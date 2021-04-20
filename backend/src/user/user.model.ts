@@ -21,12 +21,19 @@ export const UserSchema = new mongoose.Schema({
   certificate: { type: String },
   phone: { type: String, required: true },
   email: { type: String, require: true },
-  socialNetwork: [{
-    title: String,
-    link: String
-  }],
+  socialNetwork: {
+    type:{
+      title: String,
+      link: String
+    },
+    require: true
+  },
   bank: {
     type: { bankName: String, bankNumber: String },
+    require: true
+  },
+  status: {
+    type: String,
     require: true
   }
 });
@@ -39,6 +46,7 @@ export interface User extends mongoose.Document {
   certificate: string;
   phone: string;
   email: string;
-  socialNetwork: [SocialNetwork];
+  socialNetwork: SocialNetwork;
   bank: Bank;
+  status: 'Pending'|'Working'|'';
 }

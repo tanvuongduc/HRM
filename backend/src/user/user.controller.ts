@@ -6,6 +6,7 @@ import {
     Param,
     Patch,
     Delete,
+    Query,
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
@@ -23,7 +24,7 @@ export class UsersController {
         @Body('certificate') certificate: string,
         @Body('phone') phone: number,
         @Body('email') email: string,
-        @Body('socialNetwork') socialNetwork: [SocialNetwork],
+        @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
     ) {
         const generatedId = await this.usersService.insertUser(
@@ -39,15 +40,14 @@ export class UsersController {
         return { id: generatedId };
     }
 
+    @Get('getuid')
+    getUser(@Query('id') uid: string) {
+        return this.usersService.getSingleUser(uid);
+    }
     @Get()
     async getAllUsers() {
         const Users = await this.usersService.getUsers();
         return Users;
-    }
-
-    @Get(':id')
-    getUser(@Param('id') uid: string) {
-        return this.usersService.getSingleUser(uid);
     }
 
     @Patch(':id')

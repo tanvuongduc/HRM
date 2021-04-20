@@ -17,7 +17,7 @@ export class UsersService {
         certificate: string,
         phone: number,
         email: string,
-        socialNetwork: [SocialNetwork],
+        socialNetwork: SocialNetwork,
         bank: Bank,
     ) {
         const newUser = new this.userModel({
@@ -35,17 +35,17 @@ export class UsersService {
     }
 
     async getUsers() {
-        const users = await this.userModel.find().exec();
+        const users = await this.userModel.find().select({name:1}).exec();
         return users.map(user => ({
             id: user.id,
             name: user.name,
-            birthday: user.birthday,
-            adress: user.adress,
-            certificate: user.certificate,
-            phone: user.phone,
-            email: user.email,
-            socialNetwork: user.socialNetwork,
-            bank: user.bank,
+            // birthday: user.birthday,
+            // adress: user.adress,
+            // certificate: user.certificate,
+            // phone: user.phone,
+            // email: user.email,
+            // socialNetwork: user.socialNetwork,
+            // bank: user.bank,
         }));
     }
 
