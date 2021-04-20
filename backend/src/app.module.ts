@@ -12,7 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'),UserModule, TeamModule, CompanyModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost:27017/HRM'),UserModule, TeamModule, CompanyModule],
   controllers: [AppController, CompanyController, TeamController],
   providers: [AppService, TeamService, CompanyService],
 })
