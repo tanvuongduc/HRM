@@ -46,6 +46,7 @@ export class UsersService {
             // email: user.email,
             // socialNetwork: user.socialNetwork,
             // bank: user.bank,
+            // status: user.status
         }));
     }
 
@@ -61,6 +62,7 @@ export class UsersService {
             email: user.email,
             socialNetwork: user.socialNetwork,
             bank: user.bank,
+            status: user.status
         };
     }
 
@@ -74,6 +76,7 @@ export class UsersService {
         email: string,
         socialNetwork: [SocialNetwork],
         bank: Bank,
+        status: string
     ) {
         const updatedUser = await this.findUser(uid);
         // if (title) {

@@ -72,6 +72,7 @@ export class UsersController {
             email,
             socialNetwork,
             bank,
+            status
         );
         return null;
     }
