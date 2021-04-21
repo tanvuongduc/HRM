@@ -5,14 +5,14 @@ import * as mongoose from 'mongoose';
 export const TeamSchema = new mongoose.Schema({
     leader: {
         type: {
-            id: String,
+            uid: String,
             name: String
         },
         require: true
     },
     member: {
         type: {
-            id: String,
+            uid: String,
             name: String
         },
         require: true
