@@ -1,0 +1,15 @@
+GET http://localhost:3000/company
+
+####
+POST  http://localhost:3000/company
+Content-Type: application/json
+
+{
+    "name":"hien1",
+    "domain":"hien",
+    "overview":"hien",
+    "address":"hien",
+    "contact":"hien",
+    "pic":"hien",
+    "notes":"hien"
+}
