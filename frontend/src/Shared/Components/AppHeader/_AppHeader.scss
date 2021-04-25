@@ -1,0 +1,11 @@
+.appHeaderContainer {
+    height: 80px;
+    color: $c-text;
+    background: hsl($c-hue, $c-sat, 80);
+    padding: 15px 0;
+    justify-content: space-between;
+    box-shadow: 0px 0px 5px ​$c-text;
+    a {
+        color: $c-text;
+    }
+}

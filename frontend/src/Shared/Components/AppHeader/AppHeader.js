@@ -1,11 +1,8 @@
 import React from 'react';
-
 import { withRouter } from "react-router-dom";
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+import { Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { Col, Row } from 'reactstrap';
 import { AuthService } from '../../';
-import { ROLE } from '../../../Constances/const';
-
 
 class AppHeader extends React.Component {
     state = {
@@ -46,12 +43,12 @@ class AppHeader extends React.Component {
     render() {
         return (
             <Nav pills>
-                <Row className="appHeaderContainer" style={{ margin: '0px' }}>
+                <Row className="appHeaderContainer" style={{margin:'0px'}}>
                     <Col xs="2"></Col>
                     <Col xs="8"></Col>
                     <Col xs="2">
                         <Dropdown nav isOpen={this.state.dropdownUserOpen} toggle={this.toggleUser}>
-                            <DropdownToggle nav caret>{AuthService.userInfo.first_name}</DropdownToggle>
+                            <DropdownToggle nav caret>{AuthService.userInfo.first_name}ADMIN</DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>Info</DropdownItem>
                                 <DropdownItem>Change Passworld</DropdownItem>

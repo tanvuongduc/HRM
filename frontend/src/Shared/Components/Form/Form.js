@@ -60,13 +60,12 @@ class Form extends Component {
         if (domEl.validity.tooShort) return ERR_MSG.MIN_LENGTH + domEl.minLength;
         if (domEl.validity.patternMismatch && domEl.pattern === REGEX_TEL) return ERR_MSG.P_TEL;
         return 'Got err'
-
     }
 
     _validateForm() {
         let formData = this.state.form;
         Object.keys(formData).forEach(k => {
-            if (k != 'dirty') {
+            if (k !== 'dirty') {
                 let domEl = document.getElementsByName(k);
                 if (domEl[0]) {
                     formData[k].err = this._getInvalidErr(domEl[0]);
@@ -80,7 +79,6 @@ class Form extends Component {
         let formData = this.state.form;
         return !Object.keys(formData).find(k => !!formData[k].err);
     }
-
 }
 
 export default Form;
