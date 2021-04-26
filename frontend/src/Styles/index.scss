@@ -1,6 +1,6 @@
-@import "./variables";
-@import "./util";
 @import "./shared";
+@import "./util";
+@import "./variables";
 @import "../Shared/Components/AppHeader/AppHeader";
 @import "../Shared/Components/AppSidebar/AppSidebar";
 @import "../Shared/Components/AppFooter/AppFooter";
@@ -8,9 +8,9 @@
 
 /*====================================================*/
 
-@import "../Modules/Org/Components/Department/Department";
-@import "../Modules/Org/Components/Company/Company";
-@import "../Modules/Org/Components/Career/Career";
+@import "../Modules/Components/Department/Department";
+@import "../Modules/Components/Company/Company";
+@import "../Modules/Components/Career/Career";
 
 /*====================================================*/
 

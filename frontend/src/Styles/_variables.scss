@@ -1,6 +1,13 @@
-$c-text: #3c3c3c;
+* { outline: none; }
+
+$c-text: #2e424d;
 $c-border: #c3c3c3;
-$c-primary: #007bff;
+$c-primary: #155691;
+
+$c-background-hover: #e0e7eb;
+$c-shadow-hover: #c9d6dc;
+$c-background-focus: #0369d1;
+$c-shadow-focus: #0056b8;
 $c-hue: 211;
 $c-sat: 100;
 
