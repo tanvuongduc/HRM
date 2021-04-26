@@ -96,12 +96,7 @@ export class CompanyService {
         updateCompany.save();
     }
     //delete company
-    async deleteCompany(id: string) {
-        const result = await this.companyModel.deleteOne({_id: id}).exec();
-        if (result.n === 0) {
-          throw new NotFoundException('Could not find Company.');
-        } 
-    }
+ 
 
     private async findCompany(id: string): Promise<Company> {
         let company;

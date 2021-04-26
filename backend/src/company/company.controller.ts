@@ -60,9 +60,5 @@ export class CompanyController {
             notes)
         return { success: true }
     }
-    @Delete(':id')
-    async removeCompany(@Param('id') id: string){
-        await this.companyServive.deleteCompany(id)
-        return{ success: true}
-    }
+   
 }
