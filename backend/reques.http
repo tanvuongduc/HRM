@@ -1,0 +1,66 @@
+GET http://localhost:3000/company/60806e2901050d0140e41905
+
+####
+GET http://localhost:3000/company
+
+####
+POST  http://localhost:3000/company
+Content-Type: application/json
+
+{
+    "name":"hien1",
+    "domain":"hien",
+    "overview":"hien",
+    "address":"hien",
+    "contact":"hien",
+    "pic":"hien",
+    "notes":"hien"
+}
+####
+PUT   http://localhost:3000/company/60806e2901050d0140e41905
+Content-Type: application/json
+
+{
+    "name":"hien123",
+    "domain":"hien123",
+    "overview":"hien123",
+    "address":"hien123",
+    "contact":"hien123",
+    "pic":"hien123",
+    "notes":"hien123"
+}
+###
+DELETE  http://localhost:3000/company/60806e2901050d0140e41905
+
+
+
+
+
+### department
+POST  http://localhost:3000/department
+Content-Type: application/json
+
+{
+    "name": "hien",
+    "code": "code",
+    "description": "description"
+}
+
+
+### get all
+GET http://localhost:3000/department/
+####
+GET http://localhost:3000/department/60813df3550fc524589f2711
+
+####
+PUT  http://localhost:3000/department/60813df3550fc524589f2711
+Content-Type: application/json
+
+{
+    "name": "thai",
+    "code": "code 1",
+    "description": "description1"
+}
+
+###
+DELETE  http://localhost:3000/department/60813df3550fc524589f2711
