@@ -9,16 +9,17 @@ import Career from '../../../Modules/Components/Career/Career';
 import { Col, Row } from 'reactstrap';
 
 class App extends React.Component {
+
     render() {
         const { path } = this.props.match;
         return (
             <div>
                 <AppHeader />
                 <Row style={{ margin: '0px' }}>
-                    <Col xs='2'>
+                    <Col sm='2'>
                         <AppSidebar />
                     </Col>
-                    <Col xs='10' style={{ background: 'red' }}>
+                    <Col sm='10'>
                         <Switch>
                             <Route exact path={`${path}/department`} component={Department} />
                             <Route exact path={`${path}/company`} component={Company} />

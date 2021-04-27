@@ -4,7 +4,15 @@ class Career extends Component {
     render() {
         return (
             <div className='career-container'>
-                <h1>CAREER</h1>
+                <div className='career-content'>
+                    <div className='content-header'>
+                        <b>Career</b><hr />
+                    </div>
+                    <div className='content-button'>
+                        <button>Career</button>
+                        <button>Add Career</button>
+                    </div>
+                </div>
             </div>
         );
     }

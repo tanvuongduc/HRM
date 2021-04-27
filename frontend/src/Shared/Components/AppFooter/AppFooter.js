@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 
 class AppFooter extends Component {
     render() {
@@ -13,4 +14,4 @@ class AppFooter extends Component {
     }
 }
 
-export default AppFooter;
+export default withRouter(AppFooter);

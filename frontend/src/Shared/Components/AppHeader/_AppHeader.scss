@@ -52,3 +52,9 @@
         }
     }
 }
+@media only screen and (max-width: 991px) {
+    .header-middle-search {
+        position: fixed;
+        bottom: 0px;
+    }
+}

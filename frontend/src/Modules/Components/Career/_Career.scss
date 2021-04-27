@@ -1,6 +1,51 @@
+@import "../../../Styles/variables";
+
 .career-container {
     width: 100%;
-    height: 1000px;
-    padding-top: 100px;
-    background-color: royalblue;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 100px 0 50px 0;
+    background-color: chocolate;
+    .career-content {
+        background-color: #0369d1;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        width: 100%;
+        height: 200px;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px 0 0 20px;
+        .content-header {
+            width: 100%;
+            height: auto;
+            text-align: left;
+            color: #ffffff;
+            b {
+                font-size: 40px;
+            }
+        }
+        .content-button {
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            button {
+                margin-left: 2px;
+                border: none;
+                padding: 10px 20px;
+            }
+            button:first-child {
+                margin-left: 0px;
+            }
+            button:hover {
+                background-color: $c-background-hover;
+                border-bottom: 2px solid $c-shadow-hover;
+            }
+            button:focus {
+                color: white;
+                background-color: $c-shadow-focus;
+                border-bottom: 2px solid #51e2c2;
+            }
+        }
+    }
 }
