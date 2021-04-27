@@ -5,7 +5,6 @@ import {
     Get,
     Param,
     Patch,
-    Delete,
     Query,
 } from '@nestjs/common';
 
@@ -17,6 +16,7 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Post()
+    //for admin
     async addUser(
         @Body('name') name: string,
         @Body('birthday') birthday: Date,
@@ -45,12 +45,14 @@ export class UsersController {
         return this.usersService.getSingleUser(uid);
     }
     @Get()
+    // for admin
     async getAllUsers() {
         const Users = await this.usersService.getUsers();
         return Users;
     }
 
     @Patch(':id')
+    //update info user
     async updateUser(
         @Param('id') uid: string,
         @Body('name') name: string,
@@ -77,9 +79,9 @@ export class UsersController {
         return null;
     }
 
-    @Delete(':id')
-    async removeUser(@Param('id') uid: string) {
-        await this.usersService.deleteUser(uid);
-        return null;
-    }
+    // @Delete(':id')
+    // async removeUser(@Param('id') uid: string) {
+    //     await this.usersService.deleteUser(uid);
+    //     return null;
+    // }
 }

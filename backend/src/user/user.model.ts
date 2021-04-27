@@ -23,7 +23,7 @@ export const UserSchema = new mongoose.Schema({
   email: { type: String, require: true },
   socialNetwork: {
     type: {
-      title: String,
+      title: String, //twiter facebook zalo
       link: String
     },
     require: true
