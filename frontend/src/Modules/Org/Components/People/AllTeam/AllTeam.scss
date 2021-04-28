@@ -1,0 +1,66 @@
+div.list-team{
+    width: 60%;
+    padding-left: 20%;
+    box-sizing: content-box;
+    padding-top: 5px;
+
+
+    div.add-team{
+        overflow: auto;
+        margin-bottom: 20px;
+        h3.list-my-team{
+            float: left;
+            color: rgb(0, 105, 209);
+        }
+
+        button.btn-addNewTeam{
+            float: right;
+            color: rgb(0, 105, 209);
+            border: 2px solid rgb(0, 105, 209);
+            border-radius: 20px;
+            font-size: 20px;
+        }
+
+    }
+    div.team-info{
+        border: rgb(0, 105, 209) 2px solid;
+        border-radius: 30px;
+        margin-bottom: 20px;
+        div.header-info{
+            overflow: auto;
+            border-bottom: rgb(0, 105, 209) 2px solid;
+            div.header-left{
+                float: left;
+                padding-left: 2%;
+            }
+            div.header-right{
+                float: right;
+                margin-right: 20%;
+                border-left: rgb(0, 105, 209) 2px solid;
+                padding-left: 2%;
+            }
+        }
+    }
+    div.border-info{
+        padding-left: 2%;
+        overflow: auto;
+        div.img-avatar{
+            float: left;
+            img{
+                width: 50px;
+                margin-right: 2px;
+                margin-bottom: 10px;
+
+            }
+        }
+        button.btn-joinTeam{
+            float: right;
+            border: rgb(0, 105, 209) 2px solid;
+            color: rgb(0, 105, 209);
+            border-radius: 20px;
+            margin-right: 2%;
+        }
+    }
+
+
+}
