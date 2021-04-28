@@ -40,7 +40,7 @@ export class UsersController {
         return { id: generatedId };
     }
 
-    @Get('getuid')
+    @Get('user')
     getUser(@Query('id') uid: string) {
         return this.usersService.getSingleUser(uid);
     }
