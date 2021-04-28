@@ -16,35 +16,60 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      bithday: '',
-      address: '',
-      certificate: '',
-      phoneNumber: '',
-      email: '',
-      socialNetwork: [
-        {
-          nameSocialNetwork: '',
-          linkNetWork: ''
-        }
-      ]
+      userName: "",
+      birthday: "",
+      address: "",
+      certificate: "",
+      phoneNumber: "",
+      email: "",
+      socialNetwork: [],
+      bankAccountId: [],
     };
   }
 
   async componentDidMount() {
     let data = await this.getInfo();
-    console.log(data);
+    console.log(this.state);
   }
 
   async getInfo() {
-    const res = await Http.get("users/user", { id: "6088cc2b80660b2f2818ae8a" });
-    this.setState({
-
+    const res = await Http.get("users/user", {
+      id: "6088cc2b80660b2f2818ae8a",
     });
-    return res.data
+    this.setState({
+      userName: res.data.name,
+      birthday: res.data.birthday,
+      address: res.data.adress,
+      certificate: res.data.certificate,
+      phoneNumber: res.data.phone,
+      email: res.data.email,
+      socialNetwork: res.data.socialNetwork,
+      bankAccountId: res.data.bank
+    });
+    return res.data;
   }
 
   render() {
+    var {
+      userName,
+      birthday,
+      address,
+      certificate,
+      phoneNumber,
+      email,
+      socialNetwork,
+      bankAccountId,
+    } = this.state;
+    const social = socialNetwork.map((s, index) => {
+      return (
+        <div className="item-info" key={index}>
+          <label>{s.title}</label>
+          <br></br>
+          <FaFacebook className="item-info__icon" />
+          <span>{s.link}</span>
+        </div>
+      );
+    });
     return (
       <div>
         <div className="profile-main__details" id="profile-details">
@@ -56,22 +81,22 @@ class Details extends Component {
                   <div className="item-info">
                     <label>Họ và tên</label>
                     <br></br>
-                    <span>Thêm họ tên</span>
+                    <span>{userName}</span>
                   </div>
                   <div className="item-info">
                     <label>Ngày sinh</label>
                     <br></br>
-                    <span>Thêm ngày sinh</span>
+                    <span>{birthday}</span>
                   </div>
                   <div className="item-info">
                     <label>Địa chỉ</label>
                     <br></br>
-                    <span>Thêm địa chỉ</span>
+                    <span>{address}</span>
                   </div>
                   <div className="item-info">
                     <label>Bằng cấp</label>
                     <br></br>
-                    <span>Thêm bằng cấp</span>
+                    <span>{certificate}</span>
                   </div>
                 </div>
               </div>
@@ -84,16 +109,17 @@ class Details extends Component {
                     <label>Số điện thoại</label>
                     <br></br>
                     <FaPhoneAlt className="item-info__icon" />
-                    <span>Thêm số điện thoại</span>
+                    <span>{phoneNumber}</span>
                   </div>
 
                   <div className="item-info">
                     <label>Email cá nhân</label>
                     <br></br>
                     <FaEnvelope className="item-info__icon" />
-                    <span>Thêm email</span>
+                    <span>{email}</span>
                   </div>
-                  <div className="item-info">
+                  {social}
+                  {/* <div className="item-info">
                     <label>Facebook</label>
                     <br></br>
                     <FaFacebook className="item-info__icon" />
@@ -110,7 +136,7 @@ class Details extends Component {
                     <br></br>
                     <FaLink className="item-info__icon" />
                     <span>Thêm ...</span>
-                  </div>
+                  </div> */}
                   <div className="item-info">
                     <label>Tài khoản ngân hàng</label>
                     <br></br>
