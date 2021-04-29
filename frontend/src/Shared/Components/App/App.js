@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
-import Exam from '../../../Modules/Exam/Exam';
 import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
+import Company from '../../../Modules/Company/Company';
 
 class App extends React.Component {
     render() {
@@ -11,7 +11,7 @@ class App extends React.Component {
             <div className="App">
                 <AppHeader></AppHeader>
                 <Switch>
-                    <Route path={`${path}/exam`} component={Exam} />
+                    <Route path={`${path}/company`} component={Company} />
                     <Route path={`${path}/notauthorized`} component={NotAuthorized} />
                 </Switch>
             </div>

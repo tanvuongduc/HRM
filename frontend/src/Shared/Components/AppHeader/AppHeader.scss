@@ -1,10 +1,60 @@
+@import "../../../Styles/variables";
+
 .appHeaderContainer {
+    width: 100%;
+    height: 80px;
     color: $c-text;
-    background: hsl($c-hue, $c-sat, 80);
-    padding: 5px;
-    justify-content: space-between;
-    box-shadow: 0px 0px 5px ​$c-text;
-    a {
-        color: $c-text;
+    position: fixed;
+    z-index: 2;
+    background-color: $c-primary;
+    padding: 15px 0;
+    .header-left {
+        padding: 8px 0 0 20px;
+        img {
+            width: auto;
+            height: 40px;
+        }
+    }
+    .header-middle {
+        padding: 8px 0 0 0;
+        .header-middle-search {
+            width: 100%;
+            height: 40px;
+            display:flex;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            .search-button {
+                background-color: white;
+                border: none;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    path {
+                        fill: $c-text;
+                    }
+                }
+            }
+            .search-input {
+                background-color: white;
+                border: none;
+                height: 100%;
+            }
+        }
+    }
+    .header-right {
+        .dropdownToggle {
+            overflow: hidden;
+            color: white;
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 991px) {
+    .header-middle-search {
+        position: fixed;
+        bottom: 0px;
     }
 }
