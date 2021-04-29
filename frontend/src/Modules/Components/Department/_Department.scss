@@ -139,5 +139,61 @@
                 }
             }
         }
+        .adddepartment-item-content {
+            margin-bottom: 20px;
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            .content-regisger {
+                width: 60%;
+                height: auto;
+                padding: 15px;
+                input {
+                    width: 100%;
+                    padding: 15px;
+                    margin: 5px 0 22px 0;
+                    display: inline-block;
+                    border: none;
+                    background: #f1f1f1;
+                    &:focus {
+                        background-color: #ddd;
+                        outline: none;
+                    }
+                }
+                textarea {
+                    width: 100%;
+                    height: 100px;
+                }
+                hr {
+                    border: 1px solid #f1f1f1;
+                    margin-bottom: 25px;
+                }
+                .registerbtn {
+                    background-color: #04AA6D;
+                    color: white;
+                    padding: 16px 20px;
+                    margin: 8px 0;
+                    border: none;
+                    cursor: pointer;
+                    width: 100%;
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+            }
+            .content-img {
+                width: 40%;
+                height: auto;
+                position: relative;
+                img {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    width: 70%;
+                    height: auto;
+                }
+            }
+        }
     }
 }
