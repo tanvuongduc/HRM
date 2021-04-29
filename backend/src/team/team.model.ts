@@ -31,6 +31,7 @@ export interface Employee {
     regency: Number
 }
 export interface Team extends mongoose.Document{
+    id:String;
     name: String;
     member: Employee;
     rate: Number;
