@@ -9,7 +9,7 @@ class Company extends Component {
   render() {
     const { path } = this.props.match;
     return (
-      <Container>
+      <Container className="hien">
 
       <div className="Company">
         <SliderEdit></SliderEdit>
