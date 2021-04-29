@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Form, ModalNoti, REGEX_TEL } from '../../Shared';
+import SliderImg from '../../../../Asset/Img/full-Width_Slider_Image_11.jpg'
 import {
   Carousel,
   CarouselItem,
@@ -62,6 +63,7 @@ const SliderEdit = (props) => {
   });
 
   return (
+    
     <Carousel
       activeIndex={activeIndex}
       next={next}
@@ -69,6 +71,7 @@ const SliderEdit = (props) => {
     >
       <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
       {slides}
+      
       <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
       <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
     </Carousel>
