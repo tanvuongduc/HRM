@@ -17,7 +17,7 @@ class AppSidebar extends Component {
                     </Link>
                 </div>
                 <div className='sidebar-container-item'>
-                    <Link to='/app/company2'>
+                    <Link to='/app/company'>
                         <button className='btn-item'>
                             <span>
                                 <svg id="bold" enableBackground="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg">

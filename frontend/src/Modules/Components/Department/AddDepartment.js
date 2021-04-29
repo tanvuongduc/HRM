@@ -15,12 +15,12 @@ class AddDepartment extends Component {
                 <div className='adddepartment-item-content'>
                     <div className='content-regisger'>
                         <form>
-                            <label><b>Name Department</b></label>
-                            <input type="text" placeholder="Name Department" name="name" required />
+                            <label><b>Department Name</b></label>
+                            <input type="text" placeholder="department name" name="name" required />
                             <label><b>Leader ID</b></label>
-                            <input type="text" placeholder="Leader ID" name="leader" required />
+                            <input type="text" placeholder="leader id" name="leader" required />
                             <label><b>Describe</b></label>
-                            <textarea placeholder="Describe" name="describe"></textarea>
+                            <textarea placeholder="describe" name="describe"></textarea>
                             <hr />
                             <button type="submit" className="registerbtn">Create Department</button>
                         </form>
