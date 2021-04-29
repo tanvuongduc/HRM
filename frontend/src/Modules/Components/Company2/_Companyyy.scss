@@ -4,13 +4,12 @@
 	// margin: auto;
     width: 100%;
     background-color: #f1f6f8;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0px 0px 10px 0px grey;
 
 	div.c_header{
 		background-image: url('https://s3-eu-west-1.amazonaws.com/charlie-production/static/default-splash.jpg');
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-radius: 5px;
 		div.textWelcome{
 			padding-top: 120px;
 		    padding-bottom: 120px;
@@ -42,15 +41,12 @@
 			}
 			div.companyTabSelect:hover{
 				background-color: #055ab0;
-			    border-bottom: solid 2px #8bfee3;
+			    border-bottom: solid 3px #8bfee3;
 			    color: #8bfee3;
-                padding: 17px 18px;
-                cursor: pointer;
 			}
 		}
 
 		div.detailContent{
-            padding: 10px 0px;
 			div.leftContent{
 				div.overView{
 					div.overViewTop{
@@ -87,7 +83,6 @@
 						color: white;
 					    background: #0b71d7d9;
 					    box-shadow: 0px 1px 2px 0px #2a2929;
-                        cursor: pointer;
 					}
 				}
 				div.document{
@@ -99,14 +94,8 @@
 					div.documentContent{
 						margin: 10px 10px;
 						div.documentContentItem{
-                            background-color: #eff3f5;
-                            border-radius: 5px;
-                            padding: 5px;
-                            padding-left: 10px;
 							h3{
-                                font-size: 22px;
-                                color: gray;
-                                padding-left: 10px;
+
 							}
 							p{
 
@@ -137,9 +126,8 @@
 
 .right{
 	float: right;
-    margin-top: -30px;
+    margin-top: -25px;
     font-size: 20px;
-    cursor: pointer;
 }
 
 .boxContent{
@@ -147,8 +135,9 @@
     color: #2e424d;
     border-color: #f1f6f8;
     width: 80%;
-    margin: 10px auto;
+    margin: auto;
     border-radius: 5px;
+    margin-top: 20px;
     border: solid 1px #e4e6e7;
     padding: 20px;
 }

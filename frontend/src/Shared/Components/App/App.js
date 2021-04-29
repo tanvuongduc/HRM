@@ -6,6 +6,7 @@ import AppSidebar from '../AppSidebar/AppSidebar';
 import Department from '../../../Modules/Components/Department/Department';
 import Company from '../../../Modules/Components/Company/Company';
 import Career from '../../../Modules/Components/Career/Career';
+import Company2 from '../../../Modules/Components/Company2/Company2';
 import { Col, Row } from 'reactstrap';
 
 class App extends React.Component {
@@ -24,6 +25,7 @@ class App extends React.Component {
                             <Route exact path={`${path}/department`} component={Department} />
                             <Route exact path={`${path}/company`} component={Company} />
                             <Route exact path={`${path}/career`} component={Career} />
+                            <Route exact path={`${path}/company2`} component={Company2} />
                         </Switch>
                     </Col>
                 </Row>
