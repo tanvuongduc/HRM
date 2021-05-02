@@ -8,7 +8,7 @@ import { AuthService } from './Shared';
 
 import App from './Shared/Components/App/App';
 import Login from './Modules/Org/Components/Login/Login';
-import RouteURL from './Modules/Org/Components/People/RouteURL';
+import People from './Modules/Org/Components/People/People';
 
 const isLogged = !!AuthService.userInfo;
 
@@ -41,7 +41,7 @@ const Root = (
           }} ></Route>
           <Route path="/people" render={() => {
             return (
-              <RouteURL></RouteURL>
+              <People/>
             )
           }} ></Route>
         </Suspense>

@@ -22,45 +22,7 @@ div.list-team{
         }
 
     }
-    div.team-info{
-        border: rgb(0, 105, 209) 2px solid;
-        border-radius: 30px;
-        margin-bottom: 20px;
-        div.header-info{
-            overflow: auto;
-            border-bottom: rgb(0, 105, 209) 2px solid;
-            div.header-left{
-                float: left;
-                padding-left: 2%;
-            }
-            div.header-right{
-                float: right;
-                margin-right: 20%;
-                border-left: rgb(0, 105, 209) 2px solid;
-                padding-left: 2%;
-            }
-        }
-    }
-    div.border-info{
-        padding-left: 2%;
-        overflow: auto;
-        div.img-avatar{
-            float: left;
-            img{
-                width: 50px;
-                margin-right: 2px;
-                margin-bottom: 10px;
 
-            }
-        }
-        button.btn-joinTeam{
-            float: right;
-            border: rgb(0, 105, 209) 2px solid;
-            color: rgb(0, 105, 209);
-            border-radius: 20px;
-            margin-right: 2%;
-        }
-    }
 
 
 }
