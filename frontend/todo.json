@@ -1,0 +1,40 @@
+{
+    "department": [
+        {
+            "department_id": "01",
+            "department_name": "department_name_01",
+            "member": [
+                {
+                    "member_id": "0101",
+                    "member_name": "admin",
+                    "member_department": "department_name_01",
+                    "member_company": "company_name"
+                },
+                {
+                    "member_id": "0102",
+                    "member_name": "manager",
+                    "member_department": "department_name_01",
+                    "member_company": "company_name"
+                }
+            ]
+        },
+        {
+            "department_id": "02",
+            "department_name": "department_name_02",
+            "member": [
+                {
+                    "member_id": "0201",
+                    "member_name": "admin",
+                    "member_department": "department_name_02",
+                    "member_company": "company_name"
+                },
+                {
+                    "member_id": "0202",
+                    "member_name": "manager",
+                    "member_department": "department_name_02",
+                    "member_company": "company_name"
+                }
+            ]
+        }
+    ]
+}

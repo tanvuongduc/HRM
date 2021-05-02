@@ -1,4 +1,6 @@
-* { outline: none; box-sizing: border-box;}
+* { outline: none; box-sizing: border-box }
+::-webkit-scrollbar { width: 2px }  
+::-webkit-scrollbar-thumb { background: gray }
 
 $c-text: #2e424d;
 $c-border: #c3c3c3;

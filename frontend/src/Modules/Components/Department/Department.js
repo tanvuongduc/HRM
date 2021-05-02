@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import AddDepartment from './AddDepartment';
 import ItemDepartment from './ItemDepartment';
+import axios from 'axios';
+import * as Config from '../../../Constances/const';
 
 class Department extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showItem: ''
+            showItem: '',
+            data: '',
+            listmember: ''
         }
     };
     Button1(e) {
@@ -23,10 +27,26 @@ class Department extends Component {
     };
     showItem() {
         if (this.state.showItem === 'department' || this.state.showItem === '') {
-            return <ItemDepartment />
+            return <ItemDepartment data={this.state.data} listmember={this.state.listmember} />
         }
         else if (this.state.showItem === 'adddepartment')
             return <AddDepartment />
+    };
+    componentDidMount() {
+        axios.get(`${Config.BASE_URL}department`, null).then(res => {
+            res.data.forEach(e => {
+                this.setState({
+                    data: e
+                });
+            });
+            this.state.data.member.forEach(e => {
+                this.setState({
+                    listmember: e
+                });
+            });
+        }).catch(err => {
+            console.log(err);
+        });
     };
     render() {
         return (
