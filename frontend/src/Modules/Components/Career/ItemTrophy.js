@@ -15,6 +15,7 @@ class ItemTrophy extends Component {
                     <img src={trophy2} alt={trophy2} />&ensp;
                     Hội nghị thảo luận và thông qua các văn kiện: Chánh cương vắn tắt, Sách lược vắn tắt, Chương trình tóm tắt và Điều lệ vắn tắt của Đảng Cộng sản Việt Nam.
                 </p>
+                
             </div>
         );
     }

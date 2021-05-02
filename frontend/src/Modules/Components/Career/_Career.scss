@@ -6,6 +6,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 100px 0 50px 0;
+
     .career-content {
         background-color: #0369d1;
         border-top-left-radius: 10px;
@@ -67,12 +68,17 @@
         box-shadow: 0 1px 20px 1px #ccd7dd;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        .tabs{
+            padding-left:  15px;
+        }
         .career-item-content {
             margin: 20px 0 20px 0;
             width: 100%;
             height: auto;
             display: flex;
             flex-wrap: wrap;
+            background-color: white;
+
             .item-content-left {
                 width: 40%;
                 height: auto;
@@ -140,5 +146,6 @@
                 }
             }
         }
+
     }
 }

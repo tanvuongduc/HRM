@@ -27,7 +27,7 @@ class App extends React.Component {
                         </Switch>
                     </Col>
                 </Row>
-                <AppFooter />
+                {/* <AppFooter /> */}
             </div>
         );
     }
