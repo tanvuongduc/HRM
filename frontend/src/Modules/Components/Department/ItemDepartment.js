@@ -27,23 +27,24 @@ class ItemDepartment extends Component {
     };
     ListMember() {
         if (this.state.button) {
-            return <TableItem listmember={this.props.listmember} />
+            return <TableItem />
         } else return null
     };
     render() {
-        let { department_id, department_name } = this.props.data;
-        let count = [];
-        for (let i = 1; i < department_id; i++) {
-            count.push(i + 1);
-        };
+        console.log(this.props.data, 'sao deo chay');
+        // let { department_id, department_name } = this.props.data;
+        // let count = [];
+        // for (let i = 1; i < department_id; i++) {
+        //     count.push(i + 1);
+        // };
         return (
             <div className='department-item'>
                 <div className='department-item-nav'>
-                    <b>{count} Department</b>
+                    <b>{} Department</b>
                 </div>
                 <div className='department-item-content'>
                     <div className='item-content-top'>
-                        <b>{department_name}</b>
+                        <b>{}</b>
                     </div>
                     <div className='item-content-bottom'>
                         <p>MEMBER</p>

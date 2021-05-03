@@ -8,9 +8,7 @@ class Department extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showItem: '',
-            data: '',
-            listmember: ''
+            showItem: ''
         }
     };
     Button1(e) {
@@ -25,9 +23,9 @@ class Department extends Component {
             showItem: 'adddepartment'
         });
     };
-    showItem() {
+    showItem(event) {
         if (this.state.showItem === 'department' || this.state.showItem === '') {
-            return <ItemDepartment data={this.state.data} listmember={this.state.listmember} />
+            return <ItemDepartment data={event} />;
         }
         else if (this.state.showItem === 'adddepartment')
             return <AddDepartment />
@@ -35,14 +33,7 @@ class Department extends Component {
     componentDidMount() {
         axios.get(`${Config.BASE_URL}department`, null).then(res => {
             res.data.forEach(e => {
-                this.setState({
-                    data: e
-                });
-            });
-            this.state.data.member.forEach(e => {
-                this.setState({
-                    listmember: e
-                });
+                return this.showItem(e);
             });
         }).catch(err => {
             console.log(err);
