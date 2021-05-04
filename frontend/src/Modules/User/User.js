@@ -4,43 +4,21 @@ import { FaUser, FaEnvelope } from "react-icons/fa";
 import Details from "./Details/Details";
 import Employment from "./Employment/Employment";
 import TimeOff from "./TimeOff/TimeOff";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, NavLink, Route, Switch } from "react-router-dom";
+import NavBarUser from "./NavBarUser/NavBarUser";
 
 class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDisplayDetail: false,
-      isDisplayEmployment: true,
-      isDisplayTimeOff: false,
+     
     };
   }
-  showDetails = () => {
-    this.setState({
-      isDisplayDetail: true,
-      isDisplayEmployment: false,
-      isDisplayTimeOff: false,
-    });
-    console.log(this.state.isDisplayDetail);
-  };
-  onShowEmployment = () => {
-    this.setState({
-      isDisplayEmployment: true,
-      isDisplayDetail: false,
-      isDisplayTimeOff: false,
-    });
-  };
 
-  onShowTimeOff = () => {
-    this.setState({
-      isDisplayTimeOff: true,
-      isDisplayDetail: false,
-      isDisplayEmployment: false,
-    });
-  };
+ 
 
   render() {
-    var { isDisplayDetail, isDisplayEmployment, isDisplayTimeOff } = this.state;
+    
     return (
       <BrowserRouter>
         <Fragment>
@@ -59,23 +37,8 @@ class User extends Component {
                 </div>
               </div>
             </div>
-
-            <div className="profile-header__navigation">
-              <div className="container">
-                <Link to="/user">
-                    Tổng quan
-                </Link>
-
-                <Link to="/user/details">
-                    Chi tiết
-                </Link>
-
-                {/* <a 
-                 onClick={this.onShowTimeOff}
-                 className={ isDisplayTimeOff ? 'onClickNav' : '' }
-              >Thời gian nghỉ</a> */}
-              </div>
-            </div>
+          <NavBarUser/>
+            
           </div>
           <div className="profile-main">
             <div className="container">
