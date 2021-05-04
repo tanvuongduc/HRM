@@ -17,8 +17,9 @@ class People extends Component {
         }
     }
     async componentDidMount(){
-        let res = await Http.get('teams/team?id=60885ae888e1d925c488889b');
+        let res = await Http.get('teams/team?id=60912c521618fb2e28b4a984');
         let data = res.data;
+        console.log(data)
         this.setState({
             data : data
         })
