@@ -1,19 +1,24 @@
-import React, { Suspense, Fragment } from 'react';
-import { Route, Redirect, Switch, BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import './Styles/index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Suspense, Fragment } from "react";
+import { Route, Redirect, Switch, BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./Styles/index.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import { AuthService } from './Shared';
+import { AuthService } from "./Shared";
 
-import App from './Shared/Components/App/App';
-import Login from './Modules/Org/Components/Login/Login';
+import App from "./Shared/Components/App/App";
+import Login from "./Modules/Org/Components/Login/Login";
+import NavBar from "./Modules/Org/Components/NavBar.js/NavBar";
+import User from "./Modules/User/User";
+
+// import App from './Shared/Components/App/App';
+// import Login from './Modules/Org/Components/Login/Login';
 import People from './Modules/Org/Components/People/People';
+import Employment from "./Modules/User/Employment/Employment";
 
 const isLogged = !!AuthService.userInfo;
 
 const Root = (
-
   <BrowserRouter>
     <Fragment>
       <Switch>
@@ -44,12 +49,17 @@ const Root = (
               <People/>
             )
           }} ></Route>
+          <Route path="/user" render={() => {
+            return (
+              <User/>
+            )
+          }} ></Route>
         </Suspense>
       </Switch>
     </Fragment>
   </BrowserRouter>
 );
 
-ReactDOM.render(Root, document.getElementById('root'));
+ReactDOM.render(Root, document.getElementById("root"));
 
 export default Root;
