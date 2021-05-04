@@ -3,8 +3,27 @@ import { withRouter } from 'react-router';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import MyTeam from './MyTeam/MyTeam';
 import User from './User/User';
+import {Http} from '../../../../Helper/Http'
+
+
+
 
 class People extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            data : {}
+
+        }
+    }
+    async componentDidMount(){
+        let res = await Http.get('teams/team?id=60885ae888e1d925c488889b');
+        let data = res.data;
+        this.setState({
+            data : data
+        })
+    }
+
     render() {
         return (
             <BrowserRouter>
@@ -24,7 +43,7 @@ class People extends Component {
                     </div>
                     <Switch>
                         <Route path="/people/my-team">
-                            <MyTeam/>
+                            <MyTeam data = {this.state.data}/>
                         </Route>
                         <Route path="/people/user">
                             <User/>

@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 
 class Team extends Component {
     render() {
-        const props= this.props;
+        const {data}= this.props;
         return (
             <div className="team-info">
                 <div className="header-info">
                     <div className="header-left">
-                        <h4>Name: Team ABC</h4>
-                        <h6>Department: Ban nhân sự</h6>
+                        <h4>Name: {data.name}</h4>
+                        <h6>Department: {data.department}</h6>
                     </div>
                     <div className="header-right">
-                        <h4>Leader: Nguyễn Văn A</h4>
+                        <h4>Leader: </h4>
                         <h6>Ngày tạo: 01/01/2021</h6>
                     </div>
                 </div>
