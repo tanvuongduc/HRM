@@ -3,11 +3,10 @@ import { Table } from 'reactstrap';
 
 class TableItem extends Component {
     render() {
-        let { member_id, member_name, member_department, member_company } = this.props.listmember;
+        console.log(this.props.member, 'uuuuuuuu')
         return (
             <div className='ListMember'>
                 <Table>
-
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -18,10 +17,11 @@ class TableItem extends Component {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{member_id}</td>
-                            <td>{member_name}</td>
-                            <td>{member_department}</td>
-                            <td>{member_company}</td>
+                        {/* {
+                            this.props.member.member_department.map((e, i) => (
+                                <td key={i}>{ e.department_id }</td>
+                            ))
+                        } */}
                         </tr>
                     </tbody>
                 </Table>

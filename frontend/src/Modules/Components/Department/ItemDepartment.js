@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import avt from '../../../Asset/Img/avatar.png';
 import avt2 from '../../../Asset/Img/avatar2.png';
 import TableItem from './TableItem';
@@ -7,7 +7,8 @@ class ItemDepartment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            button: false
+            button: false,
+            member: []
         }
     };
     showMember() {
@@ -27,40 +28,48 @@ class ItemDepartment extends Component {
     };
     ListMember() {
         if (this.state.button) {
-            return <TableItem />
+            return <TableItem member={this.state.member} />
         } else return null
     };
+    componentDidMount() {
+        this.props.data.map(e => {
+            return this.setState({
+                member: e
+            });
+        })
+    };
     render() {
-        console.log(this.props.data, 'sao deo chay');
-        // let { department_id, department_name } = this.props.data;
-        // let count = [];
-        // for (let i = 1; i < department_id; i++) {
-        //     count.push(i + 1);
-        // };
+        console.log(this.state.member, 'heheh')
         return (
-            <div className='department-item'>
-                <div className='department-item-nav'>
-                    <b>{} Department</b>
-                </div>
-                <div className='department-item-content'>
-                    <div className='item-content-top'>
-                        <b>{}</b>
+            <Fragment>
+                <div className='department-item'>
+                    <div className='department-item-nav'>
+                        <b>Department</b>
                     </div>
-                    <div className='item-content-bottom'>
-                        <p>MEMBER</p>
-                        <div className='content-member'>
-                            <div className='content-member-avt'>
-                                <img src={avt} alt={avt} />
-                                <img src={avt2} alt={avt2} />
+                    {
+                        this.props.data.map((e, i) => (
+                            <div className='department-item-content' key={i}>
+                                <div className='item-content-top'>
+                                    <b>{e.department_name}</b>
+                                </div>
+                                <div className='item-content-bottom'>
+                                    <p>MEMBER</p>
+                                    <div className='content-member'>
+                                        <div className='content-member-avt'>
+                                            <img src={avt} alt={avt} />
+                                            <img src={avt2} alt={avt2} />
+                                        </div>
+                                        <div className='content-member-nav'>
+                                            {this.Button()}
+                                        </div>
+                                        {this.ListMember()}
+                                    </div>
+                                </div>
                             </div>
-                            <div className='content-member-nav'>
-                                {this.Button()}
-                            </div>
-                            {this.ListMember()}
-                        </div>
-                    </div>
+                        ))
+                    }
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }
