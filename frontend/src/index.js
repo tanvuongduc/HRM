@@ -11,6 +11,10 @@ import Login from "./Modules/Org/Components/Login/Login";
 import NavBar from "./Modules/Org/Components/NavBar.js/NavBar";
 import User from "./Modules/User/User";
 
+// import App from './Shared/Components/App/App';
+// import Login from './Modules/Org/Components/Login/Login';
+import People from './Modules/Org/Components/People/People';
+import Employment from "./Modules/User/Employment/Employment";
 
 const isLogged = !!AuthService.userInfo;
 
@@ -19,36 +23,37 @@ const Root = (
     <Fragment>
       <Switch>
         <Suspense>
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return !isLogged ? (
-                <Redirect to="/login"></Redirect>
-              ) : (
-                <Redirect to="/app"></Redirect>
-              );
-            }}
-          ></Route>
-          <Route
-            path="/login"
-            render={() => {
-              return isLogged ? (
-                <Login></Login>
-              ) : (
-                <Redirect to="/app"></Redirect>
-              );
-            }}
-          ></Route>
-          <Route
-            path="/app"
-            render={() => {
-              return isLogged ? <App></App> : <Redirect to="/login"></Redirect>;
-            }}
-          ></Route>
-          <Route exact path="/user">
+          <Route exact path="/" render={() => {
+            return (!isLogged) ? (
+              <Redirect to="/login" ></Redirect>
+            ) : (
+              <Redirect to="/app" ></Redirect>
+            )
+          }} ></Route>
+          <Route path="/login" render={() => {
+            return (!isLogged) ? (
+              <Login></Login>
+            ) : (
+              <Redirect to="/app" ></Redirect>
+            )
+          }} ></Route>
+          <Route path="/app" render={() => {
+            return (isLogged) ? (
+              <App></App>
+            ) : (
+              <Redirect to="/login" ></Redirect>
+            )
+          }} ></Route>
+          <Route path="/people" render={() => {
+            return (
+              <People/>
+            )
+          }} ></Route>
+          <Route path="/user" render={() => {
+            return (
               <User/>
-          </Route>
+            )
+          }} ></Route>
         </Suspense>
       </Switch>
     </Fragment>
