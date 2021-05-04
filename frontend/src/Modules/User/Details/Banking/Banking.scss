@@ -1,0 +1,20 @@
+.item-info {
+    margin-bottom: 10px;
+
+    label {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        font-size: 14px;
+        color: rgba(34, 33, 33, 0.582);
+    }
+
+    span {
+        font-size: 17px;
+    }
+
+    &__icon {
+        margin-right: 8px;
+        font-size: 20px;
+    }
+
+}
