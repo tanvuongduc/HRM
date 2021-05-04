@@ -7,7 +7,7 @@ export const TimeoffSchema = new mongoose.Schema({
     from: { type: Date, require: true },
     to: { type: Date, require: true },
     by: { type: String, require: true },
-    status: { type: String, require: true }, //Pendding, approve, reject
+    status: { type: String, require: true, default:"Pendding" }, //Pendding, approve, reject
     censor: { type: String, default: "" }
 })
 
