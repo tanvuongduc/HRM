@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import AddDepartment from './AddDepartment';
 import ItemDepartment from './ItemDepartment';
-import axios from 'axios';
-import * as Config from '../../../Constances/const';
+import { Http } from '../../../Helper/Http';
 
 class Department extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showItem: ''
+            showItem: '',
+            data: []
         }
     };
     Button1(e) {
@@ -23,21 +23,21 @@ class Department extends Component {
             showItem: 'adddepartment'
         });
     };
-    showItem(event) {
+    showItem() {
         if (this.state.showItem === 'department' || this.state.showItem === '') {
-            return <ItemDepartment data={event} />;
+            return <ItemDepartment data={this.state.data} />;
         }
         else if (this.state.showItem === 'adddepartment')
-            return <AddDepartment />
+            return <AddDepartment />;
     };
     componentDidMount() {
-        axios.get(`${Config.BASE_URL}department`, null).then(res => {
-            res.data.forEach(e => {
-                return this.showItem(e);
-            });
+        Http.get("department").then(e => {
+            return this.setState({
+                data: e.data
+            })
         }).catch(err => {
-            console.log(err);
-        });
+            console.log(err)
+        })
     };
     render() {
         return (

@@ -2,7 +2,6 @@ import Axios from "axios";
 import { BASE_URL } from "../Constances/const";
 
 export class Http {
-
   static _getHeader() {
     return {
       "Authorization": `Bearer ${window.localStorage.getItem('token') || ''}`,

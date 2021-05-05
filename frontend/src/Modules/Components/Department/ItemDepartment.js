@@ -1,66 +1,66 @@
-import React, { Component } from 'react';
-import avt from '../../../Asset/Img/avatar.png';
-import avt2 from '../../../Asset/Img/avatar2.png';
-import TableItem from './TableItem';
+import React, { Component, Fragment, useState } from 'react';
+import TableMember from './TableMember';
+import { Modal } from 'react-modal';
 
 class ItemDepartment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            button: false
+            modalIsOpen: false,
+            setModalIsOpen: false
         }
-    };
-    showMember() {
-        this.setState({
-            button: true
-        });
-    };
-    closeMember() {
-        this.setState({
-            button: false
-        });
-    };
-    Button() {
-        if (this.state.button) {
-            return <button onClick={() => this.closeMember()}>&#8689;</button>
-        } else return <button onClick={() => this.showMember()}>&#8690;</button>
-    };
-    ListMember() {
-        if (this.state.button) {
-            return <TableItem />
-        } else return null
-    };
+    }
+    
+    
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         showModal: false
+    //     }
+    // };
+    // Modal() {
+    //     this.setState({
+    //         showModal: true
+    //     });
+    // };
     render() {
-        console.log(this.props.data, 'sao deo chay');
-        // let { department_id, department_name } = this.props.data;
-        // let count = [];
-        // for (let i = 1; i < department_id; i++) {
-        //     count.push(i + 1);
-        // };
+        
         return (
-            <div className='department-item'>
-                <div className='department-item-nav'>
-                    <b>{} Department</b>
-                </div>
-                <div className='department-item-content'>
-                    <div className='item-content-top'>
-                        <b>{}</b>
-                    </div>
-                    <div className='item-content-bottom'>
-                        <p>MEMBER</p>
-                        <div className='content-member'>
-                            <div className='content-member-avt'>
-                                <img src={avt} alt={avt} />
-                                <img src={avt2} alt={avt2} />
+            <Fragment>
+
+                <div className='department-item'>
+                    <div className='department-item-nav'>
+                        <Modal isOpen={modalIsOpen} updateTodo={updateTodo}>
+                            <div className="modal">
+                                <h2>Edit todo</h2>
+                                <form >
+                                    <input type="text" />
+                                    <input type="submit" />
+                                </form>
                             </div>
-                            <div className='content-member-nav'>
-                                {this.Button()}
+                        </Modal>
+                        {/* <h2>Modal Example</h2>
+                        <button id="myBtn" onClick={this.Modal()}>Open Modal</button>
+                        <div id="myModal" className="modal">
+                            <div className="modal-content">
+                                <span className="close">&times;</span>
+                                <p>Some text in the Modal..</p>
                             </div>
-                            {this.ListMember()}
-                        </div>
+
+                        </div> */}
                     </div>
+                    {
+                        this.props.data.map((e, i) => (
+                            <div className='department-item-content' key={i}>
+                                <div className='item-content-top'>
+                                    <b>{e.department_name}</b>
+                                </div>
+                                <TableMember data={e} />
+                            </div>
+                        ))
+                    }
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }
