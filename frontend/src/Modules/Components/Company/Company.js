@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, } from 'reactstrap';
 import { Link } from 'react-router-dom'
-import ModalEdit from './Modal/ModalEdit';
+import ModalEdit from './Modal/ModalExample';
+import ModalExample from './Modal/ModalExample';
 
 class Company extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            data: []
         }
     }
 
-    toggle() {
+    showDocument() {
+        return <ModalExample data={(item) => this.addData(item)} />
+    };
+    addData(item) {
         this.setState({
-            modal: !this.state.modal
-        })
-        return this.state.modal ? (<ModalEdit></ModalEdit>) : ''
-    }
+            data: item
+        });
+    };
+
     render() {
+        console.log(this.state.data)
         return (
             <div className="appCompanyContainer">
                 <div className="c_header">
@@ -53,8 +58,7 @@ class Company extends Component {
                         </div>
                         <div className="document boxContent">
                             <div className="documentTop">
-                                <h3 className="topLeftContent">Documents</h3>
-                                <Button className="right" onClick={this.toggle()}>ADD</Button>
+                                <ModalExample /><h3 className="topLeftContent">Documents</h3>
                             </div>
                             <div className="documentContent">
                                 <div className="documentContentItem">
