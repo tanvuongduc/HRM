@@ -46,7 +46,7 @@ const Root = (
               return isLogged ? <App></App> : <Redirect to="/login"></Redirect>;
             }}
           ></Route>
-          <Route exact path="/user">
+          <Route path="/user">
               <User/>
           </Route>
         </Suspense>

@@ -16,6 +16,7 @@ import BasicInfo from "./BasicInfo/BasicInfo";
 import Contact from "./Contact/Contact";
 import Banking from "./Banking/Banking";
 import EditInfo from "./EditInfo/EditInfo";
+import Popup from "reactjs-popup";
 
 class Details extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Details extends Component {
       bankAccountId: [],
     };
   }
+  
 
   async componentDidMount() {
     let data = await this.getInfo();
@@ -50,10 +52,30 @@ class Details extends Component {
       email: res.data.email,
       socialNetwork: res.data.socialNetwork,
       bankAccountId: res.data.bank,
+      isDisplayEditInfo: false,
     });
     return res.data;
   }
 
+  onShowInfoEdit = (data) => {
+    console.log(data);
+    this.setState({
+      isDisplayEditInfo: true,
+    });
+  };
+
+  onCloseEditInfo = () => {
+    this.setState({
+      isDisplayEditInfo: false,
+    });
+  };
+
+  onSaveEditting = (data) => {
+    console.log(data);
+    this.setState({
+      userName: data,
+    });
+  };
   render() {
     var {
       userName,
@@ -64,7 +86,19 @@ class Details extends Component {
       email,
       socialNetwork,
       bankAccountId,
+      isDisplayEditInfo,
     } = this.state;
+
+    var elmEditInfo = isDisplayEditInfo ? (
+      <EditInfo
+        userName={userName}
+        onSaveEditting={this.onSaveEditting}
+        onCloseEditInfo={this.onCloseEditInfo}
+      />
+    ) : (
+      ""
+    );
+
     return (
       <div>
         <div className="profile-main__details" id="profile-details">
@@ -75,6 +109,7 @@ class Details extends Component {
                 birthday={birthday}
                 address={address}
                 certificate={certificate}
+                onShowInfoEdit={this.onShowInfoEdit}
               />
             </div>
             <div className="col-md-4">
@@ -85,10 +120,10 @@ class Details extends Component {
               />
             </div>
             <div className="col-md-4">
-              <Banking bankAccountId={bankAccountId}/>
+              <Banking bankAccountId={bankAccountId} />
             </div>
           </div>
-          <EditInfo/>
+          {elmEditInfo}
         </div>
       </div>
     );

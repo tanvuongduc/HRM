@@ -4,7 +4,7 @@ import { FaUser, FaEnvelope } from "react-icons/fa";
 import Details from "./Details/Details";
 import Employment from "./Employment/Employment";
 import TimeOff from "./TimeOff/TimeOff";
-import { BrowserRouter, Link, NavLink, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Link, NavLink, Redirect, Route, Switch } from "react-router-dom";
 import NavBarUser from "./NavBarUser/NavBarUser";
 
 class User extends Component {
@@ -16,7 +16,6 @@ class User extends Component {
   }
 
  
-
   render() {
     
     return (

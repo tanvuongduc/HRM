@@ -9,6 +9,10 @@ class BasicInfo extends Component {
 
         }
     }
+    isDisplayInfoEdit = () => {
+        this.props.onShowInfoEdit(this.props.userName);
+    }
+
     render() {
         let {userName, birthday, address, certificate} = this.props;
         return(
@@ -20,7 +24,7 @@ class BasicInfo extends Component {
                     <label>Họ và tên</label>
                     <br></br>
                     <span>{userName}</span>
-                    <FaEdit className="edit-icon"/>
+                    <FaEdit className="edit-icon" onClick={this.isDisplayInfoEdit}/>
                   </div>
                   <div className="item-info">
                     <label>Ngày sinh</label>
