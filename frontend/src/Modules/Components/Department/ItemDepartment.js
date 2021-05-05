@@ -3,11 +3,16 @@ import ModalExample from './Modal';
 import TableMember from './TableMember';
 
 class ItemDepartment extends Component {
+    constructor(props) {
+        super(props);
+
+    }
+
     render() {
-        
+        console.log(this.props.data)
+
         return (
             <Fragment>
-
                 <div className='department-item'>
                     <div className='department-item-nav'>
                         <ModalExample />

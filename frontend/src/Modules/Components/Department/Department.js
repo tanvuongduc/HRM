@@ -11,24 +11,12 @@ class Department extends Component {
             data: []
         }
     };
-    Button1(e) {
-        e.preventDefault();
-        this.setState({
-            showItem: 'department'
-        });
-    };
-    Button2(e) {
-        e.preventDefault();
-        this.setState({
-            showItem: 'adddepartment'
-        });
-    };
+
     showItem() {
         if (this.state.showItem === 'department' || this.state.showItem === '') {
             return <ItemDepartment data={this.state.data} />;
         }
-        else if (this.state.showItem === 'adddepartment')
-            return <AddDepartment />;
+
     };
     componentDidMount() {
         Http.get("department").then(e => {
@@ -41,6 +29,7 @@ class Department extends Component {
     };
     render() {
         return (
+
             <div className='department-container'>
                 <h1>Department</h1>
                 {this.showItem()}

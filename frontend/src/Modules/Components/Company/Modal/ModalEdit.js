@@ -1,23 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
 
-const ModalExample = (props) => {
+const ModalEdit = (props) => {
 
-    const [modal, setModal] = useState(false);
-    const [data, setdata] = useState('')
-    const handerOnchange = (event) => {
-        setdata({ ...data, [event.target.name]: event.target.value })
-    }
-    const addDepartment = (event) => {
-        event.preventDefault();
-        console.log(data, 'gggggggg')
-    }
-    const {
-        buttonLabel,
-        className
-    } = props;
 
-    const toggle = () => setModal(!modal);
     return (
         <div>
             <Button color="danger" onClick={toggle}>{buttonLabel}+ Add</Button>
@@ -51,4 +37,4 @@ const ModalExample = (props) => {
     );
 }
 
-export default ModalExample;
+export default ModalEdit;
