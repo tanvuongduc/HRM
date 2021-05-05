@@ -6,12 +6,10 @@
             "member_department": [
                 {
                     "username": "admin",
-                    "department": "phong ban 01",
                     "company": "abc"
                 },
                 {
                     "username": "admin01",
-                    "department": "phong ban 01",
                     "company": "abc"
                 }
             ]
@@ -22,23 +20,6 @@
             "member_department": [
                 {
                     "username": "user",
-                    "department": "phong ban 02",
-                    "company": "abc"
-                }
-            ]
-        },
-        {
-            "department_id": "03",
-            "department_name": "phong ban 03",
-            "member_department": [
-                {
-                    "username": "sinhvien",
-                    "department": "phong ban 03",
-                    "company": "abc"
-                },
-                {
-                    "username": "sinhvien dz",
-                    "department": "phong ban 03",
                     "company": "abc"
                 }
             ]
