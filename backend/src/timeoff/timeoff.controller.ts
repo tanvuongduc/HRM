@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Query, } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
 import {TimeoffService} from './timeoff.service'
 import {
     
@@ -22,4 +22,13 @@ export class TimeoffController {
     async getAllTimeoffInMonth(){
         return this.timeoffService.getAllTimeoffInMonth()
     }
+
+    @Patch()
+    async handleTimeoff(
+        @Body('id')id: String,
+        @Body('status')status: String
+    ){
+        return this.timeoffService.handleTimeoff(id, status)
+    }
+    
 }
