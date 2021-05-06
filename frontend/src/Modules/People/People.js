@@ -24,10 +24,10 @@ class People extends Component {
                         </div>
                     </div>
                     <Switch>
-                        <Route path="/people">
+                        <Route exact path="/people">
                             <MyTeam/>
                         </Route>
-                        <Route path="/people/user">
+                        <Route exact path="/people/user">
                             <User/>
                         </Route>
                     </Switch>
