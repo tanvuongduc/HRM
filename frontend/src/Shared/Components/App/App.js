@@ -5,7 +5,7 @@ import AppFooter from '../AppFooter/AppFooter';
 import AppSidebar from '../AppSidebar/AppSidebar';
 import Department from '../../../Modules/Components/Department/Department';
 import Company from '../../../Modules/Components/Company/Company';
-import Career from '../../../Modules/career/Career';
+import Career from '../../../Modules/Career/Career';
 import { Col, Row } from 'reactstrap';
 import DetailDepartment from '../../../Modules/Components/Department/DetailDepartment';
 import ListMember from '../../../Modules/Components/Department/ListMember';
