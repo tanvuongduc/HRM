@@ -40,7 +40,6 @@ class Details extends Component {
 
   async componentDidMount() {
     let data = await this.getInfo();
-    this.updateInfo();
   }
 
   async getInfo() {
