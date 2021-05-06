@@ -8,21 +8,40 @@ class Company extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [{
+                title: 'Linh vuc Hoat Dong',
+                desc: 'hoat dong trong linh vuc IT'
+            },
+            {
+                title: 'Linh vuc Hoat Dong',
+                desc: 'hoat dong trong linh vuc IT'
+            },
+            ]
         }
     }
-
-    showDocument() {
-        return <ModalExample data={(item) => this.addData(item)} />
-    };
-    addData(item) {
+    setItem(item) {
         this.setState({
             data: item
-        });
+        })
+    }
+    showDocument() {
+        return <ModalExample item={this.setItem()} />
+    };
+    addData(item) {
+        console.log(item)
     };
 
     render() {
-        console.log(this.state.data)
+        const showData = this.state.data.map((item) => {
+            return (
+                <>
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+
+                </>
+            )
+        })
+
         return (
             <div className="appCompanyContainer">
                 <div className="c_header">
@@ -58,12 +77,11 @@ class Company extends Component {
                         </div>
                         <div className="document boxContent">
                             <div className="documentTop">
-                                <ModalExample /><h3 className="topLeftContent">Documents</h3>
+                                <ModalExample item={this.addData} /><h3 className="topLeftContent">Documents</h3>
                             </div>
                             <div className="documentContent">
                                 <div className="documentContentItem">
-                                    <h3>Company Information</h3>
-                                    <p>Lorem ipsum, dolor sit, amet consectetur adipisicing elit. Ut, nulla, cumque! Maxime suscipit at corrupti quis voluptatum dignissimos dolores, eius unde explicabo provident officia praesentium excepturi fugit facere inventore sint.</p>
+                                    {showData}
                                 </div>
                             </div>
 
