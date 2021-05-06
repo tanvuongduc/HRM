@@ -5,7 +5,7 @@ import AppFooter from '../AppFooter/AppFooter';
 import AppSidebar from '../AppSidebar/AppSidebar';
 import Department from '../../../Modules/Components/Department/Department';
 import Company from '../../../Modules/Components/Company/Company';
-import Career from '../../../Modules/Components/Career/Career';
+import Career from '../../../Modules/career/Career';
 import { Col, Row } from 'reactstrap';
 import DetailDepartment from '../../../Modules/Components/Department/DetailDepartment';
 import ListMember from '../../../Modules/Components/Department/ListMember';
@@ -17,11 +17,11 @@ class App extends React.Component {
         console.log(path, 'ahdsgagsjhdg')
         return (
             <div>
-                <AppHeader />
+                {/* <AppHeader /> */}
                 <Row style={{ margin: '0px' }}>
-                    <Col sm='2'>
+                    {/* <Col sm='2'>
                         <AppSidebar />
-                    </Col>
+                    </Col> */}
                     <Col sm='10'>
                         <Switch>
                             <Route exact path={`${path}/department`} component={Department} />
