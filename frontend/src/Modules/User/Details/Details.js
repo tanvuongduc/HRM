@@ -16,7 +16,6 @@ import BasicInfo from "./BasicInfo/BasicInfo";
 import Contact from "./Contact/Contact";
 import Banking from "./Banking/Banking";
 import EditInfo from "./EditInfo/EditInfo";
-import Popup from "reactjs-popup";
 
 class Details extends Component {
   constructor(props) {
@@ -30,19 +29,25 @@ class Details extends Component {
       email: "",
       socialNetwork: [],
       bankAccountId: [],
+      isDisplayEditInfo: false,
+      codeEdit: '',
+      titleEdit: '',
+      valueEdit: ''
     };
   }
   
 
+
   async componentDidMount() {
     let data = await this.getInfo();
-    console.log(this.state);
+    this.updateInfo();
   }
 
   async getInfo() {
     const res = await Http.get("users/user", {
       id: "6088cc2b80660b2f2818ae8a",
     });
+    this.props.receiveInfoUser(res.data.name, res.data.email);
     this.setState({
       userName: res.data.name,
       birthday: res.data.birthday,
@@ -52,16 +57,19 @@ class Details extends Component {
       email: res.data.email,
       socialNetwork: res.data.socialNetwork,
       bankAccountId: res.data.bank,
-      isDisplayEditInfo: false,
     });
     return res.data;
   }
 
-  onShowInfoEdit = (data) => {
-    console.log(data);
+
+  onShowEditInfo = (code, title, value) => {
     this.setState({
       isDisplayEditInfo: true,
+      codeEdit: code,
+      titleEdit: title,
+      valueEdit: value
     });
+    console.log(this.state);
   };
 
   onCloseEditInfo = () => {
@@ -69,12 +77,31 @@ class Details extends Component {
       isDisplayEditInfo: false,
     });
   };
-
-  onSaveEditting = (data) => {
+  
+  onSaveEditting = (codeEdit, data) => {
     console.log(data);
-    this.setState({
-      userName: data,
-    });
+    switch(codeEdit) {
+      case "username":
+        this.setState({
+          userName: data
+        });
+        break;
+      case "birthday":
+        this.setState({
+          birthday: data
+        });
+        break;
+      case "address":
+        this.setState({
+          address: data
+        });
+        break;
+      case "certificate":
+        this.setState({
+          certificate: data
+        });
+        break;
+    }
   };
   render() {
     var {
@@ -87,11 +114,16 @@ class Details extends Component {
       socialNetwork,
       bankAccountId,
       isDisplayEditInfo,
+      titleEdit,
+      valueEdit,
+      codeEdit
     } = this.state;
 
     var elmEditInfo = isDisplayEditInfo ? (
       <EditInfo
-        userName={userName}
+        codeEdit={codeEdit}
+        titleEdit={titleEdit}
+        valueEdit={valueEdit}
         onSaveEditting={this.onSaveEditting}
         onCloseEditInfo={this.onCloseEditInfo}
       />
@@ -109,7 +141,7 @@ class Details extends Component {
                 birthday={birthday}
                 address={address}
                 certificate={certificate}
-                onShowInfoEdit={this.onShowInfoEdit}
+                onShowEditInfo={this.onShowEditInfo}
               />
             </div>
             <div className="col-md-4">

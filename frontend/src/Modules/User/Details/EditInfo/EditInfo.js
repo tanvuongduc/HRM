@@ -5,15 +5,19 @@ class EditInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
-      contentEdit: "",
+      codeEdit: '',
+      titleEdit: '',
+      valueEdit: ''
     };
   }
 
   componentWillMount() {
     this.setState({
-      contentEdit: this.props.userName,
+      codeEdit: this.props.codeEdit,
+      titleEdit: this.props.titleEdit,
+      valueEdit: this.props.valueEdit
     });
+    console.log(this.state.codeEdit);
   }
 
   onChange = (event) => {
@@ -26,22 +30,23 @@ class EditInfo extends Component {
   };
 
   onSaveEditting = () => {
-    this.props.onSaveEditting(this.state.contentEdit);
+    this.props.onSaveEditting(this.state.codeEdit, this.state.valueEdit);
     this.props.onCloseEditInfo();
   };
   render() {
+    const { titleEdit, valueEdit } = this.state;
     return (
       <Fragment>
         <div className="overlay-full">
           <div className="edit-details-info">
             <h4>Edit Infomation</h4>
             <div className="form-group">
-              <label>Username</label>
+              <label>{titleEdit}</label>
               <input
                 type="text"
                 className="form-control"
-                name="contentEdit"
-                value={this.state.contentEdit}
+                name="valueEdit"
+                value={valueEdit}
                 onChange={this.onChange}
               />
               <div className="btn-control">
