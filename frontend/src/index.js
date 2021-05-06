@@ -13,7 +13,6 @@ import User from "./Modules/User/User";
 
 // import App from './Shared/Components/App/App';
 // import Login from './Modules/Org/Components/Login/Login';
-import People from './Modules/People/People';
 import Team from "./Modules/ProFile/Components/Team/Team";
 
 const isLogged = !!AuthService.userInfo;
@@ -42,11 +41,6 @@ const Root = (
               <App></App>
             ) : (
               <Redirect to="/login" ></Redirect>
-            )
-          }} ></Route>
-          <Route path="/people" render={() => {
-            return (
-              <People/>
             )
           }} ></Route>
           <Route path="/user" render={() => {
