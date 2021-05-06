@@ -17,14 +17,14 @@ class People extends Component {
                             </div>
                             <div className="border-list">
                                 <div className="list">
-                                    <Link className="list-item" to="/people/my-team">Team</Link>
+                                    <Link className="list-item" to="/people">Team</Link>
                                     <Link className="list-item" to="/people/user">User</Link>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <Switch>
-                        <Route path="/people/my-team">
+                        <Route path="/people">
                             <MyTeam/>
                         </Route>
                         <Route path="/people/user">

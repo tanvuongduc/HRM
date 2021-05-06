@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import Team from '../Team/Team';
+import Team from './Team/Team';
 
 
 class MyTeam extends Component {
