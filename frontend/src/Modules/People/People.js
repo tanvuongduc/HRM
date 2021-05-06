@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router';
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
-import MyTeam from './MyTeam/MyTeam';
-import User from './User/User';
+import User from './Components/User/User';
+import MyTeam from './Components/MyTeam/MyTeam';
+
 
 class People extends Component {
     render() {

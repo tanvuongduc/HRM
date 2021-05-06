@@ -13,8 +13,7 @@ import User from "./Modules/User/User";
 
 // import App from './Shared/Components/App/App';
 // import Login from './Modules/Org/Components/Login/Login';
-import People from './Modules/Org/Components/People/People';
-import Employment from "./Modules/User/Employment/Employment";
+import People from './Modules/People/People';
 
 const isLogged = !!AuthService.userInfo;
 
