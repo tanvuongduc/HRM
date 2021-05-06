@@ -5,19 +5,12 @@ class ListUser extends Component {
     render() {
         return (
             <Row>
-                <Col xs='0'>
-                    <form>
-                        <input className="checkbox" type="checkbox" id="" name="" value=""/>
-                    </form>
-                </Col>
-                <Col xs="3">
+                <Col xs="3" className="style-col-list-user-left">
                     Nghiêm Thọ Đô
                 </Col>
-                <Col>âf</Col>
-                <Col>âf</Col>
-                <Col>âf</Col>
-                <Col>âf</Col>
-                <Col>âf</Col>
+                <Col xs="2" className="style-col-list-user-center">Leader</Col>
+                <Col xs="2" className="style-col-list-user-center">team1</Col>
+                <Col xs="5" className="style-col-list-user-left">thiết kế giao diện</Col>
             </Row>
         );
     }

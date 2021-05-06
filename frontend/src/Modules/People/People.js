@@ -11,14 +11,16 @@ class People extends Component {
             <BrowserRouter>
                 <Fragment>
                     <div className="card-people">
-                        <div className="list">
-                            <div className="border-header">
-                                <h1 className="card-name"><b>People</b></h1>
-                            </div>
-                            <div className="border-list">
-                                <div className="list">
-                                    <Link className="list-item" to="/people">Team</Link>
-                                    <Link className="list-item" to="/people/user">User</Link>
+                        <div className="container">
+                            <div className="list">
+                                <div className="border-header">
+                                    <h1 className="card-name"><b>People</b></h1>
+                                </div>
+                                <div className="border-list">
+                                    <div className="list">
+                                        <Link className="list-item" to="/people">Team</Link>
+                                        <Link className="list-item" to="/people/user">User</Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -14,6 +14,7 @@ import User from "./Modules/User/User";
 // import App from './Shared/Components/App/App';
 // import Login from './Modules/Org/Components/Login/Login';
 import People from './Modules/People/People';
+import Team from "./Modules/ProFile/Components/Team/Team";
 
 const isLogged = !!AuthService.userInfo;
 
@@ -51,6 +52,11 @@ const Root = (
           <Route path="/user" render={() => {
             return (
               <User/>
+            )
+          }} ></Route>
+          <Route path="/team" render={() => {
+            return (
+              <Team/>
             )
           }} ></Route>
         </Suspense>

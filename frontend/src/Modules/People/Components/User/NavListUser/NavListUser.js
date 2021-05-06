@@ -5,42 +5,25 @@ class NavListUser extends Component {
         return (
             <div>
                     <Row>
-                        <Col xs='0'>
-                            <form>
-                                <input className="checkbox" type="checkbox" id="" name="" value=""/>
-                            </form>
-                        </Col>
-                        <Col xs='3'>
+                        <Col xs='3' className="style-col-list-user-left">
                             <select>
                                 <option className="tieude">NAME</option>
                                 <option>...</option>
                             </select>
                         </Col>
-                        <Col>
+                        <Col xs="2" className="style-col-list-user-center">
                             <select>
-                                <option>LINE MANAGER</option>
+                                <option>REGENCY</option>
                                 <option>...</option>
                             </select>
                         </Col>
-                        <Col>
+                        <Col  xs="2" className="style-col-list-user-center">
                             <select>
                                 <option>TEAM</option>
                                 <option>...</option>
                             </select>
                         </Col>
-                        <Col>
-                            <select>
-                                <option>OFFICE</option>
-                                <option>...</option>
-                            </select>
-                        </Col>
-                        <Col>
-                            <select>
-                                <option>PERMISSIONS</option>
-                                <option>...</option>
-                            </select>
-                        </Col>
-                        <Col>
+                        <Col xs="5" className="style-col-list-user-center">
                             <select>
                                 <option>STATUS</option>
                                 <option>...</option>

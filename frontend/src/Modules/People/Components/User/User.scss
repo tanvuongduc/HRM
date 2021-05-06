@@ -9,27 +9,20 @@ div.user{
         div.row{
             margin: 0px;
             border-bottom: rgb(224, 231, 235) 1px solid;
-            div.col-0{
-                form{
-                    input.checkbox{
-                        margin: 10px;
-                        width: 30px;
-                        height: 30px;
-        
-                    }
-                }
-            }
             select{
                 border: none;
                 font-weight: bold;
             }
-            div.col{
+            div.style-col-list-user-center{
                 height: 50px;
                 line-height: 50px;
+                text-align:center;
             }
-            div.col-3{
+            div.style-col-list-user-left{
                 height: 50px;
                 line-height: 50px;
+                text-align:center;
+                text-align: left;
             }
         }
     }

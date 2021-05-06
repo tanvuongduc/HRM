@@ -1,0 +1,16 @@
+@import url(../../../../../../Styles/_variables.scss);
+
+$b-color: #d4d5d6;
+
+div.info-team{
+    background-color: $b-color;
+    border-radius: 10px;
+    padding: 20px;
+
+    div.item-info{
+        label.style-label{
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    }
+}
