@@ -11,7 +11,7 @@ class MyTeam extends Component {
                     <h3 className="list-my-team"><b>List team</b></h3>
                     <button className="btn-addNewTeam"><b>Tạo team mới</b></button>
                 </div>
-                <Team/>
+                <Team data = {this.props.data}/>
             </div>
         );
     }

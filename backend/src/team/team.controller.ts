@@ -3,8 +3,6 @@ import {
     Post,
     Body,
     Get,
-    Param,
-    Patch,
     Query,
 } from '@nestjs/common';
 
@@ -20,8 +18,9 @@ export class TeamController {
         @Body('name') name: String,
         @Body('member') member: Employee,
         @Body('department') department: String,
+        @Body('sologan') sologan: String
     ) {
-        const res = await this.teamService.insertTeam(name, member, department);
+        const res = await this.teamService.insertTeam(name, member, department, sologan);
         return res;
     }
     @Get('department')
