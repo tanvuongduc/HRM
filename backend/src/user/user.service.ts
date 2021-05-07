@@ -78,6 +78,7 @@ export class UsersService {
         status: string
     ) {
         const updatedUser = await this.findUser(uid);
+<<<<<<< HEAD
         // if (title) {
         //     updatedUser.title = title;
         // }
@@ -87,6 +88,36 @@ export class UsersService {
         // if (price) {
         //     updatedUser.price = price;
         // }
+=======
+        if (name) {
+            updatedUser.name = name;
+        }
+        if (birthday) {
+            updatedUser.birthday = birthday;
+        }
+        if (certificate) {
+            updatedUser.certificate = certificate;
+        }
+        if (phone) {
+            updatedUser.phone = phone;
+        }
+        if (email) {
+            updatedUser.email = email;
+        }
+        if (adress) {
+            updatedUser.adress = adress;
+        }
+        if (socialNetwork) {
+            updatedUser.socialNetwork = socialNetwork;
+        }
+        if(bank){
+            updatedUser.bank = bank
+        }
+        if(status){
+            updatedUser.status = status
+        }
+
+>>>>>>> 6d465c30b7c8ad32e3f35b0842c67024a9a9e761
         updatedUser.save();
     }
 

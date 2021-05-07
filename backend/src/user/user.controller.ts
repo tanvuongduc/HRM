@@ -59,9 +59,9 @@ export class UsersController {
         @Body('birthday') birthday: Date,
         @Body('adress') adress: string,
         @Body('certificate') certificate: string,
-        @Body('phone') phone: number,
+        @Body('phone') phone: string,
         @Body('email') email: string,
-        @Body('socialNetwork') socialNetwork: [SocialNetwork],
+        @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
     ) {
         await this.usersService.updateUser(
