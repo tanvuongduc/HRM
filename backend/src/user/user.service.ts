@@ -105,8 +105,10 @@ export class UsersService {
         if(status){
             updatedUser.status = status
         }
-
-        updatedUser.save();
+        const res = await updatedUser.save();
+        return {
+            id: res.id
+        }
     }
 
     // async deleteUser(uid: string) {
