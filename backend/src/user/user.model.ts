@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 
 export interface SocialNetwork {
   title: string;
+  icon: string;
   link: string;
 }
 // interface Certificate{
@@ -24,6 +25,7 @@ export const UserSchema = new mongoose.Schema({
   socialNetwork: {
     type: {
       title: String, //twiter facebook zalo
+      icon: String,
       link: String
     },
     require: true
@@ -50,6 +52,6 @@ export interface User extends mongoose.Document {
   email: string;
   socialNetwork: SocialNetwork;
   bank: Bank;
-  status: 'Pending' | 'Working';
+  status: string;
   team: string;
 }
