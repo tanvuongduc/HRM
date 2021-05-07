@@ -93,6 +93,9 @@ export class UsersService {
         if (email) {
             updatedUser.email = email;
         }
+        if (adress) {
+            updatedUser.adress = adress;
+        }
         if (socialNetwork) {
             updatedUser.socialNetwork = socialNetwork;
         }
