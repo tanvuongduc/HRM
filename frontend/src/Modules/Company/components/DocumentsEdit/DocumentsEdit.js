@@ -9,7 +9,7 @@ const DocumentsEdit = () => {
             </div>
             <div className="documentContent">
                 <div className="documentContentItem">
-                    {showData}
+
                 </div>
             </div>
 

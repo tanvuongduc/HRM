@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, Row, Col, } from 'reactstrap';
 
 const ContactEdit = () => {
     return (
