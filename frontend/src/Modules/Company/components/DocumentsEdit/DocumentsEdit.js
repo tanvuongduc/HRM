@@ -1,18 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 const DocumentsEdit = () => {
     return (
-        <div className="document boxContent">
-            <div className="documentTop">
-                <h3 className="topLeftContent">Documents</h3>
-                {/* <ModalExample item={this.addData} /><h3 className="topLeftContent">Documents</h3> */}
+        <div className="document-content">
+            <h3>Documents</h3>
+            <div className="document-item">
+                <h4>Title</h4>
+                <p>noi dung cua document noi dung cua document noi dung cua document</p>
+                <hr />
             </div>
-            <div className="documentContent">
-                <div className="documentContentItem">
-
-                </div>
-            </div>
-
         </div>
     )
 }

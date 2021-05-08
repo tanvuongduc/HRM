@@ -8,14 +8,16 @@
 
 /*====================================================*/
 
-@import "../Modules/Components/Department/Department";
-@import "../Modules/Components/Company/Company";
-@import "../Modules/Components/Career/Career";
+// @import "../Modules/Components/Department/Department";
+// @import "../Modules/Components/Company/Company";
+// @import "../Modules/Components/Career/Career";
 
 /*====================================================*/
 
 @import "../Shared/Components/ModalConfirm/ModalConfirm";
 @import "../Shared/Components/ModalNoti/ModalNoti";
 @import "../Modules/Org/Components/Login/Login";
-// company scss
+
+/*====================================================*/
+
 @import "../Modules/Company/Company.scss";

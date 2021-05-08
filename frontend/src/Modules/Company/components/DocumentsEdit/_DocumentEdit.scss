@@ -1,0 +1,11 @@
+.document-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    .document-item {
+        padding: 5px 70px;
+        width: 100%;
+        height: auto;
+    }
+}
