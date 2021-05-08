@@ -92,20 +92,20 @@ class Company extends Component {
                             <div className="contactTop">
                                 <h3 className="topLeftContent">Contact</h3>
                                 <Row>
-                                    <Col xs='4'><i className="fa fa-phone" />&nbsp;Phone:</Col>
-                                    <Col xs='8'>0987123456</Col>
+                                    <Col xs='2'><i className="fa fa-phone" />&nbsp;Phone :</Col>
+                                    <Col xs='10'>0987123456</Col>
                                 </Row>
                                 <Row>
-                                    <Col xs='4'><i className="fa fa-globe" />&nbsp;Website:</Col>
-                                    <Col xs='8'> <a href='http://google.com'>http://google.com</a></Col>
+                                    <Col xs='2'><i className="fa fa-globe" />&nbsp;Website :</Col>
+                                    <Col xs='10'> <a href='http://google.com'>http://google.com</a></Col>
                                 </Row>
                                 <Row>
-                                    <Col xs='4'><i className="fa fa-envelope" />&nbsp;Email:</Col>
-                                    <Col xs='8'>anhcachon@gmail.com</Col>
+                                    <Col xs='2'><i className="fa fa-envelope" />&nbsp;Email :</Col>
+                                    <Col xs='10'>anhcachon@gmail.com</Col>
                                 </Row>
                                 <Row>
-                                    <Col xs='4'><i className="fa fa-map-marker" />&nbsp;Adress:</Col>
-                                    <Col xs='8'>Hà Nội</Col>
+                                    <Col xs='2'><i className="fa fa-map-marker" />&nbsp;Adress :</Col>
+                                    <Col xs='10'>Hà Nội</Col>
                                 </Row>
 
                             </div>
