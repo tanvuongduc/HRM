@@ -29,8 +29,8 @@ class ListMember extends Component {
             field: 'status',
             headerName: 'Status',
             type: 'string',
-            width: 560,
-        }
+            width: 608,
+        },
         ];
 
         const rows = [
@@ -51,7 +51,7 @@ class ListMember extends Component {
             <div className="list-member">
                 <h5>Danh sách thành viên</h5>
                 <div style={{ height:370, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection className="data-grid"/>
+                    <DataGrid rows={rows} columns={columns} pageSize={5} className="data-grid"/>
                 </div>
             </div>
         );

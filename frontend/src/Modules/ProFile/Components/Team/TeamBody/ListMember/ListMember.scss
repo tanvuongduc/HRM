@@ -1,13 +1,2 @@
 @import url(../../../../../../Styles/_variables.scss);
 
-$b-color: #d4d5d6;
-
-div.list-member{
-    margin-top: 20px;
-    div{
-        .data-grid{
-            background-color: $b-color;
-            border-radius: 10px;
-        }
-    }
-}

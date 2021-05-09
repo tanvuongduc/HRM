@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import TeamHeader from './TeamHeader/TeamHeader';
 import InfoTeam from './TeamBody/InfoTeam/InfoTeam';
 import ListMember from './TeamBody/ListMember/ListMember';
-
+import TableMember from './TeamBody/ListMember/TableMember';
 class Team extends Component {
     render() {
         return (
@@ -15,7 +15,9 @@ class Team extends Component {
                         <div className="team-body_overview">
                             <div className="container">
                                 <InfoTeam/>
-                                <ListMember/>                                
+                                {/* <ListMember/>   */}
+                                <br/>
+                                <TableMember/>                              
                             </div>
                         </div>
                     </div>
