@@ -30,7 +30,29 @@ class EditInfo extends Component {
   };
 
   onSaveEditting = () => {
-    this.props.onSaveEditting(this.state.codeEdit, this.state.valueEdit);
+    const {codeEdit, valueEdit} = this.state
+    let {data} = this.props;
+    switch (codeEdit){
+      case "username":
+        data.name = valueEdit;
+        break;
+      case "address":
+        data.adress = valueEdit;
+        break;
+      case "birthday":
+        data.birthday = valueEdit;
+        break;
+      case "certificate":
+        data.certificate = valueEdit;
+        break;
+      case "phoneNumber":
+        data.phone = valueEdit;
+        break;
+      case "email":
+        data.email = valueEdit;
+        break;
+    }
+    this.props.onSaveEditting(data);
     this.props.onCloseEditInfo();
   };
   render() {
@@ -50,18 +72,18 @@ class EditInfo extends Component {
                 onChange={this.onChange}
               />
               <div className="btn-control">
-                <button
-                  className="btn btn-success btn-save"
+                <a
+                  className="btn btn-save"
                   onClick={this.onSaveEditting}
                 >
                   Save
-                </button>
-                <button
-                  className="btn btn-warning btn-close"
+                </a>
+                <a
+                  className="btn btn-close"
                   onClick={this.props.onCloseEditInfo}
                 >
                   Close
-                </button>
+                </a>
               </div>
             </div>
           </div>

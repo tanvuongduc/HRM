@@ -63,8 +63,9 @@ export class UsersController {
         @Body('email') email: string,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
+        @Body('status') status: string
     ) {
-        await this.usersService.updateUser(
+        const res = await this.usersService.updateUser(
             uid,
             name,
             birthday,
@@ -76,7 +77,7 @@ export class UsersController {
             bank,
             status
         );
-        return null;
+        return res;
     }
 
     // @Delete(':id')

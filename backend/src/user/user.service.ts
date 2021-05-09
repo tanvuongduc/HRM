@@ -71,24 +71,13 @@ export class UsersService {
         birthday: Date,
         adress: string,
         certificate: string,
-        phone: number,
+        phone: string,
         email: string,
-        socialNetwork: [SocialNetwork],
+        socialNetwork: SocialNetwork,
         bank: Bank,
         status: string
     ) {
         const updatedUser = await this.findUser(uid);
-<<<<<<< HEAD
-        // if (title) {
-        //     updatedUser.title = title;
-        // }
-        // if (desc) {
-        //     updatedUser.description = desc;
-        // }
-        // if (price) {
-        //     updatedUser.price = price;
-        // }
-=======
         if (name) {
             updatedUser.name = name;
         }
@@ -117,9 +106,10 @@ export class UsersService {
             updatedUser.status = status
         }
 
->>>>>>> 6d465c30b7c8ad32e3f35b0842c67024a9a9e761
         updatedUser.save();
+        return updatedUser
     }
+
 
     // async deleteUser(uid: string) {
     //     const result = await this.userModel.deleteOne({ _id: uid }).exec();

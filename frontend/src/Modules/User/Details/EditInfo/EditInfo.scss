@@ -45,16 +45,27 @@
                 margin-top: 2rem;
                 margin-bottom: 3.5rem;
 
-                .btn-save {
-                    float: right;
-                    text-transform: uppercase;
+                a {
+                    cursor: pointer;
+                    text-decoration: none;
                     font-weight: 500;
+                    font-size: 15px;
+                    text-transform: uppercase;
+                    border-radius: 5px;
+                    display: block;
+                }
+
+                .btn-save {
+                    padding: 10px 15px;
+                    background-color: $c-primary;
                     color: white;
+                    float: right;
                 }
 
                 .btn-close {
-                    text-transform: uppercase;
-                    font-weight: 500;
+                    background-color: grey;
+                    color: white;
+                    padding: 10px 12px;
                     float: left;
                 }
             }

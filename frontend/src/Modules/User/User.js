@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import NavBarUser from "./NavBarUser/NavBarUser";
 import HeaderUser from "./HeaderUser/HeaderUser";
+import ChangeAvatar from "./HeaderUser/ChangeAvatar/ChangeAvatar";
 
 class User extends Component {
   constructor(props) {

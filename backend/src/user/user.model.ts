@@ -50,6 +50,6 @@ export interface User extends mongoose.Document {
   email: string;
   socialNetwork: SocialNetwork;
   bank: Bank;
-  status: 'Pending' | 'Working';
+  status: string;
   team: string;
 }
