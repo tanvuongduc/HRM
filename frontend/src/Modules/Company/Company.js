@@ -7,18 +7,9 @@ import Container from '@material-ui/core/Container';
 
 const Company = () => {
   const path = window.location.pathname
-  const [Documents, setDocuments] = useState([
-    {
-      title: 'Linh vuc Hoat Dong',
-      desc: 'hoat dong trong linh vuc IT'
-    },
-    {
-      title: 'Linh vuc Hoat Dong',
-      desc: 'hoat dong trong linh vuc IT'
-    },
-  ])
+  const [Documents, setDocuments] = useState([])
   const addDocument = data => {
-    setDocuments([...Documents, data])
+    setDocuments([data, ...Documents])
   }
   const document = Documents.map((data, index) => {
     return (
