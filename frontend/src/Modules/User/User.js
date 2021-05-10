@@ -1,44 +1,45 @@
 import React, { Component, Fragment, useState } from "react";
 import "./User.scss";
-import { FaUser, FaEnvelope } from "react-icons/fa";
+
 import Details from "./Details/Details";
 import Employment from "./Employment/Employment";
 import TimeOff from "./TimeOff/TimeOff";
-import { BrowserRouter, Link, NavLink, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  NavLink,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import NavBarUser from "./NavBarUser/NavBarUser";
+import HeaderUser from "./HeaderUser/HeaderUser";
+import ChangeAvatar from "./HeaderUser/ChangeAvatar/ChangeAvatar";
 
 class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     
+      userName: '',
+      emailUser: ''
     };
   }
 
- 
+  receiveInfoUser = (userName, emailUser) => {
+     this.setState({
+       userName: userName,
+       emailUser: emailUser
+     });
+  }
 
   render() {
-    
+    const { userName, emailUser } = this.state;
     return (
       <BrowserRouter>
         <Fragment>
           <div className="profile-header">
-            <div className="profile-header__overview">
-              <div className="container">
-                <div className="overview__avatarUser">
-                  <FaUser className="avatarUser__iconAvatar" />
-                </div>
-                <div className="overview__info">
-                  <h3 className="info__username">Username</h3>
-                  <p className="info__email">
-                    <FaEnvelope className="email__icon" />
-                    username@gmail.com
-                  </p>
-                </div>
-              </div>
-            </div>
-          <NavBarUser/>
-            
+            <HeaderUser userName={userName} emailUser={emailUser}/>
+            <NavBarUser />
           </div>
           <div className="profile-main">
             <div className="container">
@@ -47,7 +48,7 @@ class User extends Component {
                   <Employment />
                 </Route>
                 <Route exact path="/user/details">
-                  <Details />
+                  <Details receiveInfoUser={this.receiveInfoUser}/>
                 </Route>
               </Switch>
             </div>

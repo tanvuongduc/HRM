@@ -71,24 +71,45 @@ export class UsersService {
         birthday: Date,
         adress: string,
         certificate: string,
-        phone: number,
+        phone: string,
         email: string,
-        socialNetwork: [SocialNetwork],
+        socialNetwork: SocialNetwork,
         bank: Bank,
         status: string
     ) {
         const updatedUser = await this.findUser(uid);
-        // if (title) {
-        //     updatedUser.title = title;
-        // }
-        // if (desc) {
-        //     updatedUser.description = desc;
-        // }
-        // if (price) {
-        //     updatedUser.price = price;
-        // }
+        if (name) {
+            updatedUser.name = name;
+        }
+        if (birthday) {
+            updatedUser.birthday = birthday;
+        }
+        if (certificate) {
+            updatedUser.certificate = certificate;
+        }
+        if (phone) {
+            updatedUser.phone = phone;
+        }
+        if (email) {
+            updatedUser.email = email;
+        }
+        if (adress) {
+            updatedUser.adress = adress;
+        }
+        if (socialNetwork) {
+            updatedUser.socialNetwork = socialNetwork;
+        }
+        if(bank){
+            updatedUser.bank = bank
+        }
+        if(status){
+            updatedUser.status = status
+        }
+
         updatedUser.save();
+        return updatedUser
     }
+
 
     // async deleteUser(uid: string) {
     //     const result = await this.userModel.deleteOne({ _id: uid }).exec();

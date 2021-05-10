@@ -17,7 +17,7 @@ class People extends Component {
         }
     }
     async componentDidMount(){
-        let res = await Http.get('teams/team?id=60912c521618fb2e28b4a984');
+        let res = await Http.get('teams/team?id=60912c521618fb2e28b4a984') ;
         let data = res.data;
         console.log(data)
         this.setState({
@@ -36,7 +36,7 @@ class People extends Component {
                             </div>
                             <div className="border-list">
                                 <div className="list">
-                                    <Link className="list-item" to="/people/my-team">Team</Link>
+                                    <Link className="list-item" to="/people">Team</Link>
                                     <Link className="list-item" to="/people/user">User</Link>
                                 </div>
                             </div>

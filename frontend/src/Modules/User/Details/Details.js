@@ -21,6 +21,17 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataUser: {
+        name: '',
+        birthday: '',
+        adress: '',
+        certificate: '',
+        phone: '',
+        email: '',
+        socialNetwork: [],
+        bank: [],
+        status: "Pendding",
+      },
       userName: "",
       birthday: "",
       address: "",
@@ -29,66 +40,106 @@ class Details extends Component {
       email: "",
       socialNetwork: [],
       bankAccountId: [],
+      isDisplayEditInfo: false,
+      codeEdit: "",
+      titleEdit: "",
+      valueEdit: "",
     };
   }
 
   async componentDidMount() {
     let data = await this.getInfo();
-    console.log(this.state);
   }
 
   async getInfo() {
     const res = await Http.get("users/user", {
       id: "6088cc2b80660b2f2818ae8a",
     });
-    this.setState({
-      userName: res.data.name,
-      birthday: res.data.birthday,
-      address: res.data.adress,
-      certificate: res.data.certificate,
-      phoneNumber: res.data.phone,
-      email: res.data.email,
-      socialNetwork: res.data.socialNetwork,
-      bankAccountId: res.data.bank,
+    this.props.receiveInfoUser(res.data.name, res.data.email);
+    await this.setState({
+      dataUser:res.data
     });
+    console.log(this.state)
     return res.data;
   }
 
+  async updateInfo(data) {
+    
+    const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
+    console.log(req);
+  }
+
+  onShowEditInfo = (code, title, value) => {
+    this.setState({
+      isDisplayEditInfo: true,
+      codeEdit: code,
+      titleEdit: title,
+      valueEdit: value,
+    });
+    console.log(this.state);
+  };
+
+  onCloseEditInfo = () => {
+    this.setState({
+      isDisplayEditInfo: false,
+    });
+  };
+
+  onSaveEditting = async (data) => {
+    console.log(data);
+    await this.setState({
+      dataUser: data
+    })
+    this.updateInfo(data);
+  };
   render() {
     var {
-      userName,
-      birthday,
-      address,
-      certificate,
-      phoneNumber,
-      email,
-      socialNetwork,
-      bankAccountId,
+      dataUser,
+      isDisplayEditInfo,
+      titleEdit,
+      valueEdit,
+      codeEdit
     } = this.state;
+
+    var elmEditInfo = isDisplayEditInfo ? (
+      <EditInfo
+        codeEdit={codeEdit}
+        titleEdit={titleEdit}
+        valueEdit={valueEdit}
+        data = {dataUser}
+        onSaveEditting={(data)=>this.onSaveEditting(data)}
+        onCloseEditInfo={this.onCloseEditInfo}
+      />
+    ) : (
+      ""
+    );
+
     return (
       <div>
         <div className="profile-main__details" id="profile-details">
           <div className="row">
             <div className="col-md-4">
               <BasicInfo
-                userName={userName}
-                birthday={birthday}
-                address={address}
-                certificate={certificate}
+                userName={dataUser.name}
+                birthday={dataUser.birthday}
+                address={dataUser.adress}
+                certificate={dataUser.certificate}
+                onShowEditInfo={this.onShowEditInfo}
               />
             </div>
             <div className="col-md-4">
               <Contact
-                phoneNumber={phoneNumber}
-                email={email}
-                socialNetwork={socialNetwork}
+                phoneNumber={dataUser.phone}
+                email={dataUser.email}
+                socialNetwork={dataUser.socialNetwork}
+                onShowEditInfo={this.onShowEditInfo}
               />
             </div>
             <div className="col-md-4">
-              <Banking bankAccountId={bankAccountId}/>
+              <Banking bankAccountId={dataUser.bank} />
             </div>
           </div>
-          <EditInfo/>
+          {elmEditInfo}
         </div>
       </div>
     );

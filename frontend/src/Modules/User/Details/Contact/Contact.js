@@ -1,24 +1,39 @@
 import React, { Component, Fragment } from "react";
 import "./Contact.scss";
 import {
-  FaUser,
   FaEnvelope,
   FaPhoneAlt,
-  FaEnvelopeOpen,
-  FaEnvelopeOpenText,
   FaFacebook,
   FaTwitter,
   FaLink,
-  FaMoneyCheckAlt,
+  FaEdit
 } from "react-icons/fa";
 
 class Contact extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      phoneNumber: '',
+      email: '',
+      socialNetwork: []
+    };
   }
+  
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      phoneNumber: nextProps.phoneNumber,
+      email: nextProps.email,
+      socialNetwork: nextProps.socialNetwork
+    });
+  }
+
+  isDisplayEditInfo = (code, title, value) => {
+    console.log(code, title, value);
+    this.props.onShowEditInfo(code, title, value);
+  }
+
   render() {
-    let { phoneNumber, email, socialNetwork } = this.props;
+    let { phoneNumber, email, socialNetwork } = this.state;
     const socialNetworkAcc = socialNetwork.map((s, index) => {
       return (
         <div className="item-info" key={index}>
@@ -38,6 +53,12 @@ class Contact extends Component {
             <br></br>
             <FaPhoneAlt className="item-info__icon" />
             <span>{phoneNumber}</span>
+            <FaEdit
+                className="edit-icon"
+                onClick={() =>
+                  this.isDisplayEditInfo("phoneNumber", "PhoneNumber", phoneNumber)
+                }
+              />
           </div>
 
           <div className="item-info">
@@ -45,6 +66,12 @@ class Contact extends Component {
             <br></br>
             <FaEnvelope className="item-info__icon" />
             <span>{email}</span>
+            <FaEdit
+                className="edit-icon"
+                onClick={() =>
+                  this.isDisplayEditInfo("email", "Email", email)
+                }
+              />
           </div>
 
           {socialNetworkAcc}

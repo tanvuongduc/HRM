@@ -12,13 +12,11 @@ export class TeamService {
         name: String,
         member: Employee,                             
         department: String,
-        sologan: String
     ){
         const newTeam = new this.teamModel({
             name,
             member,               
             department,
-            sologan
         });
         const res = await newTeam.save();
         return {
@@ -35,8 +33,6 @@ export class TeamService {
             rate: team.rate,
             achievements: team.achievements,                
             department: team.achievements,
-            sologan: team.sologan,
-            createAt: team.createAt
         }
     }
     async getDepartmentTeam(department: String){

@@ -23,7 +23,7 @@ class Banking extends Component {
             <label>Ngân hàng</label>
             <br></br>
             <FaMoneyCheckAlt className="item-info__icon" />
-            <span>{bankAccountId.bankName}</span>
+            <span>{bankAccountId.name}</span>
           </div>
           <div className="item-info">
             <label>Số tài khoản</label>

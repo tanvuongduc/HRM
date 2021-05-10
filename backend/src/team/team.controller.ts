@@ -20,9 +20,8 @@ export class TeamController {
         @Body('name') name: String,
         @Body('member') member: Employee,
         @Body('department') department: String,
-        @Body('sologan') sologan: String
     ) {
-        const res = await this.teamService.insertTeam(name, member, department, sologan);
+        const res = await this.teamService.insertTeam(name, member, department);
         return res;
     }
     @Get('department')
