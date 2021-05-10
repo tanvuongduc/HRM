@@ -17,6 +17,7 @@ export interface Bank {
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  avatar: {type:String},
   birthday: { type: Date, required: true },
   adress: { type: String, require: true },
   certificate: { type: String },
@@ -45,6 +46,7 @@ export const UserSchema = new mongoose.Schema({
 export interface User extends mongoose.Document {
   id: string;
   name: string;
+  avatar: string;
   birthday: Date;
   adress: string;
   certificate: string;

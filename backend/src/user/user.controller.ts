@@ -80,7 +80,19 @@ export class UsersController {
         );
         return res;
     }
-
+    @Post('upload/avatar')
+    async uploadAvatar(
+        @Query('id') uid: string,
+        @Body('data') data: string,
+        @Body('type') type: string
+    ){
+        let res = await this.usersService.uploadAvatar(
+            uid,
+            data,
+            type
+        );
+        return res;
+    }
     // @Delete(':id')
     // async removeUser(@Param('id') uid: string) {
     //     await this.usersService.deleteUser(uid);

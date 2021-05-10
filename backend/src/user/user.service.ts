@@ -2,7 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, Bank, SocialNetwork } from './user.model';
-
+import { BASEPATH } from '../base';
+import { writeFileSync } from 'fs';
 @Injectable()
 export class UsersService {
     constructor(
@@ -34,7 +35,7 @@ export class UsersService {
     }
 
     async getUsers() {
-        const users = await this.userModel.find().select({name:1}).exec();
+        const users = await this.userModel.find().select({ name: 1 }).exec();
         return users.map(user => ({
             id: user.id,
             name: user.name,
@@ -99,15 +100,32 @@ export class UsersService {
         if (socialNetwork) {
             updatedUser.socialNetwork = socialNetwork;
         }
-        if(bank){
+        if (bank) {
             updatedUser.bank = bank
         }
-        if(status){
+        if (status) {
             updatedUser.status = status
         }
         const res = await updatedUser.save();
         return {
             id: res.id
+        }
+    }
+
+    async uploadAvatar(
+        uid: string,
+        avatar: string,
+        type: string
+    ) {
+        const path = `/avatar/${uid}.${type}`;
+        const user = await this.findUser(uid);
+        if (user) {
+            const data = new Buffer(avatar, 'base64');
+            writeFileSync(BASEPATH+path, data);
+            user.avatar = path;
+        }
+        return {
+            avatar: path
         }
     }
 
