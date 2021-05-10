@@ -3,14 +3,7 @@
 @import "./variables";
 @import "../Shared/Components/AppHeader/AppHeader";
 @import "../Shared/Components/AppSidebar/AppSidebar";
-@import "../Shared/Components/AppFooter/AppFooter";
 @import "../Shared/Components/App/App";
-
-/*====================================================*/
-
-// @import "../Modules/Components/Department/Department";
-// @import "../Modules/Components/Company/Company";
-// @import "../Modules/Components/Career/Career";
 
 /*====================================================*/
 
@@ -21,3 +14,4 @@
 /*====================================================*/
 
 @import "../Modules/Company/Company.scss";
+@import "../Modules/Department/Department";

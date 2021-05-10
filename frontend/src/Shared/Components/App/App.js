@@ -1,36 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
-import AppFooter from '../AppFooter/AppFooter';
 import AppSidebar from '../AppSidebar/AppSidebar';
-import Department from '../../../Modules/Components/Department/Department';
 import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
-import { Col, Row } from 'reactstrap';
-import DetailDepartment from '../../../Modules/Components/Department/DetailDepartment';
-import ListMember from '../../../Modules/Components/Department/ListMember';
+import { Department } from '../../../Modules/Department/Department';
+import { DetailDepartment } from '../../../Modules/Department/Components/DetailDepartment/DetailDepartment';
 
-class App extends React.Component {
-
+class App extends Component {
     render() {
         const { path } = this.props.match;
-        console.log(path, 'ahdsgagsjhdg')
         return (
             <div>
                 <AppHeader />
-                {/*<AppSidebar />*/}
+                {/* <AppSidebar /> */}
                 <Switch>
-                    <Route exact path={`${path}/department`} component={Department} />
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
-                    <Route exact path={`${path}/department/detail`} component={DetailDepartment} />
-                    <Route exact path={`${path}/department/detail/:name`} component={ListMember} />
+                    <Route exact path={`${path}/department`} component={Department} />
+                    <Route exact path={`${path}/department/detail:id`} component={DetailDepartment} />
                 </Switch>
-
-                {/* <AppFooter /> */}
             </div>
         );
     }
 }
-
 export default withRouter(App);

@@ -25,7 +25,7 @@ export default function CareerEdit() {
     const classes = useStyles();
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" style={{paddingTop: '100px'}}>
             <Timeline align="alternate">
 
                 <TimelineItem>

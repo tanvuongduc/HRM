@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import React, { Fragment, useState } from 'react'
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap'
 
-const ModalExample = (props) => {
-
+export const ModalAD = () => {
     const [modal, setModal] = useState(false);
-    const [data, setdata] = useState('')
+    const [data, setdata] = useState('');
     const handerOnchange = (event) => {
         setdata({ ...data, [event.target.name]: event.target.value })
-    }
+    };
     const addDepartment = (event) => {
         event.preventDefault();
-        console.log(data, 'gggggggg')
-    }
-    const {
-        buttonLabel,
-        className
-    } = props;
-
+    };
     const toggle = () => setModal(!modal);
     return (
-        <div>
-            <Button color="danger" onClick={toggle}>{buttonLabel}+ Add</Button>
-            <Modal isOpen={modal} fade={false} toggle={toggle} className={className}>
+        <Fragment>
+            <Button color="danger" onClick={toggle}>+ Add</Button>
+            <Modal isOpen={modal} fade={false} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Them phong ban</ModalHeader>
                 <ModalBody>
                     <Form onSubmit={addDepartment}>
@@ -40,15 +33,13 @@ const ModalExample = (props) => {
                         </FormGroup>
                         <FormGroup>
                             <Label>Mo ta phong ban</Label>
-                            <Input name='dsc' type='textarea' onChange={handerOnchange} />
+                            <Input name='dsc' type='textarea' style={{resize: 'vertical'}} onChange={handerOnchange} />
                         </FormGroup>
                         <Button color="primary" onClick={toggle} type="submit" >Create</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
                     </Form>
                 </ModalBody>
             </Modal>
-        </div>
-    );
+        </Fragment>
+    )
 }
-
-export default ModalExample;
