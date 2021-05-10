@@ -1,0 +1,36 @@
+div.header-user{
+    overflow: auto;
+    margin-top: 20px;
+
+    h3.number-people{
+        float: left;
+    }
+
+    div.btn-edit{
+        float: right;
+        font-size: 20px;
+        margin-bottom: 10px;
+        button.button1{
+            border: 1px solid rgb(0, 105, 259);
+            border-radius: 10px 0 0 10px;
+            margin-right: -1px;
+            background-color: white;
+        }
+        button.button2{
+            border: 1px solid rgb(0, 105, 259);
+            margin-right: 3px;
+            border-radius: 0 10px 10px 0;
+            background-color: white;
+        }
+        select{
+            font-weight: bold;
+            background-color: rgb(0, 105, 259);
+            border-radius: 10px;
+            padding: 8px;
+            color: white;
+            font-size: 14px;
+            margin-right: 2px;
+
+        }
+    }
+}
