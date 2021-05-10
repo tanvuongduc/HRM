@@ -14,7 +14,7 @@ class App extends React.Component {
 
     render() {
         const { path } = this.props.match;
-        console.log(path, 'ahdsgagsjhdg')
+
         return (
             <div>
                 <AppHeader />

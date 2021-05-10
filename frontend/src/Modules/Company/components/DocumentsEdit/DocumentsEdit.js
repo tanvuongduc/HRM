@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import ModalForm from './ModalForm'
 
-const DocumentsEdit = () => {
+
+
+const DocumentsEdit = ({ document }) => {
+
     return (
         <div className="document-content">
-            <h3>Documents</h3>
+            <h3 >Documents</h3>
+            <ModalForm></ModalForm>
             <div className="document-item">
-                <h4>Title</h4>
-                <p>noi dung cua document noi dung cua document noi dung cua document</p>
-                <hr />
+                {document}
             </div>
         </div>
     )
