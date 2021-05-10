@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Label } from 'reactstrap';
 
-const ModalForm = () => {
+const ModalForm = ({ addDocument }) => {
 
 
     const [modal, setModal] = useState(false);
@@ -10,8 +10,9 @@ const ModalForm = () => {
         setdata({ ...data, [event.target.name]: event.target.value })
     }
 
-    const addDocument = (event) => {
+    const addData = (event) => {
         event.preventDefault();
+        addDocument(data)
 
     }
 
@@ -25,7 +26,7 @@ const ModalForm = () => {
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Modal title</ModalHeader>
                 <ModalBody>
-                    <Form onSubmit={addDocument}>
+                    <Form onSubmit={addData}>
                         <FormGroup>
                             <Label>TITLE</Label>
                             <Input type='text' name='title' onChange={handerOnchange} />

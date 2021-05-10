@@ -17,6 +17,9 @@ const Company = () => {
       desc: 'hoat dong trong linh vuc IT'
     },
   ])
+  const addDocument = data => {
+    setDocuments([...Documents, data])
+  }
   const document = Documents.map((data, index) => {
     return (
       <div key={index}>
@@ -32,7 +35,7 @@ const Company = () => {
       <OveriewEdit>
       </OveriewEdit>
       <hr></hr>
-      <DocumentsEdit document={document}></DocumentsEdit>
+      <DocumentsEdit document={document} addDocument={addDocument}></DocumentsEdit>
       <hr></hr>
       <ContactEdit></ContactEdit>
     </Container>
