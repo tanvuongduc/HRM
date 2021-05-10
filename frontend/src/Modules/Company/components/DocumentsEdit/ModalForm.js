@@ -29,11 +29,15 @@ const ModalForm = ({ addDocument }) => {
                     <Form onSubmit={addData}>
                         <FormGroup>
                             <Label>TITLE</Label>
-                            <Input type='text' name='title' onChange={handerOnchange} />
+                            <Input type='text' name='title' onChange={handerOnchange} value={data.title} />
                         </FormGroup>
                         <FormGroup>
-                            <Label>DESCSCRIP</Label>
-                            <Input type='textarea' name='desc' onChange={handerOnchange} />
+                            <Label>DESCRIPTION</Label>
+                            <Input type='textarea' name='desc' onChange={handerOnchange} value={data.desc} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>File</Label>
+                            <Input type='file' name='file' />
                         </FormGroup>
                         <Button color="primary" onClick={toggle} type="submit">Create</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
