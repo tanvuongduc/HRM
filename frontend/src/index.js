@@ -11,12 +11,7 @@ import Login from "./Modules/Org/Components/Login/Login";
 import NavBar from "./Modules/Org/Components/NavBar.js/NavBar";
 import User from "./Modules/User/User";
 
-<<<<<<< HEAD
-=======
-// import App from './Shared/Components/App/App';
-// import Login from './Modules/Org/Components/Login/Login';
 import People from './Modules/People/People';
->>>>>>> 1f9e7cc78af20579c8c9cfc5846b17eabe008c3e
 
 const isLogged = !!AuthService.userInfo;
 

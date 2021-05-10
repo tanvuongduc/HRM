@@ -43,13 +43,8 @@ class People extends Component {
                         </div>
                     </div>
                     <Switch>
-<<<<<<< HEAD:frontend/src/Modules/People/People.js
-                        <Route path="/people">
-                            <MyTeam/>
-=======
                         <Route path="/people/my-team">
                             <MyTeam data = {this.state.data}/>
->>>>>>> d3efdd7cc0f049e5d8be879f1844e26c70733254:frontend/src/Modules/Org/Components/People/People.js
                         </Route>
                         <Route path="/people/user">
                             <User/>
