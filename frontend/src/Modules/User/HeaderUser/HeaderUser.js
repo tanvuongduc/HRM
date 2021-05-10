@@ -21,6 +21,7 @@ class HeaderUser extends Component {
   
   async componentDidMount() {
     let data = await this.getInfo();
+    console.log(this.state.image);
   }
 
   async getInfo() {
