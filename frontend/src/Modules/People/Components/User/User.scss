@@ -1,0 +1,36 @@
+div.user{
+    width: 60%;
+    padding-left: 20%;
+    box-sizing: content-box;
+
+
+    div.list-user{
+        border: rgb(224, 231, 235) 1px solid;
+        div.row{
+            margin: 0px;
+            border-bottom: rgb(224, 231, 235) 1px solid;
+            div.col-0{
+                form{
+                    input.checkbox{
+                        margin: 10px;
+                        width: 30px;
+                        height: 30px;
+        
+                    }
+                }
+            }
+            select{
+                border: none;
+                font-weight: bold;
+            }
+            div.col{
+                height: 50px;
+                line-height: 50px;
+            }
+            div.col-3{
+                height: 50px;
+                line-height: 50px;
+            }
+        }
+    }
+}
