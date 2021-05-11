@@ -6,9 +6,8 @@ import ModalForm from './ModalForm'
 const DocumentsEdit = ({ document, addDocument }) => {
 
     return (
-        <div className="document-content">
-            <h3 >Documents</h3>
-            <ModalForm addDocument={addDocument}></ModalForm>
+        <div className="document-content" style={{justifyContent: 'space-evenly'}}>
+            <h3 >Documents</h3><ModalForm addDocument={addDocument} />
             <div className="document-item">
                 {document}
             </div>

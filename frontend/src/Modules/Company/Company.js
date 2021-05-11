@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import ContactEdit from "./components/ContactEdit/ContactEdit";
 import DocumentsEdit from "./components/DocumentsEdit/DocumentsEdit";
 import OveriewEdit from "./components/OveriewEdit/OveriewEdit.js";
-import Container from '@material-ui/core/Container';
-
 
 const Company = () => {
   const path = window.location.pathname
@@ -22,16 +20,12 @@ const Company = () => {
   })
 
   return (
-    <Container className="Company">
-      <OveriewEdit>
-      </OveriewEdit>
-      <hr></hr>
-      <DocumentsEdit document={document} addDocument={addDocument}></DocumentsEdit>
-      <hr></hr>
-      <ContactEdit></ContactEdit>
-    </Container>
+    <div className="Company">
+      <OveriewEdit />
+      <ContactEdit />
+      <DocumentsEdit document={document} addDocument={addDocument} />
+    </div>
   )
 }
 
 export default Company
-
