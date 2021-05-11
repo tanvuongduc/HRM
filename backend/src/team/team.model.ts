@@ -11,30 +11,39 @@ import * as mongoose from 'mongoose';
 
 export const TeamSchema = new mongoose.Schema({
     name: { type: String, require: true },
+    sologan: {type:String},
     member: {
         type: {
             uid: String,
             name: String,
+            office: String,
             regency: Number, // Leader 1, employee: 0s
         },
         require: true
     },
-    rate: { type: Number, require: true, default: 0},
-    achievements: { type: String, default:''},             //Những nhiệm vụ đã hoàn thành sẽ đk coi là thành tích nhóm
-    mission: { type: String, default:'' },                  //Id của nhiệm vụ đang thực hiện, nếu trống thì là đang rảnh
-    department: { type: String, require: true } //Phòng ban
+    rate: { type: Number, require: true, default: 0 },
+    achievements: { type: String, default: '' },             //Những nhiệm vụ đã hoàn thành sẽ đk coi là thành tích nhóm
+    mission: { type: String, default: '' },                  //Id của nhiệm vụ đang thực hiện, nếu trống thì là đang rảnh
+    department: { type: String, require: true },             //Phòng ban
+    createAt: { type: Date, require: true, default: Date.now() },
+    createBy: { type: String, require: true}
 })
 
 export interface Employee {
     uid: String,
     name: String,
+    office: String,
     regency: Number
 }
-export interface Team extends mongoose.Document{
+export interface Team extends mongoose.Document {
+    id: String;
     name: String;
+    sologan: String;
     member: Employee;
     rate: Number;
-    achievements: String;             
-    mission: String;                  
+    achievements: String;
+    mission: String;
     department: String;
+    createAt: Date;
+
 }

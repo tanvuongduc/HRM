@@ -56,7 +56,7 @@ class HeaderUser extends Component {
     this.setState({
       image: image,
     });
-
+    this.props.uploadAvatar(image,"jpg");
     this.onCloseChangeAvatar();
   };
 
@@ -68,6 +68,7 @@ class HeaderUser extends Component {
 
   render() {
     const { userName, email, image, isDisplayChangeAvatar } = this.state;
+    const {avatar } = this.props;
     const elmChangeAvatar = isDisplayChangeAvatar ? (
       <ChangeAvatar
         onSaveChangeAvatar={this.onSaveChangeAvatar}
@@ -76,14 +77,14 @@ class HeaderUser extends Component {
     ) : (
       ""
     );
-    const avatarDefault = image === null ? <FaUser className="avatarUser__iconAvatar" /> : ''; 
+    const avatarDefault = avatar === null ? <FaUser className="avatarUser__iconAvatar" /> : ''; 
     return (
       <Fragment>
         <div className="profile-header__overview">
           <div className="container">
-            <div className="overview__avatarUser" style={image === null ? {backgroundColor: 'white'} : null}>
+            <div className="overview__avatarUser" style={avatar === null ? {backgroundColor: 'white'} : null}>
               <img
-                src={image}
+                src={"http://localhost:3000"+avatar}
                 className="avatarUser__img"
 
               />

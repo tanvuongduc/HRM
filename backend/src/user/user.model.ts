@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 
 export interface SocialNetwork {
   title: string;
+  icon: string;
   link: string;
 }
 // interface Certificate{
@@ -16,6 +17,7 @@ export interface Bank {
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  avatar: {type:String},
   birthday: { type: Date, required: true },
   adress: { type: String, require: true },
   certificate: { type: String },
@@ -24,6 +26,7 @@ export const UserSchema = new mongoose.Schema({
   socialNetwork: {
     type: {
       title: String, //twiter facebook zalo
+      icon: String,
       link: String
     },
     require: true
@@ -43,6 +46,7 @@ export const UserSchema = new mongoose.Schema({
 export interface User extends mongoose.Document {
   id: string;
   name: string;
+  avatar: string;
   birthday: Date;
   adress: string;
   certificate: string;

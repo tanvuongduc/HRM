@@ -21,25 +21,19 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataUser: {
-        name: '',
-        birthday: '',
-        adress: '',
-        certificate: '',
-        phone: '',
-        email: '',
-        socialNetwork: [],
-        bank: [],
-        status: "Pendding",
-      },
-      userName: "",
-      birthday: "",
-      address: "",
-      certificate: "",
-      phoneNumber: "",
-      email: "",
-      socialNetwork: [],
-      bankAccountId: [],
+      // dataUser: {
+      //   name: '',
+      //   birthday: '',
+      //   adress: '',
+      //   certificate: '',
+      //   phone: '',
+      //   email: '',
+      //   socialNetwork: [],
+      //   bank: [],
+      //   status: "Pendding",
+      //   avatar: ''
+      // },
+    
       isDisplayEditInfo: false,
       codeEdit: "",
       titleEdit: "",
@@ -48,26 +42,26 @@ class Details extends Component {
   }
 
   async componentDidMount() {
-    let data = await this.getInfo();
+    this.props.getInfo();
   }
 
-  async getInfo() {
-    const res = await Http.get("users/user", {
-      id: "6088cc2b80660b2f2818ae8a",
-    });
-    this.props.receiveInfoUser(res.data.name, res.data.email);
-    await this.setState({
-      dataUser:res.data
-    });
-    console.log(this.state)
-    return res.data;
-  }
+  // async getInfo() {
+  //   const res = await Http.get("users/user", {
+  //     id: "6088cc2b80660b2f2818ae8a",
+  //   });
+  //   this.props.receiveInfoUser(res.data.name, res.data.email);
+  //   await this.setState({
+  //     dataUser:res.data
+  //   });
+  //   console.log(this.state)
+  //   return res.data;
+  // }
 
-  async updateInfo(data) {
+  // async updateInfo(data) {
     
-    const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
-    console.log(req);
-  }
+  //   const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
+  //   console.log(req);
+  // }
 
   onShowEditInfo = (code, title, value) => {
     this.setState({
@@ -85,29 +79,28 @@ class Details extends Component {
     });
   };
 
-  onSaveEditting = async (data) => {
-    console.log(data);
-    await this.setState({
-      dataUser: data
-    })
-    this.updateInfo(data);
-  };
+  // onSaveEditting = async (data) => {
+  //   console.log(data);
+  //   await this.setState({
+  //     dataUser: data
+  //   })
+  //   this.updateInfo(data);
+  // };
   render() {
     var {
-      dataUser,
       isDisplayEditInfo,
       titleEdit,
       valueEdit,
       codeEdit
-    } = this.state;
-
+    } = this.state;   
+    const {dataUser, onSaveEditting} = this.props;
     var elmEditInfo = isDisplayEditInfo ? (
       <EditInfo
         codeEdit={codeEdit}
         titleEdit={titleEdit}
         valueEdit={valueEdit}
         data = {dataUser}
-        onSaveEditting={(data)=>this.onSaveEditting(data)}
+        onSaveEditting={(data)=>onSaveEditting(data)}
         onCloseEditInfo={this.onCloseEditInfo}
       />
     ) : (
