@@ -1,8 +1,8 @@
-import React, { Suspense, Fragment } from 'react';
-import { Route, Redirect, Switch, BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import './Styles/index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Suspense, Fragment } from "react";
+import { Route, Redirect, Switch, BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./Styles/index.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { AuthService } from './Shared';
 import App from './Shared/Components/App/App';

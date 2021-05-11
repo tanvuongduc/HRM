@@ -1,0 +1,23 @@
+@import '../../../Styles/variables';
+
+@mixin title-box-style {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+@mixin button-style {
+    height: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+@mixin sub-title-box {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.profile-main__employment {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
