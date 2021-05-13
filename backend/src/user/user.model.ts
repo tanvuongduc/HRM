@@ -2,16 +2,16 @@ import * as mongoose from 'mongoose';
 
 
 export interface SocialNetwork {
-  title: string;
-  icon: string;
-  link: string;
+  title: String;
+  icon: String;
+  link: String;
 }
 // interface Certificate{
-//   title: string;
+//   title: String;
 // }
 export interface Bank {
-  bankName: string;
-  bankNumber: string;
+  bankName: String;
+  bankNumber: String;
 }
 
 
@@ -40,20 +40,20 @@ export const UserSchema = new mongoose.Schema({
     require: true,
     default: "Pending"
   },
-  team: { type: String }
+  teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team', default:[] }]
 });
 
 export interface User extends mongoose.Document {
-  id: string;
-  name: string;
-  avatar: string;
+  id: String;
+  name: String;
+  avatar: String;
   birthday: Date;
-  adress: string;
-  certificate: string;
-  phone: string;
-  email: string;
+  adress: String;
+  certificate: String;
+  phone: String;
+  email: String;
   socialNetwork: SocialNetwork;
   bank: Bank;
-  status: string;
-  team: string;
+  status: String;
+  teams: [String];
 }
