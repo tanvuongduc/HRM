@@ -43,67 +43,6 @@
             .list-members {
                 margin-top: 2em;
 
-                .item-member {
-                    width: 100%;
-                    background-color: rgb(44, 175, 207);
-                    height: 80px;
-                    overflow: hidden;
-                    border-radius: 10px;
-                    padding: 9px 15px;
-                    display: flex;
-                    cursor: pointer;
-                    position: relative;
-                    margin-bottom: 0.6em;
-
-                    &__avatar {
-                        width: 50px;
-                        height: 50px;
-                        background-color: #F5F5F5;
-                        border-radius: 35px;
-                        margin-top: 5px;
-                        border: 1px solid white;
-                        
-                    }
-
-                    &__info-user {
-                        margin-left: 1em;
-                    }
-
-                    &__username {
-                        color: white;
-                        font-size: 22px;
-                        font-weight: 500;
-                        margin-bottom: 0;
-                    }
-
-                    &__team-user {
-                        color: white;
-                        font-size: 18px;
-                        font-weight: 500;
-                        margin-top: -15px;
-
-                        .team-user-list {
-                            font-weight: 400;
-                        }
-                    }
-
-                    &__choosed-icon {
-                        position: absolute;
-                        color: white;
-                        font-size: 35px;
-                        right: 5%;
-                      
-                    }
-
-
-
-
-                }
-
-
-                .item-member:hover {
-                    background-color: rgb(22, 93, 110);
-                }
             }
 
 

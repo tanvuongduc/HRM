@@ -41,6 +41,12 @@ class Employment extends Component {
      isDisplayAddMembers: true
     });
   }
+
+  onCloseAddMember = () => {
+    this.setState({
+      isDisplayAddMembers: false
+    });
+  }
   render() {
      const { isDisplayChangeManager, isDisplayAddMembers } = this.state;
     const elmChangeManager = isDisplayChangeManager ? (
@@ -49,7 +55,7 @@ class Employment extends Component {
       ""
     );
 
-    const elmAddMembersToTeam = isDisplayAddMembers ? <AddMemberToTeam avatarUser={this.props.avatarUser}/> : '';
+    const elmAddMembersToTeam = isDisplayAddMembers ? <AddMemberToTeam avatarUser={this.props.avatarUser} onCloseAddMember={this.onCloseAddMember}/> : '';
     return (
       <Fragment>
         <div className="profile-main__employment">

@@ -7,17 +7,17 @@ import { FaCheck, FaThumbsDown } from "react-icons/fa";
 class ItemMember extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-       
-    };
+    this.state = {};
   }
 
   render() {
-    const { member, avatarUser} = this.props;
+    const { member, avatarUser } = this.props;
     const styleChoosed = {
-      backgroundColor: "rgb(22, 93, 110)",
+      background: "rgb(21,116,173)",
+      background:
+        "linear-gradient(90deg, rgba(21,116,173,1) 0%, rgba(20,138,218,1) 72%, rgba(29,148,236,1) 100%, rgba(16,133,159,1) 100%)",
     };
-    
+
     return (
       <Fragment>
         <div
@@ -34,9 +34,12 @@ class ItemMember extends Component {
             <label className="item-member__username">{member.name}</label>
             <br></br>
             <label className="item-member__team-user">
-              Team: <span className="team-user-list">
-                {member.teams.length !== 0 ? member.teams : "Chưa thuộc team nào"}
-                </span>
+              Team:{" "}
+              <span className="team-user-list">
+                {member.teams.length !== 0
+                  ? member.teams
+                  : "Chưa thuộc team nào"}
+              </span>
             </label>
           </div>
           {member.isChoosed ? (

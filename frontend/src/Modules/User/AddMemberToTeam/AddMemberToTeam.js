@@ -76,6 +76,7 @@ class AddMemberToTeam extends Component {
       const { listMemberChoosed } = this.state;
       const res = await Http.post("teams/add/members?team=609ddb7ab7ca213f2489ff38", {members:listMemberChoosed});
       console.log(res.data);
+      this.props.onCloseAddMember();
   }
 
   onSearchMember = (event) => {
@@ -132,8 +133,8 @@ class AddMemberToTeam extends Component {
               <div className="list-members">{itemMember}</div>
             </div>
             <div className="btn-form-control">
-              <a className="btn-control-close">Close</a>
-              <a className="btn-control-save" onClick={this.addMembersToTeam}>Choose</a>
+              <a className="btn-control-close" onClick={this.props.onCloseAddMember}>Close</a>
+              <a className="btn-control-save" onClick={this.addMembersToTeam}>Add to team</a>
             </div>
           </div>
         </div>
