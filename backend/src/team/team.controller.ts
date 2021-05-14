@@ -1,6 +1,7 @@
 import {
     Controller,
     Post,
+    Delete,
     Body,
     Get,
     Query,
@@ -23,6 +24,31 @@ export class TeamController {
         const res = await this.teamService.insertTeam(name, member, department, sologan);
         return res;
     }
+
+    @Post('add/members')
+    async insertMembers(
+        @Body('members')ids: [string],
+        @Query('team')teamId: string
+    ){
+        const res = this.teamService.insertMembers(ids, teamId);
+        return res;
+    }
+    @Delete('remove/members')
+    async removeMembers(
+        @Body('members')ids: [string],
+        @Query('team')teamId: string
+    ){
+        const res = this.teamService.removeMembers(ids, teamId);
+        return res;
+    }
+    @Get('get/members')
+    async getMembers(
+        @Query('team')teamId: string
+    ){
+        const res = this.teamService.getMembers(teamId);
+        return res;
+    }
+
     @Get('department')
     async getDepartmentTeam(@Query('dpm')department: String){
         const res = await this.teamService.getDepartmentTeam(department);
