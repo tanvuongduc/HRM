@@ -37,6 +37,21 @@ export class CompanyService {
             pic: prod.pic
         }));
     }
+    async insertDocument(
+        title: string,
+        description: string
+    ) {
+        const data = {
+            documents: {
+                title,
+                description
+            }
+        }
+        const response = await this.companyModel.find().populate('')
+        const documents = response.map(prod => (prod.documents));
+
+        console.log(data)
+    }
     //update Company
     // async updateCompany(
     //     id: string,

@@ -22,11 +22,13 @@ export class CompanyController {
         return { id: generatedId }
     }
     //  get document
-    @Post('ducuments')
-    async adđocument(
-        @Body('documents') documents: Documents
+    @Post('documents')
+    async addDocument(
+        @Body('title') title: string,
+        @Body('description') description: string
     ) {
-
+        const document = await this.companyServive.insertDocument(title, description)
+        return document
     }
     @Get()
     async getAllCompany() {

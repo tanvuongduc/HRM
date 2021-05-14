@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import ContactEdit from "./components/ContactEdit/ContactEdit";
 import DocumentsEdit from "./components/DocumentsEdit/DocumentsEdit";
 import OveriewEdit from "./components/OveriewEdit/OveriewEdit.js";
-import {Http} from './Shared/index';
+import { Http } from './Shared/index';
 import axios from 'axios';
 
 const Company = () => {
   const path = window.location.pathname
-  const [data, setData] = useState([])
+  const [company, setCompany] = useState({ data: [] })
 
   const [Documents, setDocuments] = useState([])
   const addDocument = data => {
@@ -15,28 +15,18 @@ const Company = () => {
   }
 
 
-  // const getcompany = async () => {
-  //   const data = await axios.get('http://localhost:3000/company')
-  //   console.log(data, 'aaaaa')
-  // }
-
-  // useEffect(() => {
-  //   getcompany()
-  // }, [])
-
-
-  
-useEffect(() => {
-    Http.get('company').then(e => {
-      setData(...data, e)
-    })
+  useEffect(async () => {
+    const data1 = await Http.get('company')
+    setCompany(data1)
   }, []);
-
+  const showData = company.data.map(e => (e.documents))
+  const showContact = company.data.map(e => (e.contact))
   return (
     <div className="Company">
       <OveriewEdit />
-      <ContactEdit />
-      <DocumentsEdit data1={data} addDocument={addDocument} />
+      <ContactEdit data={showContact} />
+      <DocumentsEdit data={showData} addDocument={addDocument} />
+
     </div>
   )
 }
