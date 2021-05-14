@@ -10,7 +10,6 @@ import App from "./Shared/Components/App/App";
 import Login from "./Modules/Org/Components/Login/Login";
 import User from "./Modules/User/User";
 
-
 const isLogged = !!AuthService.userInfo;
 
 const Root = (
@@ -46,7 +45,7 @@ const Root = (
             }}
           ></Route>
           <Route path="/user">
-              <User/>
+            <User />
           </Route>
         </Suspense>
       </Switch>

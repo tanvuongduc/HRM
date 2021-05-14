@@ -20,8 +20,6 @@ class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
-      emailUser: "",
       dataUser: {
         name: "",
         birthday: "",
@@ -39,14 +37,9 @@ class User extends Component {
 
   async componentDidMount() {
     await this.getInfo();
+    console.log(this.state.dataUser);
   }
-  receiveInfoUser = (userName, emailUser) => {
-    this.setState({
-      userName: userName,
-      emailUser: emailUser,
-    });
-  };
-
+  
   async getInfo() {
     const res = await Http.get("users/user", {
       id: "6088cc2b80660b2f2818ae8a",
@@ -55,10 +48,12 @@ class User extends Component {
       dataUser: res.data,
     });
   }
+  
   async updateInfo(data) {
     const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
     console.log(req);
   }
+
   onSaveEditting = async (data) => {
     console.log(data);
     await this.setState({
@@ -66,6 +61,7 @@ class User extends Component {
     });
     this.updateInfo(data);
   };
+
   async uploadAvatar(data, type) {
     let option = {
       data: data,
@@ -96,7 +92,7 @@ class User extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/user">
-                  <Employment />
+                  <Employment avatarUser={dataUser.avatar} />
                 </Route>
                 <Route exact path="/user/details">
                   <Details

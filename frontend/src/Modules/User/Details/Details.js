@@ -1,17 +1,5 @@
 import React, { Component, Fragment, useState } from "react";
 import "./Details.scss";
-import {
-  FaUser,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaEnvelopeOpen,
-  FaEnvelopeOpenText,
-  FaFacebook,
-  FaTwitter,
-  FaLink,
-  FaMoneyCheckAlt,
-} from "react-icons/fa";
-import { Http } from "../../../Helper/Http";
 import BasicInfo from "./BasicInfo/BasicInfo";
 import Contact from "./Contact/Contact";
 import Banking from "./Banking/Banking";
@@ -21,19 +9,6 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // dataUser: {
-      //   name: '',
-      //   birthday: '',
-      //   adress: '',
-      //   certificate: '',
-      //   phone: '',
-      //   email: '',
-      //   socialNetwork: [],
-      //   bank: [],
-      //   status: "Pendding",
-      //   avatar: ''
-      // },
-    
       isDisplayEditInfo: false,
       codeEdit: "",
       titleEdit: "",
@@ -44,24 +19,6 @@ class Details extends Component {
   async componentDidMount() {
     this.props.getInfo();
   }
-
-  // async getInfo() {
-  //   const res = await Http.get("users/user", {
-  //     id: "6088cc2b80660b2f2818ae8a",
-  //   });
-  //   this.props.receiveInfoUser(res.data.name, res.data.email);
-  //   await this.setState({
-  //     dataUser:res.data
-  //   });
-  //   console.log(this.state)
-  //   return res.data;
-  // }
-
-  // async updateInfo(data) {
-    
-  //   const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
-  //   console.log(req);
-  // }
 
   onShowEditInfo = (code, title, value) => {
     this.setState({
@@ -79,28 +36,16 @@ class Details extends Component {
     });
   };
 
-  // onSaveEditting = async (data) => {
-  //   console.log(data);
-  //   await this.setState({
-  //     dataUser: data
-  //   })
-  //   this.updateInfo(data);
-  // };
   render() {
-    var {
-      isDisplayEditInfo,
-      titleEdit,
-      valueEdit,
-      codeEdit
-    } = this.state;   
-    const {dataUser, onSaveEditting} = this.props;
+    var { isDisplayEditInfo, titleEdit, valueEdit, codeEdit } = this.state;
+    const { dataUser, onSaveEditting } = this.props;
     var elmEditInfo = isDisplayEditInfo ? (
       <EditInfo
         codeEdit={codeEdit}
         titleEdit={titleEdit}
         valueEdit={valueEdit}
-        data = {dataUser}
-        onSaveEditting={(data)=>onSaveEditting(data)}
+        data={dataUser}
+        onSaveEditting={(data) => onSaveEditting(data)}
         onCloseEditInfo={this.onCloseEditInfo}
       />
     ) : (
@@ -129,7 +74,10 @@ class Details extends Component {
               />
             </div>
             <div className="col-md-4">
-              <Banking bankAccountId={dataUser.bank} />
+              <Banking
+                bankAccount={dataUser.bank}
+                onShowEditInfo={this.onShowEditInfo}
+              />
             </div>
           </div>
           {elmEditInfo}

@@ -27,7 +27,7 @@ class Teams extends Component {
                 <BsPlusCircle className="new-team-icon" /> New team
               </span>
             </div>
-            <button className="btn btn-primary">Thêm vào team</button>
+            <button className="btn btn-primary" onClick={this.props.isDisplayAddMembers}>Thêm vào team</button>
           </div>
         </div>
       </Fragment>

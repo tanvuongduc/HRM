@@ -14,7 +14,7 @@ class HeaderUser extends Component {
     this.state = {
       userName: '',
       email: '',
-      image: null,
+      avatar: null,
       isDisplayChangeAvatar: false,
     };
   }
@@ -37,11 +37,13 @@ class HeaderUser extends Component {
   }
 
 
-  componentWillReceiveProps = (nextProps) => {
-    console.log(nextProps);
+   componentWillReceiveProps = (nextProps) => {
+    console.log(nextProps.avatar);
     this.setState ({
+      avatar: nextProps.avatar,
       userName: nextProps.userName,
-      email: nextProps.emailUser
+      email: nextProps.emailUser,
+      
     });
   }
 
@@ -53,9 +55,6 @@ class HeaderUser extends Component {
 
   onSaveChangeAvatar = (image) => {
     console.log(image);
-    this.setState({
-      image: image,
-    });
     this.props.uploadAvatar(image,"jpg");
     this.onCloseChangeAvatar();
   };
@@ -67,8 +66,8 @@ class HeaderUser extends Component {
   };
 
   render() {
-    const { userName, email, image, isDisplayChangeAvatar } = this.state;
-    const {avatar } = this.props;
+    const { userName, email, avatar, isDisplayChangeAvatar } = this.state;
+
     const elmChangeAvatar = isDisplayChangeAvatar ? (
       <ChangeAvatar
         onSaveChangeAvatar={this.onSaveChangeAvatar}

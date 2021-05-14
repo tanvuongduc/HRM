@@ -1,14 +1,20 @@
 import React, { Component, Fragment } from "react";
 import "./Banking.scss";
-import {FaMoneyCheckAlt} from 'react-icons/fa';
+import {FaMoneyCheckAlt, FaEdit} from 'react-icons/fa';
 
 class Banking extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+  isDisplayEditInfo = (code, title, value) => {
+    console.log(code, title, value);
+    this.props.onShowEditInfo(code, title, value);
+  }
+
   render() {
-    const {bankAccountId} = this.props;
+    const {bankAccount} = this.props;
     return (
       <Fragment>
         <div className="details__card address">
@@ -18,18 +24,31 @@ class Banking extends Component {
             <br></br>
             <FaMoneyCheckAlt className="item-info__icon" />
             <span></span>
+            
           </div>
           <div className="item-info">
             <label>Ngân hàng</label>
             <br></br>
             <FaMoneyCheckAlt className="item-info__icon" />
-            <span>{bankAccountId.name}</span>
+            <span>{bankAccount.bankName}</span>
+            <FaEdit
+                className="edit-icon"
+                onClick={() =>
+                  this.isDisplayEditInfo("bankName", "Ngân hàng", bankAccount.bankName)
+                }
+              />
           </div>
           <div className="item-info">
             <label>Số tài khoản</label>
             <br></br>
             <FaMoneyCheckAlt className="item-info__icon" />
-            <span>{bankAccountId.bankNumber}</span>
+            <span>{bankAccount.bankId}</span>
+            <FaEdit
+                className="edit-icon"
+                onClick={() =>
+                  this.isDisplayEditInfo("bankId", "Số tài khoản", bankAccount.Id)
+                }
+              />
           </div>
         </div>
       </Fragment>
