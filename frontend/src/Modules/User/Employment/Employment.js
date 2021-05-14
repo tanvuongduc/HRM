@@ -11,7 +11,7 @@ class Employment extends Component {
     super(props);
     this.state = {
        isDisplayChangeManager: false,
-       isDisplayAddMembers: true,
+       isDisplayAddMembers: false,
        manager: ''
     }
   }

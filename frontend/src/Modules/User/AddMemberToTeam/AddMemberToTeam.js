@@ -12,39 +12,7 @@ class AddMemberToTeam extends Component {
     this.state = {
         idItemChoosed: null, 
         searchMember: '',
-      listMembers: [
-        // {
-        //   id: 1,
-        //   avatar: "",
-        //   userName: "Dang Jinner",
-        //   team: ["Developer"],
-        // },
-        // {
-        //   id: 2,
-        //   userName: "Hai Mom",
-        //   team: ["Developer, BA"],
-        // },
-        // {
-        //   id: 3,
-        //   userName: "Huy Dan",
-        //   team: [],
-        // },
-        // {
-        //   id: 4,
-        //   userName: "Duc Phao",
-        //   team: ["Developer, Manager"],
-        // },
-        // {
-        //   id: 5,
-        //   userName: "Dang Jinner 5",
-        //   team: ["Developer, Manager"],
-        // },
-        // {
-        //   id: 6,
-        //   userName: "Hello",
-        //   team: ["Developer, Manager"],
-        // },
-      ],
+      listMembers: [],
       listMemberChoosed: []
     };
   }
@@ -56,8 +24,13 @@ class AddMemberToTeam extends Component {
 
   async getAllUser() {
     const res = await Http.get("users");
+    const members = res.data.filter((member)=>{
+      if(!member.teams) return 1
+      return member.teams.indexOf('609ddb7ab7ca213f2489ff38')<0;
+    })
+    console.log('members',members)
     await this.setState({
-      listMembers: res.data
+      listMembers: members
     });
 
   }
@@ -71,13 +44,13 @@ class AddMemberToTeam extends Component {
     });
 
     if(listMembers[index].isChoosed) {
-        listMemberChoosed.push(listMembers[index]);
+        listMemberChoosed.push(listMembers[index].id);
         this.setState({
             listMemberChoosed: listMemberChoosed
         });
     } else {
         for(var i=0; i<listMemberChoosed.length; i++) {
-             if(listMembers[index] === listMemberChoosed[i]) {
+             if(listMembers[index].id === listMemberChoosed[i]) {
                  listMemberChoosed.splice(i, 1);
              }
         }
@@ -98,6 +71,13 @@ class AddMemberToTeam extends Component {
     return result;
   }
 
+
+  addMembersToTeam = async  ()  => {
+      const { listMemberChoosed } = this.state;
+      const res = await Http.post("teams/add/members?team=609ddb7ab7ca213f2489ff38", {members:listMemberChoosed});
+      console.log(res.data);
+  }
+
   onSearchMember = (event) => {
     var target = event.target;
     var name = target.name;
@@ -116,13 +96,14 @@ class AddMemberToTeam extends Component {
          listMembers = listMembers.filter((member) => {
             return member.name.toLowerCase().indexOf(searchMember.toLowerCase()) !== -1;
         });
-    
+        
     }
        
 
     const itemMember = listMembers.map((member) => {
       return (
         <ItemMember
+          key={member.id}
           member={member}
           avatarUser={avatarUser}
           chooseMember={this.chooseMember}
@@ -152,7 +133,7 @@ class AddMemberToTeam extends Component {
             </div>
             <div className="btn-form-control">
               <a className="btn-control-close">Close</a>
-              <a className="btn-control-save">Choose</a>
+              <a className="btn-control-save" onClick={this.addMembersToTeam}>Choose</a>
             </div>
           </div>
         </div>

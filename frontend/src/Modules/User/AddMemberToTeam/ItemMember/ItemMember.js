@@ -35,7 +35,7 @@ class ItemMember extends Component {
             <br></br>
             <label className="item-member__team-user">
               Team: <span className="team-user-list">
-                {/* {member.team.length !== 0 ? member.team : ""} */}
+                {member.teams.length !== 0 ? member.teams : "Chưa thuộc team nào"}
                 </span>
             </label>
           </div>
