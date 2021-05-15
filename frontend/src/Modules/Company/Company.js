@@ -3,13 +3,14 @@ import ContactEdit from "./components/ContactEdit/ContactEdit"
 import DocumentsEdit from "./components/DocumentsEdit/DocumentsEdit"
 import OveriewEdit from "./components/OveriewEdit/OveriewEdit"
 import { Http } from "./Shared/index"
+import Div from "./Div"
 
 export default function Company() {
   const [company, setCompany] = useState({ data: [] });
 
   const addDocument = async (addDocument) => {
     try {
-      const data = await Http.post('company/documents', addDocument)
+      const data = await Http.put('company/documents', addDocument)
       setCompany(data)
     } catch (err) {
       console.log(err)
@@ -31,12 +32,12 @@ export default function Company() {
 
   const showDocument = company.data.map(e => (e.documents));
   const showContact = company.data.map(e => (e.contact));
-
+  
   return (
-    <div className="Company">
+    <Div>
       <OveriewEdit />
       <ContactEdit data={showContact} />
       <DocumentsEdit data={showDocument} addDocument={addDocument} />
-    </div>
+    </Div>
   )
 }
