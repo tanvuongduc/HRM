@@ -38,6 +38,7 @@ export const Root = (
               <Redirect to="/login" ></Redirect>
             )
           }} ></Route>
+          
         </Suspense>
       </Switch>
     </Fragment>

@@ -3,20 +3,17 @@ import { Button, Modal, ModalHeader, ModalBody, Form, Input, FormGroup, Label } 
 
 const ModalForm = ({ addDocument }) => {
 
-
     const [modal, setModal] = useState(false);
-    const [data, setdata] = useState('')
+    const [data, setdata] = useState('');
+
     const handerOnchange = (event) => {
         setdata({ ...data, [event.target.name]: event.target.value })
-    }
+    };
 
     const addData = (event) => {
         event.preventDefault();
         addDocument(data)
-
-    }
-
-
+    };
 
     const toggle = () => setModal(!modal);
 
@@ -33,12 +30,12 @@ const ModalForm = ({ addDocument }) => {
                         </FormGroup>
                         <FormGroup>
                             <Label>DESCRIPTION</Label>
-                            <Input type='textarea' name='desc' onChange={handerOnchange} value={data.desc} />
+                            <Input type='textarea' name='description' onChange={handerOnchange} value={data.desc} />
                         </FormGroup>
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label>File</Label>
                             <Input type='file' name='file' />
-                        </FormGroup>
+                        </FormGroup> */}
                         <Button color="primary" onClick={toggle} type="submit">Create</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
                     </Form>
@@ -47,5 +44,4 @@ const ModalForm = ({ addDocument }) => {
         </div>
     );
 }
-
 export default ModalForm;

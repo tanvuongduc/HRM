@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ModalForm from './ModalForm'
 
-
-
 const DocumentsEdit = ({ data, addDocument }) => {
+
     const showData = data.map((event, index) => {
         return (
             <div key={index}>
@@ -11,17 +10,15 @@ const DocumentsEdit = ({ data, addDocument }) => {
                 <p>{event.description}</p>
             </div>
         )
-    })
+    });
+
     return (
-        <div className="document-content" style={{ justifyContent: 'space-evenly' }}>
+        <div className="document-content">
             <h3 >Documents</h3><ModalForm addDocument={addDocument} />
             <div className="document-item">
-                {
-                    showData
-                }
+                {showData}
             </div>
         </div>
     )
 }
-
-export default DocumentsEdit
+export default DocumentsEdit;

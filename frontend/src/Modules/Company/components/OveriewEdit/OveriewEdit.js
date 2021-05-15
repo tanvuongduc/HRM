@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 const OveriewEdit = () => {
+
     return (
         <div className="overview-container">
             <h3>Overview</h3>
@@ -21,4 +22,4 @@ const OveriewEdit = () => {
         </div>
     )
 }
-export default OveriewEdit
+export default OveriewEdit;

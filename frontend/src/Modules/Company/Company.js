@@ -1,34 +1,42 @@
-import React, { useState, useEffect } from "react";
-import ContactEdit from "./components/ContactEdit/ContactEdit";
-import DocumentsEdit from "./components/DocumentsEdit/DocumentsEdit";
-import OveriewEdit from "./components/OveriewEdit/OveriewEdit.js";
-import { Http } from './Shared/index';
-import axios from 'axios';
+import React, { useState, useEffect } from "react"
+import ContactEdit from "./components/ContactEdit/ContactEdit"
+import DocumentsEdit from "./components/DocumentsEdit/DocumentsEdit"
+import OveriewEdit from "./components/OveriewEdit/OveriewEdit"
+import { Http } from "./Shared/index"
 
-const Company = () => {
-  const path = window.location.pathname
-  const [company, setCompany] = useState({ data: [] })
+export default function Company() {
+  const [company, setCompany] = useState({ data: [] });
 
-  const [Documents, setDocuments] = useState([])
-  const addDocument = data => {
-    setDocuments([data, ...Documents])
-  }
+  const addDocument = async (addDocument) => {
+    try {
+      const data = await Http.post('company/documents', addDocument)
+      setCompany(data)
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
+  const getData = async () => {
+    try {
+      const data = await Http.get('company')
+      setCompany(data)
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
-  useEffect(async () => {
-    const data1 = await Http.get('company')
-    setCompany(data1)
+  useEffect(() => {
+    getData()
   }, []);
-  const showData = company.data.map(e => (e.documents))
-  const showContact = company.data.map(e => (e.contact))
+
+  const showDocument = company.data.map(e => (e.documents));
+  const showContact = company.data.map(e => (e.contact));
+
   return (
     <div className="Company">
       <OveriewEdit />
       <ContactEdit data={showContact} />
-      <DocumentsEdit data={showData} addDocument={addDocument} />
-
+      <DocumentsEdit data={showDocument} addDocument={addDocument} />
     </div>
   )
 }
-
-export default Company

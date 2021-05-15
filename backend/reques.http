@@ -7,6 +7,20 @@ Content-Type: application/json
 
 {
     "name":"CONG TY TNHH ABC",
+    "department": [
+        {
+            "id": "1",
+            "name": "PHONG BAN 1",
+            "describe": "MO TA PHONG BAN 1",
+            "manage": "admin"
+        },
+        {
+            "id": "2",
+            "name": "PHONG BAN 2",
+            "describe": "MO TA PHONG BAN 2",
+            "manage": "admin"
+        }
+    ],
     "documents": {
         "id":"1",
         "title":" linh vuc hoat dong",
@@ -20,8 +34,8 @@ Content-Type: application/json
 
     },
     "pic": "hien"
-
 }
+
 ####
 POST  http://localhost:3000/company/documents
 Content-Type: application/json
@@ -30,6 +44,7 @@ Content-Type: application/json
     "title": "hien",
     "description": "hien"
 }
+
 ####
 PUT   http://localhost:3000/company/60806e2901050d0140e41905
 Content-Type: application/json
@@ -43,11 +58,6 @@ Content-Type: application/json
     "pic":"hien123",
     "notes":"hien123"
 }
-
-
-
-
-
 
 ### department
 POST  http://localhost:3000/department

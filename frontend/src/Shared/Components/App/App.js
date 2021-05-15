@@ -18,10 +18,10 @@ class App extends Component {
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/department`} component={Department} />
-                    <Route exact path={`${path}/department/detail:id`} component={DetailDepartment} />
                 </Switch>
             </div>
         );
     }
 }
+
 export default withRouter(App);

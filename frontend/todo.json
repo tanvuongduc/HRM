@@ -1,0 +1,33 @@
+{
+    "department": [
+        {
+            "id": "1234567",
+            "name": "CONG TY TNHH ABC",
+            "department": [
+                {
+                    "id": "1",
+                    "name": "PHONG BAN 1",
+                    "describe": "MO TA PHONG BAN 1",
+                    "manage": "admin"
+                },
+                {
+                    "id": "2",
+                    "name": "PHONG BAN 2",
+                    "describe": "MO TA PHONG BAN 2",
+                    "manage": "admin"
+                }
+            ],
+            "documents": {
+                "id": "1",
+                "title": " linh vuc hoat dong",
+                "description": " hoat dong trong linh vuc IT"
+            },
+            "contact": {
+                "phone": "0981234567",
+                "domain": "https://www.google.com.vn",
+                "email": "anhcachon@gmail.com",
+                "address": "me linh ha noi"
+            }
+        }
+    ]
+}
