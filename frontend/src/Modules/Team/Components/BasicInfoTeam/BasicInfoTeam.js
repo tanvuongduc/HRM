@@ -4,6 +4,7 @@ import './BasicInfoTeam.scss';
 import {Container, Grid, } from '@material-ui/core';
 
 
+
 class BasicInfoTeam extends Component {
     constructor(props) {
         super(props);

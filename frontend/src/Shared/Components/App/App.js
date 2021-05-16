@@ -14,7 +14,7 @@ class App extends React.Component {
                 <Switch>
                     <Route path={`${path}/exam`} component={Exam} />
                     <Route path={`${path}/team`} component={MainTeam} />
-                    <Route path={`${path}/notauthorized`} component={NotAuthorized} />
+                    {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
                 </Switch>
             </div>
         );

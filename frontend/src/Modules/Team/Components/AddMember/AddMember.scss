@@ -1,0 +1,13 @@
+.showList{
+    position: fixed;
+    width: 800px;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border: 1px solid;
+    padding: 5px;
+    background-color: white;
+}
+.hidenList{
+    display: none;
+}

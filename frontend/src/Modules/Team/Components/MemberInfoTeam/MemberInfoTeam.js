@@ -20,15 +20,7 @@ class MemberInfoTeam extends Component {
 
         return (
             <Grid container className="MemberInfoTeam">
-                <TableContainer>
-                    <Grid container>
-                        <Grid item xs={10}>
-                            <h3>Thông tin thành viên team</h3>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <p>add thanhf vien</p>
-                        </Grid>
-                    </Grid>
+                <TableContainer>                    
                     <Table size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
