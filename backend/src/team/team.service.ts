@@ -63,7 +63,7 @@ export class TeamService {
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
-            department: team.achievements,
+            department: team.department,
             sologan: team.sologan,
             createAt: team.createAt
         }
