@@ -13,9 +13,7 @@ class ItemMember extends Component {
   render() {
     const { member, avatarUser } = this.props;
     const styleChoosed = {
-      background: "rgb(21,116,173)",
-      background:
-        "linear-gradient(90deg, rgba(21,116,173,1) 0%, rgba(20,138,218,1) 72%, rgba(29,148,236,1) 100%, rgba(16,133,159,1) 100%)",
+      backgroundColor: "rgb(13, 100, 151)"
     };
 
     return (
@@ -49,6 +47,9 @@ class ItemMember extends Component {
           ) : (
             ""
           )}
+          <div className="item-member__info-detail">
+            
+          </div>
         </div>
       </Fragment>
     );
