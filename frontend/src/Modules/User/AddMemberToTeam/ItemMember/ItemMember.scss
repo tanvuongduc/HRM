@@ -1,3 +1,9 @@
+@mixin labelInfoUser {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .item-member {
     width: 100%;
     background-color: rgb(13, 143, 218);
@@ -55,16 +61,30 @@
     &__info-detail {
         width: 100%;
         height: 50px;
-        background-color: rgb(25, 230, 178);
         z-index: 150;
         margin-top: 13%;
         margin-left: -57%;
         display: none;
         transition: 200ms;
+        padding-left: 70px;
+
+        .info-detail__email {
+            @include labelInfoUser();
+        }
+
+        .info-detail__phone-number {
+            @include labelInfoUser();
+        }
+
+        span {
+            padding-left: 7px;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
     }
 
 }
-
 
 .item-member:hover {
     transition: 200ms;

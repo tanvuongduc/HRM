@@ -2,7 +2,7 @@ import React from "react";
 import { Fragment } from "react";
 import { Component } from "react";
 import "./ItemMember.scss";
-import { FaCheck, FaThumbsDown } from "react-icons/fa";
+import { FaCheck, FaThumbsDown, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 class ItemMember extends Component {
   constructor(props) {
@@ -49,7 +49,8 @@ class ItemMember extends Component {
             ""
           )}
           <div className="item-member__info-detail">
-              <p>{member.email}</p>
+              <label className="info-detail__phone-number"><FaPhoneAlt/> <span>{member.phone}</span></label><br></br>
+              <label className="info-detail__email"><FaEnvelope/> <span>{member.email}</span></label><br></br>
           </div>
         </div>
       </Fragment>
