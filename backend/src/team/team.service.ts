@@ -14,12 +14,14 @@ export class TeamService {
 
     async insertTeam(
         name: String,
+        leader: String,
         members: Employee,
         department: String,
         sologan: String
     ) {
         const newTeam = new this.teamModel({
             name,
+            leader,
             members,
             department,
             sologan
@@ -60,6 +62,7 @@ export class TeamService {
         const team = await this.findTeam(id);
         return {
             id: team.id,
+            leader: team.leader,
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
@@ -79,9 +82,10 @@ export class TeamService {
         }));
     }
     async getTeams() {
-        const teams = await this.teamModel.find().exec();
+        const teams = await this.teamModel.find().populate('leader').exec();
         return teams.map(team => ({
             id: team.id,
+            leader: team.leader,
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
@@ -92,7 +96,7 @@ export class TeamService {
     async findTeam(id: String): Promise<Team> {
         let team: any;
         try {
-            team = await this.teamModel.findById(id).exec();
+            team = await this.teamModel.findById(id).populate('leader').exec();
         } catch (error) {
             throw new NotFoundException('Could not find Team.');
         }
