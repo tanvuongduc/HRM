@@ -38,19 +38,17 @@ export class CompanyService {
         }));
     }
     async insertDocument(
+        id: string,
         title: string,
         description: string
     ) {
         const data = {
-            documents: {
-                title,
-                description
-            }
+            id,
+            title,
+            description
         }
-        const response = await this.companyModel.find().populate('')
-        const documents = response.map(prod => (prod.documents));
-
-        console.log(data)
+        const document = await this.companyModel.updateOne({ $push: { documents: data } })
+        return ({ success: true })
     }
     //update Company
     // async updateCompany(

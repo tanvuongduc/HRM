@@ -6,9 +6,8 @@ export const CompanySchema = new mongoose.Schema({
         required: true
     },
     documents: {
-        id: String,
-        title: String,
-        description: String
+        type: Array,
+        default: []
     },
     contact: {
         phone: Number,

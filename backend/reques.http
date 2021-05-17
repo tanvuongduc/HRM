@@ -7,25 +7,7 @@ Content-Type: application/json
 
 {
     "name":"CONG TY TNHH ABC",
-    "department": [
-        {
-            "id": "1",
-            "name": "PHONG BAN 1",
-            "describe": "MO TA PHONG BAN 1",
-            "manage": "admin"
-        },
-        {
-            "id": "2",
-            "name": "PHONG BAN 2",
-            "describe": "MO TA PHONG BAN 2",
-            "manage": "admin"
-        }
-    ],
-    "documents": {
-        "id":"1",
-        "title":" linh vuc hoat dong",
-        "description": " hoat dong trong linh vuc IT"
-    },
+    "documents": [],
     "contact": {
         "phone": "0981234567",
         "domain": "https://www.google.com.vn",
@@ -40,7 +22,7 @@ Content-Type: application/json
 POST  http://localhost:3000/company/documents
 Content-Type: application/json
 
-{
+{   "id": "5",
     "title": "hien",
     "description": "hien"
 }
