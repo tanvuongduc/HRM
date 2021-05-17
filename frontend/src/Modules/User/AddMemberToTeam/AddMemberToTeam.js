@@ -10,8 +10,8 @@ class AddMemberToTeam extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        idItemChoosed: null, 
-        searchMember: '',
+      idItemChoosed: null, 
+      searchMember: '',
       listMembers: [],
       listMemberChoosed: []
     };

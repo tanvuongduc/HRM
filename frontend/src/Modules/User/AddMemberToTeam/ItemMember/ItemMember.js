@@ -15,6 +15,7 @@ class ItemMember extends Component {
     const styleChoosed = {
       backgroundColor: "rgb(13, 100, 151)"
     };
+    console.log(member);
 
     return (
       <Fragment>
@@ -48,7 +49,7 @@ class ItemMember extends Component {
             ""
           )}
           <div className="item-member__info-detail">
-            
+              <p>{member.email}</p>
           </div>
         </div>
       </Fragment>
