@@ -17,7 +17,7 @@ const Root = (
     <Fragment>
       <Switch>
         <Suspense>
-          <Route
+          {/* <Route
             exact
             path="/"
             render={() => {
@@ -43,9 +43,12 @@ const Root = (
             render={() => {
               return isLogged ? <App></App> : <Redirect to="/login"></Redirect>;
             }}
-          ></Route>
+          ></Route> */}
           <Route path="/user">
             <User />
+          </Route>
+          <Route path="/app">
+            <App />
           </Route>
         </Suspense>
       </Switch>

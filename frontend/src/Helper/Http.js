@@ -40,6 +40,7 @@ export class Http {
     });
   };
 
+ 
   static delete = (endPoint, id) => {
     return Axios.delete(BASE_URL + endPoint + "/" + id, {
       headers: this._getHeader(),

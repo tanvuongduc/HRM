@@ -51,7 +51,7 @@ class AppHeader extends React.Component {
                     <Col xs="8"></Col>
                     <Col xs="2">
                         <Dropdown nav isOpen={this.state.dropdownUserOpen} toggle={this.toggleUser}>
-                            <DropdownToggle nav caret>{AuthService.userInfo.first_name}</DropdownToggle>
+                            {/* <DropdownToggle nav caret>{AuthService.userInfo.first_name}</DropdownToggle> */}
                             <DropdownMenu>
                                 <DropdownItem>Info</DropdownItem>
                                 <DropdownItem>Change Passworld</DropdownItem>
