@@ -35,7 +35,7 @@ export class UsersService {
     }
 
     async getUsers() {
-        const users = await this.userModel.find().select({ name: 1, teams: 1 }).exec();
+        const users = await this.userModel.find().exec();
         return users.map(user => ({
             id: user.id,
             name: user.name,
