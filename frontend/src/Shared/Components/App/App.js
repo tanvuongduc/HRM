@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
-import AppSidebar from '../AppSidebar/AppSidebar';
-import Company from '../../../Modules/Company/Company.jsx';
+// import AppSidebar from '../AppSidebar/AppSidebar';
+import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
 import { Department } from '../../../Modules/Department/Department';
 

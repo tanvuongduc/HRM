@@ -15,7 +15,7 @@ const Contact = ({ data }) => {
                     <i className="fa fa-envelope" />{' '}Email : {e.email}
                 </div>
                 <div>
-                    <i className="fa fa-map-marker" />{' '}Adress : {e.address}
+                    <i className="fa fa-map-marker" />{' '}Address : {e.address}
                 </div>
             </div>
         )

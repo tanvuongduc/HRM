@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import Contact from "./Components/Contact/Contact.jsx"
-import Overiew from "./Components/Overiew/Overview.jsx"
-import Document from "./Components/Document/Document.jsx"
+import Contact from "./Components/Contact/Contact"
+import Overiew from "./Components/Overiew/Overview"
+import Document from "./Components/Document/Document"
 import { Http } from "./Shared/Index"
 import Div from "./CssCompany"
 

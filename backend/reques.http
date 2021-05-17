@@ -51,7 +51,6 @@ Content-Type: application/json
     "description": "description"
 }
 
-
 ### get all
 GET http://localhost:3000/department/
 ####

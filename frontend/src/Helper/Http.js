@@ -2,7 +2,6 @@ import Axios from "axios";
 import { BASE_URL } from "../Constances/const";
 
 export class Http {
-  constructor() { }
 
   static _getHeader() {
     return {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Http } from '../../Helper/Http'
 import { DetailDepartment } from './Components/DetailDepartment/DetailDepartment';

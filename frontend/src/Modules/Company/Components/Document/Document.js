@@ -1,13 +1,13 @@
 import React from 'react'
-import ModalAdd from './ModalAdd.jsx'
+import ModalAdd from './ModalAdd'
 import Div from './CssDocument'
 
 const Document = ({ data, addDocument }) => {
-    const showData = data.map((e, i) => {
+    const showData = data.map((event, index) => {
         return (
-            <div key={i}>
-                <h2>{e.title}hihi</h2>
-                <p>{e.description}hahah</p>
+            <div key={index}>
+                <h3>{event.title}</h3>
+                <p>{event.description}</p>
             </div>
         )
     });
