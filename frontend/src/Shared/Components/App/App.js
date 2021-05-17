@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import AppSidebar from '../AppSidebar/AppSidebar';
-import Company from '../../../Modules/Company/Company';
+import Company from '../../../Modules/Company/Company.jsx';
 import Career from '../../../Modules/Career/Career';
 import { Department } from '../../../Modules/Department/Department';
-import { DetailDepartment } from '../../../Modules/Department/Components/DetailDepartment/DetailDepartment';
 
 class App extends Component {
     render() {
