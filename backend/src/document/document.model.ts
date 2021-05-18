@@ -2,14 +2,14 @@ import * as mongoose from 'mongoose';
 
 
 
-export const UploadSchema = new mongoose.Schema({
+export const DocumentSchema = new mongoose.Schema({
     type: {type:String, require: true},
     link: {type: String, require: true},
     createdAt: {type: Date, default: Date.now()},
 })
 
 
-export interface Upload extends mongoose.Document{
+export interface Document extends mongoose.Document{
     id:String;
     type: String;
     link: String;
