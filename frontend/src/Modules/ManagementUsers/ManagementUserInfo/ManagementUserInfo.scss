@@ -1,0 +1,19 @@
+@import '../../../Styles/variables';
+
+.management-user-info {
+    padding: 50px 70px;
+
+    .user-info {
+        &__title {
+            font-size: 35px;
+            color: $c-primary;
+            border-bottom: 2px solid $c-primary;
+        }
+
+        &__detail {
+            width: 100%;
+            margin-top: 2em;
+        }
+
+    }
+}

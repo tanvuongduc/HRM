@@ -9,6 +9,7 @@ import { AuthService } from "./Shared";
 import App from "./Shared/Components/App/App";
 import Login from "./Modules/Org/Components/Login/Login";
 import User from "./Modules/User/User";
+import ManagementUsers from "./Modules/ManagementUsers/ManagementUsers";
 
 const isLogged = !!AuthService.userInfo;
 
@@ -49,6 +50,9 @@ const Root = (
           </Route>
           <Route path="/app">
             <App />
+          </Route>
+          <Route path="/management/users">
+            <ManagementUsers/>
           </Route>
         </Suspense>
       </Switch>

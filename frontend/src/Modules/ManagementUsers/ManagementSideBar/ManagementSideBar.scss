@@ -1,0 +1,33 @@
+
+@import '../../../Styles/variables';
+
+.management-users__sidebar {
+    height: 100vh;
+    background-color: $c-primary;
+   padding-top: 45px;
+
+    .sidebar__nav-users {
+        padding: 10px 40px;
+        cursor: pointer;
+        transition: 200ms;
+
+        .nav-users__icon {
+            color: #ffff;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .nav-users__title {
+            margin-left: 15px;
+            color: #ffff;
+            font-size: 25px;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+    }
+
+    .sidebar__nav-users:hover {
+        transition: 200ms;
+        background-color: rgb(36, 82, 209);
+    }
+}
