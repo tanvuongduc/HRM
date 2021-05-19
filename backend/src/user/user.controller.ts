@@ -4,9 +4,7 @@ import {
     Post,
     Body,
     Get,
-    Param,
     Patch,
-    Query,
     UseGuards
 } from '@nestjs/common';
 
@@ -16,7 +14,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @Controller('users')
 export class UsersController {
 
-    
+
     constructor(private readonly usersService: UsersService) { }
 
 
