@@ -141,7 +141,32 @@ export class UsersService {
             teams: user.teams
         };
     }
-
+    async findOne(email: String) {
+        let user
+        try {
+            user = await this.userModel.findOne().where({email:email}).exec();
+        } catch (error) {
+            throw new NotFoundException('Could not find user.');
+        }
+        if (!user) {
+            throw new NotFoundException('Could not find user.');
+        }
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password
+            // birthday: user.birthday,
+            // adress: user.adress,
+            // certificate: user.certificate,
+            // phone: user.phone,
+            // socialNetwork: user.socialNetwork,
+            // bank: user.bank,
+            // status: user.status,
+            // avatar: user.avatar,
+            // teams: user.teams
+        };
+    }
     async updateUser(
         uid: String,
         name: String,
