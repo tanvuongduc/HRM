@@ -5,30 +5,16 @@ import { FaEdit } from "react-icons/fa";
 class BasicInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userName: "",
-      birthday: "",
-      address: "",
-      certificate: "",
-    };
+    this.state = {};
   }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      userName: nextProps.userName,
-      birthday: nextProps.birthday,
-      address: nextProps.address,
-      certificate: nextProps.certificate,
-    });
-  }
-
+  
   isDisplayEditInfo = (code, title, value) => {
     console.log(code, title, value);
     this.props.onShowEditInfo(code, title, value);
   };
 
   render() {
-    let { userName, birthday, address, certificate } = this.state;
+    let { userName, birthday, address, certificate } = this.props;
     return (
       <Fragment>
         <div className="details__card basicInfo">

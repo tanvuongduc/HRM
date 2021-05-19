@@ -2,7 +2,7 @@ import React from "react";
 import { Fragment } from "react";
 import { Component } from "react";
 import "./ItemMember.scss";
-import { FaCheck, FaThumbsDown } from "react-icons/fa";
+import { FaCheck, FaThumbsDown, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 class ItemMember extends Component {
   constructor(props) {
@@ -13,10 +13,9 @@ class ItemMember extends Component {
   render() {
     const { member, avatarUser } = this.props;
     const styleChoosed = {
-      background: "rgb(21,116,173)",
-      background:
-        "linear-gradient(90deg, rgba(21,116,173,1) 0%, rgba(20,138,218,1) 72%, rgba(29,148,236,1) 100%, rgba(16,133,159,1) 100%)",
+      backgroundColor: "rgb(13, 100, 151)"
     };
+    console.log(member);
 
     return (
       <Fragment>
@@ -49,6 +48,10 @@ class ItemMember extends Component {
           ) : (
             ""
           )}
+          <div className="item-member__info-detail">
+              <label className="info-detail__phone-number"><FaPhoneAlt/> <span>{member.phone}</span></label><br></br>
+              <label className="info-detail__email"><FaEnvelope/> <span>{member.email}</span></label><br></br>
+          </div>
         </div>
       </Fragment>
     );

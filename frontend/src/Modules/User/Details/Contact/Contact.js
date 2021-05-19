@@ -13,19 +13,10 @@ class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phoneNumber: '',
-      email: '',
-      socialNetwork: []
+     
     };
   }
   
-  componentWillReceiveProps = (nextProps) => {
-    this.setState({
-      phoneNumber: nextProps.phoneNumber,
-      email: nextProps.email,
-      socialNetwork: nextProps.socialNetwork
-    });
-  }
 
   isDisplayEditInfo = (code, title, value) => {
     console.log(code, title, value);
@@ -33,7 +24,7 @@ class Contact extends Component {
   }
 
   render() {
-    let { phoneNumber, email, socialNetwork } = this.state;
+    let { phoneNumber, email, socialNetwork } = this.props;
     const socialNetworkAcc = socialNetwork.map((s, index) => {
       return (
         <div className="item-info" key={index}>

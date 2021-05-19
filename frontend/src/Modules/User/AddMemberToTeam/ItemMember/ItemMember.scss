@@ -1,8 +1,13 @@
+@mixin labelInfoUser {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .item-member {
     width: 100%;
-    background: rgb(29, 180, 242);
-    background: linear-gradient(90deg, rgba(29, 180, 242, 1) 0%, rgba(29, 211, 236, 1) 68%, rgba(22, 221, 240, 1) 100%, rgba(16, 133, 159, 1) 100%);
-    height: 80px;
+    background-color: rgb(13, 143, 218);
+    min-height: 80px;
     overflow: hidden;
     border-radius: 10px;
     padding: 9px 15px;
@@ -11,6 +16,7 @@
     position: relative;
     margin-bottom: 0.6em;
     transition: 250ms;
+    animation: dropUp ease 0.3s forwards;
 
     &__avatar {
         width: 50px;
@@ -52,15 +58,60 @@
 
     }
 
+    &__info-detail {
+        width: 100%;
+        height: 50px;
+        z-index: 150;
+        margin-top: 13%;
+        margin-left: -57%;
+        display: none;
+        transition: 200ms;
+        padding-left: 70px;
 
+        .info-detail__email {
+            @include labelInfoUser();
+        }
 
+        .info-detail__phone-number {
+            @include labelInfoUser();
+        }
+
+        span {
+            padding-left: 7px;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+    }
 
 }
 
-
 .item-member:hover {
     transition: 200ms;
-    background: rgb(21, 116, 173);
-    background:
-        linear-gradient(90deg, rgba(21, 116, 173, 1) 0%, rgba(20, 138, 218, 1) 72%, rgba(29, 148, 236, 1) 100%, rgba(16, 133, 159, 1) 100%);
+    animation: dropDown linear 0.3s forwards;
+}
+
+.item-member:hover .item-member__info-detail {
+    transition: 3000ms;
+    display: block;
+    
+}
+
+@keyframes dropDown {
+    from {
+        height: 84px;
+        
+    }
+    to {
+        height: 150px;
+    }
+}
+
+@keyframes dropUp {
+    from {
+        height: 150px;
+    }
+    to {
+        height: 84px;
+    }
 }

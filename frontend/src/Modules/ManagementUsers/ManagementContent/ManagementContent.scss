@@ -1,0 +1,43 @@
+@import '../../../Styles/variables';
+
+.management-users__content {
+    height: 100vh;
+    background-color: #ffff;
+    padding: 50px 45px;
+
+    .management-users__add-user {
+        float: right;
+        margin-bottom: 5px;
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            padding: 15px 20px;
+            width: auto;
+            color: #ffff;
+            font-size: 17px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background-color: $c-primary;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: rgb(19, 65, 149);
+        }
+
+    }
+
+    .content__table-header {
+        width: 100%;
+        height: 50px;
+        background-color: $c-primary;
+        color: #ffff;
+    }
+
+    .content__table-body {
+
+       
+    }
+
+}
