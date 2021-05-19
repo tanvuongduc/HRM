@@ -16,51 +16,52 @@ export class TeamController {
 
     @Post()
     async insertTeam(
+        @Body('leader') leader: String,
         @Body('name') name: String,
         @Body('member') member: Employee,
         @Body('department') department: String,
         @Body('sologan') sologan: String
     ) {
-        const res = await this.teamService.insertTeam(name, member, department, sologan);
+        const res = await this.teamService.insertTeam(name, leader, member, department, sologan);
         return res;
     }
 
     @Post('add/members')
     async insertMembers(
-        @Body('members')ids: [string],
-        @Query('team')teamId: string
-    ){
+        @Body('members') ids: [string],
+        @Query('team') teamId: string
+    ) {
         const res = this.teamService.insertMembers(ids, teamId);
         return res;
     }
     @Delete('remove/members')
     async removeMembers(
-        @Body('members')ids: [string],
-        @Query('team')teamId: string
-    ){
+        @Body('members') ids: [string],
+        @Query('team') teamId: string
+    ) {
         const res = this.teamService.removeMembers(ids, teamId);
         return res;
     }
     @Get('get/members')
     async getMembers(
-        @Query('team')teamId: string
-    ){
+        @Query('team') teamId: string
+    ) {
         const res = this.teamService.getMembers(teamId);
         return res;
     }
 
     @Get('department')
-    async getDepartmentTeam(@Query('dpm')department: String){
+    async getDepartmentTeam(@Query('dpm') department: String) {
         const res = await this.teamService.getDepartmentTeam(department);
         return res;
     }
     @Get('team')
-    async getSingleTeam(@Query('id')id: String){
+    async getSingleTeam(@Query('id') id: String) {
         const res = await this.teamService.getSingleTeam(id);
         return res;
     }
     @Get()
-    async getTeams(){
+    async getTeams() {
         const res = await this.teamService.getTeams();
         return res;
     }

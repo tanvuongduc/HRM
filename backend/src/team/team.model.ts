@@ -1,15 +1,8 @@
 import * as mongoose from 'mongoose';
 
 
-
-// interface module {
-//     content: String,    // Nội dung công việc phải làm sau khi team phân tích mission content
-//     status: Boolean,    // Đang làm, hoàn thành
-//     evaluate: String,   //Đánh giá
-// }
-
-
 export const TeamSchema = new mongoose.Schema({
+    leader: {type: mongoose.Types.ObjectId, require: true, ref: 'User'},
     name: { type: String, require: true },
     sologan: {type:String},
     rate: { type: Number, require: true, default: 0 },
@@ -28,6 +21,7 @@ export interface Employee {
 }
 export interface Team extends mongoose.Document {
     id: String;
+    leader: String;
     name: String;
     sologan: String;
     rate: Number;

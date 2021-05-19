@@ -17,7 +17,7 @@ export interface Bank {
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  avatar: {type:String},
+  avatar: {type: mongoose.Types.ObjectId, ref: 'Upload'},
   birthday: { type: Date, required: true },
   adress: { type: String, require: true },
   certificate: { type: String },

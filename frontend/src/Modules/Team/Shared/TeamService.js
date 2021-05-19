@@ -7,6 +7,7 @@ const API_ENDPOINT = {
   GETBASICINFOTEAM: 'teams/team?id=',
   GETLISTMEMBERTEAM: 'teams/get/members?team=',
   GETLISTUSER: 'users',
+  GETUSERINFO: 'users/user?id=',
 
 
   POSTREMOVEMEMBER: 'teams/remove/members?team=',
@@ -32,6 +33,9 @@ class TeamService {
   getListUser() {
     return Http.get(API_ENDPOINT.GETLISTUSER);
   }
+  getUserInfo(id) {
+    return Http.get(API_ENDPOINT.GETUSERINFO+id);
+  }
 
   /////////////////POST
   
@@ -41,7 +45,7 @@ class TeamService {
 
   ////////////////DELETE
   postRemoveMember(id, data){
-    return Axios.delete(API_ENDPOINT.POSTREMOVEMEMBER + id, data, { Authorization: `Bearer ${window.localStorage.getItem("token") || ""}`});
+    return Http.deleteData(API_ENDPOINT.POSTREMOVEMEMBER + id, data);
   }
   
 }

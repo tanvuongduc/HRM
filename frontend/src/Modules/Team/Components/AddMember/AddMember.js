@@ -5,8 +5,8 @@ import {Fragment} from 'react';
 import TeamService from '../../Shared/TeamService';
 
 import { ClickAwayListener } from '@material-ui/core';
-import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
-
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Icon } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 class AddMember extends Component {
     constructor(props) {
         super(props);
@@ -39,9 +39,13 @@ class AddMember extends Component {
         return (
             <ClickAwayListener onClickAway={() => this.handleClickAway()}>
                 <div>
-                    <button type="button" onClick={() => this.handleClick()}>
+                    <Button variant="contained"
+                        color="primary"
+                        size="small"
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={() => this.handleClick()}>
                         Thêm thành viên
-                    </button>
+                    </Button>
                     <div className={this.state.setOpen ? "showList" : "hidenList"}>
                         <h3>Danh sách nhân viên</h3>
                         <TableContainer>

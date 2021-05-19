@@ -8,6 +8,7 @@ import { MissionModule } from './mission/mission.module';
 import { TimeoffModule } from './timeoff/timeoff.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import {BASEPATH} from './base'
+import { DocumentModule } from './document/document.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import {BASEPATH} from './base'
     UserModule,
     TeamModule,
     MissionModule,
-    TimeoffModule],
+    TimeoffModule,
+    DocumentModule],
   controllers: [AppController],
   providers: [AppService],
 })

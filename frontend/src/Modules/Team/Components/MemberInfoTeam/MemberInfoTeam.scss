@@ -4,4 +4,19 @@
     border-radius: 5px;
     background-color: white;
     min-height: 400px;
+    .MuiTableRow-head{
+        background-color: #28b76b;
+        .MuiTableCell-head{
+            font-weight: bold;
+        }
+    }
+
+    .odd{
+        background-color: #f4fcf6;
+    }
+    .MuiTableBody-root{
+        .MuiTableRow-root:hover{
+            background-color: #e7f4eb;
+        }
+    }
 }
