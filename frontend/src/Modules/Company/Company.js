@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import Contact from "./Components/Contact/Contact"
 import Overiew from "./Components/Overiew/Overview"
 import Document from "./Components/Document/Document"
-import { Http } from "./Shared/Index"
+import { Http } from "./Shared/index"
 import Div from "./CssCompany"
 
 export default function Company() {
