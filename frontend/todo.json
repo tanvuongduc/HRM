@@ -1,0 +1,28 @@
+{
+    "department": [
+        {
+            "department_id": "01",
+            "department_name": "phong ban 01",
+            "member_department": [
+                {
+                    "username": "admin",
+                    "company": "abc"
+                },
+                {
+                    "username": "admin01",
+                    "company": "abc"
+                }
+            ]
+        },
+        {
+            "department_id": "02",
+            "department_name": "phong ban 02",
+            "member_department": [
+                {
+                    "username": "user",
+                    "company": "abc"
+                }
+            ]
+        }
+    ]
+}

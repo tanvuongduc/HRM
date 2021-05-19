@@ -2,23 +2,24 @@ import Axios from "axios";
 import { BASE_URL } from "../Constances/const";
 
 export class Http {
-
   constructor() { }
 
   static _getHeader() {
     return {
-      "Authorization": `Bearer ${window.localStorage.getItem('token') || ''}`,
+      Authorization: `Bearer ${window.localStorage.getItem("token") || ""}`,
+      "Access-Control-Allow-Origin": "*"
     };
   }
 
-  static get = (endPoint, params) => {
+  static get = async (endPoint, params) => {
     const options = {
       headers: this._getHeader(),
     };
     if (params && Object.keys(params).length) {
       options.params = params;
     }
-    return Axios.get(BASE_URL + endPoint, options);
+    const res = await Axios.get(BASE_URL + endPoint, options);
+    return res;
   };
 
   static post = (endPoint, payload) => {

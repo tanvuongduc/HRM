@@ -1,18 +1,16 @@
-import React, { Suspense, Fragment } from 'react';
-import { Route, Redirect, Switch, BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-import './Styles/index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Suspense, Fragment } from "react";
+import { Route, Redirect, Switch, BrowserRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./Styles/index.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { AuthService } from './Shared';
-
 import App from './Shared/Components/App/App';
 import Login from './Modules/Org/Components/Login/Login';
 
 const isLogged = !!AuthService.userInfo;
 
-const Root = (
-
+export const Root = (
   <BrowserRouter>
     <Fragment>
       <Switch>
@@ -24,6 +22,7 @@ const Root = (
               <Redirect to="/app" ></Redirect>
             )
           }} ></Route>
+
           <Route path="/login" render={() => {
             return (!isLogged) ? (
               <Login></Login>
@@ -31,6 +30,7 @@ const Root = (
               <Redirect to="/app" ></Redirect>
             )
           }} ></Route>
+
           <Route path="/app" render={() => {
             return (isLogged) ? (
               <App></App>
@@ -45,5 +45,3 @@ const Root = (
 );
 
 ReactDOM.render(Root, document.getElementById('root'));
-
-export default Root;

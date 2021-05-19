@@ -1,0 +1,35 @@
+.item-info {
+    margin-bottom: 10px;
+    transition: 300ms;
+    label {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        font-size: 14px;
+        color: rgba(34, 33, 33, 0.582);
+    }
+
+    span {
+        font-size: 17px;
+    }
+
+   .edit-icon {
+       float: right;
+       font-size: 20px;
+       color: rgb(13, 223, 205);
+       cursor: pointer;
+       display: none;
+       margin-top: -10px;
+   }
+   
+}
+
+.item-info:hover .edit-icon{
+    display: block;
+}
+.item-info:hover {
+    
+    padding: 6px 10px;
+    transition: 300ms;
+    border-radius: 10px;
+    border: 1px solid rgba(175, 174, 174, 0.513);
+}

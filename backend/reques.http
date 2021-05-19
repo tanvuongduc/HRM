@@ -1,0 +1,71 @@
+
+GET http://localhost:3000/company
+
+####
+POST  http://localhost:3000/company
+Content-Type: application/json
+
+{
+    "name":"CONG TY TNHH ABC",
+    "documents": {
+        "id":"1",
+        "title":" linh vuc hoat dong",
+        "description": " hoat dong trong linh vuc IT"
+    },
+    "contact": {
+        "phone": "0981234567",
+        "domain": "https://www.google.com.vn",
+        "email": "anhcachon@gmail.com",
+        "address": "me linh ha noi"
+
+    },
+    "pic": "hien"
+
+}
+####
+PUT   http://localhost:3000/company/60806e2901050d0140e41905
+Content-Type: application/json
+
+{
+    "name":"hien123",
+    "domain":"hien123",
+    "overview":"hien123",
+    "address":"hien123",
+    "contact":"hien123",
+    "pic":"hien123",
+    "notes":"hien123"
+}
+
+
+
+
+
+
+### department
+POST  http://localhost:3000/department
+Content-Type: application/json
+
+{
+    "name": "hien",
+    "code": "code",
+    "description": "description"
+}
+
+
+### get all
+GET http://localhost:3000/department/
+####
+GET http://localhost:3000/department/60813df3550fc524589f2711
+
+####
+PUT  http://localhost:3000/department/60813df3550fc524589f2711
+Content-Type: application/json
+
+{
+    "name": "thai",
+    "code": "code 1",
+    "description": "description1"
+}
+
+###
+DELETE  http://localhost:3000/department/60813df3550fc524589f2711
