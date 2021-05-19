@@ -1,0 +1,41 @@
+@import '../../../../Styles/variables';
+
+.content__table-item {
+    .table-item__selected {
+        width: 5%;
+
+        input {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .table-item__id {
+        width: 18%;
+    }
+
+    .table-item__username {
+        width: 15%;
+    }
+
+    .table-item__email {
+        width: 20%;
+    }
+
+    .table-item__team {
+        width: 15%;
+    }
+
+    .table-item__status {
+        width: 10%;
+    }
+
+    .table-item__view-detail {
+        width: 5%;
+        font-size: 30px;
+        padding: 0 0 7px 0;
+        color: $c-primary;
+        cursor: pointer;
+    }
+
+}
