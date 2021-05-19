@@ -52,13 +52,13 @@ export class UsersService {
     }
 
 
-    async getMembers(id:String){
+    async getMembersByTeamId(id:String){
         const members = await this.userModel.find({teams:{$all:[id]}})
         return {
             members: members
         }
     }
-    async removeTeamOfUsers(
+    async removeTeamIdFromUsers(
         ids: [String],
         teamId: String
     ) {
@@ -91,7 +91,7 @@ export class UsersService {
         }
         return res;
     }
-    async insertTeamForUsers(
+    async insertTeamIdForUsers(
         ids: [String],
         teamId: String
     ) {
@@ -155,7 +155,7 @@ export class UsersService {
             id: user.id,
             name: user.name,
             email: user.email,
-            password: user.password
+            password: user.password,
             // birthday: user.birthday,
             // adress: user.adress,
             // certificate: user.certificate,

@@ -1,23 +1,29 @@
 import {
     Controller,
+    Request,
     Post,
     Body,
     Get,
     Param,
     Patch,
     Query,
+    UseGuards
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
 import { Bank, SocialNetwork } from './user.model'
-
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @Controller('users')
 export class UsersController {
+
+    
     constructor(private readonly usersService: UsersService) { }
 
+
+    @UseGuards(JwtAuthGuard)
     @Post()
-    //for admin
     async addUser(
+        @Body() req,
         @Body('name') name: string,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: string,
@@ -40,21 +46,28 @@ export class UsersController {
         return { id: generatedId };
     }
 
+
+
+    @UseGuards(JwtAuthGuard)
     @Get('user')
-    getUser(@Query('id') uid: string) {
-        return this.usersService.getSingleUser(uid);
+    getUser(
+        @Request() req
+    ) {
+        return this.usersService.getSingleUser(req.user.userId);
     }
+
+    @UseGuards(JwtAuthGuard)
     @Get()
-    // for admin
     async getAllUsers() {
+
         const Users = await this.usersService.getUsers();
         return Users;
     }
 
-    @Patch(':id')
-    //update info user
+    @UseGuards(JwtAuthGuard)
+    @Patch()
     async updateUser(
-        @Param('id') uid: string,
+        @Request() req,
         @Body('name') name: string,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: string,
@@ -65,9 +78,9 @@ export class UsersController {
         @Body('bank') bank: Bank,
         @Body('status') status: string
     ) {
-        
+
         let res = await this.usersService.updateUser(
-            uid,
+            req.user.userId,
             name,
             birthday,
             adress,
@@ -80,14 +93,15 @@ export class UsersController {
         );
         return res;
     }
+    @UseGuards(JwtAuthGuard)
     @Post('upload/avatar')
     async uploadAvatar(
-        @Query('id') uid: string,
+        @Request() req,
         @Body('data') data: string,
         @Body('type') type: string
-    ){
+    ) {
         let res = await this.usersService.uploadAvatar(
-            uid,
+            req.user.userId,
             data,
             type
         );
