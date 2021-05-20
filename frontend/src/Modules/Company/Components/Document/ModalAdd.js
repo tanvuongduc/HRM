@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Modal, ModalHeader, ModalBody, Form, Input, Label } from 'reactstrap'
 import Button from '@material-ui/core/Button'
 
-const ModalAdd = ({ addDocument }) => {
+const Modaladd = () => {
     const [modal, setModal] = useState(false);
     const [data, setdata] = useState('');
 
@@ -10,19 +10,14 @@ const ModalAdd = ({ addDocument }) => {
         setdata({ ...data, [event.target.name]: event.target.value })
     };
 
-    const addData = (event) => {
-        event.preventDefault();
-        addDocument(data)
-    };
-
     const toggle = () => setModal(!modal);
     return (
-        <>
+        <div>
             <Button variant="contained" color="primary" style={{ display: 'inline' }} onClick={toggle}>ADD</Button>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Create new document</ModalHeader>
                 <ModalBody>
-                    <Form onSubmit={addData}>
+                    <Form>
                         <Label>Enter title</Label>
                         <Input type='text' name='title' onChange={handerOnchange} value={data.title} />
                         <Label>Enter content</Label>
@@ -32,7 +27,8 @@ const ModalAdd = ({ addDocument }) => {
                     </Form>
                 </ModalBody>
             </Modal>
-        </>
-    );
+        </div>
+    )
 }
-export default ModalAdd;
+
+export default Modaladd;

@@ -1,23 +1,44 @@
-import React from 'react'
-import ModalAdd from './ModalAdd'
-import Div from './CssDocument'
+import React, { useState, useEffect } from 'react'
+import { Http } from '../../Shared/Index';
+import Modaladd from './Modaladd'
 
-const Document = ({ data, addDocument }) => {
-    const showData = data.map((event, index) => {
+const Document = () => {
+    const [dataDocument, setDataDocument] = useState([]);
+
+    const getDataDocument = async () => {
+        try {
+            const data = await Http.get('company')
+            data.data.map(event => {
+                return setDataDocument(event.documents)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
+    useEffect(() => {
+        getDataDocument();
+    }, []);
+
+    const showDocumentItem = dataDocument.map((event, index) => {
         return (
             <div key={index}>
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
+                <p><b>Title: </b>{event.title}</p>
+                <p><b>Description: </b>{event.description}</p><hr />
             </div>
         )
     });
+
     return (
-        <Div>
-            <div>
-                <h3>Document</h3><ModalAdd addDocument={addDocument} />
+        <div className="document-content">
+            <div className="document-header">
+                <h3>Document</h3><Modaladd />
             </div>
-            {showData}
-        </Div>
+            <div className="document-item">
+                {showDocumentItem}
+            </div>
+        </div>
     )
 }
+
 export default Document;
