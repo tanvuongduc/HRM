@@ -1,19 +1,22 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap'
 
-export const ModalAD = () => {
+const Modaladd = () => {
     const [modal, setModal] = useState(false);
-    const [data, setdata] = useState('');
+    const [dataDepartment, setDataDepartment] = useState({});
+
     const handerOnchange = (event) => {
-        setdata({ ...data, [event.target.name]: event.target.value })
+        setDataDepartment({ ...dataDepartment, [event.target.name]: event.target.value })
     };
+
     const addDepartment = (event) => {
         event.preventDefault();
     };
+
     const toggle = () => setModal(!modal);
     return (
-        <Fragment>
-            <Button color="danger" onClick={toggle}>+ Add</Button>
+        <div>
+            <Button color="danger" onClick={toggle}>+ Add Department</Button>
             <Modal isOpen={modal} fade={false} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Them phong ban</ModalHeader>
                 <ModalBody>
@@ -33,13 +36,15 @@ export const ModalAD = () => {
                         </FormGroup>
                         <FormGroup>
                             <Label>Mo ta phong ban</Label>
-                            <Input name='dsc' type='textarea' style={{resize: 'vertical'}} onChange={handerOnchange} />
+                            <Input name='dsc' type='textarea' style={{ resize: 'vertical' }} onChange={handerOnchange} />
                         </FormGroup>
                         <Button color="primary" onClick={toggle} type="submit" >Create</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
                     </Form>
                 </ModalBody>
             </Modal>
-        </Fragment>
+        </div>
     )
 }
+
+export default Modaladd;

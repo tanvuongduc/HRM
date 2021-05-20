@@ -9,7 +9,7 @@ const Department = () => {
         <div>
             <Switch>
                 <Route exact path={`${path}`} component={ItemDepartment} />
-                <Route exact path={`${path}/new`} component={DetailDepartment} />
+                <Route exact path={`${path}/detail:id`} component={DetailDepartment} />
             </Switch>
         </div>
     )
