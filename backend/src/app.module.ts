@@ -10,6 +10,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { BASEPATH } from './base'
 import { DocumentModule } from './document/document.module';
 import { AuthModule } from './auth/auth.module';
+import { DepartmentModule } from './department/department.module';
+import { CompanyModule } from './company/company.module';
+import { CertificateModule } from './certificate/certificate.module';
 
 @Module({
     imports: [
@@ -22,7 +25,10 @@ import { AuthModule } from './auth/auth.module';
         MissionModule,
         TimeoffModule,
         DocumentModule,
-        AuthModule],
+        AuthModule,
+        DepartmentModule,
+        CompanyModule,
+        CertificateModule],
     controllers: [AppController],
     providers: [AppService],
 })

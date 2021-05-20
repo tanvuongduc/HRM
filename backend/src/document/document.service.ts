@@ -16,23 +16,33 @@ export class DocumentService {
     ) { }
 
     async uploadFile(
-        id: String,
-        type: String,
         file: Express.Multer.File
     ) {
-        // get model by id
 
+
+        // get model by id
+        const extension = file.originalname.split('.')[file.originalname.split('.').length - 1];
+        const fileName = file.originalname.replace(extension, '') + Date.now();
+        let document = new this.documentModel({
+            fileName: fileName,
+            extension: extension
+        })
+        let folder = '';
 
         // save file into static folder 
-        switch (file.mimetype) {
-            case 'image/jpeg':
-                const path = `/image/${file.originalname}`
-                writeFileSync(BASEPATH + path, file.buffer);
-                return {
-                    msg: true,
-                    id: id,
-                    type: type
-                }
+        if (file.mimetype === 'image/jpeg') {
+            folder = 'image';
+        }
+        else {
+            folder = 'asset'
+        }
+        let path = `/${folder}/${fileName}.${extension}`;
+        writeFileSync(BASEPATH + path, file.buffer);
+        document.url = path;
+        const res = await document.save();
+        return {
+            status: "success",
+            id: res.id
         }
     }
 }

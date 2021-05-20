@@ -7,22 +7,20 @@ import { UsersService } from '../user/user.service'
 
 @Injectable()
 export class TeamService {
-
     constructor(
         @InjectModel('Team') private readonly teamModel: Model<Team>,
         private readonly usersService: UsersService
     ) { }
 
-    
     async insertTeam(
         name: String,
-        leader: String,
+        pic: String,
         department: String,
         sologan: String
     ) {
         const newTeam = new this.teamModel({
             name,
-            leader,
+            pic,
             department,
             sologan
         });
@@ -73,17 +71,34 @@ export class TeamService {
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
+            department: team.department,
             sologan: team.sologan,
             createAt: team.createAt
         }
     }
 
 
-    async getTeams() {
+    async getTeamsByDepartmentId(department: String) {
+        const teams = await this.teamModel.find().where({ department: department }).exec();
+        return teams.map(team => ({
+            id: team.id,
+            pic: team.pic,
+            name: team.name,
+            rate: team.rate,
+            achievements: team.achievements,
+            department: team.department,
+            sologan: team.sologan,
+            createAt: team.createAt
+        }));
+    }
+
+
+
+    async getAllTeams() {
         const teams = await this.teamModel.find().populate('pic').exec();
         return teams.map(team => ({
             id: team.id,
-            leader: team.pic,
+            pic: team.pic,
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
@@ -94,7 +109,7 @@ export class TeamService {
     async findTeamById(id: String): Promise<Team> {
         let team: any;
         try {
-            team = await this.teamModel.findById(id).populate('pic').exec();
+            team = await this.teamModel.findById(id).populate('pic').populate('department').exec();
         } catch (error) {
             throw new NotFoundException('Could not find Team.');
         }

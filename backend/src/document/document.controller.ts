@@ -17,12 +17,9 @@ export class DocumentController {
     @Post('file')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(
-        @UploadedFile() file: Express.Multer.File,
-        @Body('id') id: String,
-        @Body('type') type: String
-
+        @UploadedFile() file: Express.Multer.File
     ) {
-        return await this.documentService.uploadFile(id, type, file)
+        return await this.documentService.uploadFile(file)
     }
 
 }
