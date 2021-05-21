@@ -10,7 +10,10 @@ class AddNewUser extends Component {
     this.state = {
         certificate: "",
         socialNetwork: [],
-        bank: [],
+        bank: {
+          bankName: "",
+          bankNumber: ""
+        },
         status: "",
         teams: []
 

@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Component } from "react";
 import { FaRegEdit, FaTimes } from "react-icons/fa";
 import { AiFillEye } from "react-icons/ai";
+import { RiEdit2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "./LineUser.scss";
 
@@ -27,7 +28,12 @@ class LineUser extends Component {
           <td className="table-item__status">{user.status}</td>
           <th className="table-item__view-detail">
             <Link to="/management/users/user">
-              <AiFillEye onClick={() => this.props.onViewUserInfo(user)} />
+              <AiFillEye className="view-detail__icon" onClick={() => this.props.onViewUserInfo(user)} />
+            </Link>
+          </th>
+          <th className="table-item__edit-info">
+            <Link to="/management/users/edit">
+              <RiEdit2Fill className="edit-info__icon" onClick={() => this.props.onEditUserInfo(user)}/>
             </Link>
           </th>
         </tr>
