@@ -57,6 +57,7 @@ class ManagementContent extends Component {
         <LineUser
           user={user}
           onViewUserInfo={this.onViewUserInfo}
+          onEditUserInfo={this.props.onEditUserInfo}
         />
       );
     });
@@ -83,6 +84,7 @@ class ManagementContent extends Component {
                 <th>Email</th>
                 <th>Team</th>
                 <th>Status</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>

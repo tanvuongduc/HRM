@@ -27,15 +27,35 @@
     }
 
     .table-item__status {
-        width: 10%;
+        width: 12%;
     }
 
     .table-item__view-detail {
-        width: 5%;
+        width: 10%;
         font-size: 30px;
         padding: 0 0 7px 0;
-        color: $c-primary;
         cursor: pointer;
+
+        .view-detail__icon {
+            
+        }
+
+    }
+
+    .table-item__edit-info {
+        width: 5%;
+        font-size: 25px;
+        padding: 0 0 7px 0;
+        cursor: pointer;
+
+        .edit-info__icon {
+           color: rgb(107, 106, 106); 
+        }
+
+        .edit-info__icon:hover {
+            color: rgb(43, 42, 42); 
+        }
+        
     }
 
 }
