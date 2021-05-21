@@ -11,6 +11,9 @@ import {
 import { UsersService } from './user.service';
 import { Bank, SocialNetwork } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Query } from '@nestjs/common';
+
+
 @Controller('users')
 export class UsersController {
 
@@ -18,16 +21,17 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
 
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post()
     async addUser(
-        @Body() req,
-        @Body('name') name: string,
+        // @Body() req,
+        @Body('name') name: String,
         @Body('birthday') birthday: Date,
-        @Body('adress') adress: string,
-        @Body('certificate') certificate: string,
-        @Body('phone') phone: number,
-        @Body('email') email: string,
+        @Body('adress') adress: String,
+        @Body('certificate') certificate: String,
+        @Body('phone') phone: String,
+        @Body('email') email: String,
+        @Body('password') password: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
     ) {
@@ -38,6 +42,7 @@ export class UsersController {
             certificate,
             phone,
             email,
+            password,
             socialNetwork,
             bank,
         );
@@ -47,14 +52,21 @@ export class UsersController {
 
 
     @UseGuards(JwtAuthGuard)
-    @Get('user')
-    getUser(
+    @Get('myinfo')
+    getMyInfomation(
         @Request() req
     ) {
-        return this.usersService.getSingleUser(req.user.userId);
+        return this.usersService.getUserById(req.user.userId);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @Get('user')
+    getUserById(
+        @Query('id') id : String
+    ) {
+        return this.usersService.getUserById(id);
+    }
+
+    // @UseGuards(JwtAuthGuard)
     @Get()
     async getAllUsers() {
 
@@ -62,7 +74,9 @@ export class UsersController {
         return Users;
     }
 
-    @UseGuards(JwtAuthGuard)
+
+
+    // @UseGuards(JwtAuthGuard)
     @Patch()
     async updateUser(
         @Request() req,
@@ -72,6 +86,7 @@ export class UsersController {
         @Body('certificate') certificate: string,
         @Body('phone') phone: string,
         @Body('email') email: string,
+        @Body('password') pasword: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
         @Body('status') status: string
@@ -85,12 +100,15 @@ export class UsersController {
             certificate,
             phone,
             email,
+            pasword,
             socialNetwork,
             bank,
             status
         );
         return res;
     }
+
+    
     @UseGuards(JwtAuthGuard)
     @Post('upload/avatar')
     async uploadAvatar(

@@ -15,8 +15,9 @@ export class UsersService {
         birthday: Date,
         adress: String,
         certificate: String,
-        phone: number,
+        phone: String,
         email: String,
+        password: String,
         socialNetwork: SocialNetwork,
         bank: Bank,
     ) {
@@ -27,6 +28,7 @@ export class UsersService {
             certificate,
             phone,
             email,
+            password,
             socialNetwork,
             bank,
         });
@@ -76,15 +78,6 @@ export class UsersService {
                 res.push({
                     id: userSaved.id,
                     name: userSaved.name,
-                    // birthday: userSaved.birthday,
-                    // adress: userSaved.adress,
-                    // certificate: userSaved.certificate,
-                    // phone: userSaved.phone,
-                    // email: userSaved.email,
-                    // socialNetwork: userSaved.socialNetwork,
-                    // bank: userSaved.bank,
-                    // status: userSaved.status,
-                    // avatar: userSaved.avatar,
                     teams: userSaved.teams
                 })
             }
@@ -108,15 +101,6 @@ export class UsersService {
                 res.push({
                     id: userSaved.id,
                     name: userSaved.name,
-                    // birthday: userSaved.birthday,
-                    // adress: userSaved.adress,
-                    // certificate: userSaved.certificate,
-                    // phone: userSaved.phone,
-                    // email: userSaved.email,
-                    // socialNetwork: userSaved.socialNetwork,
-                    // bank: userSaved.bank,
-                    // status: userSaved.status,
-                    // avatar: userSaved.avatar,
                     teams: userSaved.teams
                 })
             }
@@ -175,6 +159,7 @@ export class UsersService {
         certificate: String,
         phone: String,
         email: String,
+        password: String,
         socialNetwork: SocialNetwork,
         bank: Bank,
         status: String
@@ -195,6 +180,9 @@ export class UsersService {
         if (email) {
             updatedUser.email = email;
         }
+        if(password){
+            updatedUser.password = password;
+        }
         if (adress) {
             updatedUser.adress = adress;
         }
@@ -202,10 +190,10 @@ export class UsersService {
             updatedUser.socialNetwork = socialNetwork;
         }
         if (bank) {
-            updatedUser.bank = bank
+            updatedUser.bank = bank;
         }
         if (status) {
-            updatedUser.status = status
+            updatedUser.status = status;
         }
         const res = await updatedUser.save();
         return {
