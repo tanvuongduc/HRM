@@ -15,7 +15,7 @@ export class DepartmentController {
 
     constructor(private readonly departmentService: DepartmentService) { }
 
-    @Post()
+    @Post('department')
     async insertDepartment(
         @Body('name') name: String,
         @Body('pic') pic: String,
@@ -34,6 +34,20 @@ export class DepartmentController {
         return res;
     }
 
+    @Patch('department')
+    async updateDepartmentById(
+        @Query('id') id: Number,
+        @Body('name') name: String,
+        @Body('pic') pic: String,
+        @Body('desc') desc: String,
+        @Body('documents') documents: [String]
+    ) {
+        const res = await this.departmentService.updateDepartmentById(id, name, pic, desc, documents);
+        return res;
+    }
+
+
+
 
     @Get()
     async getAllDepartments(
@@ -50,14 +64,20 @@ export class DepartmentController {
         return res;
     }
 
-    @Patch('department')
-    async updateDepartmentById(
-        @Query('id') id: Number,
-        @Body('name') name: String,
-        @Body('pic') pic: String,
-        @Body('desc') desc: String,
+    @Patch('teams')
+    async insertTeamsByDepartmentId(
+        @Query('department') id: Number,
+        @Body('teamsId') teamsId: [String]
     ) {
-        const res = await this.departmentService.updateDepartmentById(id, name, pic, desc);
+        const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
+        return res;
+    }
+    @Delete('teams')
+    async removeTeamsByDepartmentId(
+        @Query('department') id: Number,
+        @Body('teamsId') teamsId: [String]
+    ) {
+        const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);
         return res;
     }
 }

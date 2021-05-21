@@ -18,6 +18,7 @@ export class TeamService {
         department: String,
         sologan: String
     ) {
+        let user = await this.usersService.findUserById(pic)
         const newTeam = new this.teamModel({
             name,
             pic,
@@ -25,6 +26,9 @@ export class TeamService {
             sologan
         });
         const res = await newTeam.save();
+        if (user.teams.indexOf(res.id) > -1) {
+            user.teams.push(res.id)
+        }
         return {
             id: res.id
         };
@@ -63,7 +67,7 @@ export class TeamService {
     }
 
 
-    async getSingleTeamById(id: String) {
+    async getTeamById(id: String) {
         const team = await this.findTeamById(id);
         return {
             id: team.id,
@@ -76,7 +80,50 @@ export class TeamService {
             createAt: team.createAt
         }
     }
+    async getAllTeams() {
+        const teams = await this.teamModel.find().populate('pic').exec();
+        return teams.map(team => ({
+            id: team.id,
+            pic: team.pic,
+            name: team.name,
+            rate: team.rate,
+            achievements: team.achievements,
+            department: team.achievements,
+        }));
+    }
+    async insertDepartmentForTeamsId(
+        teamsId: [String],
+        departmentId: Number
+    ) {
+        let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
+        let teamsArr = [];
+        for (let team of teams) {
+            team.department = departmentId;
+            const res = await team.save();
+            teamsArr.push(res.id)
+        }
+        return {
+            teams: teamsArr
+        }
+    }
 
+    async removeDepartmentFromTeamsId(
+        teamsId: [String],
+        departmentId: Number
+    ) {
+        let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
+        let teamsArr = [];
+        for (let team of teams) {
+            if(team.department == departmentId){
+                team.department = null;
+                const res = await team.save();
+                teamsArr.push(res.id)
+            }          
+        }
+        return {
+            teams: teamsArr
+        }
+    }
 
     async getTeamsByDepartmentId(department: String) {
         const teams = await this.teamModel.find().where({ department: department }).exec();
@@ -92,19 +139,6 @@ export class TeamService {
         }));
     }
 
-
-
-    async getAllTeams() {
-        const teams = await this.teamModel.find().populate('pic').exec();
-        return teams.map(team => ({
-            id: team.id,
-            pic: team.pic,
-            name: team.name,
-            rate: team.rate,
-            achievements: team.achievements,
-            department: team.achievements,
-        }));
-    }
 
     async findTeamById(id: String): Promise<Team> {
         let team: any;

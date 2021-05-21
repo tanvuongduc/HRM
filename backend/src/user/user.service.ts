@@ -124,8 +124,8 @@ export class UsersService {
         return res;
     }
 
-    async getSingleUser(uid: String) {
-        const user = await this.findUser(uid);
+    async getUserById(uid: String) {
+        const user = await this.findUserById(uid);
         return {
             id: user.id,
             name: user.name,
@@ -141,7 +141,7 @@ export class UsersService {
             teams: user.teams
         };
     }
-    async findOne(email: String) {
+    async findInfoUserByEmail(email: String) {
         let user
         try {
             user = await this.userModel.findOne().where({email:email}).exec();
@@ -179,7 +179,7 @@ export class UsersService {
         bank: Bank,
         status: String
     ) {
-        const updatedUser = await this.findUser(uid);
+        const updatedUser = await this.findUserById(uid);
         if (name) {
             updatedUser.name = name;
         }
@@ -219,7 +219,7 @@ export class UsersService {
         type: String
     ) {
         const path = `/avatar/${uid}.${type}`;
-        const user = await this.findUser(uid);
+        const user = await this.findUserById(uid);
         if (user) {
 
             const data = new Buffer(avatar.split(',')[1], 'base64');
@@ -239,7 +239,7 @@ export class UsersService {
     //     }
     // }
 
-    private async findUser(id: String): Promise<User> {
+    async findUserById(id: String): Promise<User> {
         let user: any;
         try {
             user = await this.userModel.findById(id).exec();

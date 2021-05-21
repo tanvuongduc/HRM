@@ -22,7 +22,8 @@ export const CompanySchema = new mongoose.Schema({
             title: String,
             desc: String,
         }
-    }
+    },
+    documents:[{type: mongoose.Types.ObjectId, ref: 'Document'}]
 })
 
 
@@ -48,4 +49,5 @@ export interface Company extends mongoose.Document {
     pic: String;
     overviews?: [Overview];
     notes?: [Note];
+    documents?: [String]
 }

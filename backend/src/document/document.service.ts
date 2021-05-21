@@ -30,7 +30,7 @@ export class DocumentService {
         let folder = '';
 
         // save file into static folder 
-        if (file.mimetype === 'image/jpeg') {
+        if (file.mimetype.startsWith('image')) {
             folder = 'image';
         }
         else {

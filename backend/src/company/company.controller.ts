@@ -5,12 +5,14 @@ import {
     Patch
 } from '@nestjs/common';
 
-import { CompanyService } from './company.service'
-import { Overview, Note } from './company.model'
+import { CompanyService } from './company.service';
+import { Overview, Note } from './company.model';
 
 @Controller('company')
 export class CompanyController {
-    constructor(private readonly companyService: CompanyService) { }
+    constructor(
+        private readonly companyService: CompanyService,
+    ) { }
 
     @Get()
     async getCompany() {
@@ -21,16 +23,17 @@ export class CompanyController {
 
     @Patch()
     async updateCompany(
-        @Body('name')name: String,
-        @Body('domain')domain: String,
-        @Body('address')address: String,
-        @Body('email')email: String,
-        @Body('phone')phone: String,
-        @Body('pic')pic: String,
-        @Body('overviews')overviews: [Overview],
-        @Body('notes')notes: [Note]
+        @Body('name') name: String,
+        @Body('domain') domain: String,
+        @Body('address') address: String,
+        @Body('email') email: String,
+        @Body('phone') phone: String,
+        @Body('pic') pic: String,
+        @Body('overviews') overviews: [Overview],
+        @Body('notes') notes: [Note],
+        @Body('documents') documents: [String]
     ) {
-        const res = await this.companyService.updateCompany(name, domain, address, email, phone, pic, overviews, notes);
+        const res = await this.companyService.updateCompany(name, domain, address, email, phone, pic, overviews, notes, documents);
         return res;
     }
 }

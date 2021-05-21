@@ -1,16 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Company, Overview, Note } from './company.model'
+import { Company, Overview, Note } from './company.model';
+import { UsersService } from '../user/user.service'
 
 @Injectable()
 export class CompanyService {
     constructor(
         @InjectModel('Company') private readonly companyModel: Model<Company>,
+        private readonly usersService: UsersService
     ) { }
 
     async getCompany() {
-        const res = await this.companyModel.findOne().populate('pic').exec();
+        const res = await this.companyModel.findOne().populate('pic').populate('documents').exec();
         if (!res) {
             const company = new this.companyModel({})
             await company.save();
@@ -25,7 +27,8 @@ export class CompanyService {
             phone: res.phone,
             pic: res.pic,
             overviews: res.overviews,
-            notes: res.notes
+            notes: res.notes,
+            documents: res.documents
         }
     }
 
@@ -37,8 +40,10 @@ export class CompanyService {
         phone: String,
         pic: String,
         overviews: [Overview],
-        notes: [Note]
+        notes: [Note],
+        documents: [String]
     ) {
+        await this.usersService.findUserById(pic)
         let company = await this.findCompany();
         company.name = name;
         company.domain = domain;
@@ -48,6 +53,7 @@ export class CompanyService {
         company.pic = pic;
         company.overviews = overviews;
         company.notes = notes;
+        company.documents = documents
         const res = await company.save();
         return {
             id: res.id,
@@ -58,7 +64,8 @@ export class CompanyService {
             phone: res.phone,
             pic: res.pic,
             overviews: res.overviews,
-            notes: res.notes
+            notes: res.notes,
+            documents: res.documents
         }
 
     }

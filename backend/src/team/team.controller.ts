@@ -57,7 +57,7 @@ export class TeamController {
 
     @Get('team')
     async getSingleTeamById(@Query('id') id: String) {
-        const res = await this.teamService.getSingleTeamById(id);
+        const res = await this.teamService.getTeamById(id);
         return res;
     }
 
