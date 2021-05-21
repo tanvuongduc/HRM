@@ -23,13 +23,11 @@ class ManagementContent extends Component {
     this.props.onViewUserInfo(dataUser);
   };
 
-
   getUsers = async () => {
     const res = await Http.get("users");
     this.setState({
       listUsers: res.data,
     });
-    console.log(this.state);
   };
 
   onDisplayAddNewUser = () => {
@@ -40,60 +38,63 @@ class ManagementContent extends Component {
 
   onSubmitAddNewUser = () => {
     this.setState({
-      onSubmitAddNewUser: true
+      onSubmitAddNewUser: true,
     });
-  }
+  };
 
   onCloseAddNewUser = () => {
     this.setState({
-      onDisplayAddNewUser: false
+      onDisplayAddNewUser: false,
     });
-  }
+  };
 
   render() {
     const { listUsers, onDisplayAddNewUser, onSubmitAddNewUser } = this.state;
     const userItems = listUsers.map((user) => {
       return (
         <LineUser
+          key={user.id}
           user={user}
           onViewUserInfo={this.onViewUserInfo}
           onEditUserInfo={this.props.onEditUserInfo}
         />
       );
     });
-    const displayAddNewUser = onDisplayAddNewUser ? <AddNewUser onCloseAddNewUser={this.onCloseAddNewUser} onSubmitAddNewUser={this.onSubmitAddNewUser}/> : "";
-    const messageAddNewUser = onSubmitAddNewUser ? <MessageAddNewUser/> : "";
+    const displayAddNewUser = onDisplayAddNewUser ? (
+      <AddNewUser
+        onCloseAddNewUser={this.onCloseAddNewUser}
+        onSubmitAddNewUser={this.onSubmitAddNewUser}
+      />
+    ) : (
+      ""
+    );
+    const messageAddNewUser = onSubmitAddNewUser ? <MessageAddNewUser /> : "";
     return (
-      <Fragment>
-        <div className="management-users__content">
-          <div className="management-users__add-user">
-            <a
-              className="management-users__add-user"
-              onClick={this.onDisplayAddNewUser}
-            >
-              Add new user
-            </a>
-          </div>
-
-          <table className="table table-striped">
-            <thead className="content__table-header">
-              <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Team</th>
-                <th>Status</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody className="content__table-body">{userItems}</tbody>
-          </table>
-          {displayAddNewUser}
-          {messageAddNewUser}
+      <div className="management-users-content">
+        <div className="add-user">
+          <a className="btn-add-user" onClick={this.onDisplayAddNewUser}>
+            Add new user
+          </a>
         </div>
-      </Fragment>
+
+        <table className="table table-striped">
+          <thead className="table-header">
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Team</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody className="table-body">{userItems}</tbody>
+        </table>
+        {displayAddNewUser}
+        {messageAddNewUser}
+      </div>
     );
   }
 }

@@ -1,7 +1,7 @@
 @import '../../../../Styles/variables';
 
-.content__table-item {
-    .table-item__selected {
+.content-table-item {
+    .item-selected {
         width: 5%;
 
         input {
@@ -10,49 +10,45 @@
         }
     }
 
-    .table-item__id {
+    .item-id {
         width: 18%;
     }
 
-    .table-item__username {
+    .item-username {
         width: 15%;
     }
 
-    .table-item__email {
+    .item-email {
         width: 20%;
     }
 
-    .table-item__team {
+    .item-team {
         width: 15%;
     }
 
-    .table-item__status {
+    .item-status {
         width: 12%;
     }
 
-    .table-item__view-detail {
+    .item-view-detail {
         width: 10%;
         font-size: 30px;
         padding: 0 0 7px 0;
         cursor: pointer;
 
-        .view-detail__icon {
-            
-        }
-
     }
 
-    .table-item__edit-info {
+    .item-edit-info {
         width: 5%;
         font-size: 25px;
         padding: 0 0 7px 0;
         cursor: pointer;
 
-        .edit-info__icon {
+        .edit-info-icon {
            color: rgb(107, 106, 106); 
         }
 
-        .edit-info__icon:hover {
+        .edit-info-icon:hover {
             color: rgb(43, 42, 42); 
         }
         

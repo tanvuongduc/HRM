@@ -3,7 +3,8 @@
 @import '../Employment.scss';
 
 
-.employment__manager {
+.employment-manager {
+
     h3 {
         @include title-box-style();
     }
@@ -13,12 +14,12 @@
         background-color: rgba(138, 138, 138, 0.164);
         border-radius: 0.8rem;
 
-        &__title {
+        .title {
             @include sub-title-box();
             margin-bottom: 2rem;
         }
 
-        &__bar {
+        .manager-bar {
             border-radius: 0.4rem;
             width: 100%;
             height: auto;

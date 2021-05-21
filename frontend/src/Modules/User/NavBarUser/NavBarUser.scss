@@ -1,4 +1,4 @@
-.profile-header__navigation {
+.profile-header-navigation {
 
     border-top: 2px solid #ffffff80;
     width: 100%;
@@ -6,7 +6,7 @@
     bottom: 100%;
     color: white;
 
-    .nav__item {
+    .nav-item {
         cursor: pointer;
         color: white;
         text-decoration: none;
@@ -26,7 +26,7 @@
 
     }
 
-    .nav__item:hover {
+    .nav-item:hover {
         background-color: #125297;
     }
 

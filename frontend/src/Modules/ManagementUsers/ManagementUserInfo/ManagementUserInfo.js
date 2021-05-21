@@ -24,11 +24,9 @@ class ManagementUserInfo extends Component {
       titleEdit: title,
       valueEdit: value,
     });
-    console.log(code, title, value);
   };
 
   onSaveEditting = async (data) => {
-    console.log(data);
     const idUserEditted = data.id;
     const req = await Http.patch("users/" + idUserEditted, data);
   };
@@ -54,43 +52,40 @@ class ManagementUserInfo extends Component {
     ) : (
       ""
     );
-    console.log(userIsViewedInfo);
     return (
-      <Fragment>
-        <div className="management-user-info">
-          <div className="user-info">
-            <h2 className="user-info__title">User info</h2>
-            <div className="user-info__detail">
-              <div className="row">
-                <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                  <BasicInfo
-                    userName={userIsViewedInfo.name}
-                    birthday={userIsViewedInfo.birthday}
-                    address={userIsViewedInfo.adress}
-                    certificate={userIsViewedInfo.certificate}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
-                <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                  <Contact
-                    phoneNumber={userIsViewedInfo.phone}
-                    email={userIsViewedInfo.email}
-                    socialNetwork={userIsViewedInfo.socialNetwork}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
-                <div className="col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                  <Banking
-                    bankAccount={userIsViewedInfo.bank}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
+      <div className="management-user-info">
+        <div className="user-info">
+          <h2 className="title">User info</h2>
+          <div className="detail">
+            <div className="row">
+              <div className="col-sm-4">
+                <BasicInfo
+                  userName={userIsViewedInfo.name}
+                  birthday={userIsViewedInfo.birthday}
+                  address={userIsViewedInfo.adress}
+                  certificate={userIsViewedInfo.certificate}
+                  onShowEditInfo={this.onShowEditInfo}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Contact
+                  phoneNumber={userIsViewedInfo.phone}
+                  email={userIsViewedInfo.email}
+                  socialNetwork={userIsViewedInfo.socialNetwork}
+                  onShowEditInfo={this.onShowEditInfo}
+                />
+              </div>
+              <div className="col-sm-4">
+                <Banking
+                  bankAccount={userIsViewedInfo.bank}
+                  onShowEditInfo={this.onShowEditInfo}
+                />
               </div>
             </div>
           </div>
-          {displayEditInfo}
         </div>
-      </Fragment>
+        {displayEditInfo}
+      </div>
     );
   }
 }

@@ -7,24 +7,24 @@
     background-color: rgb(228, 225, 225);
     margin: 45px 65px;
 
-    &__title {
+    .title {
         font-size: 40px;
         color: #ffff;
         padding: 15px 30px;
         background-color: $c-primary;
     }
 
-    &__form {
+    .form-edit {
         padding: 40px 30px;
 
-        .form-edit__title {
+        .title {
             color: rgb(0, 0, 0);
             font-size: 18px;
             text-transform: uppercase;
             font-weight: 500;
         }
 
-        .form-edit__input {
+        .input {
             height: 50px;
             font-size: 18px;
         }

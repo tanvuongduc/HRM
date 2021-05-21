@@ -1,16 +1,16 @@
  @import '../Employment.scss';
  
- .employment__team {
+ .employment-team {
         h3 {
             @include title-box-style();
         }
 
-        .team__add-to-team {
+        .add-to-team {
             border-radius: 0.8rem;
             padding: 25px 20px;
             background-color: rgba(138, 138, 138, 0.164);
 
-            .add-to-team__title {
+            .title {
                 @include sub-title-box();
             }
 

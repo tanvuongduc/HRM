@@ -1,6 +1,7 @@
 @import '../../../../Styles/variables';
+@import '../../Shared/button-form.scss';
 
-.changeAvatar-overlay {
+.change-avatar-overlay {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -12,7 +13,7 @@
     z-index: 2;
     animation: fadeIn linear 250ms;
 
-    .changeAvatar-form {
+    .change-avatar-form {
         background-color: white;
         position: absolute;
         border-radius: 0.8em;
@@ -22,7 +23,7 @@
         transform: translate(-50%, -50%);
         overflow: hidden;
 
-        &__title {
+        .title {
             font-size: 30px;
             background-color: $c-primary;
             color: white;
@@ -30,60 +31,15 @@
 
         }
 
-        &__add {
-            width: 15em;
-            font-size: 20px;
-            background-color: white;
-            color: $c-primary;
-
-        }
-
-        .changeAvatar__preview {
+        .preview {
             overflow: hidden;
             width: 32rem;
             margin: 0 auto;
-        }
-
-        &__btn {
-            padding: 15px 20px;
-            width: 100%;
-            margin-top: auto;
-            background-color: rgba(128, 128, 128, 0.185);
-            height: 4.5rem;
-
-            a {
-                text-decoration: none;
-                cursor: pointer;
-                text-decoration: none;
-                font-weight: 500;
-                font-size: 15px;
-                text-transform: uppercase;
-                border-radius: 5px;
-                display: block;
-
-            }
-
-            .btn-close {
-                background-color: grey;
-                color: white;
-                padding: 10px 12px;
-                float: left;
-            }
-
-            .btn-save {
-                padding: 10px 15px;
-                background-color: $c-primary;
-                color: white;
-                float: right;
-            }
-        }
-
-        .changeAvatar__preview {
             margin-top: 2em;
             height: auto;
             margin-bottom: 2em;
-           
         }
+
     }
 }
 

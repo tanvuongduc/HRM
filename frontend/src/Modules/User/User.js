@@ -3,7 +3,6 @@ import "./User.scss";
 import { Http } from "../../Helper/Http";
 import Details from "./Details/Details";
 import Employment from "./Employment/Employment";
-import TimeOff from "./TimeOff/TimeOff";
 import {
   BrowserRouter,
   Link,
@@ -37,9 +36,8 @@ class User extends Component {
 
   async componentDidMount() {
     await this.getInfo();
-    console.log(this.state.dataUser);
   }
-  
+
   async getInfo() {
     const res = await Http.get("users/user", {
       id: "6088cc2b80660b2f2818ae8a",
@@ -48,14 +46,12 @@ class User extends Component {
       dataUser: res.data,
     });
   }
-  
+
   async updateInfo(data) {
     const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
-    console.log(req);
   }
 
   onSaveEditting = async (data) => {
-    console.log(data);
     await this.setState({
       dataUser: data,
     });
@@ -71,40 +67,34 @@ class User extends Component {
       "users/upload/avatar?id=6088cc2b80660b2f2818ae8a",
       option
     );
-    console.log(res);
   }
 
   render() {
     const { dataUser } = this.state;
     return (
       <BrowserRouter>
-        <Fragment>
-          <div className="profile-header">
-            <HeaderUser
-              avatar={dataUser.avatar}
-              userName={dataUser.name}
-              emailUser={dataUser.email}
-              uploadAvatar={this.uploadAvatar}
-            />
-            <NavBarUser />
+        <div className="profile-header">
+          <HeaderUser
+            avatar={dataUser.avatar}
+            userName={dataUser.name}
+            emailUser={dataUser.email}
+            uploadAvatar={this.uploadAvatar}
+          />
+          <NavBarUser />
+        </div>
+        <div className="profile-main">
+          <div className="container">
+            <Switch>
+              <Route exact path="/user">
+                <Details
+                  getInfo={() => this.getInfo()}
+                  dataUser={dataUser}
+                  onSaveEditting={this.onSaveEditting}
+                />
+              </Route>
+            </Switch>
           </div>
-          <div className="profile-main">
-            <div className="container">
-              <Switch>
-                <Route exact path="/user">
-                  <Employment avatarUser={dataUser.avatar} />
-                </Route>
-                <Route exact path="/user/details">
-                  <Details
-                    getInfo = {()=>this.getInfo()}
-                    dataUser={dataUser}
-                    onSaveEditting={this.onSaveEditting}
-                  />
-                </Route>
-              </Switch>
-            </div>
-          </div>
-        </Fragment>
+        </div>
       </BrowserRouter>
     );
   }

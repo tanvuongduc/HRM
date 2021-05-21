@@ -27,7 +27,6 @@ class Details extends Component {
       titleEdit: title,
       valueEdit: value,
     });
-    console.log(this.state);
   };
 
   onCloseEditInfo = () => {
@@ -54,37 +53,33 @@ class Details extends Component {
 
     return (
       <div>
-        <div className="profile-main__details" id="profile-details">
-          {dataUser && dataUser.length != 0 ?
-            <Fragment>
-              <div className="row">
-                <div className="col-md-4">
-                  <BasicInfo
-                    userName={dataUser.name}
-                    birthday={dataUser.birthday}
-                    address={dataUser.adress}
-                    certificate={dataUser.certificate}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <Contact
-                    phoneNumber={dataUser.phone}
-                    email={dataUser.email}
-                    socialNetwork={dataUser.socialNetwork}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <Banking
-                    bankAccount={dataUser.bank}
-                    onShowEditInfo={this.onShowEditInfo}
-                  />
-                </div>
-              </div>
-              {elmEditInfo}
-            </Fragment>
-            : null}
+        <div className="profile-main-details" id="profile-details">
+          <div className="row">
+            <div className="col-md-4">
+              <BasicInfo
+                userName={dataUser.name}
+                birthday={dataUser.birthday}
+                address={dataUser.adress}
+                certificate={dataUser.certificate}
+                onShowEditInfo={this.onShowEditInfo}
+              />
+            </div>
+            <div className="col-md-4">
+              <Contact
+                phoneNumber={dataUser.phone}
+                email={dataUser.email}
+                socialNetwork={dataUser.socialNetwork}
+                onShowEditInfo={this.onShowEditInfo}
+              />
+            </div>
+            <div className="col-md-4">
+              <Banking
+                bankAccount={dataUser.bank}
+                onShowEditInfo={this.onShowEditInfo}
+              />
+            </div>
+          </div>
+          {elmEditInfo}
         </div>
       </div>
     );

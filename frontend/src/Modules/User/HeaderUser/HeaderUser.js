@@ -12,16 +12,15 @@ class HeaderUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      email: '',
+      userName: "",
+      email: "",
       avatar: null,
       isDisplayChangeAvatar: false,
     };
   }
-  
+
   async componentDidMount() {
     let data = await this.getInfo();
-    console.log(this.state.image);
   }
 
   async getInfo() {
@@ -30,22 +29,18 @@ class HeaderUser extends Component {
     });
     await this.setState({
       userName: res.data.name,
-      email: res.data.email
+      email: res.data.email,
     });
-    console.log(this.state);
     return res.data;
   }
 
-
-   componentWillReceiveProps = (nextProps) => {
-    console.log(nextProps.avatar);
-    this.setState ({
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
       avatar: nextProps.avatar,
       userName: nextProps.userName,
       email: nextProps.emailUser,
-      
     });
-  }
+  };
 
   onDisplayChangeAvatar = () => {
     this.setState({
@@ -54,8 +49,7 @@ class HeaderUser extends Component {
   };
 
   onSaveChangeAvatar = (image) => {
-    console.log(image);
-    this.props.uploadAvatar(image,"jpg");
+    this.props.uploadAvatar(image, "jpg");
     this.onCloseChangeAvatar();
   };
 
@@ -76,37 +70,37 @@ class HeaderUser extends Component {
     ) : (
       ""
     );
-    const avatarDefault = avatar === null ? <FaUser className="avatarUser__iconAvatar" /> : ''; 
+    const avatarDefault =
+      avatar === null ? <FaUser className="avatar-user-default" /> : "";
     return (
-      <Fragment>
-        <div className="profile-header__overview">
-          <div className="container">
-            <div className="overview__avatarUser" style={avatar === null ? {backgroundColor: 'white'} : null}>
-              <img
-                src={"http://localhost:3000"+avatar}
-                className="avatarUser__img"
-
-              />
-              {avatarDefault}
-              <div className="avatarUser__background-iconChange">
-                <BiImageAdd
-                className="avatarUser__iconChange"
+      <div className="profile-header-overview">
+        <div className="container">
+          <div
+            className="overview-avatar-user"
+            style={avatar === null ? { backgroundColor: "white" } : null}
+          >
+            <img
+              src={"http://localhost:3000" + avatar}
+              className="user-avatar"
+            />
+            {avatarDefault}
+            <div className="add-avatar-user">
+              <BiImageAdd
+                className="icon-change-avatar"
                 onClick={this.onDisplayChangeAvatar}
               />
-              </div>
-              
-            </div>
-            <div className="overview__info">
-              <h3 className="info__username">{userName}</h3>
-              <p className="info__email">
-                <FaEnvelope className="email__icon" />
-                {email}
-              </p>
             </div>
           </div>
-          {elmChangeAvatar}
+          <div className="overview-info">
+            <h3 className="username">{userName}</h3>
+            <p className="email">
+              <FaEnvelope className="email-icon" />
+              {email}
+            </p>
+          </div>
         </div>
-      </Fragment>
+        {elmChangeAvatar}
+      </div>
     );
   }
 }

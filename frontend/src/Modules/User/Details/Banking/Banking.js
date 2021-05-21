@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "./Banking.scss";
-import {FaMoneyCheckAlt, FaEdit} from 'react-icons/fa';
+import { FaMoneyCheckAlt, FaEdit } from "react-icons/fa";
 
 class Banking extends Component {
   constructor(props) {
@@ -9,49 +9,49 @@ class Banking extends Component {
   }
 
   isDisplayEditInfo = (code, title, value) => {
-    console.log(code, title, value);
     this.props.onShowEditInfo(code, title, value);
-  }
+  };
 
   render() {
-    const {bankAccount} = this.props;
+    const { bankAccount } = this.props;
     return (
-      <Fragment>
-        <div className="details__card address">
-          <h4>Banking</h4>
-          <div className="item-info">
-            <label>Chủ tài khoản</label>
-            <br></br>
-            <FaMoneyCheckAlt className="item-info__icon" />
-            <span></span>
-            
-          </div>
-          <div className="item-info">
-            <label>Ngân hàng</label>
-            <br></br>
-            <FaMoneyCheckAlt className="item-info__icon" />
-            <span>{bankAccount.bankName}</span>
-            <FaEdit
-                className="edit-icon"
-                onClick={() =>
-                  this.isDisplayEditInfo("bankName", "Ngân hàng", bankAccount.bankName)
-                }
-              />
-          </div>
-          <div className="item-info">
-            <label>Số tài khoản</label>
-            <br></br>
-            <FaMoneyCheckAlt className="item-info__icon" />
-            <span>{bankAccount.bankId}</span>
-            <FaEdit
-                className="edit-icon"
-                onClick={() =>
-                  this.isDisplayEditInfo("bankId", "Số tài khoản", bankAccount.Id)
-                }
-              />
-          </div>
+      <div className="details-card address">
+        <h4>Banking</h4>
+        <div className="item-info">
+          <label>Chủ tài khoản</label>
+          <br></br>
+          <FaMoneyCheckAlt className="info-icon" />
+          <span></span>
         </div>
-      </Fragment>
+        <div className="item-info">
+          <label>Ngân hàng</label>
+          <br></br>
+          <FaMoneyCheckAlt className="info-icon" />
+          <span>{bankAccount.bankName}</span>
+          <FaEdit
+            className="edit-icon"
+            onClick={() =>
+              this.isDisplayEditInfo(
+                "bankName",
+                "Ngân hàng",
+                bankAccount.bankName
+              )
+            }
+          />
+        </div>
+        <div className="item-info">
+          <label>Số tài khoản</label>
+          <br></br>
+          <FaMoneyCheckAlt className="info-icon" />
+          <span>{bankAccount.bankId}</span>
+          <FaEdit
+            className="edit-icon"
+            onClick={() =>
+              this.isDisplayEditInfo("bankId", "Số tài khoản", bankAccount.Id)
+            }
+          />
+        </div>
+      </div>
     );
   }
 }
