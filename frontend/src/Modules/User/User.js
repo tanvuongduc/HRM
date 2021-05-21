@@ -36,7 +36,6 @@ class User extends Component {
 
   async componentDidMount() {
     await this.getInfo();
-    console.log(this.state.dataUser);
   }
 
   async getInfo() {
@@ -50,11 +49,9 @@ class User extends Component {
 
   async updateInfo(data) {
     const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
-    console.log(req);
   }
 
   onSaveEditting = async (data) => {
-    console.log(data);
     await this.setState({
       dataUser: data,
     });
@@ -70,7 +67,6 @@ class User extends Component {
       "users/upload/avatar?id=6088cc2b80660b2f2818ae8a",
       option
     );
-    console.log(res);
   }
 
   render() {

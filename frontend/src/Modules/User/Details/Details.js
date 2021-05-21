@@ -27,7 +27,6 @@ class Details extends Component {
       titleEdit: title,
       valueEdit: value,
     });
-    console.log(this.state);
   };
 
   onCloseEditInfo = () => {

@@ -19,7 +19,6 @@ class AddMemberToTeam extends Component {
 
   componentDidMount() {
     this.getAllUser();
-    console.log(this.state.listMembers);
   }
 
   async getAllUser() {
@@ -28,7 +27,6 @@ class AddMemberToTeam extends Component {
       if (!member.teams) return 1;
       return member.teams.indexOf("609ddb7ab7ca213f2489ff38") < 0;
     });
-    console.log("members", members);
     await this.setState({
       listMembers: members,
     });
@@ -54,7 +52,6 @@ class AddMemberToTeam extends Component {
         }
       }
     }
-    console.log(this.state.listMemberChoosed);
   };
 
   findIndex(id) {
@@ -74,7 +71,6 @@ class AddMemberToTeam extends Component {
       "teams/add/members?team=609ddb7ab7ca213f2489ff38",
       { members: listMemberChoosed }
     );
-    console.log(res.data);
     this.props.onCloseAddMember();
   };
 
@@ -85,7 +81,6 @@ class AddMemberToTeam extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state.searchMember);
   };
 
   render() {

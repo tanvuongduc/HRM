@@ -17,7 +17,6 @@ class EditInfo extends Component {
       titleEdit: this.props.titleEdit,
       valueEdit: this.props.valueEdit,
     });
-    console.log(this.state.codeEdit);
   }
 
   onChange = (event) => {

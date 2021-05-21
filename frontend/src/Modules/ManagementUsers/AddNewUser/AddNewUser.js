@@ -26,13 +26,11 @@ class AddNewUser extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state);
   };
 
   onSubmitAddNewUser = async () => {
     const newUser = this.state;
     const req = await Http.post("users", newUser);
-    console.log(newUser);
     this.props.onCloseAddNewUser();
     this.props.onSubmitAddNewUser();
   };

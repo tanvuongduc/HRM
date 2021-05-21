@@ -74,13 +74,11 @@ class ManagementEditInfo extends Component {
     this.setState({
       dataUser: dataUser
     });
-    console.log("Data User", dataUser);
   };
 
   onSaveEditUserInfo = async () => {
     const { dataUser } = this.state;
     const req = await Http.patch("users/" + dataUser.id, dataUser);
-    console.log("requesst",req);
   };
 
   render() {

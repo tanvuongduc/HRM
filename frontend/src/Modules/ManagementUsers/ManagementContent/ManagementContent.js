@@ -28,7 +28,6 @@ class ManagementContent extends Component {
     this.setState({
       listUsers: res.data,
     });
-    console.log(this.state);
   };
 
   onDisplayAddNewUser = () => {

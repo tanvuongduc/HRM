@@ -16,7 +16,6 @@ class Contact extends Component {
   }
 
   isDisplayEditInfo = (code, title, value) => {
-    console.log(code, title, value);
     this.props.onShowEditInfo(code, title, value);
   };
 

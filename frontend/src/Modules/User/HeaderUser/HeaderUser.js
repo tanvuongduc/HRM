@@ -21,7 +21,6 @@ class HeaderUser extends Component {
 
   async componentDidMount() {
     let data = await this.getInfo();
-    console.log(this.state.image);
   }
 
   async getInfo() {
@@ -32,12 +31,10 @@ class HeaderUser extends Component {
       userName: res.data.name,
       email: res.data.email,
     });
-    console.log(this.state);
     return res.data;
   }
 
   componentWillReceiveProps = (nextProps) => {
-    console.log(nextProps.avatar);
     this.setState({
       avatar: nextProps.avatar,
       userName: nextProps.userName,
@@ -52,7 +49,6 @@ class HeaderUser extends Component {
   };
 
   onSaveChangeAvatar = (image) => {
-    console.log(image);
     this.props.uploadAvatar(image, "jpg");
     this.onCloseChangeAvatar();
   };

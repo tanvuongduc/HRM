@@ -24,11 +24,9 @@ class ManagementUserInfo extends Component {
       titleEdit: title,
       valueEdit: value,
     });
-    console.log(code, title, value);
   };
 
   onSaveEditting = async (data) => {
-    console.log(data);
     const idUserEditted = data.id;
     const req = await Http.patch("users/" + idUserEditted, data);
   };
@@ -54,7 +52,6 @@ class ManagementUserInfo extends Component {
     ) : (
       ""
     );
-    console.log(userIsViewedInfo);
     return (
       <div className="management-user-info">
         <div className="user-info">

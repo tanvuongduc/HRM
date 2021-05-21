@@ -15,7 +15,6 @@ class ItemMember extends Component {
     const styleChoosed = {
       backgroundColor: "rgb(13, 100, 151)",
     };
-    console.log(member);
 
     return (
       <div

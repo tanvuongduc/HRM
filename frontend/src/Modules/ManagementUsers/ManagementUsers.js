@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./ManagementUsers.scss";
-import ManagementContent from "./ManagementContent/MangementContent";
+import ManagementContent from "./ManagementContent/ManagementContent";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import ManagementUserInfo from "./ManagementUserInfo/ManagementUserInfo";
 import ManagementEditInfo from "./ManagementEditInfo/ManagementEditInfo";
@@ -16,7 +16,6 @@ class ManagementUsers extends Component {
   }
 
   onViewUserInfo = (dataUser) => {
-    console.log(dataUser);
     this.setState({
       userIsViewedInfo: dataUser,
       userIsChoosed: true,
@@ -24,7 +23,6 @@ class ManagementUsers extends Component {
   };
 
   onEditUserInfo = (dataUser) => {
-    console.log(dataUser);
     this.setState({
       userIsChoosed: true,
       userIsChoosedEdit: dataUser,
