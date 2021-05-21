@@ -54,7 +54,7 @@ class Details extends Component {
 
     return (
       <div>
-        <div className="profile-main__details" id="profile-details">
+        <div className="profile-main-details" id="profile-details">
           <div className="row">
             <div className="col-md-4">
               <BasicInfo

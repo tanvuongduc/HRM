@@ -56,7 +56,7 @@ class EditInfo extends Component {
         break;
       case "bankId":
         data.bank.bankId = valueEdit;
-        break; 
+        break;
     }
     this.props.onSaveEditting(data);
     this.props.onCloseEditInfo();
@@ -64,40 +64,38 @@ class EditInfo extends Component {
   render() {
     const { titleEdit, valueEdit } = this.state;
     return (
-      <Fragment>
-        <div className="overlay-full">
-          <div className="edit-details-info">
-            <h4>Edit Infomation</h4>
-            <div className="form-group">
-              <label>{titleEdit}</label>
-              <input
-                type="text"
-                className="form-control"
-                name="valueEdit"
-                value={valueEdit}
-                onChange={this.onChange}
-              />
+      <div className="overlay-full">
+        <div className="edit-details-info">
+          <h4>Edit Infomation</h4>
+          <div className="form-group">
+            <label>{titleEdit}</label>
+            <input
+              type="text"
+              className="form-control"
+              name="valueEdit"
+              value={valueEdit}
+              onChange={this.onChange}
+            />
 
-              <div className="btn-control">
-                <a
-                  for="check-button-input"
-                  className="btn btn-save"
-                  onClick={this.onSaveEditting}
-                >
-                  Save
-                </a>
-                <a
-                  for="check-button-input"
-                  className="btn btn-close"
-                  onClick={this.props.onCloseEditInfo}
-                >
-                  Close
-                </a>
-              </div>
+            <div className="btn-control">
+              <a
+                for="check-button-input"
+                className="btn btn-save"
+                onClick={this.onSaveEditting}
+              >
+                Save
+              </a>
+              <a
+                for="check-button-input"
+                className="btn btn-close"
+                onClick={this.props.onCloseEditInfo}
+              >
+                Close
+              </a>
             </div>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

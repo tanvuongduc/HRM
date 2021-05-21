@@ -1,8 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./ManagementUsers.scss";
-import { FaUserFriends, FaRegEdit, FaTimes } from "react-icons/fa";
-import { AiFillEye } from "react-icons/ai";
-import ManagementSideBar from "./ManagementSideBar/ManagementSideBar";
 import ManagementContent from "./ManagementContent/MangementContent";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import ManagementUserInfo from "./ManagementUserInfo/ManagementUserInfo";
@@ -39,38 +36,34 @@ class ManagementUsers extends Component {
 
     return (
       <BrowserRouter>
-        <Fragment>
-          <div className="management-users">
-            <div className="row no-gutters">
-              <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <Switch>
-                  <Route exact path="/management/users">
-                    <ManagementContent
-                      onViewUserInfo={this.onViewUserInfo}
-                      onEditUserInfo={this.onEditUserInfo}
-                    />
-                  </Route>
-                  <Route exact path="/management/users/user">
-                    {userIsChoosed ? (
-                      <ManagementUserInfo userIsViewedInfo={userIsViewedInfo} />
-                    ) : (
-                      <Redirect to="/management/users" />
-                    )}
-                  </Route>
-                  <Route exact path="/management/users/edit">
-                    {userIsChoosed ? (
-                      <ManagementEditInfo
-                        userIsChoosedEdit={userIsChoosedEdit}
-                      />
-                    ) : (
-                      <Redirect to="/management/users" />
-                    )}
-                  </Route>
-                </Switch>
-              </div>
+        <div className="management-users">
+          <div className="row no-gutters">
+            <div className="col-sm-12">
+              <Switch>
+                <Route exact path="/management/users">
+                  <ManagementContent
+                    onViewUserInfo={this.onViewUserInfo}
+                    onEditUserInfo={this.onEditUserInfo}
+                  />
+                </Route>
+                <Route exact path="/management/users/user">
+                  {userIsChoosed ? (
+                    <ManagementUserInfo userIsViewedInfo={userIsViewedInfo} />
+                  ) : (
+                    <Redirect to="/management/users" />
+                  )}
+                </Route>
+                <Route exact path="/management/users/edit">
+                  {userIsChoosed ? (
+                    <ManagementEditInfo userIsChoosedEdit={userIsChoosedEdit} />
+                  ) : (
+                    <Redirect to="/management/users" />
+                  )}
+                </Route>
+              </Switch>
             </div>
           </div>
-        </Fragment>
+        </div>
       </BrowserRouter>
     );
   }

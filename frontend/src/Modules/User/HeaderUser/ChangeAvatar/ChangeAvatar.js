@@ -7,21 +7,10 @@ class ChangeAvatar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: null,
       preview: null,
       src: null,
     };
   }
-
-  onChangeAvatar = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let image = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(image),
-      });
-    }
-    console.log(this.state.image);
-  };
 
   onSaveChangeAvatar = () => {
     this.props.onSaveChangeAvatar(this.state.preview);
@@ -36,36 +25,34 @@ class ChangeAvatar extends Component {
   };
 
   render() {
-    const { preview } = this.state;
-    const imagePreview = preview ? <img src={preview} /> : "";
     return (
-      <Fragment>
-        <div className="changeAvatar-overlay">
-          <div className="changeAvatar-form">
-            <h4 className="changeAvatar-form__title">Change My Avatar</h4>
+      <div className="change-avatar-overlay">
+        <div className="change-avatar-form">
+          <h4 className="title">Change My Avatar</h4>
 
-            <div className="changeAvatar__preview">
-              <Avatar
-                className="preview__avatar-upload"
-                width={500}
-                height={300}
-                onCrop={this.onCrop}
-                onClose={this.onClose}
-                src={this.state.src}
-              />
-            </div>
+          <div className="preview">
+            <Avatar
+              width={500}
+              height={300}
+              onCrop={this.onCrop}
+              onClose={this.onClose}
+              src={this.state.src}
+            />
+          </div>
 
-            <div className="changeAvatar-form__btn">
-              <a className="btn-close" onClick={this.props.onCloseChangeAvatar}>
-                Close
-              </a>
-              <a className="btn-save" onClick={this.onSaveChangeAvatar}>
-                Save
-              </a>
-            </div>
+          <div className="btn-form-control">
+            <a
+              className="btn-control-close"
+              onClick={this.props.onCloseChangeAvatar}
+            >
+              Close
+            </a>
+            <a className="btn-control-save" onClick={this.onSaveChangeAvatar}>
+              Save
+            </a>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

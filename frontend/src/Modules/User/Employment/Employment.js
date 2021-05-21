@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { FaRegCalendar, FaUserAlt } from "react-icons/fa";
-import './Employment.scss';
-import ChangeManager from './ChangeManager/ChangeManager';
+import "./Employment.scss";
+import ChangeManager from "./ChangeManager/ChangeManager";
 import LineManager from "./LineManager/LineManager";
 import Teams from "./Teams/Teams";
 import AddMemberToTeam from "../AddMemberToTeam/AddMemberToTeam";
@@ -10,12 +10,12 @@ class Employment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       isDisplayChangeManager: false,
-       isDisplayAddMembers: false,
-       manager: ''
-    }
+      isDisplayChangeManager: false,
+      isDisplayAddMembers: false,
+      manager: "",
+    };
   }
-  
+
   onChangeManager = () => {
     this.setState({
       isDisplayChangeManager: true,
@@ -27,50 +27,61 @@ class Employment extends Component {
       isDisplayChangeManager: false,
     });
   };
-  
+
   onSaveChangeManager = (data) => {
     var { manager } = this.state;
     manager = data;
-     this.setState({
-       manager: manager
-     });
-  }
+    this.setState({
+      manager: manager,
+    });
+  };
 
   isDisplayAddMembers = () => {
     this.setState({
-     isDisplayAddMembers: true
+      isDisplayAddMembers: true,
     });
-  }
+  };
 
   onCloseAddMember = () => {
     this.setState({
-      isDisplayAddMembers: false
+      isDisplayAddMembers: false,
     });
-  }
+  };
   render() {
-     const { isDisplayChangeManager, isDisplayAddMembers } = this.state;
+    const { isDisplayChangeManager, isDisplayAddMembers } = this.state;
     const elmChangeManager = isDisplayChangeManager ? (
-      <ChangeManager closeChangeManger={this.closeChangeManager} onSaveChangeManager={this.onSaveChangeManager} />
+      <ChangeManager
+        closeChangeManger={this.closeChangeManager}
+        onSaveChangeManager={this.onSaveChangeManager}
+      />
     ) : (
       ""
     );
 
-    const elmAddMembersToTeam = isDisplayAddMembers ? <AddMemberToTeam avatarUser={this.props.avatarUser} onCloseAddMember={this.onCloseAddMember}/> : '';
+    const elmAddMembersToTeam = isDisplayAddMembers ? (
+      <AddMemberToTeam
+        avatarUser={this.props.avatarUser}
+        onCloseAddMember={this.onCloseAddMember}
+      />
+    ) : (
+      ""
+    );
     return (
-      <Fragment>
-        <div className="profile-main__employment">
-          <div className="row">
-            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <Teams isDisplayAddMembers={this.isDisplayAddMembers}/>
-            </div>
-            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-               <LineManager onChangeManager={this.onChangeManager} manager={this.state.manager}/>
-            </div>
+      <div className="profile-main__employment">
+        <div className="row">
+          <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <Teams isDisplayAddMembers={this.isDisplayAddMembers} />
+          </div>
+          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <LineManager
+              onChangeManager={this.onChangeManager}
+              manager={this.state.manager}
+            />
           </div>
         </div>
         {elmChangeManager}
         {elmAddMembersToTeam}
-      </Fragment>
+      </div>
     );
   }
 }
