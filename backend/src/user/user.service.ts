@@ -111,12 +111,12 @@ export class UsersService {
     }
 
 
-    // async deleteUser(uid: string) {
-    //     const result = await this.userModel.deleteOne({ _id: uid }).exec();
-    //     if (result.n === 0) {
-    //         throw new NotFoundException('Could not find User.');
-    //     }
-    // }
+    async deleteUser(uid: string) {
+        const result = await this.userModel.deleteOne({ _id: uid }).exec();
+        if (result.n === 0) {
+            throw new NotFoundException('Could not find User.');
+        }
+    }
 
     private async findUser(id: string): Promise<User> {
         let user: any;

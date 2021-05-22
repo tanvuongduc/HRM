@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
-import { Bank, SocialNetwork } from './user.model'
+// import { Bank, SocialNetwork } from './user.model'
 
 @Controller('users')
 export class UsersController {
