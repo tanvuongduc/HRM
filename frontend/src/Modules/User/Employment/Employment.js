@@ -29,7 +29,7 @@ class Employment extends Component {
   };
 
   onSaveChangeManager = (data) => {
-    var { manager } = this.state;
+    const { manager } = this.state;
     manager = data;
     this.setState({
       manager: manager,
