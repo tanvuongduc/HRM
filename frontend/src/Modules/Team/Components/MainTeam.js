@@ -8,8 +8,8 @@ import BasicInfoTeam from './BasicInfoTeam/BasicInfoTeam';
 import TeamService from '../Shared/TeamService';
 import MemberInfoTeam from './MemberInfoTeam/MemberInfoTeam';
 import AddMember from './AddMember/AddMember';
-import Details from '../../User/Details/Details';
-import AddMemberToTeam from '../../User/AddMemberToTeam/AddMemberToTeam';
+import Details from '../../User/Components/Details/Details';
+import AddMemberToTeam from '../../User/Components/AddMemberToTeam/AddMemberToTeam';
 
 
 class MainTeam extends Component {
