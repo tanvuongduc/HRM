@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Team, Employee } from './team.model'
+import { Team } from './team.model'
 import { UsersService } from '../user/user.service'
 
 
@@ -14,52 +14,64 @@ export class TeamService {
 
     async insertTeam(
         name: String,
-        members: Employee,
+        pic: String,
         department: String,
         sologan: String
     ) {
+        let user = await this.usersService.findUserById(pic)
         const newTeam = new this.teamModel({
             name,
-            members,
+            pic,
             department,
             sologan
         });
         const res = await newTeam.save();
+        if (user.teams.indexOf(res.id) > -1) {
+            user.teams.push(res.id)
+        }
         return {
             id: res.id
         };
     }
 
-    async getMembers(id:String){
-        const users = await this.usersService.getMembers(id);
+
+    async getMembersByTeamId(id: String) {
+        const users = await this.usersService.getMembersByTeamId(id);
         return users;
     }
-    async insertMembers(
+
+
+    async insertTeamIdForMembers(
         ids: [String],
         idTeam: String
     ) {
-        const team = await this.findTeam(idTeam);
+        const team = await this.findTeamById(idTeam);
         if (team) {
-            const users = await this.usersService.insertTeamForUsers(ids, idTeam);
+            const users = await this.usersService.insertTeamIdForUsers(ids, idTeam);
             return users;
         }
         return team;
     }
-    async removeMembers(
+
+
+    async removeMembersByTeamId(
         ids: [String],
         idTeam: String
     ) {
-        const team = await this.findTeam(idTeam);
+        const team = await this.findTeamById(idTeam);
         if (team) {
-            const users = await this.usersService.removeTeamOfUsers(ids, idTeam);
+            const users = await this.usersService.removeTeamIdFromUsers(ids, idTeam);
             return users;
         }
         return team;
     }
-    async getSingleTeam(id: String) {
-        const team = await this.findTeam(id);
+
+
+    async getTeamById(id: String) {
+        const team = await this.findTeamById(id);
         return {
             id: team.id,
+            pic: team.pic,
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
@@ -68,31 +80,70 @@ export class TeamService {
             createAt: team.createAt
         }
     }
-    async getDepartmentTeam(department: String) {
+    async getAllTeams() {
+        const teams = await this.teamModel.find().populate('pic').exec();
+        return teams.map(team => ({
+            id: team.id,
+            pic: team.pic,
+            name: team.name,
+            rate: team.rate,
+            achievements: team.achievements,
+            department: team.achievements,
+        }));
+    }
+    async insertDepartmentForTeamsId(
+        teamsId: [String],
+        departmentId: Number
+    ) {
+        let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
+        let teamsArr = [];
+        for (let team of teams) {
+            team.department = departmentId;
+            const res = await team.save();
+            teamsArr.push(res.id)
+        }
+        return {
+            teams: teamsArr
+        }
+    }
+
+    async removeDepartmentFromTeamsId(
+        teamsId: [String],
+        departmentId: Number
+    ) {
+        let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
+        let teamsArr = [];
+        for (let team of teams) {
+            if(team.department == departmentId){
+                team.department = null;
+                const res = await team.save();
+                teamsArr.push(res.id)
+            }          
+        }
+        return {
+            teams: teamsArr
+        }
+    }
+
+    async getTeamsByDepartmentId(department: String) {
         const teams = await this.teamModel.find().where({ department: department }).exec();
         return teams.map(team => ({
             id: team.id,
+            pic: team.pic,
             name: team.name,
             rate: team.rate,
             achievements: team.achievements,
-            department: team.achievements,
-        }));
-    }
-    async getTeams() {
-        const teams = await this.teamModel.find().exec();
-        return teams.map(team => ({
-            id: team.id,
-            name: team.name,
-            rate: team.rate,
-            achievements: team.achievements,
-            department: team.achievements,
+            department: team.department,
+            sologan: team.sologan,
+            createAt: team.createAt
         }));
     }
 
-    async findTeam(id: String): Promise<Team> {
+
+    async findTeamById(id: String): Promise<Team> {
         let team: any;
         try {
-            team = await this.teamModel.findById(id).exec();
+            team = await this.teamModel.findById(id).populate('pic').populate('department').exec();
         } catch (error) {
             throw new NotFoundException('Could not find Team.');
         }

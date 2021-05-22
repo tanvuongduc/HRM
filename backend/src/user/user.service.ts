@@ -15,8 +15,9 @@ export class UsersService {
         birthday: Date,
         adress: String,
         certificate: String,
-        phone: number,
+        phone: String,
         email: String,
+        password: String,
         socialNetwork: SocialNetwork,
         bank: Bank,
     ) {
@@ -27,6 +28,7 @@ export class UsersService {
             certificate,
             phone,
             email,
+            password,
             socialNetwork,
             bank,
         });
@@ -52,13 +54,13 @@ export class UsersService {
     }
 
 
-    async getMembers(id:String){
+    async getMembersByTeamId(id:String){
         const members = await this.userModel.find({teams:{$all:[id]}})
         return {
             members: members
         }
     }
-    async removeTeamOfUsers(
+    async removeTeamIdFromUsers(
         ids: [String],
         teamId: String
     ) {
@@ -76,22 +78,13 @@ export class UsersService {
                 res.push({
                     id: userSaved.id,
                     name: userSaved.name,
-                    // birthday: userSaved.birthday,
-                    // adress: userSaved.adress,
-                    // certificate: userSaved.certificate,
-                    // phone: userSaved.phone,
-                    // email: userSaved.email,
-                    // socialNetwork: userSaved.socialNetwork,
-                    // bank: userSaved.bank,
-                    // status: userSaved.status,
-                    // avatar: userSaved.avatar,
                     teams: userSaved.teams
                 })
             }
         }
         return res;
     }
-    async insertTeamForUsers(
+    async insertTeamIdForUsers(
         ids: [String],
         teamId: String
     ) {
@@ -108,15 +101,6 @@ export class UsersService {
                 res.push({
                     id: userSaved.id,
                     name: userSaved.name,
-                    // birthday: userSaved.birthday,
-                    // adress: userSaved.adress,
-                    // certificate: userSaved.certificate,
-                    // phone: userSaved.phone,
-                    // email: userSaved.email,
-                    // socialNetwork: userSaved.socialNetwork,
-                    // bank: userSaved.bank,
-                    // status: userSaved.status,
-                    // avatar: userSaved.avatar,
                     teams: userSaved.teams
                 })
             }
@@ -124,8 +108,8 @@ export class UsersService {
         return res;
     }
 
-    async getSingleUser(uid: String) {
-        const user = await this.findUser(uid);
+    async getUserById(uid: String) {
+        const user = await this.findUserById(uid);
         return {
             id: user.id,
             name: user.name,
@@ -141,7 +125,32 @@ export class UsersService {
             teams: user.teams
         };
     }
-
+    async findInfoUserByEmail(email: String) {
+        let user
+        try {
+            user = await this.userModel.findOne().where({email:email}).exec();
+        } catch (error) {
+            throw new NotFoundException('Could not find user.');
+        }
+        if (!user) {
+            throw new NotFoundException('Could not find user.');
+        }
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            // birthday: user.birthday,
+            // adress: user.adress,
+            // certificate: user.certificate,
+            // phone: user.phone,
+            // socialNetwork: user.socialNetwork,
+            // bank: user.bank,
+            // status: user.status,
+            // avatar: user.avatar,
+            // teams: user.teams
+        };
+    }
     async updateUser(
         uid: String,
         name: String,
@@ -150,11 +159,12 @@ export class UsersService {
         certificate: String,
         phone: String,
         email: String,
+        password: String,
         socialNetwork: SocialNetwork,
         bank: Bank,
         status: String
     ) {
-        const updatedUser = await this.findUser(uid);
+        const updatedUser = await this.findUserById(uid);
         if (name) {
             updatedUser.name = name;
         }
@@ -170,6 +180,9 @@ export class UsersService {
         if (email) {
             updatedUser.email = email;
         }
+        if(password){
+            updatedUser.password = password;
+        }
         if (adress) {
             updatedUser.adress = adress;
         }
@@ -177,10 +190,10 @@ export class UsersService {
             updatedUser.socialNetwork = socialNetwork;
         }
         if (bank) {
-            updatedUser.bank = bank
+            updatedUser.bank = bank;
         }
         if (status) {
-            updatedUser.status = status
+            updatedUser.status = status;
         }
         const res = await updatedUser.save();
         return {
@@ -194,7 +207,7 @@ export class UsersService {
         type: String
     ) {
         const path = `/avatar/${uid}.${type}`;
-        const user = await this.findUser(uid);
+        const user = await this.findUserById(uid);
         if (user) {
 
             const data = new Buffer(avatar.split(',')[1], 'base64');
@@ -214,7 +227,7 @@ export class UsersService {
     //     }
     // }
 
-    private async findUser(id: String): Promise<User> {
+    async findUserById(id: String): Promise<User> {
         let user: any;
         try {
             user = await this.userModel.findById(id).exec();

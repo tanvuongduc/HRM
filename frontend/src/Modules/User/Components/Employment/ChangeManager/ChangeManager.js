@@ -11,9 +11,9 @@ class ChangeManager extends Component {
   }
 
   onChangeValue = (event) => {
-    var target = event.target;
-    var name = target.name;
-    var value = target.value;
+    let target = event.target;
+    let name = target.name;
+    let value = target.value;
     value = parseInt(value);
     if (name === "selectManager") {
       if (value === 1) {

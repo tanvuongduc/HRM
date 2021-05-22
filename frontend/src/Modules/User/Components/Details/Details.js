@@ -36,9 +36,9 @@ class Details extends Component {
   };
 
   render() {
-    var { isDisplayEditInfo, titleEdit, valueEdit, codeEdit } = this.state;
+    const { isDisplayEditInfo, titleEdit, valueEdit, codeEdit } = this.state;
     const { dataUser, onSaveEditting } = this.props;
-    var elmEditInfo = isDisplayEditInfo ? (
+    let elmEditInfo = isDisplayEditInfo ? (
       <EditInfo
         codeEdit={codeEdit}
         titleEdit={titleEdit}

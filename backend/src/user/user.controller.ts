@@ -1,29 +1,37 @@
 import {
     Controller,
+    Request,
     Post,
     Body,
     Get,
-    Param,
     Patch,
-    Query,
+    UseGuards
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
 import { Bank, SocialNetwork } from './user.model'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Query } from '@nestjs/common';
+
 
 @Controller('users')
 export class UsersController {
+
+
     constructor(private readonly usersService: UsersService) { }
 
+
+    // @UseGuards(JwtAuthGuard)
     @Post()
-    //for admin
     async addUser(
-        @Body('name') name: string,
+        // @Body() req,
+        @Body('name') name: String,
         @Body('birthday') birthday: Date,
-        @Body('adress') adress: string,
-        @Body('certificate') certificate: string,
-        @Body('phone') phone: number,
-        @Body('email') email: string,
+        @Body('adress') adress: String,
+        @Body('certificate') certificate: String,
+        @Body('phone') phone: String,
+        @Body('email') email: String,
+        @Body('password') password: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
     ) {
@@ -34,60 +42,82 @@ export class UsersController {
             certificate,
             phone,
             email,
+            password,
             socialNetwork,
             bank,
         );
         return { id: generatedId };
     }
 
-    @Get('user')
-    getUser(@Query('id') uid: string) {
-        return this.usersService.getSingleUser(uid);
+
+
+    @UseGuards(JwtAuthGuard)
+    @Get('myinfo')
+    getMyInfomation(
+        @Request() req
+    ) {
+        return this.usersService.getUserById(req.user.userId);
     }
+
+    @Get('user')
+    getUserById(
+        @Query('id') id : String
+    ) {
+        return this.usersService.getUserById(id);
+    }
+
+    // @UseGuards(JwtAuthGuard)
     @Get()
-    // for admin
     async getAllUsers() {
+
         const Users = await this.usersService.getUsers();
         return Users;
     }
 
-    @Patch(':id')
-    //update info user
+
+
+    // @UseGuards(JwtAuthGuard)
+    @Patch()
     async updateUser(
-        @Param('id') uid: string,
+        @Request() req,
         @Body('name') name: string,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: string,
         @Body('certificate') certificate: string,
         @Body('phone') phone: string,
         @Body('email') email: string,
+        @Body('password') pasword: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
         @Body('status') status: string
     ) {
-        
+
         let res = await this.usersService.updateUser(
-            uid,
+            req.user.userId,
             name,
             birthday,
             adress,
             certificate,
             phone,
             email,
+            pasword,
             socialNetwork,
             bank,
             status
         );
         return res;
     }
+
+    
+    @UseGuards(JwtAuthGuard)
     @Post('upload/avatar')
     async uploadAvatar(
-        @Query('id') uid: string,
+        @Request() req,
         @Body('data') data: string,
         @Body('type') type: string
-    ){
+    ) {
         let res = await this.usersService.uploadAvatar(
-            uid,
+            req.user.userId,
             data,
             type
         );

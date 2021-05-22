@@ -46,7 +46,7 @@ class AddMemberToTeam extends Component {
         listMemberChoosed: listMemberChoosed,
       });
     } else {
-      for (var i = 0; i < listMemberChoosed.length; i++) {
+      for (let i = 0; i < listMemberChoosed.length; i++) {
         if (listMembers[index].id === listMemberChoosed[i]) {
           listMemberChoosed.splice(i, 1);
         }
@@ -56,7 +56,7 @@ class AddMemberToTeam extends Component {
 
   findIndex(id) {
     const { listMembers } = this.state;
-    var result;
+    let result;
     listMembers.forEach((member, index) => {
       if (member.id === id) {
         result = index;
@@ -75,9 +75,9 @@ class AddMemberToTeam extends Component {
   };
 
   onSearchMember = (event) => {
-    var target = event.target;
-    var name = target.name;
-    var value = target.value;
+    let target = event.target;
+    let name = target.name;
+    let value = target.value;
     this.setState({
       [name]: value,
     });
@@ -85,7 +85,7 @@ class AddMemberToTeam extends Component {
 
   render() {
     const { avatarUser } = this.props;
-    var { listMembers, idItemChoosed, searchMember } = this.state;
+    let { listMembers, idItemChoosed, searchMember } = this.state;
     if (searchMember) {
       listMembers = listMembers.filter((member) => {
         return (

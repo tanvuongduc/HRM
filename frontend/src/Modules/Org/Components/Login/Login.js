@@ -15,10 +15,10 @@ class Login extends Form {
     login() {
         const { username, password } = this.state.form;
         AuthService.login(username.value, password.value).then(res => {
-            window.localStorage.setItem('token', res.id);
+            window.localStorage.setItem('token', res.access_token);
             AuthService.getUserInfo().then(_res => {
-                let user = _res.user;
-                window.localStorage.setItem('user', JSON.stringify(user));
+                let user = _res.userId;
+                window.localStorage.setItem('userId', JSON.stringify(user));
                 AuthService.userInfo = user;
                
             }).catch(err => {

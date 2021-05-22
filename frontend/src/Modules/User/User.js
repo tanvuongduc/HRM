@@ -39,9 +39,7 @@ class User extends Component {
   }
 
   async getInfo() {
-    const res = await Http.get("users/user", {
-      id: "6088cc2b80660b2f2818ae8a",
-    });
+    const res = await Http.get("users/myinfo");
     await this.setState({
       dataUser: res.data,
     });

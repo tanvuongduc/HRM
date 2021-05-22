@@ -9,7 +9,7 @@ class LineManager extends Component {
   }
 
   render() {
-    var { manager } = this.props;
+    const { manager } = this.props;
     if (manager === 1) {
       manager = "Manager 1";
     } else if (manager === 2) {
