@@ -1,8 +1,8 @@
 import React, { Component, Fragment, useState } from "react";
 import "./User.scss";
 import { Http } from "../../Helper/Http";
-import Details from "./Details/Details";
-import Employment from "./Employment/Employment";
+import Details from "./Components/Details/Details";
+import Employment from "./Components/Employment/Employment";
 import {
   BrowserRouter,
   Link,
@@ -11,9 +11,9 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import NavBarUser from "./NavBarUser/NavBarUser";
-import HeaderUser from "./HeaderUser/HeaderUser";
-import ChangeAvatar from "./HeaderUser/ChangeAvatar/ChangeAvatar";
+import NavBarUser from "./Components/NavBarUser/NavBarUser";
+import HeaderUser from "./Components/HeaderUser/HeaderUser";
+import ChangeAvatar from "./Components/HeaderUser/ChangeAvatar/ChangeAvatar";
 
 class User extends Component {
   constructor(props) {

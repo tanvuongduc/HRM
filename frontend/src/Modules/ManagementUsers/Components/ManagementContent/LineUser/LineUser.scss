@@ -1,0 +1,57 @@
+@import '../../../../../Styles/variables';
+
+.content-table-item {
+    .item-selected {
+        width: 5%;
+
+        input {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .item-id {
+        width: 18%;
+    }
+
+    .item-username {
+        width: 15%;
+    }
+
+    .item-email {
+        width: 20%;
+    }
+
+    .item-team {
+        width: 15%;
+    }
+
+    .item-status {
+        width: 12%;
+    }
+
+    .item-view-detail {
+        width: 10%;
+        font-size: 30px;
+        padding: 0 0 7px 0;
+        cursor: pointer;
+
+    }
+
+    .item-edit-info {
+        width: 5%;
+        font-size: 25px;
+        padding: 0 0 7px 0;
+        cursor: pointer;
+
+        .edit-info-icon {
+           color: rgb(107, 106, 106); 
+        }
+
+        .edit-info-icon:hover {
+            color: rgb(43, 42, 42); 
+        }
+        
+    }
+
+}
