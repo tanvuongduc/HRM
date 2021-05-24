@@ -11,6 +11,7 @@ export interface SocialNetwork {
 // }
 export interface Bank {
   bankName: String;
+  ownName: String;
   bankNumber: String;
 }
 
@@ -27,13 +28,12 @@ export const UserSchema = new mongoose.Schema({
   socialNetwork: {
     type: {
       title: String, //twiter facebook zalo
-      icon: String,
       link: String
     },
-    require: true
+    default: null
   },
   bank: {
-    type: { bankName: String, bankNumber: String },
+    type: { bankName: String, ownName: String,bankNumber: String },
     require: true
   },
   status: {
