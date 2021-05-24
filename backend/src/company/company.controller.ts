@@ -1,61 +1,39 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { Contact, Documents } from './company.model';
+import {
+    Controller,
+    Body,
+    Get,
+    Patch
+} from '@nestjs/common';
+
 import { CompanyService } from './company.service';
+import { Overview, Note } from './company.model';
 
 @Controller('company')
 export class CompanyController {
-    constructor(private readonly companyServive: CompanyService) { }
-    @Post()
-    async addCompany(
-        @Body('name') name: string,
-        @Body('documents') documents: Documents,
-        @Body('contact') contact: Contact,
-        @Body('pic') pic: string
+    constructor(
+        private readonly companyService: CompanyService,
+    ) { }
 
-    ) {
-        const generatedId = await this.companyServive.insertCompany(
-            name,
-            documents,
-            contact,
-            pic
-        )
-        return { id: generatedId }
-    }
-    //  get document
-    @Post('ducuments')
-    async adđocument(
-        @Body('documents') documents: Documents
-    ) {
-
-    }
     @Get()
-    async getAllCompany() {
-        const companys = await this.companyServive.getCompany();
-        return companys
+    async getCompany() {
+        const res = await this.companyService.getCompany();
+        return res;
     }
 
 
-    // @Put(':id')
-    // async update(
-    //     @Param('id') id: string,
-    //     @Body('name') name: string,
-    //     @Body('domain') domain: string,
-    //     @Body('overview') overview: string,
-    //     @Body('address') address: string,
-    //     @Body('contact') contact: string,
-    //     @Body('pic') pic: string,
-    //     @Body('notes') notes: string,
-    // ) {
-    //     await this.companyServive.updateCompany(
-    //         id,
-    //         name,
-    //         domain,
-    //         overview,
-    //         address,
-    //         contact,
-    //         pic,
-    //         notes)
-    //     return { success: true }
-    // }
-
+    @Patch()
+    async updateCompany(
+        @Body('name') name: String,
+        @Body('domain') domain: String,
+        @Body('address') address: String,
+        @Body('email') email: String,
+        @Body('phone') phone: String,
+        @Body('pic') pic: String,
+        @Body('overviews') overviews: [Overview],
+        @Body('notes') notes: [Note],
+        @Body('documents') documents: [String]
+    ) {
+        const res = await this.companyService.updateCompany(name, domain, address, email, phone, pic, overviews, notes, documents);
+        return res;
+    }
 }
