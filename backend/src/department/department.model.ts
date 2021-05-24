@@ -1,26 +1,23 @@
 import * as mongoose from 'mongoose';
 
 export const DepartmentSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required: true
+    _id: {
+        type: Number,
+        alias: 'id',
+        required: true,
     },
-    code:{
-        type: String
-    },
-    description:{
-        type: String
-    },
-    PIC:{
-        type: String
-    },
-    
+    name: { type: String, require: true },
+    pic: { type: mongoose.Types.ObjectId, require: true, ref: 'User' },
+    desc: { type: String },
+    createdAt: { type: Date, default: Date.now() },
+    documents: [{type: mongoose.Types.ObjectId, ref: 'Document'}]
 })
 
 export interface Department extends mongoose.Document {
-    id: string;
-    name: string;
-    code: string;
-    description: string;
-
+    id: Number;
+    name: String;
+    pic: String;
+    desc?: String;
+    createdAt: Date;
+    documents: [String];
 }
