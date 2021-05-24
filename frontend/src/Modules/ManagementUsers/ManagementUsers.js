@@ -1,36 +1,22 @@
 import React, { Component } from "react";
 import "./ManagementUsers.scss";
-import ManagementContent from "./ManagementContent/ManagementContent";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import ManagementUserInfo from "./ManagementUserInfo/ManagementUserInfo";
-import ManagementEditInfo from "./ManagementEditInfo/ManagementEditInfo";
+import ManagementContent from "./Components/ManagementContent/ManagementContent";
+import { BrowserRouter, Redirect, Route, Switch, Link } from "react-router-dom";
+import ManagementUserInfo from "./Components/ManagementUserInfo/ManagementUserInfo";
 
 class ManagementUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userIsViewedInfo: {},
-      userIsChoosed: false,
-      userIsChoosedEdit: {},
+      idUserisChoosed: "",
     };
   }
 
-  onViewUserInfo = (dataUser) => {
-    this.setState({
-      userIsViewedInfo: dataUser,
-      userIsChoosed: true,
-    });
-  };
-
-  onEditUserInfo = (dataUser) => {
-    this.setState({
-      userIsChoosed: true,
-      userIsChoosedEdit: dataUser,
-    });
-  };
 
   render() {
-    const { userIsViewedInfo, userIsChoosed, userIsChoosedEdit } = this.state;
+    const managementUserInfo = ({ match }) => (
+      <ManagementUserInfo userId={match.params.id}/>
+    );
 
     return (
       <BrowserRouter>
@@ -39,25 +25,9 @@ class ManagementUsers extends Component {
             <div className="col-sm-12">
               <Switch>
                 <Route exact path="/management/users">
-                  <ManagementContent
-                    onViewUserInfo={this.onViewUserInfo}
-                    onEditUserInfo={this.onEditUserInfo}
-                  />
+                  <ManagementContent />
                 </Route>
-                <Route exact path="/management/users/user">
-                  {userIsChoosed ? (
-                    <ManagementUserInfo userIsViewedInfo={userIsViewedInfo} />
-                  ) : (
-                    <Redirect to="/management/users" />
-                  )}
-                </Route>
-                <Route exact path="/management/users/edit">
-                  {userIsChoosed ? (
-                    <ManagementEditInfo userIsChoosedEdit={userIsChoosedEdit} />
-                  ) : (
-                    <Redirect to="/management/users" />
-                  )}
-                </Route>
+                <Route path="/management/users/:id" component={managementUserInfo} />
               </Switch>
             </div>
           </div>
