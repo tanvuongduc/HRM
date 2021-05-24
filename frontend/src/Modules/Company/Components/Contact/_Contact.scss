@@ -4,20 +4,25 @@
     display: flex;
     flex-wrap: wrap;
     padding: 30px;
-    border-radius: 10px;
-    background-color: #e6e9eb;
+    border-radius: 15px;
+    border: 2px solid #000;
+    background-color: white;
     .contact-item {
         width: 100%;
         height: auto;
-        padding: 10px 0;
+        padding: 15px 0;
         border-top: 1px solid gray;
         div {
             border: none;
             overflow: hidden;
+            padding-bottom: 15px;
+        }
+        div:last-child {
+            padding: 0;
         }
     }
     @media (max-width: 768px) {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
     }
 }

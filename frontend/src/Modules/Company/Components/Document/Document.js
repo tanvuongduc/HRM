@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Http } from '../../Shared/Index';
-import Modaladd from './Modaladd'
+import Modaladd from './Modaladd';
 
 const Document = () => {
     const [dataDocument, setDataDocument] = useState([]);

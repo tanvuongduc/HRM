@@ -1,5 +1,5 @@
 import { Http } from "../../../Helper/Http";
-import { UtilService } from "./";
+import { UtilService } from ".";
 
 const examResult = {
   examID: "1",

@@ -1,31 +1,61 @@
-import React, { useState } from 'react'
-import { Modal, ModalHeader, ModalBody, Form, Input, Label } from 'reactstrap'
-import Button from '@material-ui/core/Button'
+import { Modal, Button, FormControl, TextField } from '@material-ui/core'
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import React from 'react'
+
+const getModalStyle = () => {
+    return {
+        top: '35%',
+        left: '50%',
+        width: '600px',
+        padding: '30px',
+        borderRadius: '15px',
+        position: 'absolute',
+        backgroundColor: 'white',
+        border: '2px solid #000',
+        boxShadow: '0px 3px gray',
+        transform: 'translate(-50%, -50%)'
+    }
+}
+const getFormStyle = () => {
+    return {
+        textAlign: 'right'
+    }
+}
+const getFormControlStyle = () => {
+    return {
+        paddingBottom: '20px'
+    }
+}
 
 const Modaladd = () => {
-    const [modal, setModal] = useState(false);
-    const [data, setdata] = useState('');
+    const [modalStyle] = React.useState(getModalStyle);
+    const [formStyle] = React.useState(getFormStyle);
+    const [formControlStyle] = React.useState(getFormControlStyle);
+    const [modal, setModal] = React.useState(false);
 
-    const handerOnchange = (event) => {
-        setdata({ ...data, [event.target.name]: event.target.value })
+    const handleModal = () => {
+        setModal(!modal)
     };
 
-    const toggle = () => setModal(!modal);
     return (
         <div>
-            <Button variant="contained" color="primary" style={{ display: 'inline' }} onClick={toggle}>ADD</Button>
-            <Modal isOpen={modal} toggle={toggle} >
-                <ModalHeader toggle={toggle}>Create new document</ModalHeader>
-                <ModalBody>
-                    <Form>
-                        <Label>Enter title</Label>
-                        <Input type='text' name='title' onChange={handerOnchange} value={data.title} />
-                        <Label>Enter content</Label>
-                        <Input type='textarea' name='description' onChange={handerOnchange} value={data.desc} /><br />
-                        <Button variant="contained" color="primary" onClick={toggle} type="submit">Create</Button>{' '}
-                        <Button variant="contained" color="secondary" onClick={toggle}>Cancel</Button>
-                    </Form>
-                </ModalBody>
+            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Document</Button>
+            <Modal open={modal} onClose={handleModal} >
+                <div style={modalStyle}>
+                    <h4>Create a new document</h4><hr />
+                    <form autoComplete="off" style={formStyle}>
+                        <FormControl style={formControlStyle} fullWidth>
+                            <TextField label="Enter title" helperText="Some important text" required />
+                        </FormControl>
+                        <FormControl style={formControlStyle} fullWidth>
+                            <TextField label="Enter describe" helperText="Some important text" required />
+                        </FormControl>
+                        <Button variant="contained" color="primary" type="submit" startIcon={<SaveIcon />}>Save</Button>{' '}
+                        <Button variant="contained" color="secondary" onClick={handleModal} startIcon={<CancelIcon />}>Cancel</Button>
+                    </form>
+                </div>
             </Modal>
         </div>
     )

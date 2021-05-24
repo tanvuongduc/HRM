@@ -1,20 +1,19 @@
 .quickview-content {
     width: 60%;
     height: auto;
-    border-radius: 10px;
-    background-color: #e6e9eb;
+    border-radius: 15px;
+    border: 2px solid #000;
+    background-color: white;
     padding: 30px;
     .quickview-item {
         width: 100%;
         height: auto;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding-top: 15px;
         text-align: center;
         border-top: 1px solid gray;
         div {
-            width: 33.33%;
-            height: auto;
             font-size: 20px;
         }
     }
