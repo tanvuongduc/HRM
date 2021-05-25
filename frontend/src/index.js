@@ -8,10 +8,7 @@ import { AuthService } from "./Shared";
 
 import App from "./Shared/Components/App/App";
 import Login from "./Modules/Org/Components/Login/Login";
-import NavBar from "./Modules/Org/Components/NavBar.js/NavBar";
 import User from "./Modules/User/User";
-
-import People from './Modules/People/People';
 
 const isLogged = !!AuthService.userInfo;
 
@@ -34,7 +31,7 @@ const Root = (
           <Route
             path="/login"
             render={() => {
-              return isLogged ? (
+              return !isLogged ? (
                 <Login></Login>
               ) : (
                 <Redirect to="/app"></Redirect>
@@ -47,8 +44,8 @@ const Root = (
               return isLogged ? <App></App> : <Redirect to="/login"></Redirect>;
             }}
           ></Route>
-          <Route path="/user">
-              <User/>
+          <Route path="/app">
+            <App />
           </Route>
         </Suspense>
       </Switch>

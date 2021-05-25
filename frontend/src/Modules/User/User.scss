@@ -1,5 +1,6 @@
-@import url(../../Styles/_variables.scss);
-
+body {
+     background-color: #f0efefdf; 
+}
 .profile-header {
     background-color: #007bff;
     width: 100%;
@@ -8,9 +9,5 @@
 }
 
 .profile-main {
-
-    background-color: #f0efefdf;
     padding-top: 3rem;
-    padding-bottom: 5rem;
-
 }

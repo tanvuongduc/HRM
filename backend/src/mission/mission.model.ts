@@ -14,6 +14,7 @@ export const MissionSchema = new mongoose.Schema({
 
 
 export interface Mission extends mongoose.Document{
+    id:String;
     title: String;
     content: String;
     department: String;

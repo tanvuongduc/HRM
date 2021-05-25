@@ -1,0 +1,45 @@
+
+@import '../../../../Styles/variables';
+@import '../../../User/Shared/button-form.scss';
+
+.management-edit-info {
+
+    background-color: rgb(228, 225, 225);
+
+    .title {
+        font-size: 40px;
+        color: #ffff;
+        padding: 15px 30px;
+        background-color: $c-primary;
+    }
+
+    .form-edit {
+        padding: 40px 30px;
+
+        .title-input {
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .input {
+            height: 50px;
+            font-size: 18px;
+            transition: 200ms;
+        }
+
+
+        .input:disabled {
+            border: none;
+            background-color: rgb(228, 225, 225);
+            font-size: 20px;
+            padding: 0;
+            margin-left: -10px;
+        }
+
+    }
+
+   
+}
+

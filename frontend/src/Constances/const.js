@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000/';
+export const BASE_URL = 'http://103.138.108.104:3000/';
 
 export const REGEX_TEL = '^0\\d{9,11}$';
 export const ERR_MSG = {
