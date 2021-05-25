@@ -17,7 +17,6 @@ class MainTeam extends Component {
         super(props);
         this.state = {
             basicInfoTeam: [],
-            listMemberTeam: [],
 
             idTeam: '60a017be2e215a1788c61565',
 
@@ -43,17 +42,8 @@ class MainTeam extends Component {
                 basicInfoTeam: res.data
             })
         })
-        this.getListMemberTeam(this.state.idTeam);
     }
-    deleteMemberId = (id) => {
-        const data = {
-            "members": [
-                id
-            ]
-        }
 
-        TeamService.postRemoveMember(this.state.idTeam, data)
-    }
     showInfoMemberId = (id) => {
         TeamService.getUserInfo(id).then(res => {
             this.setState({
@@ -73,7 +63,6 @@ class MainTeam extends Component {
     getInfo = () => {
         console.log('hello world');
     }
-    ///// controler form
     controlFormUserInfo = () => {
         this.setState({ setOpenUserInfo: false })
         console.log('helllo mama')
@@ -114,8 +103,7 @@ class MainTeam extends Component {
                     </Grid>
 
                     <MemberInfoTeam
-                        dataListMember={listMemberTeam.members ? listMemberTeam.members : []}
-                        deleteMemberId={this.deleteMemberId}
+                        idTeam= {this.state.idTeam}
                         showInfoMemberId={this.showInfoMemberId}
                     ></MemberInfoTeam>
                 </Card>
