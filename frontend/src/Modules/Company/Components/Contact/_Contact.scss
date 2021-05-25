@@ -1,0 +1,28 @@
+.contact-content {
+    width: 35%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px gray, 0px 1px 1px 0px gray, 0px 1px 3px 0px gray;
+    .contact-item {
+        width: 100%;
+        height: auto;
+        padding: 15px 0;
+        border-top: 1px solid #e6e9eb;
+        div {
+            border: none;
+            overflow: hidden;
+            padding-bottom: 15px;
+        }
+        div:last-child {
+            padding: 0;
+        }
+    }
+    @media (max-width: 768px) {
+        width: 100%;
+        margin-top: 15px;
+    }
+}

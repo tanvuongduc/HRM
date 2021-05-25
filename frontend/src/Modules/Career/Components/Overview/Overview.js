@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from 'react'
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -21,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CareerEdit() {
+const Overview = () => {
     const classes = useStyles();
-
     return (
-        <Container maxWidth="md" style={{paddingTop: '100px'}}>
+        <Container maxWidth="md" style={{ paddingTop: '100px' }}>
             <Timeline align="alternate">
 
                 <TimelineItem>
@@ -90,8 +88,7 @@ export default function CareerEdit() {
                 </TimelineItem>
             </Timeline>
         </Container>
-    );
+    )
 }
 
-
-
+export default Overview;
