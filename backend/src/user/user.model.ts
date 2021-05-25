@@ -3,7 +3,6 @@ import * as mongoose from 'mongoose';
 
 export interface SocialNetwork {
   title: String;
-  icon: String;
   link: String;
 }
 // interface Certificate{
