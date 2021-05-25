@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
-import {TimeoffService} from './timeoff.service'
+import { TimeoffService } from './timeoff.service'
 import {
-    
+
 } from '@nestjs/common';
 @Controller('timeoff')
 export class TimeoffController {
@@ -9,26 +9,25 @@ export class TimeoffController {
 
     @Post()
     async createTimeoff(
-        @Body('reason')reason: String,
-        @Body('from')from: Date,
-        @Body('to')to: Date,
-        @Body('by')by: String,
-        @Body('status')status: String,
-    ){
-        return this.timeoffService.insertTimeoff(reason,  from, to, by, status)
+        @Body('reason') reason: String,
+        @Body('from') from: Date,
+        @Body('to') to: Date,
+        @Body('by') by: String,
+    ) {
+        return this.timeoffService.insertTimeoff(reason, from, to, by)
     }
 
     @Get()
-    async getAllTimeoffInMonth(){
+    async getAllTimeoffInMonth() {
         return this.timeoffService.getAllTimeoffInMonth()
     }
 
     @Patch()
     async handleTimeoff(
-        @Body('id')id: String,
-        @Body('status')status: String
-    ){
+        @Body('id') id: String,
+        @Body('status') status: String
+    ) {
         return this.timeoffService.handleTimeoff(id, status)
     }
-    
+
 }

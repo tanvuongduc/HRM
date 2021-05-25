@@ -7,8 +7,8 @@ export const TimeoffSchema = new mongoose.Schema({
     from: { type: Date, require: true },
     to: { type: Date, require: true },
     by: { type: String, require: true },
-    status: { type: String, require: true, default:"Pendding" }, //Pendding, approve, reject
-    censor: { type: String, default: "" }
+    status: { type: String, require: true, default: "Pendding" }, //Pendding, approve, reject
+    pic: { type: mongoose.Types.ObjectId , ref: 'User'}
 })
 
 
@@ -19,5 +19,5 @@ export interface Timeoff extends mongoose.Document {
     to: Date;
     by: String;
     status: String;
-    censor: String;
+    pic: String;
 }
