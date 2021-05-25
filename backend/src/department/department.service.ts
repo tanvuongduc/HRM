@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Department } from './department.model';
@@ -25,6 +25,10 @@ export class DepartmentService {
         desc: String,
     ) {
         await this.usersService.findUserById(pic)
+        const checkCode = await this.departmentModel.find().where({ code: code }).exec();
+        if (checkCode.length) {
+            throw new HttpException('Code exsited!', 409);
+        }
         const newDepartment = new this.departmentModel({
             code, name, pic, desc
         });
@@ -35,7 +39,7 @@ export class DepartmentService {
     }
 
     async getDepartmentById(
-        id: Number
+        id: String
     ) {
         const department = await this.findDepartmentById(id);
 
@@ -70,7 +74,7 @@ export class DepartmentService {
 
     async insertTeamsByDepartmentId(
         teamsId: [String],
-        departmentId: Number
+        departmentId: String
     ) {
         await this.findDepartmentById(departmentId);
         const res = await this.teamService.insertDepartmentForTeamsId(teamsId, departmentId)
@@ -82,7 +86,7 @@ export class DepartmentService {
 
     async removeTeamsByDepartmentId(
         teamsId: [String],
-        departmentId: Number
+        departmentId: String
     ) {
         await this.findDepartmentById(departmentId);
         const res = await this.teamService.removeDepartmentFromTeamsId(teamsId, departmentId)
@@ -92,7 +96,7 @@ export class DepartmentService {
         }
     }
     async updateDepartmentById(
-        id: Number,
+        id: String,
         name: String,
         pic: String,
         desc: String,
@@ -111,15 +115,15 @@ export class DepartmentService {
     }
 
 
-    async findDepartmentById(id: Number): Promise<Department> {
+    async findDepartmentById(id: String): Promise<Department> {
         let department: any;
         try {
             department = await this.departmentModel.findById(id).populate('pic').populate('documents').exec();
         } catch (error) {
-            throw new NotFoundException('Could not find department.');
+            throw new HttpException('Could not find department.', 400);
         }
         if (!department) {
-            throw new NotFoundException(`find department err ${id}`);
+            throw new HttpException(`find department err ${id}`, 400);
         }
         return department;
     }

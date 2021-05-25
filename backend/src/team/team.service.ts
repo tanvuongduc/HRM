@@ -93,7 +93,7 @@ export class TeamService {
     }
     async insertDepartmentForTeamsId(
         teamsId: [String],
-        departmentId: Number
+        departmentId: String
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
         let teamsArr = [];
@@ -109,7 +109,7 @@ export class TeamService {
 
     async removeDepartmentFromTeamsId(
         teamsId: [String],
-        departmentId: Number
+        departmentId: String
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
         let teamsArr = [];
