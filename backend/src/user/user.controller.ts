@@ -69,6 +69,7 @@ export class UsersController {
     // @UseGuards(JwtAuthGuard)
     @Get()
     async getAllUsers() {
+
         const Users = await this.usersService.getUsers();
         return Users;
     }

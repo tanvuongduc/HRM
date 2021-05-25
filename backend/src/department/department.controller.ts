@@ -17,11 +17,12 @@ export class DepartmentController {
 
     @Post('department')
     async insertDepartment(
+        @Body('code') code:String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
     ) {
-        const res = await this.departmentService.insertDepartment(name, pic, desc);
+        const res = await this.departmentService.insertDepartment(code, name, pic, desc);
         return res;
     }
 

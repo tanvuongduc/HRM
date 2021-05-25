@@ -19,15 +19,14 @@ export class DepartmentService {
     }
 
     async insertDepartment(
+        code: String,
         name: String,
         pic: String,
         desc: String,
     ) {
         await this.usersService.findUserById(pic)
-        const size = await this.departmentModel.estimatedDocumentCount().exec();
-        const id = size + 1;
         const newDepartment = new this.departmentModel({
-            id, name, pic, desc
+            code, name, pic, desc
         });
         const res = await newDepartment.save();
         return {

@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import AppHeader from '../AppHeader/AppHeader';
-import AppSidebar from '../AppSidebar/AppSidebar';
+import Department from '../../../Modules/Department/Department';
 import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
-import { Department } from '../../../Modules/Department/Department';
-import { DetailDepartment } from '../../../Modules/Department/Components/DetailDepartment/DetailDepartment';
+import Exam from '../../../Modules/Exam/Exam';
+import MainTeam from '../../../Modules/Team/Components/MainTeam';
+// import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
     render() {
         const { path } = this.props.match;
         return (
             <div>
-                <AppHeader />
-                {/* <AppSidebar /> */}
                 <Switch>
+                    <Route exact path={`${path}/department`} component={Department} />
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
-                    <Route exact path={`${path}/department`} component={Department} />
-                    <Route exact path={`${path}/department/detail:id`} component={DetailDepartment} />
+                    <Route exact path={`${path}/exam`} component={Exam} />
+                    <Route path={`${path}/team`} component={MainTeam} />
+                    {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
                 </Switch>
             </div>
         );
     }
 }
+
 export default withRouter(App);

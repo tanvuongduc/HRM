@@ -1,5 +1,8 @@
 import * as mongoose from 'mongoose';
 
+
+
+
 export const CompanySchema = new mongoose.Schema({
     name: { type: String, require: true, default: 'notset' },
     domain: { type: String, default: 'notset' },
@@ -46,6 +49,7 @@ export interface SocialNetwork {
     key: String;
     value: String;
 }
+
 
 export interface Company extends mongoose.Document {
     id: String;

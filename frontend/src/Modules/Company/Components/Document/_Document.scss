@@ -1,0 +1,37 @@
+.document-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 50px;
+    padding: 30px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px gray, 0px 1px 1px 0px gray, 0px 1px 3px 0px gray;
+    .document-header {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .document-item {
+        width: 100%;
+        height: auto;
+        margin-top: 5px;
+        padding-top: 15px;
+        border-top: 1px solid #e6e9eb;
+        div {
+            div {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        margin-top: 15px;
+    }
+}
