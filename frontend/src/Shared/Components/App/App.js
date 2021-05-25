@@ -4,6 +4,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import AppSidebar from '../AppSidebar/AppSidebar';
 import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
+import Team from '../../../Modules/Team/Team';
 import { Department } from '../../../Modules/Department/Department';
 import { DetailDepartment } from '../../../Modules/Department/Components/DetailDepartment/DetailDepartment';
 

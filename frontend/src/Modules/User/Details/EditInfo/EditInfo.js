@@ -5,9 +5,9 @@ class EditInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      codeEdit: '',
-      titleEdit: '',
-      valueEdit: ''
+      codeEdit: "",
+      titleEdit: "",
+      valueEdit: "",
     };
   }
 
@@ -15,7 +15,7 @@ class EditInfo extends Component {
     this.setState({
       codeEdit: this.props.codeEdit,
       titleEdit: this.props.titleEdit,
-      valueEdit: this.props.valueEdit
+      valueEdit: this.props.valueEdit,
     });
     console.log(this.state.codeEdit);
   }
@@ -30,9 +30,9 @@ class EditInfo extends Component {
   };
 
   onSaveEditting = () => {
-    const {codeEdit, valueEdit} = this.state
-    let {data} = this.props;
-    switch (codeEdit){
+    const { codeEdit, valueEdit } = this.state;
+    let { data } = this.props;
+    switch (codeEdit) {
       case "username":
         data.name = valueEdit;
         break;
@@ -51,6 +51,12 @@ class EditInfo extends Component {
       case "email":
         data.email = valueEdit;
         break;
+      case "bankName":
+        data.bank.bankName = valueEdit;
+        break;
+      case "bankId":
+        data.bank.bankId = valueEdit;
+        break; 
     }
     this.props.onSaveEditting(data);
     this.props.onCloseEditInfo();
@@ -71,14 +77,17 @@ class EditInfo extends Component {
                 value={valueEdit}
                 onChange={this.onChange}
               />
+
               <div className="btn-control">
                 <a
+                  for="check-button-input"
                   className="btn btn-save"
                   onClick={this.onSaveEditting}
                 >
                   Save
                 </a>
                 <a
+                  for="check-button-input"
                   className="btn btn-close"
                   onClick={this.props.onCloseEditInfo}
                 >
