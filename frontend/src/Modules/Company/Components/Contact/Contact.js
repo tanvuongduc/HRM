@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
+import LanguageIcon from '@material-ui/icons/Language';
+import EmailIcon from '@material-ui/icons/Email';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { Http } from '../../Shared/Index';
 
 const Contact = () => {
@@ -7,9 +11,7 @@ const Contact = () => {
     const getDataContact = async () => {
         try {
             const data = await Http.get('company')
-            data.data.map(event => {
-                return setDataContact(event.contact)
-            })
+            return setDataContact(data.data)
         } catch (error) {
             console.log(error)
         }
@@ -19,21 +21,23 @@ const Contact = () => {
         getDataContact();
     }, []);
 
+    let { phone, domain, email, address } = dataContact;
+
     return (
         <div className="contact-content">
             <h3>Contact</h3>
             <div className="contact-item">
                 <div>
-                    <i className="fa fa-phone" />{' '}Phone : {dataContact.phone}
+                    <PhoneEnabledIcon />{' '}Phone : {phone}
                 </div>
                 <div>
-                    <i className="fa fa-globe" />{' '}Website : <a href={dataContact.domain}>{dataContact.domain}</a>
+                    <LanguageIcon />{' '}Website : <a href={domain}>{domain}</a>
                 </div>
                 <div>
-                    <i className="fa fa-envelope" />{' '}Email : {dataContact.email}
+                    <EmailIcon />{' '}Email : {email}
                 </div>
                 <div>
-                    <i className="fa fa-map-marker" />{' '}Address : {dataContact.address}
+                    <LocationOnIcon />{' '}Address : {address}
                 </div>
             </div>
         </div>

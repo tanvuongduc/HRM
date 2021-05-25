@@ -11,7 +11,7 @@ class ExamEdit extends Form {
     }
 
     componentDidMount() {
-        this._fillForm({ temp: '100', pres: '101', hRate: '102' })
+        this._fillForm({ temp: '', pres: '', hRate: '' })
     }
 
     render() {
@@ -19,11 +19,18 @@ class ExamEdit extends Form {
         return (
             <div>
                 <h1>This is Exam component</h1>
+
                 <input type="text" placeholder="Nhiệt độ" value={temp.value} minLength="3" onChange={(ev) => this._setValue(ev, 'temp')}></input>
+
                 <input type="number" placeholder="Huyết áp" value={pres.value} min="3" onChange={(ev) => this._setValue(ev, 'pres')}></input>
+
                 <input type="text" pattern={REGEX_TEL} placeholder="Nhịp tim" value={hRate.value} required onChange={(ev) => this._setValue(ev, 'hRate')}></input>
+
                 <button onClick={() => console.log('aaaaaaaaaaaaaaaaaaaa', this.state)}>test</button>
+
+
                 <h1>{JSON.stringify(this.state.form)}</h1>
+                
                 <ModalNoti message={this.state.notiMessage} done={() => this.setState({ notiMessage: '' })}></ModalNoti>
             </div>
         );

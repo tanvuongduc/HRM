@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import MenuIcon from '@material-ui/icons/Menu';
 import { Http } from '../../Shared/Index';
 import Modaladd from './Modaladd';
 
@@ -8,9 +9,7 @@ const Document = () => {
     const getDataDocument = async () => {
         try {
             const data = await Http.get('company')
-            data.data.map(event => {
-                return setDataDocument(event.documents)
-            })
+            return setDataDocument(data.data.notes)
         } catch (error) {
             console.log(error)
         }
@@ -23,8 +22,10 @@ const Document = () => {
     const showDocumentItem = dataDocument.map((event, index) => {
         return (
             <div key={index}>
-                <p><b>Title: </b>{event.title}</p>
-                <p><b>Description: </b>{event.description}</p><hr />
+                <div>
+                    <span><b>Title: </b>{event.title}</span><MenuIcon />
+                </div>
+                <p><b>Description: </b>{event.desc}</p><hr />
             </div>
         )
     });

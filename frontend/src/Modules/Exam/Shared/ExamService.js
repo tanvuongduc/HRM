@@ -64,5 +64,4 @@ class Exam extends UtilService {
 }
 
 const instance = new Exam();
-
 export default instance;

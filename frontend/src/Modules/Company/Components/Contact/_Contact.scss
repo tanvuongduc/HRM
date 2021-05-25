@@ -4,14 +4,14 @@
     display: flex;
     flex-wrap: wrap;
     padding: 30px;
-    border-radius: 15px;
-    border: 2px solid #000;
+    border-radius: 4px;
     background-color: white;
+    box-shadow: 0px 2px 1px -1px gray, 0px 1px 1px 0px gray, 0px 1px 3px 0px gray;
     .contact-item {
         width: 100%;
         height: auto;
         padding: 15px 0;
-        border-top: 1px solid gray;
+        border-top: 1px solid #e6e9eb;
         div {
             border: none;
             overflow: hidden;

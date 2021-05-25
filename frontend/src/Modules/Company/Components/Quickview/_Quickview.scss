@@ -1,9 +1,9 @@
 .quickview-content {
     width: 60%;
     height: auto;
-    border-radius: 15px;
-    border: 2px solid #000;
+    border-radius: 4px;
     background-color: white;
+    box-shadow: 0px 2px 1px -1px gray, 0px 1px 1px 0px gray, 0px 1px 3px 0px gray;
     padding: 30px;
     .quickview-item {
         width: 100%;
@@ -12,7 +12,7 @@
         grid-template-columns: repeat(3, 1fr);
         padding-top: 15px;
         text-align: center;
-        border-top: 1px solid gray;
+        border-top: 1px solid #e6e9eb;
         div {
             font-size: 20px;
         }
