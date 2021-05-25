@@ -1,0 +1,47 @@
+ @import '../Employment.scss';
+ 
+ .employment-team {
+        h3 {
+            @include title-box-style();
+        }
+
+        .add-to-team {
+            border-radius: 0.8rem;
+            padding: 25px 20px;
+            background-color: rgba(138, 138, 138, 0.164);
+
+            .title {
+                @include sub-title-box();
+            }
+
+            select {
+                padding-left: 15px;
+                font-size: 18px;
+                font-weight: 400;
+                width: 32rem;
+                height: 60px;
+                border: 1px solid rgba(136, 136, 136, 0.308);
+            }
+
+            .new-team-icon {
+                margin-right: 10px;
+                font-size: 20px;
+            }
+
+            .new-team {
+                text-transform: uppercase;
+                font-size: 15px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+
+            .new-team:hover {
+                background-color: $c-primary;
+                color: white;
+            }
+
+            .btn-primary {
+                @include button-style();
+            }
+        }
+    }

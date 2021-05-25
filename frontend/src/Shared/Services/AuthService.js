@@ -2,8 +2,8 @@ import { UtilService } from "../";
 import { Http } from "../../Helper/Http";
 
 const API_ENDPOINT = {
-    LOGIN: "/auth/login",
-    ME: "/auth/me",
+    LOGIN: "login",
+    ME: "me",
 };
 
 class AuthService extends UtilService {
@@ -15,7 +15,7 @@ class AuthService extends UtilService {
         AuthService._instance = this;
     }
 
-    userInfo = JSON.parse(window.localStorage.getItem('user') || 'null');
+    userInfo = JSON.parse(window.localStorage.getItem('userId') || 'null');
 
     async login(username, password) {
         return (await Http.post(API_ENDPOINT.LOGIN, { username, password })).data;

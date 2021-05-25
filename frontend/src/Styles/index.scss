@@ -1,9 +1,9 @@
+
+@import "./variables";
 @import "./shared";
 @import "./util";
-@import "./variables";
 @import "../Shared/Components/AppHeader/AppHeader";
 @import "../Shared/Components/AppSidebar/AppSidebar";
-@import "../Shared/Components/App/App";
 
 /*====================================================*/
 
@@ -13,12 +13,12 @@
 
 /*====================================================*/
 
-@import "../Modules/Company/Company.scss";
+@import "../Modules/Company/Company";
 @import "../Modules/Department/Department";
-@import "../Modules/People/People.scss";
-@import "../Modules/People/Components/MyTeam/MyTeam.scss";
-@import "../Modules/People/Components/User/User.scss";
-@import "../Modules/People/Components/MyTeam/Team/Team.scss";
-@import "../Modules/People/Components/User/ListUser/ListUser.scss";
-@import "../Modules/People/Components/User/NavUser/NavUser.scss";
-@import "../Modules/People/Components/User/User.scss";
+@import "../Modules/People/People";
+@import "../Modules/People/Components/MyTeam/MyTeam";
+@import "../Modules/People/Components/User/User";
+@import "../Modules/People/Components/MyTeam/Team/Team";
+@import "../Modules/People/Components/User/ListUser/ListUser";
+@import "../Modules/People/Components/User/NavUser/NavUser";
+@import "../Modules/People/Components/User/User";

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
-import AppSidebar from '../AppSidebar/AppSidebar';
+import Exam from '../../../Modules/Exam/Exam';
+// import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
+import MainTeam from '../../../Modules/Team/Components/MainTeam';
 import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
 import { Department } from '../../../Modules/Department/Department';
@@ -15,6 +17,9 @@ class App extends Component {
                 <AppHeader />
                 {/* <AppSidebar /> */}
                 <Switch>
+                    <Route path={`${path}/exam`} component={Exam} />
+                    <Route path={`${path}/team`} component={MainTeam} />
+                    {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/department`} component={Department} />
