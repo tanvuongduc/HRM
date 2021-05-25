@@ -15,16 +15,17 @@ export class CertificateController {
 
     @Post()
     async insertCertificate(
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('desc') desc: String,
     ) {
-        const res = await this.certificateService.insertCertificate(name, desc);
+        const res = await this.certificateService.insertCertificate(code, name, desc);
         return res;
     }
 
     @Get('find')
     async getCertificateById(
-        @Query('id') id: Number
+        @Query('id') id: String
     ) {
         const res = await this.certificateService.getCertificateById(id);
         return res;
@@ -39,7 +40,7 @@ export class CertificateController {
 
     @Patch('update')
     async updateCertificate(
-        @Query('id') id: Number,
+        @Query('id') id: String,
         @Body('name') name: String,
         @Body('desc') desc: String,
     ) {

@@ -201,32 +201,6 @@ export class UsersService {
         }
     }
 
-    async uploadAvatar(
-        uid: String,
-        avatar: String,
-        type: String
-    ) {
-        const path = `/avatar/${uid}.${type}`;
-        const user = await this.findUserById(uid);
-        if (user) {
-
-            const data = new Buffer(avatar.split(',')[1], 'base64');
-            writeFileSync(BASEPATH + path, data);
-            user.avatar = path;
-            await user.save()
-        }
-        return {
-            avatar: path
-        }
-    }
-
-    // async deleteUser(uid: String) {
-    //     const result = await this.userModel.deleteOne({ _id: uid }).exec();
-    //     if (result.n === 0) {
-    //         throw new NotFoundException('Could not find User.');
-    //     }
-    // }
-
     async findUserById(id: String): Promise<User> {
         let user: any;
         try {

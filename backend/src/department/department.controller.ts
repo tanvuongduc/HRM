@@ -17,18 +17,19 @@ export class DepartmentController {
 
     @Post('department')
     async insertDepartment(
+        @Body('code') code:String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
     ) {
-        const res = await this.departmentService.insertDepartment(name, pic, desc);
+        const res = await this.departmentService.insertDepartment(code, name, pic, desc);
         return res;
     }
 
 
     @Get('department')
     async getDepartmentById(
-        @Query('id') id: Number
+        @Query('id') id: String
     ) {
         const res = await this.departmentService.getDepartmentById(id);
         return res;
@@ -36,7 +37,7 @@ export class DepartmentController {
 
     @Patch('department')
     async updateDepartmentById(
-        @Query('id') id: Number,
+        @Query('id') id: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
@@ -66,7 +67,7 @@ export class DepartmentController {
 
     @Patch('teams')
     async insertTeamsByDepartmentId(
-        @Query('department') id: Number,
+        @Query('department') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
@@ -74,7 +75,7 @@ export class DepartmentController {
     }
     @Delete('teams')
     async removeTeamsByDepartmentId(
-        @Query('department') id: Number,
+        @Query('department') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);

@@ -12,14 +12,12 @@ export class TimeoffService {
         from: Date,
         to: Date,
         by: String,
-        status: String,
     ) {
         let timeoff = new this.timeoffModel({
             reason,
             from,
             to,
-            by,
-            status,
+            by
         })
         await timeoff.save()
         return timeoff.id
@@ -36,7 +34,7 @@ export class TimeoffService {
             to: time.to,
             by: time.by,
             status: time.status,
-            censor: time.censor,
+            pic: time.pic,
         }));
     }
     async handleTimeoff(
@@ -44,7 +42,6 @@ export class TimeoffService {
         status: String
     ) {
         const timeoff = await this.findTimeoff(id);
-        //timeoff.censor = 
         timeoff.status = (status === "Approved" || status === "Rejected") ? status : "Pendding";
         timeoff.save();
         return {
@@ -55,7 +52,7 @@ export class TimeoffService {
     private async findTimeoff(id: String): Promise<Timeoff> {
         let Timeoff: any;
         try {
-            Timeoff = await this.timeoffModel.findById(id).exec();
+            Timeoff = await this.timeoffModel.findById(id).populate('pic').exec();
         } catch (error) {
             throw new NotFoundException('Could not find Timeoff.');
         }

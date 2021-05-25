@@ -76,7 +76,7 @@ export class UsersController {
 
 
 
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Patch()
     async updateUser(
         @Request() req,
@@ -107,25 +107,4 @@ export class UsersController {
         );
         return res;
     }
-
-    
-    @UseGuards(JwtAuthGuard)
-    @Post('upload/avatar')
-    async uploadAvatar(
-        @Request() req,
-        @Body('data') data: string,
-        @Body('type') type: string
-    ) {
-        let res = await this.usersService.uploadAvatar(
-            req.user.userId,
-            data,
-            type
-        );
-        return res;
-    }
-    // @Delete(':id')
-    // async removeUser(@Param('id') uid: string) {
-    //     await this.usersService.deleteUser(uid);
-    //     return null;
-    // }
 }

@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Company, Overview, Note } from './company.model';
+import { Company, Overview, Note, SocialNetwork } from './company.model';
 import { UsersService } from '../user/user.service'
 
 @Injectable()
@@ -16,16 +16,17 @@ export class CompanyService {
         if (!res) {
             const company = new this.companyModel({})
             await company.save();
-            throw new NotFoundException('Đã tạo công ty, vui lòng cập nhật lại thông tin');
         }
         return {
             id: res.id,
             name: res.name,
             domain: res.domain,
+            website: res.website,
             address: res.address,
             email: res.email,
             phone: res.phone,
             pic: res.pic,
+            socialNetwork: res.socialNetwork,
             overviews: res.overviews,
             notes: res.notes,
             documents: res.documents
@@ -35,10 +36,12 @@ export class CompanyService {
     async updateCompany(
         name: String,
         domain: String,
+        website: String,
         address: String,
         email: String,
         phone: String,
         pic: String,
+        socialNetwork: [SocialNetwork],
         overviews: [Overview],
         notes: [Note],
         documents: [String]
@@ -47,10 +50,12 @@ export class CompanyService {
         let company = await this.findCompany();
         company.name = name;
         company.domain = domain;
+        company.website = website;
         company.address = address;
         company.email = email;
         company.phone = phone;
         company.pic = pic;
+        company.socialNetwork = socialNetwork;
         company.overviews = overviews;
         company.notes = notes;
         company.documents = documents
@@ -59,10 +64,12 @@ export class CompanyService {
             id: res.id,
             name: res.name,
             domain: res.domain,
+            website: res.website,
             address: res.address,
             email: res.email,
             phone: res.phone,
             pic: res.pic,
+            socialNetwork: res.socialNetwork,
             overviews: res.overviews,
             notes: res.notes,
             documents: res.documents
@@ -75,10 +82,10 @@ export class CompanyService {
         try {
             company = await this.companyModel.findOne().exec();
         } catch (error) {
-            throw new NotFoundException('Could not find company.');
+            throw new HttpException('Could not find company.', 400);
         }
         if (!company) {
-            throw new NotFoundException(`find company err`);
+            throw new HttpException(`find company err`, 400);
         }
         return company;
     }

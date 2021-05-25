@@ -21,7 +21,7 @@ export interface Team extends mongoose.Document {
     rate: Number;
     achievements: String;
     mission: String;
-    department: Number;
+    department: String;
     createAt: Date;
     creatBy: String;
 }

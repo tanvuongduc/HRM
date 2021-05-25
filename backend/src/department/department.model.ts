@@ -1,11 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export const DepartmentSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        alias: 'id',
-        required: true,
-    },
+    code: {type: String, require: true},
     name: { type: String, require: true },
     pic: { type: mongoose.Types.ObjectId, require: true, ref: 'User' },
     desc: { type: String },
@@ -14,7 +10,8 @@ export const DepartmentSchema = new mongoose.Schema({
 })
 
 export interface Department extends mongoose.Document {
-    id: Number;
+    id: String;
+    code: String;
     name: String;
     pic: String;
     desc?: String;
