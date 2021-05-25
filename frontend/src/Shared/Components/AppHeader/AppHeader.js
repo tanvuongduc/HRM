@@ -1,11 +1,9 @@
 import React from 'react';
-
 import { withRouter } from "react-router-dom";
-import { Nav, NavItem, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, NavLink } from 'reactstrap';
+import { Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import { Col, Row } from 'reactstrap';
 import { AuthService } from '../../';
-import { ROLE } from '../../../Constances/const';
-
+import avt from '../../../Asset/Img/avatar.png';
 
 class AppHeader extends React.Component {
     state = {
@@ -25,18 +23,6 @@ class AppHeader extends React.Component {
         })
     }
 
-    toggleMasterData = () => {
-        this.setState({
-            dropdownMasterDataOpen: !this.state.dropdownMasterDataOpen,
-        })
-    }
-
-    toggleWareHouse = () => {
-        this.setState({
-            dropdownWareHouseOpen: !this.state.dropdownWareHouseOpen,
-        })
-    }
-
     logout() {
         AuthService.userInfo = null;
         window.localStorage.clear();
@@ -47,12 +33,25 @@ class AppHeader extends React.Component {
         return (
             <Nav pills>
                 <Row className="appHeaderContainer" style={{ margin: '0px' }}>
-                    <Col xs="2"></Col>
-                    <Col xs="8"></Col>
-                    <Col xs="2">
+                    <Col xs="2" className='header-left'></Col>
+                    <Col xs="8" className="header-middle">
+                        <form className='header-middle-search'>
+                            <InputGroup>
+                                <InputGroupAddon addonType="prepend">
+                                    <InputGroupText className='search-button'>
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                <Input className='search-input' placeholder="Search.." />
+                            </InputGroup>
+                        </form>
+                    </Col>
+                    <Col xs="2" className="header-right">
                         <Dropdown nav isOpen={this.state.dropdownUserOpen} toggle={this.toggleUser}>
-                            {/* <DropdownToggle nav caret>{AuthService.userInfo.first_name}</DropdownToggle> */}
-                            <DropdownMenu>
+                            <DropdownToggle nav caret className='dropdownToggle'>
+                                <img src={avt} alt={avt} />
+                                <span>&ensp;{localStorage.getItem('user')}</span>
+                            </DropdownToggle>
+                            <DropdownMenu right>
                                 <DropdownItem>Info</DropdownItem>
                                 <DropdownItem>Change Passworld</DropdownItem>
                                 <DropdownItem divider />

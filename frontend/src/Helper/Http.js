@@ -2,12 +2,12 @@ import Axios from "axios";
 import { BASE_URL } from "../Constances/const";
 
 export class Http {
-  constructor() {}
+  constructor() { }
 
   static _getHeader() {
     return {
       Authorization: `Bearer ${window.localStorage.getItem("token") || ""}`,
-      "Access-Control-Allow-Origin":"*"
+      "Access-Control-Allow-Origin": "*"
     };
   }
 

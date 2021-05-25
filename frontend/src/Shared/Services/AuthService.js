@@ -25,12 +25,10 @@ class AuthService extends UtilService {
         return (await Http.get(API_ENDPOINT.ME)).data;
     }
 
-
     hasRole(role) {
         if (!role || !this.userInfo) return;
         return this.userInfo.role === role;
     }
-
 }
 
 const instance = new AuthService();
