@@ -1,37 +1,20 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { TeamModule } from './team/team.module';
+import { CompanyModule } from './company/company.module';
 import { MongooseModule } from '@nestjs/mongoose'
 import { MissionModule } from './mission/mission.module';
-import { TimeoffModule } from './timeoff/timeoff.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { BASEPATH } from './base'
-import { DocumentModule } from './document/document.module';
-import { AuthModule } from './auth/auth.module';
 import { DepartmentModule } from './department/department.module';
-import { CompanyModule } from './company/company.module';
-import { CertificateModule } from './certificate/certificate.module';
+import { CarrerModule } from './carrer/carrer.module';
+
 
 @Module({
-    imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/HRM'),
-        ServeStaticModule.forRoot({
-            rootPath: BASEPATH
-        }),
-        UserModule,
-        TeamModule,
-        MissionModule,
-        TimeoffModule,
-        DocumentModule,
-        AuthModule,
-        DepartmentModule,
-        CompanyModule,
-        CertificateModule],
-    controllers: [AppController],
-    providers: [AppService],
+  imports: [MongooseModule.forRoot('mongodb://localhost:27017/HRM'), UserModule,
+    TeamModule,
+    CompanyModule,
+    MissionModule,
+    DepartmentModule,
+    CarrerModule,
+    CompanyModule],
 })
-export class AppModule {
-   
-}
+export class AppModule { }

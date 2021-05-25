@@ -1,83 +1,46 @@
-import {
-    Patch,
-    Controller,
-    Post,
-    Delete,
-    Body,
-    Get,
-    Query
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { DepartmentService } from './department.service';
 
-import { DepartmentService } from './department.service'
-
-@Controller('departments')
+@Controller('department')
 export class DepartmentController {
-
     constructor(private readonly departmentService: DepartmentService) { }
+    @Post()
+    async addDepartment(
+        @Body('name') name: string,
+        @Body('code') code: string,
+        @Body('description') description: string,
 
-    @Post('department')
-    async insertDepartment(
-        @Body('name') name: String,
-        @Body('pic') pic: String,
-        @Body('desc') desc: String,
     ) {
-        const res = await this.departmentService.insertDepartment(name, pic, desc);
-        return res;
+        const department = await this.departmentService.insertDepartment(
+            name,
+            code,
+            description,
+        )
+        return { id: department }
     }
-
-
-    @Get('department')
-    async getDepartmentById(
-        @Query('id') id: Number
-    ) {
-        const res = await this.departmentService.getDepartmentById(id);
-        return res;
-    }
-
-    @Patch('department')
-    async updateDepartmentById(
-        @Query('id') id: Number,
-        @Body('name') name: String,
-        @Body('pic') pic: String,
-        @Body('desc') desc: String,
-        @Body('documents') documents: [String]
-    ) {
-        const res = await this.departmentService.updateDepartmentById(id, name, pic, desc, documents);
-        return res;
-    }
-
-
-
-
     @Get()
-    async getAllDepartments(
-    ) {
-        const res = await this.departmentService.getAllDepartments();
-        return res;
+    async getAll() {
+        return await this.departmentService.getAllDepartment()
     }
-
-    @Get('teams')
-    async getTeamsByDepartmentId(
-        @Query('department') id: String
+    @Get(':id')
+    async getSingleDepartment(
+        @Param('id') id: string
     ) {
-        const res = await this.departmentService.getTeamsByDepartmentId(id);
-        return res;
+        return this.departmentService.getSingleDepartment(id)
     }
-
-    @Patch('teams')
-    async insertTeamsByDepartmentId(
-        @Query('department') id: Number,
-        @Body('teamsId') teamsId: [String]
+    @Put(':id')
+    async updateDepartment(
+        @Param('id') id: string,
+        @Body('name') name: string,
+        @Body('code') code: string,
+        @Body('description') description: string,
     ) {
-        const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
-        return res;
+        const data = await this.departmentService.updateDepartment(id, name, code, description)
+        return {success: true}
     }
-    @Delete('teams')
-    async removeTeamsByDepartmentId(
-        @Query('department') id: Number,
-        @Body('teamsId') teamsId: [String]
-    ) {
-        const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);
-        return res;
+    @Delete(':id')
+    async deleteDepartment(@Param('id') id: string) {
+        await this.departmentService.deleteDepartment(id)
+        return {success: true}
     }
 }

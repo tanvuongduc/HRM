@@ -2,24 +2,20 @@ import * as mongoose from 'mongoose';
 
 
 export interface SocialNetwork {
-  title: String;
-  icon: String;
-  link: String;
+  title: string;
+  link: string;
 }
 // interface Certificate{
-//   title: String;
+//   title: string;
 // }
 export interface Bank {
-  bankName: String;
-  ownName: String;
-  bankNumber: String;
+  bankName: string;
+  bankNumber: string;
 }
 
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  password: { type: String, require: true},
-  avatar: {type: mongoose.Types.ObjectId, ref: 'Upload'},
   birthday: { type: Date, required: true },
   adress: { type: String, require: true },
   certificate: { type: String },
@@ -30,10 +26,10 @@ export const UserSchema = new mongoose.Schema({
       title: String, //twiter facebook zalo
       link: String
     },
-    default: null
+    require: true
   },
   bank: {
-    type: { bankName: String, ownName: String,bankNumber: String },
+    type: { bankName: String, bankNumber: String },
     require: true
   },
   status: {
@@ -41,21 +37,19 @@ export const UserSchema = new mongoose.Schema({
     require: true,
     default: "Pending"
   },
-  teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team', default:[] }]
+  team: { type: String }
 });
 
 export interface User extends mongoose.Document {
-  id: String;
-  name: String;
-  password: String;
-  avatar: String;
+  id: string;
+  name: string;
   birthday: Date;
-  adress: String;
-  certificate: String;
-  phone: String;
-  email: String;
+  adress: string;
+  certificate: string;
+  phone: string;
+  email: string;
   socialNetwork: SocialNetwork;
   bank: Bank;
-  status: String;
-  teams: [String];
+  status: string;
+  team: string;
 }
