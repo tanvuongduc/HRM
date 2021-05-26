@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Department } from './department.model';
 import { TeamService } from '../team/team.service';
 import { UsersService } from '../user/user.service'
+import { connected } from 'node:process';
 
 
 @Injectable()
@@ -60,6 +61,7 @@ export class DepartmentService {
         return departments.map(department => ({
             id: department.id,
             name: department.name,
+            code: department.code,
             pic: department.pic,
             desc: department.desc,
             createAt: department.createdAt
