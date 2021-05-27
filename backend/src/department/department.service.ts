@@ -25,11 +25,18 @@ export class DepartmentService {
         pic: String,
         desc: String,
     ) {
+        if (!code) {
+            throw new HttpException('Code must be not null!', 400);
+        }
+        if (!name) {
+            throw new HttpException('Code must be not null!', 400);
+        }
         await this.usersService.findUserById(pic)
         const checkCode = await this.departmentModel.find().where({ code: code }).exec();
         if (checkCode.length) {
             throw new HttpException('Code exsited!', 409);
         }
+
         const newDepartment = new this.departmentModel({
             code, name, pic, desc
         });
@@ -37,6 +44,7 @@ export class DepartmentService {
         return {
             id: res.id
         }
+
     }
 
     async getDepartmentById(
@@ -99,6 +107,7 @@ export class DepartmentService {
     }
     async updateDepartmentById(
         id: String,
+        code: String,
         name: String,
         pic: String,
         desc: String,
@@ -106,6 +115,7 @@ export class DepartmentService {
     ) {
         await this.usersService.findUserById(pic)
         let department = await this.findDepartmentById(id);
+        department.code = code;
         department.name = name;
         department.pic = pic;
         department.desc = desc;

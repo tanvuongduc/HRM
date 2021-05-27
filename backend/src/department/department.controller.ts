@@ -17,7 +17,7 @@ export class DepartmentController {
 
     @Post('department')
     async insertDepartment(
-        @Body('code') code:String,
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
@@ -38,12 +38,13 @@ export class DepartmentController {
     @Patch('department')
     async updateDepartmentById(
         @Query('id') id: String,
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
         @Body('documents') documents: [String]
     ) {
-        const res = await this.departmentService.updateDepartmentById(id, name, pic, desc, documents);
+        const res = await this.departmentService.updateDepartmentById(id, code, name, pic, desc, documents);
         return res;
     }
 
