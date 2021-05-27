@@ -4,11 +4,13 @@ import ReactDOM from "react-dom";
 import "./Styles/index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { AuthService } from './Shared';
-import App from './Shared/Components/App/App';
-import Login from './Modules/Org/Components/Login/Login';
+import { AuthService } from "./Shared";
 
-const isLogged = !!AuthService.userInfo;
+import App from "./Shared/Components/App/App";
+import Login from "./Modules/Org/Components/Login/Login";
+
+// const isLogged = !!AuthService.userInfo;
+const isLogged = true;
 
 export const Root = (
   <BrowserRouter>

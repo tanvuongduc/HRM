@@ -1,43 +1,16 @@
-import React, { useState, useEffect } from "react"
-import Contact from "./Components/Contact/Contact"
-import Overiew from "./Components/Overiew/Overview"
-import Document from "./Components/Document/Document"
-import { Http } from "./Shared/index"
-import Div from "./CssCompany"
+import React from 'react'
+import { Route, Switch, withRouter } from 'react-router';
+import Overview from './Components/Overiew/Overview';
 
-export default function Company() {
-  const [company, setCompany] = useState({ data: [] });
-
-  const addDocument = async (addDocument) => {
-    try {
-      const data = await Http.post('company/documents', addDocument)
-      setCompany(data)
-    } catch (err) {
-      console.log(err)
-    }
-  };
-
-  const getData = async () => {
-    try {
-      const data = await Http.get('company')
-      setCompany(data)
-    } catch (err) {
-      console.log(err)
-    }
-  };
-
-  useEffect(() => {
-    getData()
-  }, []);
-
-  const showDocument = company.data.map(e => (e.documents));
-  const showContact = company.data.map(e => (e.contact));
-
+const Company = () => {
+  const path = window.location.pathname;
   return (
-    <Div>
-      <Overiew />
-      <Contact data={showContact} />
-      <Document data={showDocument} addDocument={addDocument} />
-    </Div>
+    <div>
+      <Switch>
+        <Route exact path={`${path}`} component={Overview} />
+      </Switch>
+    </div>
   )
 }
+
+export default withRouter(Company);

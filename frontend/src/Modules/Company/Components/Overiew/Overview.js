@@ -1,22 +1,16 @@
-import React from "react"
-import Div from "./CssOverview"
+import React from 'react'
+import Quickview from '../Quickview/Quickview';
+import Contact from '../Contact/Contact';
+import Document from '../Document/Document';
 
 const Overview = () => {
     return (
-        <Div>
-            <h3>Overview</h3>
-            <div>
-                <div>
-                    <b>10</b>&nbsp;<p>Department</p>
-                </div>
-                <div>
-                    <b>2</b>&nbsp;<p>Teams</p>
-                </div>
-                <div>
-                    <b>12</b>&nbsp;<p>People</p>
-                </div>
-            </div>
-        </Div>
+        <div className="overview-content">
+            <Quickview />
+            <Contact />
+            <Document />
+        </div>
     )
 }
+
 export default Overview;

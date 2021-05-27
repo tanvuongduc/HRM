@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Http } from '../../Helper/Http'
-import { DetailDepartment } from './Components/DetailDepartment/DetailDepartment';
-import { ItemDepartment } from './Components/ItemDepartment/ItemDepartment.'
+import React from 'react'
+import { Route, Switch, withRouter } from 'react-router-dom';
+import ItemDepartment from './Components/ItemDepartment/ItemDepartment';
+import DetailDepartment from './Components/DetailDepartment/DetailDepartment';
 
-export function Department() {
+const Department = () => {
     const path = window.location.pathname;
-    const [department, setDepartment] = useState({ data: [] });
-
-    useEffect(() => {
-        Http.get("department").then(e => {
-            return setDepartment(e)
-        }).catch(err => { console.log(err) })
-    }, []);
-
     return (
-        <Router>
+        <div>
             <Switch>
-                <div className='department-container'>
-                    <h1>Department</h1>
-                    <ItemDepartment data={department} />
-                    <Route exact path={`${path}/detail:id`} data={department} component={DetailDepartment} />
-                </div>
+                <Route exact path={`${path}`} component={ItemDepartment} />
+                <Route exact path={`${path}/detail:id`} component={DetailDepartment} />
             </Switch>
-        </Router>
+        </div>
     )
 }
+
+export default withRouter(Department);
