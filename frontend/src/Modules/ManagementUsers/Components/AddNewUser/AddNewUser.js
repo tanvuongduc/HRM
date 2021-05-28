@@ -12,7 +12,8 @@ import Select from "@material-ui/core/Select";
 import { Form } from "../../../../Shared";
 import { REGEX_TEL } from "../../../Exam/Shared";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
+import { Card } from "@material-ui/core";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -62,8 +63,8 @@ class AddNewUser extends Form {
     res.data.forEach((team) => {
       const teamObj = {
         id: team.id,
-        name: team.name
-      }
+        name: team.name,
+      };
       teamsName.push(teamObj);
     });
     this.setState({
@@ -73,17 +74,18 @@ class AddNewUser extends Form {
   };
 
   addMemberToTeam(teamId, userId) {
-    const req = Http.post("teams/add/members?team="+teamId, userId)
+    const req = Http.post("teams/add/members?team=" + teamId, userId);
   }
 
   onSubmitAddNewUser = async () => {
+    this._validateForm();
+    this.state.form["dirty"] = true;
     const { form, teamSelected } = this.state;
     if (form.status.value == 10) {
       form.status.value = "Pending";
     }
-    console.log("Team selected", this.state.teamSelected);
     const getNameTeamSelected = [];
-    teamSelected.forEach(team => {
+    teamSelected.forEach((team) => {
       getNameTeamSelected.push(team.name);
     });
     const newDataUser = {
@@ -96,7 +98,7 @@ class AddNewUser extends Form {
       socialNetwork: [
         {
           title: "facebook",
-          link: form.linkFacebook.value
+          link: form.linkFacebook.value,
         },
       ],
       bank: {
@@ -105,13 +107,16 @@ class AddNewUser extends Form {
         bankNumber: form.bankNumber.value,
       },
       status: form.status.value,
-      teams: getNameTeamSelected
+      teams: getNameTeamSelected,
     };
-    
-    const req = await Http.post("users", newDataUser);
-    console.log("New User", req.data);
-    this.props.onSubmitAddNewUser();
-    this.props.onCloseAddNewUser();
+    try {
+      const req = await Http.post("users", newDataUser);
+      console.log("New User", req.data);
+      this.props.onSubmitAddNewUser();
+      this.props.onCloseAddNewUser();
+    } catch (error) {
+      console.log("Error add new user");
+    }
   };
 
   onChangeStatusValue = (ev, key) => {
@@ -136,7 +141,7 @@ class AddNewUser extends Form {
 
   handleChange = (event) => {
     this.setState({
-      teamSelected: event.target.value
+      teamSelected: event.target.value,
     });
   };
 
@@ -149,7 +154,7 @@ class AddNewUser extends Form {
       }
     }
     this.setState({
-      teamSelected: event.target.value
+      teamSelected: event.target.value,
     });
     console.log("Team selected", this.state.teamSelected);
   };
@@ -170,6 +175,7 @@ class AddNewUser extends Form {
       bankNumber,
       status,
       teams,
+      dirty,
     } = this.state.form;
     let requiredNoti = "Không được để trống";
     const ITEM_HEIGHT = 48;
@@ -185,24 +191,29 @@ class AddNewUser extends Form {
 
     return (
       <div className="management-add-user">
-        <div className="add-new-user">
+        <Card className="add-new-user">
           <h3 className="title">Add new user</h3>
           <div className="input">
             <div className="row">
               <div className="col-sm-6">
                 <TextField
                   type="text"
+                  name="name"
                   label="Username"
                   className="input-field"
+                  value={name.value}
                   onChange={(ev) => this._setValue(ev, "name")}
                   required
                 />
                 <span className="validate-noti">
-                  {name.err.length > 0 ? requiredNoti : ""}
+                  {name.err.length > 0 && dirty
+                    ? requiredNoti + " username"
+                    : ""}
                 </span>
                 <TextField
                   type="date"
                   label="Birthday"
+                  name="birthday"
                   className="input-field input-field-date"
                   onChange={(ev) => this._setValue(ev, "birthday")}
                   InputLabelProps={{
@@ -211,27 +222,33 @@ class AddNewUser extends Form {
                   required
                 />
                 <span className="validate-noti">
-                  {birthday.err.length > 0 ? requiredNoti : ""}
+                  {birthday.err.length > 0 && dirty
+                    ? requiredNoti + " birthday"
+                    : ""}
                 </span>
 
                 <TextField
                   type="text"
                   label="Address"
+                  name="adress"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "adress")}
                   required
                 />
                 <span className="validate-noti">
-                  {adress.err.length > 0 ? requiredNoti : ""}
+                  {adress.err.length > 0 && dirty
+                    ? requiredNoti + " address"
+                    : ""}
                 </span>
                 <TextField
                   type="text"
+                  name="certificate"
                   label="Certificate"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "certificate")}
                 />
                 <span className="validate-noti">
-                  {certificate.err.length > 0 ? requiredNoti : ""}
+                  {certificate.err.length > 0 && dirty ? certificate.err : ""}
                 </span>
                 <FormControl className="input-field">
                   <InputLabel id="demo-mutiple-chip-label">Teams</InputLabel>
@@ -239,6 +256,7 @@ class AddNewUser extends Form {
                     labelId="demo-mutiple-chip-label"
                     id="demo-mutiple-chip"
                     multiple
+                    name="teams"
                     value={teamSelected}
                     onChange={this.handleChange}
                     input={<Input id="select-multiple-chip" />}
@@ -256,49 +274,60 @@ class AddNewUser extends Form {
                     MenuProps={MenuProps}
                   >
                     {teamsName.map((team) => (
-                      <MenuItem
-                        key={team.id}
-                        value={team}
-                      >
+                      <MenuItem key={team.id} value={team}>
                         {team.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-                <span className="validate-noti">{teams.err}</span>
+                <span className="validate-noti">{dirty ? teams.err : ""}</span>
                 <TextField
                   type="text"
+                  name="phone"
                   inputProps={{ pattern: REGEX_TEL }}
                   label="Phone number"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "phone")}
                   required
                 />
-                <span className="validate-noti">{phone.err}</span>
+                <span className="validate-noti">
+                  {dirty && phone.err === "*"
+                    ? requiredNoti + " phone number"
+                    : phone.err}
+                </span>
               </div>
               <div className="col-sm-6">
                 <TextField
                   type="email"
+                  name="email"
                   label="Email"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "email")}
                   required
                 />
-                <span className="validate-noti">{email.err}</span>
+                <span className="validate-noti">
+                  {dirty && email.err === "*"
+                    ? requiredNoti + " email"
+                    : email.err}
+                </span>
                 <TextField
                   type="text"
+                  name="linkFacebook"
                   label="Facebook"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "linkFacebook")}
                 />
                 <span className="validate-noti">
-                  {linkFacebook.err.length > 0 ? requiredNoti : ""}
+                  {linkFacebook.err.length > 0 && dirty
+                    ? requiredNoti + " username"
+                    : ""}
                 </span>
                 <FormControl className="input-field">
                   <InputLabel id="demo-simple-select-outlined-label">
                     Status
                   </InputLabel>
                   <Select
+                    name="status"
                     labelId="demo-simple-select-outlined-label"
                     onChange={(ev) => this.onChangeStatusValue(ev, "status")}
                     value={status.value}
@@ -308,37 +337,48 @@ class AddNewUser extends Form {
                   </Select>
                 </FormControl>
                 <span className="validate-noti">
-                  {status.err.length > 0 ? requiredNoti : ""}
+                  {status.err.length > 0 && dirty
+                    ? requiredNoti + " username"
+                    : ""}
                 </span>
                 <TextField
                   type="text"
                   label="Bank"
+                  name="bankName"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "bankName")}
                   required
                 />
                 <span className="validate-noti">
-                  {bankName.err.length > 0 ? requiredNoti : ""}
+                  {bankName.err.length > 0 && dirty
+                    ? requiredNoti + " bank"
+                    : ""}
                 </span>
                 <TextField
                   type="text"
+                  name="ownName"
                   label="Bank Account Holder"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "ownName")}
                   required
                 />
                 <span className="validate-noti">
-                  {ownName.err.length > 0 ? requiredNoti : ""}
+                  {ownName.err.length > 0 && dirty
+                    ? requiredNoti + " bank account holder"
+                    : ""}
                 </span>
                 <TextField
                   type="text"
+                  name="bankNumber"
                   label="Bank Account Number"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "bankNumber")}
                   required
                 />
                 <span className="validate-noti">
-                  {bankNumber.err.length > 0 ? requiredNoti : ""}
+                  {bankNumber.err.length > 0 && dirty
+                    ? requiredNoti + " bank account number"
+                    : ""}
                 </span>
               </div>
             </div>
@@ -361,7 +401,7 @@ class AddNewUser extends Form {
               Submit
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }

@@ -76,9 +76,10 @@ class ManagementContent extends Component {
 
   render() {
     const { listUsers, onDisplayAddNewUser, onSubmitAddNewUser } = this.state;
+    const { path } = this.props.match;
     const { page, rowsPerPage } = this.state;
     const userItems = listUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => {
-      return <LineUser key={user.id} user={user} />;
+      return <LineUser key={user.id} user={user} path={path}/>;
     });
     const displayAddNewUser = onDisplayAddNewUser ? (
       <AddNewUser
@@ -88,7 +89,6 @@ class ManagementContent extends Component {
     ) : (
       ""
     );
-    const messageAddNewUser = onSubmitAddNewUser ? <MessageAddNewUser /> : "";
   
 
     return (
@@ -137,7 +137,6 @@ class ManagementContent extends Component {
           />
         </Paper>
         {displayAddNewUser}
-        {messageAddNewUser}
       </div>
     );
   }

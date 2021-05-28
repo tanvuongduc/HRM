@@ -7,6 +7,7 @@ import Exam from '../../../Modules/Exam/Exam';
 import MainTeam from '../../../Modules/Team/Components/MainTeam';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 import Listdepartment from  '../../../Modules/Org/Components/Department/Department'
+import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 
 class App extends Component {
     render() {
@@ -21,7 +22,9 @@ class App extends Component {
                     <Route path={`${path}/team`} component={MainTeam} />
                     {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
                     <Route  path={`${path}/department`} exact component={Listdepartment} />
-                    <Route  path={`${path}/department/:id`} exact component={Formdepartment} />
+                    {/* <Route  path={`${path}/department/:id`} exact component={Formdepartment} /> */}
+                    <Route path={`${path}/management/users`} component={ManagementUsers}/>
+            
                 </Switch>
             </div>
         );

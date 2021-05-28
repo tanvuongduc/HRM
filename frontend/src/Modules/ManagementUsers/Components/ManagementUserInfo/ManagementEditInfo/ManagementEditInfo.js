@@ -102,7 +102,6 @@ class ManagementEditInfo extends Component {
       ? "btn-control-default"
       : "btn-control-primary";
 
-
     return (
       <Card className="management-edit-info">
         <div className="btn-control-box">
@@ -380,7 +379,7 @@ class ManagementEditInfo extends Component {
           <Button
             variant="contained"
             color="default"
-            href="/management/users"
+            href="/app/management/users"
             className="btn-control-default"
           >
             Close

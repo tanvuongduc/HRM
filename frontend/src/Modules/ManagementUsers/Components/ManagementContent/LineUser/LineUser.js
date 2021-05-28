@@ -15,8 +15,9 @@ class LineUser extends Component {
   }
 
   render() {
-    const { user } = this.props;
-    const pathUser = "/management/users/" + user.id;
+    const { user, path } = this.props;
+  
+    // const pathUser = "/management/users/" + user.id;
     const userBirthday = new Date(user.birthday);
     const userBirthdayDate = userBirthday.getDate();
     const userBirthdayMonth = userBirthday.getMonth();
@@ -36,7 +37,7 @@ class LineUser extends Component {
         <TableCell className="item-team">{user.team}</TableCell>
         <TableCell className="item-status">{user.status}</TableCell>
         <TableCell className="item-view-detail">
-          <Link to={pathUser}>
+          <Link to={`${path}/${user.id}`}>
             <AiFillEye className="view-detail-icon" />
           </Link>
         </TableCell>
