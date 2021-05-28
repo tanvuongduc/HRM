@@ -1,5 +1,6 @@
-@import '../../../../Styles//variables';
-@import '../../../User/Shared/button-form.scss';
+
+@import '../../Shared/Style/variables';
+
 .management-add-user {
     position: fixed;
     top: 0;
@@ -10,7 +11,7 @@
     animation: fadeIn linear 200ms;
 
     .add-new-user {
-        position: relative;
+        position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -22,12 +23,26 @@
         .title {
             color: #ffff;
             font-size: 28px;
-            background-color: $c-primary;
+            background-color: $color-primary;
             padding: 10px 20px;
         }
 
         .input {
             padding: 20px 25px;
+
+            .input-field {
+                width: 100%;
+                margin-top: 13px;
+            }
+        }
+
+        .validate-noti {
+            display: block;
+            margin-top: 8px;
+            font-weight: 500;
+            font-style: italic;
+            font-size: 14px;
+            color: red;
         }
     }
 }

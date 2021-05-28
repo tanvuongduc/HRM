@@ -17,7 +17,6 @@ class ManagementUsers extends Component {
     const managementUserInfo = ({ match }) => (
       <ManagementUserInfo userId={match.params.id}/>
     );
-
     return (
       <BrowserRouter>
         <div className="management-users">

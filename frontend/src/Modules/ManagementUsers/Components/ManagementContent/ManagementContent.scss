@@ -1,7 +1,8 @@
+@import '../../Shared/Style/variables';
 
 .management-users-content {
-    height: 100vh;
-    background-color: #ffff;
+
+    background-color: $color-white;
     padding: 50px 45px;
 
     .add-user {
@@ -9,28 +10,70 @@
         margin-bottom: 20px;
 
         .btn-add-user {
+            background-color: $color-primary;
             cursor: pointer;
             text-decoration: none;
             padding: 15px 20px;
             width: auto;
-            color: #ffff;
+            color: $color-white;
             font-size: 17px;
             font-weight: 600;
             text-transform: uppercase;
-            background-color: $c-primary;
             border-radius: 5px;
         }
 
-        .btn-add-user:hover {
-            background-color: rgb(19, 65, 149);
+
+    }
+
+    .table-container {
+
+        max-height: 750px;
+
+        .table-header {
+            width: 100%;
+            height: 50px;
+            background-color: $color-primary;
+
+            .table-cell-label {
+                color: $color-white;
+                font-size: 17px;
+                font-weight: 500;
+            }
         }
-
     }
 
-    .table-header {
-        width: 100%;
-        height: 50px;
-        background-color: $c-primary;
-        color: #ffff;
+
+    .table-container::-webkit-scrollbar {
+        width: 15px;
+        background-color: #F5F5F5;
     }
+
+
+    .table-container::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+        background-color: $color-primary;
+        background-image: -webkit-linear-gradient(45deg,
+                rgba(255, 255, 255, .2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, .2) 50%,
+                rgba(255, 255, 255, .2) 75%,
+                transparent 75%,
+                transparent)
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+        background-color: rgb(19, 114, 177);
+    }
+
+
+
+
+
+
+
 }

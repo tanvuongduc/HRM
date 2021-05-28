@@ -6,6 +6,7 @@ import { AiFillEye } from "react-icons/ai";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "./LineUser.scss";
+import { TableCell, TableRow } from "@material-ui/core";
 
 class LineUser extends Component {
   constructor(props) {
@@ -16,32 +17,30 @@ class LineUser extends Component {
   render() {
     const { user } = this.props;
     const pathUser = "/management/users/" + user.id;
+    const userBirthday = new Date(user.birthday);
+    const userBirthdayDate = userBirthday.getDate();
+    const userBirthdayMonth = userBirthday.getMonth();
+    const userBirthdayYear = userBirthday.getFullYear();
+    const userBirthdayConvert =
+      (userBirthdayDate < 10 ? "0" + userBirthdayDate : userBirthdayDate) +'/'+
+      (userBirthdayMonth < 10 ? "0" + userBirthdayMonth : userBirthdayMonth) +'/'+
+      userBirthdayYear;
+    console.log("Date", userBirthdayDate);
     return (
-      <tr className="content-table-item" key={user.id}>
-        <td className="item-selected">
-          <input type="checkbox" />
-        </td>
-        <td className="item-id">{user.id}</td>
-        <td className="item-username">{user.name}</td>
-        <td className="item-email">{user.email}</td>
-        <td className="item-team">{user.team}</td>
-        <td className="item-status">{user.status}</td>
-        <th className="item-view-detail">
+      <TableRow hover className="content-table-item" key={user.id}>
+        <TableCell className="item-id">{user.id}</TableCell>
+        <TableCell className="item-username">{user.name}</TableCell>
+        <TableCell className="item-birthday">{userBirthdayConvert}</TableCell>
+        <TableCell className="item-phone-number">{user.phone}</TableCell>
+        <TableCell className="item-email">{user.email}</TableCell>
+        <TableCell className="item-team">{user.team}</TableCell>
+        <TableCell className="item-status">{user.status}</TableCell>
+        <TableCell className="item-view-detail">
           <Link to={pathUser}>
-            <AiFillEye
-              className="view-detail-icon"
-            />
+            <AiFillEye className="view-detail-icon" />
           </Link>
-        </th>
-        <th className="item-edit-info">
-          <Link to="/management/users/edit">
-            <RiEdit2Fill
-              className="edit-info-icon"
-              
-            />
-          </Link>
-        </th>
-      </tr>
+        </TableCell>
+      </TableRow>
     );
   }
 }

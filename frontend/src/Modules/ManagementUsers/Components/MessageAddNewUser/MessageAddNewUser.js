@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React from "react";
 import { Fragment } from "react";
 import { Component } from "react";
@@ -11,11 +12,15 @@ class MessageAddNewUser extends Component {
 
   render() {
     return (
-      <div className="message-add-user">
-        <h3 className="title">Success</h3>
-        <p className="message">Add new user success</p>
-        <div className="btn-form-control">
-          <a className="btn-control-save">OK</a>
+      <div className="message-box">
+        <div className="message-add-user">
+          <h3 className="title">Success</h3>
+          <p className="message">Add new user success</p>
+          <div className="btn-control-box">
+            <Button className="btn-control-primary" color="primary">
+              OK
+            </Button>
+          </div>
         </div>
       </div>
     );
