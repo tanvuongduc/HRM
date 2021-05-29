@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import { Route, Switch } from "react-router-dom";
+import CertifecateList from './Components/Certifecate/CertifecateList'
+import CertifecateForm from './Components/Certifecate/CertifecateForm'
 
 class Org extends Component {
     constructor(props) {
@@ -6,10 +9,14 @@ class Org extends Component {
     }
 
     render() {
+        const { path } = this.props.match;
         return (
-            <Fragment>
-                <h1>This is Organization router</h1>
-            </Fragment>
+            <div >
+                <Switch>
+                    <Route path={`${path}`} component={CertifecateList} />
+                    <Route path={`${path}/:id`} component={CertifecateForm} />
+                </Switch>
+            </div>
         )
     }
 }

@@ -5,6 +5,7 @@ import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
 import Exam from '../../../Modules/Exam/Exam';
 import MainTeam from '../../../Modules/Team/Components/MainTeam';
+import Org from '../../../Modules/Org/Org';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
             <div>
                 <Switch>
                     <Route exact path={`${path}/department`} component={Department} />
+                    <Route exact path={`${path}/org`} component={Org} />
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/exam`} component={Exam} />
