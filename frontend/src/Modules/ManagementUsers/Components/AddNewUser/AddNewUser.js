@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { Form } from "../../../../Shared";
@@ -50,6 +49,7 @@ class AddNewUser extends Form {
         ownName: "",
         bankNumber: "",
         status: 10,
+        dirty: false,
         teams: [],
       }),
       teamSelected: [],
@@ -59,16 +59,8 @@ class AddNewUser extends Form {
 
   componentDidMount = async () => {
     const res = await Http.get("teams");
-    const { teamsName } = this.state;
-    res.data.forEach((team) => {
-      const teamObj = {
-        id: team.id,
-        name: team.name,
-      };
-      teamsName.push(teamObj);
-    });
     this.setState({
-      teamsName: teamsName,
+      teamsName: res.data
     });
     console.log("TeamsName", this.state.teamsName);
   };
@@ -84,10 +76,6 @@ class AddNewUser extends Form {
     if (form.status.value == 10) {
       form.status.value = "Pending";
     }
-    const getNameTeamSelected = [];
-    teamSelected.forEach((team) => {
-      getNameTeamSelected.push(team.name);
-    });
     const newDataUser = {
       name: form.name.value,
       birthday: form.birthday.value,
@@ -107,7 +95,7 @@ class AddNewUser extends Form {
         bankNumber: form.bankNumber.value,
       },
       status: form.status.value,
-      teams: getNameTeamSelected,
+      teams: teamSelected
     };
     try {
       const req = await Http.post("users", newDataUser);
@@ -177,6 +165,7 @@ class AddNewUser extends Form {
       teams,
       dirty,
     } = this.state.form;
+    console.log("Form", this.state.form);
     let requiredNoti = "Không được để trống";
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
