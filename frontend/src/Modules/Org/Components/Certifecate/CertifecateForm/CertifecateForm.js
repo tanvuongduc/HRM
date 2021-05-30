@@ -3,6 +3,7 @@ import { Form } from '../../../Shared'
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 
 export default class CertifecateForm extends Form {
     constructor(props) {
@@ -13,8 +14,9 @@ export default class CertifecateForm extends Form {
     }
     render() {
         return (
-            <Container maxWidth="sm">
-                <h2>CERTIFICATE FORM</h2>
+            <Card>
+
+                <h4>CERTIFICATE FORM</h4>
                 <form >
                     <TextField
                         label="CODE"
@@ -46,7 +48,7 @@ export default class CertifecateForm extends Form {
                         Save
                     </Button>
                 </form>
-            </Container>
+            </Card>
         )
     }
 }

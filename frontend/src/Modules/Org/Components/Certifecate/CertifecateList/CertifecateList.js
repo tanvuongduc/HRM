@@ -47,7 +47,7 @@ class CertifecateList extends Component {
     }
     render() {
         return (
-            <Card >
+            <Card className='CertifecateList'>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
@@ -80,15 +80,6 @@ class CertifecateList extends Component {
                                             startIcon={<DeleteIcon />}
                                         >Xóa
                                         </Button>
-                                        <Link component={RouterLink} to={row.desc}>
-                                            <Button
-                                                size="small"
-                                                variant="contained"
-                                                color="secondary"
-                                                startIcon={<DeleteIcon />}
-                                            >Xóa
-                                        </Button>
-                                        </Link>
                                     </StyledTableCell>
                                 </StyledTableRow>
                             ))}
