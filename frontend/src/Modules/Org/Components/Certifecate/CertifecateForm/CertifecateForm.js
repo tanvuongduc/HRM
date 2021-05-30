@@ -14,8 +14,7 @@ export default class CertifecateForm extends Form {
     }
     render() {
         return (
-            <Card>
-
+            <Card className='CertifecateForm'>
                 <h4>CERTIFICATE FORM</h4>
                 <form >
                     <TextField
