@@ -77,6 +77,7 @@ class ManagementEditInfo extends Form {
     const accountFacebook = res.data.socialNetwork.find((acc) => {
       return acc.title === "facebook";
     });
+    const linkAccountFacebook = accountFacebook ? accountFacebook.link : "" ;
     const dataUser = {
       id: res.data.id,
       name: res.data.name,
@@ -85,7 +86,7 @@ class ManagementEditInfo extends Form {
       certificate: res.data.certificate,
       phone: res.data.phone,
       email: res.data.email,
-      linkFacebook: accountFacebook.link,
+      linkFacebook: linkAccountFacebook,
       bankName: res.data.bank.bankName,
       ownName: res.data.bank.ownName,
       bankNumber: res.data.bank.bankNumber,
@@ -258,6 +259,7 @@ class ManagementEditInfo extends Form {
                   name="birthday"
                   onChange={(ev) => this._setValue(ev, "birthday")}
                   value={birthdayConvert}
+                  required
                   readOnly={!onEditInfo}
                   startAdornment={
                     <InputAdornment position="start">
@@ -284,6 +286,7 @@ class ManagementEditInfo extends Form {
                   name="adress"
                   onChange={(ev) => this._setValue(ev, "adress")}
                   value={form.adress.value}
+                  required
                   disarbled={!onEditInfo}
                   startAdornment={
                     <InputAdornment position="start">
@@ -375,6 +378,7 @@ class ManagementEditInfo extends Form {
                   onChange={(ev) => this._setValue(ev, "phone")}
                   value={form.phone.value}
                   readOnly={!onEditInfo}
+                  required
                   startAdornment={
                     <InputAdornment position="start">
                       <PhoneIcon />
