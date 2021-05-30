@@ -2,7 +2,6 @@ import { Modal, Button, FormControl, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { Http } from '../../Shared/Index'
 import React from 'react'
 
 const getModalStyle = () => {
@@ -28,22 +27,29 @@ const getFormControlStyle = () => {
     }
 }
 
-const Modaladd = () => {
+/*--------------------------------------------------*/
+
+const ModalAdd = (props) => {
     const [modalStyle] = React.useState(getModalStyle);
     const [formStyle] = React.useState(getFormStyle);
     const [formControlStyle] = React.useState(getFormControlStyle);
     const [modal, setModal] = React.useState(false);
-
-    /*--------------------------------------------------*/
-
     const [document, setDocument] = React.useState({});
 
     const handleOnchange = (event) => {
-        setDocument({ ...document, [event.target.name]: [event.target.value] })
+        setDocument({ ...document, [event.target.name]: event.target.value })
     };
 
-    const patchDocument = (event) => {
-        event.preventDefault();
+    const patchDocument = async (event) => {
+        // event.preventDefault();
+        event.target.reset();
+
+        const item = {};
+        item.title = document.title;
+        item.desc = document.desc;
+        props.add(item);
+
+        setModal(!modal)
     };
 
     const handleModal = () => {
@@ -56,7 +62,7 @@ const Modaladd = () => {
             <Modal open={modal} onClose={handleModal} >
                 <div style={modalStyle}>
                     <h4>Create a new document</h4><hr />
-                    <form autoComplete="off" style={formStyle} onSubmit={patchDocument}>
+                    <form style={formStyle} onSubmit={patchDocument}>
                         <FormControl style={formControlStyle} fullWidth>
                             <TextField label="Enter title" helperText="Some important text" name="title" onChange={handleOnchange} required />
                         </FormControl>
@@ -72,4 +78,4 @@ const Modaladd = () => {
     )
 }
 
-export default Modaladd;
+export default ModalAdd;
