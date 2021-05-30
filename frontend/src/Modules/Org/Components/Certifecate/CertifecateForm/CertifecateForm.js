@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form } from '../../Shared'
+import { Form } from '../../../Shared'
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';

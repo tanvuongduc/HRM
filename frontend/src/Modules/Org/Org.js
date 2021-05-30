@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch } from "react-router-dom";
-import CertifecateList from './Components/Certifecate/CertifecateList'
-import CertifecateForm from './Components/Certifecate/CertifecateForm'
+import CertifecateForm from './Components/Certifecate/CertifecateForm/CertifecateForm'
+import CertifecateList from './Components/Certifecate/CertifecateList/CertifecateList';
 
 class Org extends Component {
     constructor(props) {
