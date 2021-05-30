@@ -13,8 +13,10 @@ export default class CertifecateForm extends Form {
         }
     }
     render() {
+        const path = window.location.pathname;
         return (
             <Card className='CertifecateForm'>
+                {path}
                 <h4>CERTIFICATE FORM</h4>
                 <form >
                     <TextField

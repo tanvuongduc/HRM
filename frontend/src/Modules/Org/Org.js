@@ -9,12 +9,12 @@ class Org extends Component {
     }
 
     render() {
-        const { path } = this.props.match;
+        const path = window.location.pathname;
         return (
             <div >
                 <Switch>
-                    <Route path={`${path}`} component={CertifecateList} />
-                    <Route path={`${path}/:id`} component={CertifecateForm} />
+                    <Route exact path={`${path}/`} component={CertifecateList}></Route>
+                    <Route exact path={`${path}/:id`} component={CertifecateForm} />
                 </Switch>
             </div>
         )

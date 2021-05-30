@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Link as RouterLink } from 'react-router-dom'
+
 function createData(name, desc) {
     return { name, desc };
 }
@@ -72,7 +73,7 @@ class CertifecateList extends Component {
                                             color="primary"
                                             startIcon={<CloudUploadIcon />}
                                         >Sửa
-                                        </Button>
+                                        </Button> {' '}
                                         <Button
                                             size="small"
                                             variant="contained"
