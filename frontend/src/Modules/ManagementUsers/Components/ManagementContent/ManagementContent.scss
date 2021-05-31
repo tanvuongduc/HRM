@@ -2,7 +2,6 @@
 
 .management-users-content {
 
-    background-color: $color-white;
     padding: 50px 45px;
 
     .add-user {
@@ -10,7 +9,7 @@
         margin-bottom: 20px;
 
         .btn-add-user {
-            background-color: $color-primary;
+            background-color: $color-background;
             cursor: pointer;
             text-decoration: none;
             padding: 15px 20px;
@@ -32,7 +31,7 @@
         .table-header {
             width: 100%;
             height: 50px;
-            background-color: $color-primary;
+            background-color: $color-background;
 
             .table-cell-label {
                 color: $color-white;
@@ -55,7 +54,7 @@
     }
 
     .table-container::-webkit-scrollbar-thumb {
-        background-color: $color-primary;
+        background-color: $color-background;
         background-image: -webkit-linear-gradient(45deg,
                 rgba(255, 255, 255, .2) 25%,
                 transparent 25%,

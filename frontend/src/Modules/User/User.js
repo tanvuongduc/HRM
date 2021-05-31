@@ -69,6 +69,7 @@ class User extends Component {
 
   render() {
     const { dataUser } = this.state;
+    const { path } = this.props.match;
     return (
       <BrowserRouter>
         <div className="profile-header">
@@ -78,12 +79,12 @@ class User extends Component {
             emailUser={dataUser.email}
             uploadAvatar={this.uploadAvatar}
           />
-          <NavBarUser />
+          <NavBarUser path={path}/>
         </div>
         <div className="profile-main">
           <div className="container">
             <Switch>
-              <Route exact path="/user">
+              <Route exact path={`${path}`}>
                 <Details
                   getInfo={() => this.getInfo()}
                   dataUser={dataUser}

@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import AddNewUser from "../AddNewUser/AddNewUser";
 import LineUser from "./LineUser/LineUser";
-import MessageAddNewUser from "../MessageAddNewUser/MessageAddNewUser";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";

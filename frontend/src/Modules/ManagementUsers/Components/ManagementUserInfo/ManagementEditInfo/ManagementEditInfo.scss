@@ -6,7 +6,7 @@
         font-size: 40px;
         color: #ffff;
         padding: 15px 30px;
-        background-color: $color-primary;
+        background-color: $color-background;
     }
 
     .form-edit {
@@ -54,7 +54,7 @@
 
 
         .input:disabled {
-            background-color: $color-primary;
+            background-color: $color-background;
         }
 
     }
