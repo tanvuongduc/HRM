@@ -67,7 +67,7 @@ class CertifecateList extends Component {
                                     <StyledTableCell align="center">{row.desc}</StyledTableCell>
                                     <StyledTableCell align="center">
                                         <Button
-                                            href={`org/${row.desc}`}
+                                            href={`${row.desc}`}
                                             size="small"
                                             variant="contained"
                                             color="primary"

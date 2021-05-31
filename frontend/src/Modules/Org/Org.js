@@ -13,7 +13,7 @@ class Org extends Component {
         return (
             <div >
                 <Switch>
-                    <Route exact path={`${path}/`} component={CertifecateList}></Route>
+                    <Route exact path={`${path}`} component={CertifecateList}></Route>
                     <Route exact path={`${path}/:id`} component={CertifecateForm} />
                 </Switch>
             </div>
