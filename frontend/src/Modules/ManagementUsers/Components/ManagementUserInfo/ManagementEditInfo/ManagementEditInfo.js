@@ -13,6 +13,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import CakeIcon from "@material-ui/icons/Cake";
 import HomeIcon from "@material-ui/icons/Home";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import CardMembershipIcon from "@material-ui/icons/CardMembership";
 import GroupIcon from "@material-ui/icons/Group";
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -26,6 +27,8 @@ import ClearIcon from "@material-ui/icons/Clear";
 import { Form } from "../../../../../Shared";
 import { FormControlLabel, withStyles } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import { REGEX_TEL } from "../../../../Exam/Shared";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -77,7 +80,11 @@ class ManagementEditInfo extends Form {
     const accountFacebook = res.data.socialNetwork.find((acc) => {
       return acc.title === "facebook";
     });
-    const linkAccountFacebook = accountFacebook ? accountFacebook.link : "" ;
+    const linkAccountFacebook = accountFacebook ? accountFacebook.link : "";
+    let statusValue = 0;
+    if (res.data.status === "Pending") {
+      statusValue = 10;
+    }
     const dataUser = {
       id: res.data.id,
       name: res.data.name,
@@ -90,7 +97,7 @@ class ManagementEditInfo extends Form {
       bankName: res.data.bank.bankName,
       ownName: res.data.bank.ownName,
       bankNumber: res.data.bank.bankNumber,
-      status: res.data.status,
+      status: statusValue,
       teams: res.data.teams,
     };
     console.log("Data User", dataUser);
@@ -105,10 +112,17 @@ class ManagementEditInfo extends Form {
     this.setState({
       onEditInfo: !this.state.onEditInfo,
     });
+    if(this.state.onEditInfo) {
+      window.location.reload(true);
+    }
   };
 
   onSaveEditUserInfo = async () => {
+    this._validateForm();
+    
+    this._isFormValid();
     const { form, teamSelected } = this.state;
+    console.log("Err phone", form.phone);
     const { userId } = this.props;
     this.state.form["dirty"] = true;
     const dataUser = {
@@ -121,20 +135,21 @@ class ManagementEditInfo extends Form {
       socialNetwork: [
         {
           title: "facebook",
-          link: form.linkFacebook.value
-        }
+          link: form.linkFacebook.value,
+        },
       ],
       status: form.status.value,
       teams: teamSelected,
       bank: {
         bankName: form.bankName.value,
         ownName: form.ownName.value,
-        bankNumber: form.bankNumber.value
-      }
-    }
-    console.log("Datat user", dataUser);
+        bankNumber: form.bankNumber.value,
+      },
+    };
+    console.log("Data user", dataUser);
     const req = await Http.patch(`users/${userId}`, dataUser);
     console.log("Edit user", req.data);
+    
   };
 
   getStyles(name, personName, theme) {
@@ -165,12 +180,19 @@ class ManagementEditInfo extends Form {
     });
   };
 
+  handleChangeStatus = (ev) => {
+    this.state.form["status"] = {
+      value: ev.target.value,
+      err: "",
+    };
+    console.log("Status", this.state.form.status);
+  };
+
   render() {
     const { form, onEditInfo, teamSelected, teamsCurrent } = this.state;
-    const { classes } = this.props;
+    const { classes, userId } = this.props;
     console.log("Team current", teamsCurrent);
-    const birthdayValue = Object.assign({}, form.birthday);
-    const birthday = new Date(birthdayValue.value);
+    const birthday = new Date(form.birthday.value);
     const month = birthday.getMonth();
     const year = birthday.getFullYear();
     const day = birthday.getDate();
@@ -261,6 +283,9 @@ class ManagementEditInfo extends Form {
                   value={birthdayConvert}
                   required
                   readOnly={!onEditInfo}
+                  style={{
+                    padding: "0",
+                  }}
                   startAdornment={
                     <InputAdornment position="start">
                       <CakeIcon />
@@ -295,11 +320,11 @@ class ManagementEditInfo extends Form {
                   }
                 />
                 <span className="validate-noti">
-                <span className="validate-noti">
-                  {form.dirty && form.adress.err === "*"
-                    ? errRequiredNoti + "address"
-                    : ""}
-                </span>
+                  <span className="validate-noti">
+                    {form.dirty && form.adress.err === "*"
+                      ? errRequiredNoti + "address"
+                      : ""}
+                  </span>
                 </span>
               </FormControl>
               <FormControl className="form-input">
@@ -339,6 +364,7 @@ class ManagementEditInfo extends Form {
                   labelId="demo-mutiple-chip-label"
                   id="demo-mutiple-chip"
                   multiple
+                  className="input"
                   value={teamSelected}
                   onChange={this.handleChange}
                   input={<Input id="select-multiple-chip" />}
@@ -354,6 +380,11 @@ class ManagementEditInfo extends Form {
                     </div>
                   )}
                   MenuProps={MenuProps}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <GroupIcon />
+                    </InputAdornment>
+                  }
                 >
                   {teamsCurrent.map((team) => (
                     <MenuItem key={team.id} value={team}>
@@ -374,7 +405,9 @@ class ManagementEditInfo extends Form {
                 <Input
                   className="input"
                   id="input-with-icon-adornment"
+                  type="text"
                   name="phone"
+                  inputProps={{ pattern: REGEX_TEL }}
                   onChange={(ev) => this._setValue(ev, "phone")}
                   value={form.phone.value}
                   readOnly={!onEditInfo}
@@ -388,7 +421,8 @@ class ManagementEditInfo extends Form {
                 <span className="validate-noti">
                   {form.dirty && form.phone.err === "*"
                     ? errRequiredNoti + "phone"
-                    : form.phone.err}
+                    : ""}
+                  {form.dirty && form.phone.err !== "*" ? form.phone.err : ""}
                 </span>
               </FormControl>
               <FormControl className="form-input">
@@ -406,6 +440,7 @@ class ManagementEditInfo extends Form {
                   onChange={(ev) => this._setValue(ev, "email")}
                   value={form.email.value}
                   readOnly={!onEditInfo}
+                  required
                   startAdornment={
                     <InputAdornment position="start">
                       <EmailIcon />
@@ -413,11 +448,12 @@ class ManagementEditInfo extends Form {
                   }
                 />
                 <span className="validate-noti">
-                <span>
-                  {form.dirty && form.email.err === "*"
-                    ? errRequiredNoti + "email"
-                    : form.email.err}
-                </span>
+                  <span>
+                    {form.dirty && form.email.err === "*"
+                      ? errRequiredNoti + "email"
+                      : ""}
+                    {form.dirty && form.email.err !== "*" ? form.email.err : ""}
+                  </span>
                 </span>
               </FormControl>
               <FormControl className="form-input">
@@ -442,21 +478,30 @@ class ManagementEditInfo extends Form {
               </FormControl>
               <FormControl className="form-input">
                 <InputLabel className="title-input">Status</InputLabel>
-                <Select
-                  readOnly={!onEditInfo}
+                <NativeSelect
+                  className="input"
                   id="demo-simple-select"
-                  value={form.status.value}
-                  onChange={(ev) => this._setValue(ev, "status")}
+                  defaultValue={form.status.value}
+                  onChange={(ev) => this.handleChangeStatus(ev)}
+                  disabled={!onEditInfo}
                   startAdornment={
-                    <InputAdornment position="start">
+                    <InputAdornment
+                      position="start"
+                      style={{
+                        marginRight: "19px",
+                      }}
+                    >
                       <HowToRegIcon />
                     </InputAdornment>
                   }
                 >
-                  <MenuItem value={10}>Pending</MenuItem>
-                  <MenuItem value={20}>...</MenuItem>
-                  <MenuItem value={30}>...</MenuItem>
-                </Select>
+                  <option className="option-status" value={10}>
+                    Pending
+                  </option>
+                  <option className="option-status" value={20}>
+                    Hello
+                  </option>
+                </NativeSelect>
               </FormControl>
             </div>
             <div className="col-sm-4">

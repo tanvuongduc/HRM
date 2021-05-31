@@ -41,7 +41,6 @@ class Form extends Component {
     _setValue = (ev, key) => {
         ev.persist();
         this.setState(prevState => {
-            prevState.form.dirty = true;
             prevState.form[key] = {
                 value: ev.target.value,
                 err: this._getInvalidErr(ev.target),
