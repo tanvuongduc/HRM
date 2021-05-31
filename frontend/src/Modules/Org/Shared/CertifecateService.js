@@ -1,28 +1,36 @@
 import { Http } from "../../../Helper/Http";
-import { UtilService } from "./";
 
 
 
 const API_ENDPOINT = {
-    BASE: "/certificates",
+    GET_ALL_CERTIFECATE: "/certificates",
+    PATCH_CERTIFECATE: "/certificates",
+    POST_CERTIFECATE: "/certificates/update",
 };
 
-class Org extends UtilService {
+class Certifecate {
     constructor() {
-        if (Org._instance) {
-            return Org._instance;
+        if (Certifecate._instance) {
+            return Certifecate._instance;
         }
-        Org._instance = this;
+        Certifecate._instance = this;
     }
 
 
-    async getAllCertifecate() {
-        const url = `${API_ENDPOINT.BASE}`;
-        return (await Http.get(url)).data;
+    getAllCertifecate() {
+        return Http.get('certificates');
+    }
+    async postCertifecate(payload) {
+        const url = `${API_ENDPOINT.POST_CERTIFECATE}`;
+        return (await Http.post(url, payload)).data;
+    }
+    async patchCertifecate(payload, id) {
+        const url = `${API_ENDPOINT.PATCH_CERTIFECATE + id}`;
+        return (await Http.patch(url, payload)).data;
     }
 
 }
 
-const instance = new Org();
+const instance = new Certifecate();
 
 export default instance;

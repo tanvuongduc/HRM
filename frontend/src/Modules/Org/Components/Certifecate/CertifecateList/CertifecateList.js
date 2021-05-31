@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Link as RouterLink } from 'react-router-dom'
+import CertifecateService from '../../../Shared/CertifecateService'
+import { Http } from "../../../../../Helper/Http";
 
 function createData(name, desc) {
     return { name, desc };
@@ -46,7 +48,10 @@ class CertifecateList extends Component {
         super(props)
 
     }
-
+    componentDidMount() {
+        const data1 = CertifecateService.getAllCertifecate()
+        console.log(data1)
+    }
     render() {
         const { path } = this.props.match;
         return (
