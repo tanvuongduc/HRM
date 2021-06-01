@@ -5,13 +5,15 @@ import {
     Body,
     Get,
     Query,
+    Param,
 } from '@nestjs/common';
 
 import { TeamService } from './team.service';
 
-@Controller('teams')
+@Controller('team')
 export class TeamController {
     constructor(private readonly teamService: TeamService) { }
+
 
     
     @Post()
@@ -25,38 +27,10 @@ export class TeamController {
         return res;
     }
 
-
-    @Post('add/members')
-    async insertMembersByTeamId(
-        @Body('members') ids: [string],
-        @Query('team') teamId: string
+    @Get(':id')
+    async getTeamById(
+        @Param('id') id: String
     ) {
-        const res = this.teamService.insertTeamIdForMembers(ids, teamId);
-        return res;
-    }
-
-
-    @Delete('remove/members')
-    async removeMembersByTeamId(
-        @Body('members') ids: [string],
-        @Query('team') teamId: string
-    ) {
-        const res = this.teamService.removeMembersByTeamId(ids, teamId);
-        return res;
-    }
-
-
-    @Get('get/members')
-    async getMembersByTeamId(
-        @Query('team') teamId: string
-    ) {
-        const res = this.teamService.getMembersByTeamId(teamId);
-        return res;
-    }
-
-
-    @Get('team')
-    async getSingleTeamById(@Query('id') id: String) {
         const res = await this.teamService.getTeamById(id);
         return res;
     }
@@ -65,6 +39,34 @@ export class TeamController {
     @Get()
     async getAllTeams() {
         const res = await this.teamService.getAllTeams();
+        return res;
+    }
+
+    @Post('members/:team')
+    async insertMembersByTeamId(
+        @Body('members') ids: [string],
+        @Param('team') teamId: string
+    ) {
+        const res = this.teamService.insertTeamIdForMembers(ids, teamId);
+        return res;
+    }
+
+
+    @Delete('members/:team')
+    async removeMembersByTeamId(
+        @Body('members') ids: [string],
+        @Param('team') teamId: string
+    ) {
+        const res = this.teamService.removeMembersByTeamId(ids, teamId);
+        return res;
+    }
+
+
+    @Get('members/:team')
+    async getMembersByTeamId(
+        @Param('team') teamId: string
+    ) {
+        const res = this.teamService.getMembersByTeamId(teamId);
         return res;
     }
 

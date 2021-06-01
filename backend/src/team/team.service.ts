@@ -1,14 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Team } from './team.model'
 import { UsersService } from '../user/user.service'
+import { DepartmentService } from '../department/department.service'
 
 
 @Injectable()
 export class TeamService {
     constructor(
         @InjectModel('Team') private readonly teamModel: Model<Team>,
+        @Inject(forwardRef(() =>DepartmentService)) private readonly departmentService: DepartmentService,
         private readonly usersService: UsersService
     ) { }
 
@@ -18,7 +20,8 @@ export class TeamService {
         department: String,
         sologan: String
     ) {
-        let user = await this.usersService.findUserById(pic)
+        let user = await this.usersService.findUserById(pic);
+        await this.departmentService.findDepartmentById(department);
         const newTeam = new this.teamModel({
             name,
             pic,
@@ -114,11 +117,11 @@ export class TeamService {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
         let teamsArr = [];
         for (let team of teams) {
-            if(team.department == departmentId){
+            if (team.department == departmentId) {
                 team.department = null;
                 const res = await team.save();
                 teamsArr.push(res.id)
-            }          
+            }
         }
         return {
             teams: teamsArr

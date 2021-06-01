@@ -1,10 +1,9 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Department } from './department.model';
 import { TeamService } from '../team/team.service';
 import { UsersService } from '../user/user.service'
-import { connected } from 'node:process';
 
 
 @Injectable()
@@ -12,8 +11,8 @@ export class DepartmentService {
 
     constructor(
         @InjectModel('Department') private readonly departmentModel: Model<Department>,
-        private readonly teamService: TeamService,
-        private readonly usersService: UsersService
+        @Inject(forwardRef(() => TeamService))private readonly teamService: TeamService,
+        @Inject(forwardRef(() => UsersService))private readonly usersService: UsersService
 
     ) {
 
@@ -54,6 +53,7 @@ export class DepartmentService {
 
         return {
             id: department.id,
+            code: department.code,
             name: department.name,
             pic: department.pic,
             desc: department.desc,

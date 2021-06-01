@@ -14,12 +14,14 @@ export class DocumentController {
     constructor(private readonly documentService: DocumentService) { }
 
 
-    @Post('file')
+    @Post()
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(
-        @UploadedFile() file: Express.Multer.File
+        @UploadedFile() file: Express.Multer.File,
+        @Body('title') title: String,
+        @Body('desc') desc: String
     ) {
-        return await this.documentService.uploadFile(file)
+        return await this.documentService.uploadFile(file, title, desc)
     }
 
 }

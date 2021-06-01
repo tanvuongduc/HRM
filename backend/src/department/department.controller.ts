@@ -1,3 +1,4 @@
+import { Param } from '@nestjs/common';
 import {
     Patch,
     Controller,
@@ -10,12 +11,12 @@ import {
 
 import { DepartmentService } from './department.service'
 
-@Controller('departments')
+@Controller('department')
 export class DepartmentController {
 
     constructor(private readonly departmentService: DepartmentService) { }
 
-    @Post('department')
+    @Post()
     async insertDepartment(
         @Body('code') code: String,
         @Body('name') name: String,
@@ -27,17 +28,17 @@ export class DepartmentController {
     }
 
 
-    @Get('department')
+    @Get(':id')
     async getDepartmentById(
-        @Query('id') id: String
+        @Param('id') id: String
     ) {
         const res = await this.departmentService.getDepartmentById(id);
         return res;
     }
 
-    @Patch('department')
+    @Patch(':id')
     async updateDepartmentById(
-        @Query('id') id: String,
+        @Param('id') id: String,
         @Body('code') code: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
@@ -58,25 +59,26 @@ export class DepartmentController {
         return res;
     }
 
-    @Get('teams')
+    @Get('teams/:id')
     async getTeamsByDepartmentId(
-        @Query('department') id: String
+        @Param('id') id: String
     ) {
+        console.log(id)
         const res = await this.departmentService.getTeamsByDepartmentId(id);
         return res;
     }
 
-    @Patch('teams')
+    @Patch('teams/:id')
     async insertTeamsByDepartmentId(
-        @Query('department') id: String,
+        @Param('id') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
         return res;
     }
-    @Delete('teams')
+    @Delete('teams/:id')
     async removeTeamsByDepartmentId(
-        @Query('department') id: String,
+        @Param('id') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);
