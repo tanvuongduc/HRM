@@ -93,7 +93,7 @@ export class DepartmentService {
             id: res.id
         }
     }
-    
+
     async getAllDepartments(
 
     ) {
@@ -132,7 +132,11 @@ export class DepartmentService {
         try {
             department = await this.departmentModel.findById(id).populate('pic').populate('documents').exec();
         } catch (error) {
-            throw new HttpException('Could not find department.', 400);
+            try {
+                department = await this.departmentModel.findById(id).exec()
+            } catch (error) {
+                throw new HttpException('Could not find department.', 400);
+            }   
         }
         if (!department) {
             throw new HttpException(`find department err ${id}`, 400);

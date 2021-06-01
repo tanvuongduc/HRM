@@ -59,7 +59,7 @@ export class DepartmentController {
         return res;
     }
 
-    @Get('teams/:id')
+    @Get(':id/teams')
     async getTeamsByDepartmentId(
         @Param('id') id: String
     ) {
@@ -68,7 +68,7 @@ export class DepartmentController {
         return res;
     }
 
-    @Patch('teams/:id')
+    @Patch(':id/teams')
     async insertTeamsByDepartmentId(
         @Param('id') id: String,
         @Body('teamsId') teamsId: [String]
@@ -76,7 +76,9 @@ export class DepartmentController {
         const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
         return res;
     }
-    @Delete('teams/:id')
+
+    
+    @Delete(':id/teams')
     async removeTeamsByDepartmentId(
         @Param('id') id: String,
         @Body('teamsId') teamsId: [String]

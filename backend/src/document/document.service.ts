@@ -20,8 +20,6 @@ export class DocumentService {
         title: String,
         desc: String
     ) {
-
-
         // get model by id
         const extension = file.originalname.split('.')[file.originalname.split('.').length - 1];
         const fileName = file.originalname.replace(extension, '') + Date.now();

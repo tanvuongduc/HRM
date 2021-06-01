@@ -148,7 +148,11 @@ export class TeamService {
         try {
             team = await this.teamModel.findById(id).populate('pic').populate('department').exec();
         } catch (error) {
-            throw new NotFoundException('Could not find Team.');
+            try {
+                team = await this.teamModel.findById(id).exec()
+            } catch (error) {
+                throw new NotFoundException(error);
+            }         
         }
         if (!team) {
             throw new NotFoundException(`find team err ${id}`);

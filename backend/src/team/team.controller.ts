@@ -42,7 +42,7 @@ export class TeamController {
         return res;
     }
 
-    @Post('members/:team')
+    @Post(':team/members')
     async insertMembersByTeamId(
         @Body('members') ids: [string],
         @Param('team') teamId: string
@@ -52,7 +52,7 @@ export class TeamController {
     }
 
 
-    @Delete('members/:team')
+    @Delete(':team/members')
     async removeMembersByTeamId(
         @Body('members') ids: [string],
         @Param('team') teamId: string
@@ -62,7 +62,7 @@ export class TeamController {
     }
 
 
-    @Get('members/:team')
+    @Get(':team/members')
     async getMembersByTeamId(
         @Param('team') teamId: string
     ) {
