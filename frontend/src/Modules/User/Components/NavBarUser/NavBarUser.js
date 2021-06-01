@@ -9,11 +9,12 @@ class NavBarUser extends Component {
   }
 
   render() {
+    const { path } = this.props;
     return (
       <div className="profile-header-navigation">
         <div className="container">
           <NavLink
-            to="/user"
+            to={`${path}`}
             className="nav-item"
             activeStyle={{
               display: "block",
