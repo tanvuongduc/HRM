@@ -3,9 +3,9 @@ import { Http } from "../../../Helper/Http";
 
 
 const API_ENDPOINT = {
-    GET_ALL_CERTIFECATE: "/certificates",
-    PATCH_CERTIFECATE: "/certificates",
-    POST_CERTIFECATE: "/certificates/update",
+    GET_ALL_CERTIFECATE: "certificates",
+    PATCH_CERTIFECATE: "certificates",
+    POST_CERTIFECATE: "certificates/update",
 };
 
 class Certifecate {
@@ -17,8 +17,8 @@ class Certifecate {
     }
 
 
-    getAllCertifecate() {
-        return Http.get('certificates');
+    async getAllCertifecate() {
+        return await Http.get(API_ENDPOINT.GET_ALL_CERTIFECATE);
     }
     async postCertifecate(payload) {
         const url = `${API_ENDPOINT.POST_CERTIFECATE}`;

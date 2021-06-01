@@ -1,28 +1,15 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import Card from '@material-ui/core/Card';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Table, TableContainer, TableHead, TableBody, Link as MeterialLink } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Table, TableContainer, TableHead, TableBody } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { Link as RouterLink } from 'react-router-dom'
 import CertifecateService from '../../../Shared/CertifecateService'
-import { Http } from "../../../../../Helper/Http";
-
-function createData(name, desc) {
-    return { name, desc };
-}
-
-const rows = [
-    createData("Frozen yoghur", 159),
-    createData("Ice cream sandwich", 237),
-    createData("Eclair", 262),
-    createData("Cupcake", 305),
-    createData("Gingerbread", 356)
-];
+import ModalConfirm from '../../../../../Shared/Components/ModalConfirm/ModalConfirm';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -42,64 +29,96 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
+const useStyles = (theme) => ({
+
+})
 
 class CertifecateList extends Component {
     constructor(props) {
         super(props)
-
+        this.state = {
+            id: '',
+            certifecates: [],
+            notiConfirm: ''
+        }
     }
     componentDidMount() {
-        const data1 = CertifecateService.getAllCertifecate()
-        console.log(data1)
+        let certifecateArr = []
+        certifecateArr.push(CertifecateService.getAllCertifecate())
+        Promise.all(certifecateArr).then(([res]) => {
+            let certifecates = res.data
+            this.setState({
+                certifecates
+            })
+        })
+    }
+    onDelete = (id) => {
+        this.setState({
+            id,
+            notiConfirm: 'Bạn có chắc chắn muốn xóa !!'
+        })
+
     }
     render() {
+        const { classes } = this.props;
         const { path } = this.props.match;
+        const { certifecates, notiConfirm } = this.state
         return (
             <Card className='CertifecateList'>
-                <h3>List Certifecates</h3>
+                <div >
+                    <h2 className="certifetace-header">Danh sách chứng chỉ</h2>
+                    <div className="certifetace-btn">
+                        <Button size="small" variant="contained" color="primary" >Thêm mới</Button>
+                    </div>
+                </div>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell align="center">ID</StyledTableCell>
-                                <StyledTableCell align="center">Name</StyledTableCell>
-                                <StyledTableCell align="center">Desc</StyledTableCell>
+                                <StyledTableCell align="center">STT</StyledTableCell>
+                                <StyledTableCell align="center">Tên Trường</StyledTableCell>
+                                <StyledTableCell align="center">Mã Trường</StyledTableCell>
+                                <StyledTableCell align="center">Xếp Loại</StyledTableCell>
                                 <StyledTableCell align="center">Status</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row, index) => (
-                                <StyledTableRow key={index}>
-                                    <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.name}</StyledTableCell>
-                                    <StyledTableCell align="center">{row.desc}</StyledTableCell>
-                                    <StyledTableCell align="center">
-                                        <RouterLink to={`${path}/${index + 1}`}>
+                            {
+                                certifecates.map((row, index) => (
+                                    <StyledTableRow key={index}>
+                                        <StyledTableCell align="center">{index + 1}</StyledTableCell>
+                                        <StyledTableCell align="center">{row.name}</StyledTableCell>
+                                        <StyledTableCell align="center">{' '}</StyledTableCell>
+                                        <StyledTableCell align="center">{row.desc}</StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <RouterLink to={`${path}/${row.id}`}>
+                                                <Button
+                                                    size="small"
+                                                    variant="contained"
+                                                    color="primary"
+
+                                                >Sửa
+                                                    </Button>{'  '}
+                                            </RouterLink>
                                             <Button
-                                                size="small"
-                                                variant="contained"
-                                                color="primary"
-                                            >Sửa
-                                        </Button> {' '}
-                                        </RouterLink>
-                                        <RouterLink to={`${path}/${row.desc}`}>
-                                            <Button
+
                                                 size="small"
                                                 variant="contained"
                                                 color="secondary"
                                                 startIcon={<DeleteIcon />}
+                                                onClick={() => (this.onDelete(row.id))}
                                             >Xóa
                                         </Button>
-                                        </RouterLink>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <ModalConfirm message={notiConfirm} answer={this.answer}></ModalConfirm>
             </Card>
         )
     }
 }
 
-export default (CertifecateList);
+export default withStyles(useStyles)(CertifecateList);
