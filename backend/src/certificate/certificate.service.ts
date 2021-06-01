@@ -58,9 +58,11 @@ export class CertificateService {
         desc: String,
     ) {
         let cer = await this.findCertificateById(id);
-        const checkCode = await this.certificateModel.find().where({ code: code }).exec();
-        if (checkCode.length > 0) {
-            throw new HttpException('code exsited!', 409)
+        if (code != cer.code) {
+            const checkCode = await this.certificateModel.find().where({ code: code }).exec();
+            if (checkCode.length) {
+                throw new HttpException('code exsited!', 409)
+            }
         }
         cer.code = code;
         cer.name = name;

@@ -11,8 +11,8 @@ export class DepartmentService {
 
     constructor(
         @InjectModel('Department') private readonly departmentModel: Model<Department>,
-        @Inject(forwardRef(() => TeamService))private readonly teamService: TeamService,
-        @Inject(forwardRef(() => UsersService))private readonly usersService: UsersService
+        @Inject(forwardRef(() => TeamService)) private readonly teamService: TeamService,
+        @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService
 
     ) {
 
@@ -73,6 +73,7 @@ export class DepartmentService {
             teamsId: res
         }
     }
+
     async updateDepartmentById(
         id: String,
         code: String,
@@ -83,6 +84,12 @@ export class DepartmentService {
     ) {
         await this.usersService.findUserById(pic)
         let department = await this.findDepartmentById(id);
+        if (code != department.code) {
+            const checkCode = await this.departmentModel.find().where({ code: code }).exec();
+            if (checkCode.length) {
+                throw new HttpException('Code exsited!', 409);
+            }
+        }
         department.code = code;
         department.name = name;
         department.pic = pic;
@@ -136,7 +143,7 @@ export class DepartmentService {
                 department = await this.departmentModel.findById(id).exec()
             } catch (error) {
                 throw new HttpException('Could not find department.', 400);
-            }   
+            }
         }
         if (!department) {
             throw new HttpException(`find department err ${id}`, 400);

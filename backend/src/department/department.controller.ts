@@ -11,7 +11,7 @@ import {
 
 import { DepartmentService } from './department.service'
 
-@Controller('department')
+@Controller('departments')
 export class DepartmentController {
 
     constructor(private readonly departmentService: DepartmentService) { }
@@ -77,7 +77,7 @@ export class DepartmentController {
         return res;
     }
 
-    
+
     @Delete(':id/teams')
     async removeTeamsByDepartmentId(
         @Param('id') id: String,

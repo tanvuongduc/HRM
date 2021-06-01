@@ -10,7 +10,7 @@ import {
 
 import { TeamService } from './team.service';
 
-@Controller('team')
+@Controller('teams')
 export class TeamController {
     constructor(private readonly teamService: TeamService) { }
 
