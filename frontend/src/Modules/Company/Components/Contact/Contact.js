@@ -3,7 +3,7 @@ import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import LanguageIcon from '@material-ui/icons/Language';
 import EmailIcon from '@material-ui/icons/Email';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import { Http } from '../../Shared';
+import { Http } from '../../Shared/';
 
 const Contact = () => {
     const [dataContact, setDataContact] = useState({});
