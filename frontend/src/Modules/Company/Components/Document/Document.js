@@ -35,8 +35,8 @@ export default class Document extends Form {
         this.setState({
             document: this.state.document
         });
-
-        Http.upload
+        const res = await Http.upload(item.file[0], item.title, item.desc);
+        console.log(res);
     };
 
     componentDidMount() {

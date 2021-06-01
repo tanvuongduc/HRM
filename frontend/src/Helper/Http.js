@@ -57,7 +57,7 @@ export class Http {
 
 	static upload(file, title, desc) {
 		const formData = new FormData();
-		formData.append('file', file)
+		formData.append('file', file, file.name)
 		formData.append('title', title)
 		formData.append('desc', desc)
 		const config = {
