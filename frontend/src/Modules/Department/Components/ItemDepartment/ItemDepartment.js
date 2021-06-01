@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Modaladd from './Modaladd'
-import { Http } from '../../Shared/'
 
 const ItemDepartment = () => {
-    const [dataDepartment, setDataDepartment] = useState([]);
+    // const [dataDepartment, setDataDepartment] = useState([]);
 
-    const getDataDepartment = async () => {
-        try {
-            const data = await Http.get('company')
-            data.data.map(event => {
-                return setDataDepartment(event.departments)
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    };
+    // const getDataDepartment = async () => {
+    //     try {
+    //         const data = await Http.get('company')
+    //         data.data.map(event => {
+    //             return setDataDepartment(event.departments)
+    //         })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // };
 
-    useEffect(() => {
-        getDataDepartment();
-    }, []);
+    // useEffect(() => {
+    //     getDataDepartment();
+    // }, []);
 
     // const showDepartment = dataDepartment.map((event, index) => {
     //     return (

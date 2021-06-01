@@ -34,10 +34,10 @@ const ModalAdd = (props) => {
     const [formStyle] = React.useState(getFormStyle);
     const [formControlStyle] = React.useState(getFormControlStyle);
     const [modal, setModal] = React.useState(false);
-    const [document, setDocument] = React.useState({});
+    const [note, setNote] = React.useState({});
 
     const handleOnchange = (event) => {
-        setDocument({ ...document, [event.target.name]: event.target.value })
+        setNote({ ...note, [event.target.name]: event.target.value })
     };
 
     const patchNote = async (event) => {
@@ -58,10 +58,10 @@ const ModalAdd = (props) => {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Document</Button>
+            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Note</Button>
             <Modal open={modal} onClose={handleModal} >
                 <div style={modalStyle}>
-                    <h4>Create a new document</h4><hr />
+                    <h4>Create a new note</h4><hr />
                     <form style={formStyle} onSubmit={patchNote}>
                         <FormControl style={formControlStyle} fullWidth>
                             <TextField label="Enter title" helperText="Some important text" name="title" onChange={handleOnchange} required />
