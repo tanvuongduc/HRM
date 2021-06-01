@@ -62,38 +62,6 @@ export class DepartmentService {
         }
     }
 
-    async getAllDepartments(
-
-    ) {
-        const departments = await this.departmentModel.find().populate('pic').exec();
-        return departments.map(department => ({
-            id: department.id,
-            name: department.name,
-            code: department.code,
-            pic: department.pic,
-            desc: department.desc,
-            createAt: department.createdAt
-        }))
-    }
-
-    async getTeamsByDepartmentId(
-        id: String
-    ) {
-        return this.teamService.getTeamsByDepartmentId(id);
-    }
-
-    async insertTeamsByDepartmentId(
-        teamsId: [String],
-        departmentId: String
-    ) {
-        await this.findDepartmentById(departmentId);
-        const res = await this.teamService.insertDepartmentForTeamsId(teamsId, departmentId)
-        return {
-            departmentId: departmentId,
-            teamsId: res
-        }
-    }
-
     async removeTeamsByDepartmentId(
         teamsId: [String],
         departmentId: String
@@ -123,6 +91,38 @@ export class DepartmentService {
         const res = await department.save();
         return {
             id: res.id
+        }
+    }
+    
+    async getAllDepartments(
+
+    ) {
+        const departments = await this.departmentModel.find().populate('pic').exec();
+        return departments.map(department => ({
+            id: department.id,
+            name: department.name,
+            code: department.code,
+            pic: department.pic,
+            desc: department.desc,
+            createAt: department.createdAt
+        }))
+    }
+
+    async getTeamsByDepartmentId(
+        id: String
+    ) {
+        return this.teamService.getTeamsByDepartmentId(id);
+    }
+
+    async insertTeamsByDepartmentId(
+        teamsId: [String],
+        departmentId: String
+    ) {
+        await this.findDepartmentById(departmentId);
+        const res = await this.teamService.insertDepartmentForTeamsId(teamsId, departmentId)
+        return {
+            departmentId: departmentId,
+            teamsId: res
         }
     }
 
