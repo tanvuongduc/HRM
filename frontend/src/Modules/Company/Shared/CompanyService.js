@@ -21,6 +21,7 @@ import { UtilService } from ".";
 
 const API_ENDPOINT = {
 	BASE: "company",
+	BASE_DOCUMENT: "company",
 	// GET_CUS_BY_LOC: "/step/list",
 	// GET_EXAM_BY_LOC: "/location/service/list",
 	// GET_EXAM_INDEX_LIST_BY_SER_ID: "/service/step/get_byServiceId",
@@ -71,6 +72,7 @@ class Exam extends UtilService {
 			}
 		);
 	}
+
 }
 
 const instance = new Exam();

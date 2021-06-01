@@ -40,13 +40,14 @@ const ModalAdd = (props) => {
         setDocument({ ...document, [event.target.name]: event.target.value })
     };
 
-    const patchNote = async (event) => {
-        // event.preventDefault();
+    const patchDocument = async (event) => {
+        event.preventDefault();
         event.target.reset();
 
         const item = {};
-        item.title = note.title;
-        item.desc = note.desc;
+        item.title = document.title;
+        item.desc = document.desc;
+        item.file = document.file;
         props.add(item);
 
         setModal(!modal)
@@ -61,13 +62,16 @@ const ModalAdd = (props) => {
             <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Document</Button>
             <Modal open={modal} onClose={handleModal} >
                 <div style={modalStyle}>
-                    <h4>Create a new document</h4><hr />
-                    <form style={formStyle} onSubmit={patchNote}>
+                    <h4>Upload new file</h4><hr />
+                    <form style={formStyle} onSubmit={patchDocument}>
                         <FormControl style={formControlStyle} fullWidth>
                             <TextField label="Enter title" helperText="Some important text" name="title" onChange={handleOnchange} required />
                         </FormControl>
                         <FormControl style={formControlStyle} fullWidth>
                             <TextField label="Enter describe" helperText="Some important text" name="desc" onChange={handleOnchange} required />
+                        </FormControl>
+                        <FormControl style={formControlStyle} fullWidth>
+                            <input type="file" name="file" onChange={handleOnchange} />
                         </FormControl>
                         <Button variant="contained" color="primary" type="submit" startIcon={<SaveIcon />}>Save</Button>{' '}
                         <Button variant="contained" color="secondary" onClick={handleModal} startIcon={<CancelIcon />}>Cancel</Button>

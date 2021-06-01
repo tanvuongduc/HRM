@@ -41,7 +41,7 @@ const ModalAdd = (props) => {
     };
 
     const patchNote = async (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         event.target.reset();
 
         const item = {};
