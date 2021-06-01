@@ -4,7 +4,8 @@ import {
     Post,
     Body,
     Get,
-    Query
+    Query,
+    Param
 } from '@nestjs/common';
 import { CertificateService } from './certificate.service'
 
@@ -23,9 +24,9 @@ export class CertificateController {
         return res;
     }
 
-    @Get('find')
+    @Get(':id')
     async getCertificateById(
-        @Query('id') id: String
+        @Param('id') id: String
     ) {
         const res = await this.certificateService.getCertificateById(id);
         return res;
@@ -38,13 +39,14 @@ export class CertificateController {
         return res;
     }
 
-    @Patch('update')
+    @Patch(':id')
     async updateCertificate(
-        @Query('id') id: String,
+        @Param('id') id: String,
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('desc') desc: String,
     ) {
-        const res = await this.certificateService.updateCertificate(id, name, desc);
+        const res = await this.certificateService.updateCertificate(id, code, name, desc);
         return res;
     }
 

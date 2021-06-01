@@ -35,6 +35,7 @@ export class CertificateService {
         const cer = await this.findCertificateById(id);
         return {
             id: cer.id,
+            code: cer.code,
             name: cer.name,
             desc: cer.desc
         }
@@ -44,6 +45,7 @@ export class CertificateService {
         const cerArr = await this.certificateModel.find().exec();
         return cerArr.map(cer => ({
             id: cer.id,
+            code: cer.code,
             name: cer.name,
             desc: cer.desc
         }));
@@ -51,10 +53,16 @@ export class CertificateService {
 
     async updateCertificate(
         id: String,
+        code: String,
         name: String,
         desc: String,
     ) {
         let cer = await this.findCertificateById(id);
+        const checkCode = await this.certificateModel.find().where({ code: code }).exec();
+        if (checkCode.length > 0) {
+            throw new HttpException('code exsited!', 409)
+        }
+        cer.code = code;
         cer.name = name;
         cer.desc = desc;
         const res = await cer.save();
