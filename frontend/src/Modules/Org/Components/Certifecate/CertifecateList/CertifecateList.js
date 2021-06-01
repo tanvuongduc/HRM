@@ -30,7 +30,13 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = (theme) => ({
-
+    table: {
+        flexGrow: 1,
+        margin: `auto`,
+        border: "1px solid #c3c3c3",
+        padding: "50px 50px 50px 50px",
+        width: "80%"
+    }
 })
 
 class CertifecateList extends Component {
@@ -64,11 +70,13 @@ class CertifecateList extends Component {
         const { path } = this.props.match;
         const { certifecates, notiConfirm } = this.state
         return (
-            <Card className='CertifecateList'>
+            <Card >
                 <div >
                     <h2 className="certifetace-header">Danh sách chứng chỉ</h2>
                     <div className="certifetace-btn">
-                        <Button size="small" variant="contained" color="primary" >Thêm mới</Button>
+                        <RouterLink to={`${path}/0`} >
+                            <Button size="small" variant="contained" color="primary" >Thêm mới</Button>
+                        </RouterLink>
                     </div>
                 </div>
                 <TableContainer component={Paper}>
@@ -88,7 +96,7 @@ class CertifecateList extends Component {
                                     <StyledTableRow key={index}>
                                         <StyledTableCell align="center">{index + 1}</StyledTableCell>
                                         <StyledTableCell align="center">{row.name}</StyledTableCell>
-                                        <StyledTableCell align="center">{' '}</StyledTableCell>
+                                        <StyledTableCell align="center">{row.code}</StyledTableCell>
                                         <StyledTableCell align="center">{row.desc}</StyledTableCell>
                                         <StyledTableCell align="center">
                                             <RouterLink to={`${path}/${row.id}`}>
