@@ -80,7 +80,7 @@ class MainTeam extends Component {
     }
     controlFormAddUser = () => {
         this.setState({ setOpenChoiceUserToTeam: false })
-        console.log('dm        con tho')
+        console.log('dm con tho')
     }
     onOpenFormAddUser = () => {
         this.setState({ setOpenChoiceUserToTeam: true })
@@ -112,7 +112,6 @@ class MainTeam extends Component {
                             </ClickAwayListener>
                         </Grid>
                     </Grid>
-
                     <MemberInfoTeam
                         dataListMember={listMemberTeam.members ? listMemberTeam.members : []}
                         deleteMemberId={this.deleteMemberId}

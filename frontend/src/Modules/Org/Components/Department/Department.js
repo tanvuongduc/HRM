@@ -49,13 +49,10 @@ class Department extends Component {
   componentDidMount() {
     this.getData();
   }
-
   // list data   
   getData() {
-    let promiseArr = [];
-    promiseArr.push(Departmentservice.listDepartment());
-    Promise.all(promiseArr).then(([list_Department]) => {
-      let listDepartment = list_Department.data;
+    Departmentservice.listDepartment().then((res) => {
+      let listDepartment = res.data;
       this.setState({
         listDepartment
       });

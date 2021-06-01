@@ -5,7 +5,12 @@ import { FaMoneyCheckAlt, FaEdit } from "react-icons/fa";
 class Banking extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      bankAccount:{
+        bankName:"1",
+        bankId:"2x"
+      }
+    };
   }
 
   isDisplayEditInfo = (code, title, value) => {
@@ -13,7 +18,7 @@ class Banking extends Component {
   };
 
   render() {
-    const { bankAccount } = this.props;
+    const { bankAccount } = this.state;
     return (
       <div className="details-card address">
         <h4>Banking</h4>
