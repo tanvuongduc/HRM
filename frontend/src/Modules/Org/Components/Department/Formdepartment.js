@@ -35,7 +35,7 @@ const useStyles = (theme) => ({
   }
 })
 
-class formDepartment extends Component {
+class FormDepartment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -207,4 +207,4 @@ class formDepartment extends Component {
   }
 
 };
-export default withStyles(useStyles)(formDepartment);
+export default withStyles(useStyles)(FormDepartment);

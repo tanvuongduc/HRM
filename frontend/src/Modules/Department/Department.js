@@ -4,7 +4,7 @@ import ItemDepartment from './Components/ItemDepartment/ItemDepartment';
 import DetailDepartment from './Components/DetailDepartment/DetailDepartment';
 
 const Department = () => {
-    const path = window.location.pathname;
+    const { path } = this.props.match;
     return (
         <div>
             <Switch>
