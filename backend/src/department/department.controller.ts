@@ -1,3 +1,4 @@
+import { Param } from '@nestjs/common';
 import {
     Patch,
     Controller,
@@ -15,9 +16,9 @@ export class DepartmentController {
 
     constructor(private readonly departmentService: DepartmentService) { }
 
-    @Post('department')
+    @Post()
     async insertDepartment(
-        @Body('code') code:String,
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
@@ -27,23 +28,24 @@ export class DepartmentController {
     }
 
 
-    @Get('department')
+    @Get(':id')
     async getDepartmentById(
-        @Query('id') id: String
+        @Param('id') id: String
     ) {
         const res = await this.departmentService.getDepartmentById(id);
         return res;
     }
 
-    @Patch('department')
+    @Patch(':id')
     async updateDepartmentById(
-        @Query('id') id: String,
+        @Param('id') id: String,
+        @Body('code') code: String,
         @Body('name') name: String,
         @Body('pic') pic: String,
         @Body('desc') desc: String,
         @Body('documents') documents: [String]
     ) {
-        const res = await this.departmentService.updateDepartmentById(id, name, pic, desc, documents);
+        const res = await this.departmentService.updateDepartmentById(id, code, name, pic, desc, documents);
         return res;
     }
 
@@ -57,25 +59,28 @@ export class DepartmentController {
         return res;
     }
 
-    @Get('teams')
+    @Get(':id/teams')
     async getTeamsByDepartmentId(
-        @Query('department') id: String
+        @Param('id') id: String
     ) {
+        console.log(id)
         const res = await this.departmentService.getTeamsByDepartmentId(id);
         return res;
     }
 
-    @Patch('teams')
+    @Patch(':id/teams')
     async insertTeamsByDepartmentId(
-        @Query('department') id: String,
+        @Param('id') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
         return res;
     }
-    @Delete('teams')
+
+
+    @Delete(':id/teams')
     async removeTeamsByDepartmentId(
-        @Query('department') id: String,
+        @Param('id') id: String,
         @Body('teamsId') teamsId: [String]
     ) {
         const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);

@@ -5,13 +5,14 @@ import {
     Body,
     Get,
     Patch,
-    UseGuards
+    UseGuards,
+    Param
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
 import { Bank, SocialNetwork } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { Query } from '@nestjs/common';
+
 
 
 @Controller('users')
@@ -23,7 +24,7 @@ export class UsersController {
 
     // @UseGuards(JwtAuthGuard)
     @Post()
-    async addUser(
+    async insertUser(
         // @Body() req,
         @Body('name') name: String,
         @Body('birthday') birthday: Date,
@@ -32,6 +33,7 @@ export class UsersController {
         @Body('phone') phone: String,
         @Body('email') email: String,
         @Body('password') password: String,
+        @Body('teams') teams: [String],
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
     ) {
@@ -42,9 +44,10 @@ export class UsersController {
             certificate,
             phone,
             email,
+            teams,
             password,
             socialNetwork,
-            bank,
+            bank
         );
         return { id: generatedId };
     }
@@ -59,9 +62,9 @@ export class UsersController {
         return this.usersService.getUserById(req.user.userId);
     }
 
-    @Get('user')
+    @Get(':id')
     getUserById(
-        @Query('id') id : String
+        @Param('id') id : String
     ) {
         return this.usersService.getUserById(id);
     }
@@ -69,7 +72,6 @@ export class UsersController {
     // @UseGuards(JwtAuthGuard)
     @Get()
     async getAllUsers() {
-
         const Users = await this.usersService.getUsers();
         return Users;
     }
@@ -91,7 +93,6 @@ export class UsersController {
         @Body('bank') bank: Bank,
         @Body('status') status: string
     ) {
-
         let res = await this.usersService.updateUser(
             req.user.userId,
             name,

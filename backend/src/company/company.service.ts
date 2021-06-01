@@ -1,4 +1,4 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, HttpException, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Company, Overview, Note, SocialNetwork } from './company.model';
@@ -8,7 +8,7 @@ import { UsersService } from '../user/user.service'
 export class CompanyService {
     constructor(
         @InjectModel('Company') private readonly companyModel: Model<Company>,
-        private readonly usersService: UsersService
+        @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService
     ) { }
 
     async getCompany() {
@@ -48,12 +48,18 @@ export class CompanyService {
     ) {
         await this.usersService.findUserById(pic)
         let company = await this.findCompany();
-        company.name = name;
-        company.domain = domain;
-        company.website = website;
-        company.address = address;
-        company.email = email;
-        company.phone = phone;
+        if (name)
+            company.name = name;
+        if (domain)
+            company.domain = domain;
+        if (website)
+            company.website = website;
+        if (address)
+            company.address = address;
+        if (email)
+            company.email = email;
+        if (phone)
+            company.phone = phone;
         company.pic = pic;
         company.socialNetwork = socialNetwork;
         company.overviews = overviews;
