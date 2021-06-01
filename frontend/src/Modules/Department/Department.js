@@ -7,12 +7,10 @@ class Department extends Component {
     render() {
         const { path } = this.props.match;
         return (
-            <div className="Department">
-                <Switch>
-                    <Route exact path={`${path}`} component={DepartmentList} />
-                    <Route exact path={`${path}/:id`} component={FormDepartment} />
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path={`${path}`} component={DepartmentList} />
+                <Route exact path={`${path}/:id`} component={FormDepartment} />
+            </Switch>
         );
     }
 }
