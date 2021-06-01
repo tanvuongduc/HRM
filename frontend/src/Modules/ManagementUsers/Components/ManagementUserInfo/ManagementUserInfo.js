@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import "./ManagementUserInfo.scss";
 import { Http } from "../../../../Helper/Http";
-import ManagementEditInfo from "../ManagementEditInfo/ManagementEditInfo";
+import ManagementEditInfo from "./ManagementEditInfo/ManagementEditInfo";
+import { Button } from "@material-ui/core";
 
 class ManagementUserInfo extends Component {
   constructor(props) {
@@ -16,28 +17,19 @@ class ManagementUserInfo extends Component {
     const req = await Http.patch("users/" + idUserEditted, data);
   };
 
-  onEditInfo = () => {
-    this.setState({
-      onEditInfo: true,
-    });
-  };
   render() {
-    const { userIsViewedInfo } = this.props;
     const { onEditInfo } = this.state;
-
+    const { path } = this.props.match;
+    const  userId = this.props.match.params.id;
     return (
       <div className="management-user-info">
         <div className="user-info">
           <h2 className="title">User info</h2>
-          <div className="btn-form-control">
-            <a className="btn-control-save" onClick={this.onEditInfo}>
-              Edit
-            </a>
-          </div>
+
           <div className="detail">
             <ManagementEditInfo
               onEditInfo={onEditInfo}
-              userId={this.props.userId}
+              userId={userId}
             />
           </div>
         </div>

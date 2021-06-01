@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import "./EditInfo.scss";
 
 class EditInfo extends Component {
   constructor(props) {
