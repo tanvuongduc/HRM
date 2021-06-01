@@ -1,5 +1,4 @@
 import React, { Component, Fragment, useState } from "react";
-import "./User.scss";
 import { Http } from "../../Helper/Http";
 import Details from "./Components/Details/Details";
 import Employment from "./Components/Employment/Employment";

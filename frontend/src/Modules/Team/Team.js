@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import MainTeam from "./Components/MainTeam";
-class Org extends Component {
+
+class Team extends Component {
     constructor(props) {
         super(props);
     }
@@ -9,13 +10,12 @@ class Org extends Component {
     render() {
         const { path } = this.props.match;
         return (
-            <div className="org">
-                <Switch>
-                    <Route exact path={`${path}/team`} component={MainTeam} />
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path={`${path}`} component={MainTeam} />
+                {/* <Route exact path={`${path}`} component={MainTeam} /> */}
+            </Switch>
         )
     }
 }
 
-export default Org
+export default Team

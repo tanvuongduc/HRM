@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { Link, useParams } from "react-router-dom";
 import {
   Grid,
-  Paper,
   TextField,
   Button,Card,MenuItem 
 } from "@material-ui/core";
-import Departmentservice from "../../Shared/Departmentservice"
+import Departmentservice from "../../Shared/DepartmentService"
 import { withStyles } from '@material-ui/core/styles';
-import { ModalNoti, ModalConfirm } from "../../Shared";
+import { ModalNoti, ModalConfirm } from "../../../../Shared";
 const useStyles = (theme) => ({
   form: {
     flexGrow: 1,

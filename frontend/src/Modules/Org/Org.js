@@ -1,7 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import Department from './Components/Department/Department';
-import FormDepartment from './Components/Department/Formdepartment';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 class Org extends Component {
     constructor(props) {
@@ -11,13 +9,14 @@ class Org extends Component {
     render() {
         const { path } = this.props.match;
         return (
-            <Switch>
-                <Route exact path={`${path}`} render={() =>
-                    (<Redirect to="/app/org/department" ></Redirect>)
-                }></Route>
-                <Route exact path={`${path}/department`} component={Department} />
-                <Route exact path={`${path}/department/:id`} component={FormDepartment} />
-            </Switch>
+            // <Switch>
+            //     <Route exact path={`${path}`} render={() =>
+            //         (<Redirect to="/app/org/department" ></Redirect>)
+            //     }></Route>
+            //     <Route exact path={`${path}/department`} component={DepartmentList} />
+            //     <Route exact path={`${path}/department/:id`} component={FormDepartment} />
+            // </Switch>
+            <h1>This is org router: {path}</h1>
         )
     }
 }
