@@ -7,15 +7,17 @@ import Exam from '../../../Modules/Exam/Exam';
 import MainTeam from '../../../Modules/Team/Components/MainTeam';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 import Listdepartment from  '../../../Modules/Org/Components/Department/Department'
+import Formdepartment from  '../../../Modules/Org/Components/Department/Formdepartment'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
+
 class App extends Component {
     render() {
         const { path } = this.props.match;
         return (
             <div>
                 <Switch>
-                    <Route exact path={`${path}/department`} component={Department} />
+                    {/* <Route exact path={`${path}/department`} component={Department} /> */}
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/exam`} component={Exam} />

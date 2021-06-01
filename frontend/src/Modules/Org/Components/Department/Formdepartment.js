@@ -1,197 +1,210 @@
-import React, { Component, useState, useEffect, Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Grid,
   Paper,
   TextField,
-  Avatar,
-  Typography,
-  MenuItem,
-  Button,FormControl,Select
+  Button,Card,MenuItem 
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import ModalConfirm from "../../../../Shared/Components/ModalConfirm/ModalConfirm"
-import ModalNoti from "../../../../Shared/Components/ModalNoti/ModalNoti"
 import Departmentservice from "../../Shared/Departmentservice"
-
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    maxWidth: 400,
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
-    height: 80,
+import { withStyles } from '@material-ui/core/styles';
+import { ModalNoti, ModalConfirm } from "../../Shared";
+const useStyles = (theme) => ({
+  form: {
+    flexGrow: 1,
+    margin: `auto`,
+    border :"1px solid #c3c3c3",
+    padding :"50px 50px 50px 50px",
+    width :"80%"
   },
-  h2: {
-    textAlign: "right",
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
-  },
-  text: {
-    textAlign :"right",
-    margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
+  title: {
+    margin: `auto`,
+    padding :"50px 50px 50px 50px",
+    width :"80%"
   },
   btn: {
     marginLeft: "auto",
     padding: theme.spacing(3),
   },
-}));
+  select:{
+    width:"100%"
+  },
+  label:{
+    padding: theme.spacing(2),
+    margin: `auto`,
+  }
+})
 
-const Formdepartment = (props) => {
-  let { id } = useParams();
-  const classes = useStyles();
-  const [Department, setDepartment] = useState({
-    name:"",
-    code:"",
-    pic:"",
-    desc:"",
-
-  });
-  const [listUser,setUser]= useState([]);
-  const [confirmMessage, setConfirmMessage] = useState("");
-  const [notiMessage, setNotiMessage] = useState("");
- 
-useEffect(() => {
-    if (id !== "0") {
-      fetchDepartment();
-      fetchUser();
+class formDepartment extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listUser: [],
+      notiMessage: '',
+      confirmMessage: '',
+      code: "",
+      name: "",
+      desc: "",
+      id_user: "",
+      listuser:[],
     }
-  }, [])
-  console.log(Department);
-  const fetchDepartment = async () => {
-    let fetchDepartment = await Departmentservice.getDepartmentById(id)
-    setDepartment(fetchDepartment.data)
   }
-
-  const fetchUser = async () =>{
-    let fetchUser = await Departmentservice.listUser()
-    setUser(fetchUser.data)
-  }
-  // const fetchListDepartment = async () => {
-  //   let fetchListDepartment = await Departmentservice.listDepartment()
-  //   setlistDepartment(fetchListDepartment.data)
-  // }
-
-  
-  let User_list = listUser.map((data, i) => {
-    return (
-      <option value={data.id} key={i}>
-        {data.name}
-      </option>
-    );
-  });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDepartment((Department) => ({ ...Department, [name]: value }));
-  }
-  const editDepartment = () => {
-    const payload = Department
-    return Departmentservice.editDepartment(id,payload)
-  }
-  const postDepartment = () => {
-    const payload = Department
-    return Departmentservice.postDepartment(payload)
-  }
-
-
-  const handleSubmitForm = () => {
-    if (id === "0") {
-      postDepartment().then(() => {
-            setNotiMessage("Thêm mới !")
-        }).catch((err) => {
-            console.log(err)
-            setNotiMessage("Có lỗi xảy ra, vui lòng thử lại!")
-        })
-
-    } else {
-        //cap nhat
-        setConfirmMessage("Bạn đồng ý sửa ?")
-    }
-}
-const answer = (answer) => {
-  if (answer) {
-    editDepartment().then(() => {
-          setConfirmMessage("")
-          setNotiMessage("Bạn đã sửa thành công!")
-      }).catch((err) => {
-          setNotiMessage("Có lỗi xảy ra, vui lòng thử lại!")
+  componentDidMount() {
+    let id = this.props.match.params.id;
+    Departmentservice.listUser().then((res) => {
+      let data = res.data;
+      this.setState({
+        listuser: data
       })
+    }).catch((err) => {
+      this.setState({
+        notiMessage: 'Có lỗi vui lòng thử lại !'
+      })
+      console.log(err);
+    });
+    if (id!="0") {
+      Departmentservice.getDepartmentById(id)
+        .then(res => {
+          let data = res.data;
+          
+          this.setState({
+            name: data.name,
+            code: data.code,
+            desc: data.desc,
+            id_user: data.pic._id
+          });
+        }).catch(error => {
+          this.setState({
+            notiMessage: 'Có lỗi vui lòng thử lại !'
+          })
+          console.log(error);
+      });
+    }
+    return;
+  };
 
-  } else {
-      setConfirmMessage("")
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  onSubmit = () => {
+    let id = this.props.match.params.id;
+    if (id !=="0") {
+      this.setState({
+        confirmMessage: 'Bạn muốn cập nhập thông tin này không ?'
+      });
+    } else {
+      this.setState({
+        confirmMessage: 'Bạn muốn thêm mới thành viên này không ?'
+      });
+    }
   }
-}
+  answer = (answer) => {
+    let id = this.props.match.params.id;
+    let { name , desc, id_user} = this.state;
+    let data = {
+     name:name,
+     desc:desc,
+     pic:id_user
+  }
+  console.log(data);
+    if (answer) {
+      let method = (id !== "0") ? Departmentservice.editDepartment(id,data) : Departmentservice.postDepartment(data);
+      let notiMessage = (id) ? 'Cập nhât thành công' : 'Tạo mới thành công'
+      method.then(response => {
+        if (response.status === 200) {
+          this.setState({
+            notiMessage
+          });
+        }
+      });
 
-const done = () => {
-  setNotiMessage("")
-}
+    }
+    else {
+      this.setState({
+        confirmMessage: ''
+      })
+    }
+  }
+  doneAlret = () => {
+    if (this.state.notiMessage) {
+      window.history.back();
+    } else {
+      this.setState({ notiMessage: '' })
+    }
+  }
 
-  return (
-    <Fragment>
-      <ModalConfirm message={confirmMessage} answer={answer}></ModalConfirm>
-      <ModalNoti message={notiMessage} done={done}></ModalNoti>
-      //test
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Avatar>W</Avatar>
-          </Grid>
-          <Grid item xs zeroMinWidth>
-            <Typography noWrap></Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-      <div component={Paper}>
-        <div>
-          <h2 className={classes.h2}>
-            {id !== "0" ? "Chỉnh sửa Phòng Ban" : "Thêm mới Phòng Ban"}
-          </h2>
-        </div>
-        <Grid container>
-          <Grid xs="6" container>
-            <Grid xs="3" className={classes.text}>Nhập tên phòng ban :</Grid>
-            <Grid xs="9" className={classes.text}>
-              <TextField fullWidth id="name" onChange={handleChange}>{Department.name}</TextField>
-            </Grid>
-          </Grid>
-          <Grid xs="6" container>
-            <Grid xs="3" className={classes.text}>Nhập mã phòng ban :</Grid>
-            <Grid xs="9" className={classes.text}>
-              <TextField fullWidth id="code"   onChange={handleChange} >value={Department.code} </TextField>
-            </Grid>
-          </Grid>
-          <Grid xs="6" container>
-            <Grid xs="3" className={classes.text} >Ghi chú :</Grid>
-            <Grid xs="9" className={classes.text}>
-              <TextField fullWidth id="desc" onChange={handleChange}> value={Department.desc}  </TextField>
-            </Grid>
-          </Grid>
-          <Grid xs="6" container>
-            <Grid xs="3" className={classes.text}>Chọn trưởng phòng :</Grid>
-            <Grid xs="9" >
-              <FormControl>
-              <Select
-                native
-                autoWidth
-               id="pic"
-                value={Department.pic._id}
-                onChange={handleChange}
-                // input={<Input id="demo-dialog-native" />}
-              > {User_list}
-              </Select>
-                </FormControl> 
-            </Grid>
-          </Grid>
-
-          <div className={classes.btn}>
-            <Button variant="contained" color="primary" onClick={() => handleSubmitForm()}>
-              {id == "0" ? "Thêm mới" : "Sửa"}
-            </Button>
+  render() {
+    const { classes } = this.props;
+    let { listuser, name, code, desc, id_user } = this.state;
+    console.log(listuser);
+    let id = this.props.match.params.id
+    return (
+      <Fragment>
+         <ModalConfirm
+            message={this.state.confirmMessage}
+            answer={this.answer}
+          ></ModalConfirm>
+          <ModalNoti
+            message={this.state.notiMessage}
+            done={this.doneAlret}
+          ></ModalNoti>
+           <div>
+            <h2 className={classes.title}>
+              {id !== "0" ? "Chỉnh sửa Phòng Ban" : "Thêm mới Phòng Ban"}
+            </h2>
           </div>
-        </Grid>
-      </div>
-    </Fragment>
-  );
+        <Card className={classes.form} >
+          <Grid container >
+            <Grid xs="6"  container>
+              <Grid xs="4" align="right"  className={classes.label}><strong>Nhập tên phòng ban :</strong></Grid>
+              <Grid xs="8"  className={classes.label}>
+                <TextField fullWidth id="name" name="name" value={name} onChange={this.onChange}></TextField>
+              </Grid>
+            </Grid>
+            <Grid xs="6" container>
+              <Grid xs="4"   className={classes.label} align="right"><strong>Nhập mã phòng ban :</strong></Grid>
+              <Grid xs="8"  className={classes.label} >
+                <TextField fullWidth id="code" name="code" value={code} onChange={this.onChange}></TextField>
+              </Grid>
+            </Grid>
+            <Grid xs="6" container>
+              <Grid xs="4"  className={classes.label}align="right" ><strong>Ghi chú :</strong></Grid>
+              <Grid xs="8"  className={classes.label}  >
+                <TextField fullWidth id="desc" name="desc" value={desc} onChange={this.onChange}></TextField>
+              </Grid>
+            </Grid>
+            <Grid xs="6" container>
+              <Grid xs="4"  className={classes.label} align="right"><strong> Chọn trưởng phòng :</strong></Grid>
+              <Grid xs="8" className={classes.label}>
+              <TextField
+              id="standard-select-currency"
+              select
+              name="id_user"
+              fullWidth
+              onChange={this.onChange}
+              value={id_user}
+             >
+              {listuser.map((option,i) => (
+            <MenuItem  key={option.id} value={option.id}>
+              {option.name}
+            </MenuItem>
+          ))}
+        </TextField>
+              </Grid>
+            </Grid>
+            <div className={classes.btn}>
+              <Button variant="contained" color="primary" onClick={this.onSubmit}>
+              {id !== "0" ? "Cập nhật" : "Thêm mới"}
+              </Button>
+            </div>
+          </Grid>
+        </Card>
+      </Fragment>
+    );
+  }
+
 };
-export default Formdepartment;
+export default withStyles(useStyles)(formDepartment);
