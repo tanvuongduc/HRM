@@ -1,11 +1,11 @@
 @import './AddMember/AddMember.scss';
 @import './BasicInfoTeam/BasicInfoTeam.scss';
 @import './MemberInfoTeam/MemberInfoTeam.scss';
-
+@import '../../../Styles/util';
 .MainTeam{
     .InfoTeam{
         margin-top: 10px;
-        .MuiGrid-container{
+        .header{
             margin: 10px 15px;
         }
     }
@@ -16,7 +16,8 @@
         left: 50%;
         transform: translate(-50%, 0);
         border: none;
-        padding: 5px;
+        padding: 15px;
+     
     }
 }
 .noneDisplay{

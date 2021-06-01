@@ -1,22 +1,14 @@
+@import '../../../../Styles/variables';
 .MemberInfoTeam{
-    margin-top: 10px;
+    margin: 10px 0px 0px 0px;
     padding: 10px 15px;
     border-radius: 5px;
-    background-color: white;
     min-height: 400px;
     .MuiTableRow-head{
-        background-color: #28b76b;
+        background-color: $c-primary;
         .MuiTableCell-head{
             font-weight: bold;
-        }
-    }
-
-    .odd{
-        background-color: #f4fcf6;
-    }
-    .MuiTableBody-root{
-        .MuiTableRow-root:hover{
-            background-color: #e7f4eb;
+            color: $c-text-table-head;
         }
     }
 }

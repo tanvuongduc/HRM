@@ -10,16 +10,18 @@ import MemberInfoTeam from './MemberInfoTeam/MemberInfoTeam';
 import AddMember from './AddMember/AddMember';
 import Details from '../../User/Components/Details/Details';
 import AddMemberToTeam from '../../User/Components/AddMemberToTeam/AddMemberToTeam';
+import BasicInfo from '../../User/Components/Details/BasicInfo/BasicInfo';
+import Contact from '../../User/Components/Details/Contact/Contact';
 
 
 class MainTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            basicInfoTeam: [],
+            basicInfoTeam: {},
             listMemberTeam: [],
 
-            idTeam: '60a017be2e215a1788c61565',
+            idTeam: '60b4bc4f14272f11107d2fff',
 
             idUSer: '',
             dataUser: [],
@@ -30,29 +32,24 @@ class MainTeam extends Component {
         }
     }
     getListMemberTeam = (id) => {
-        TeamService.getListMemberTeam(id).then(res => {
-            this.setState({
-                listMemberTeam: res.data
-            })
+        TeamService.getListMember(id).then(res => {
+            this.setState({ listMemberTeam: res.data })
         })
     }
 
     componentDidMount = () => {
         TeamService.getBasicInfoTeam(this.state.idTeam).then(res => {
-            this.setState({
-                basicInfoTeam: res.data
-            })
+            this.setState({ basicInfoTeam: Array(res.data) })
         })
         this.getListMemberTeam(this.state.idTeam);
     }
     deleteMemberId = (id) => {
         const data = {
-            "members": [
-                id
-            ]
+            "members": [id]
         }
-
-        TeamService.postRemoveMember(this.state.idTeam, data)
+        TeamService.postRemoveMember(this.state.idTeam, data).then(
+            this.getListMemberTeam(this.state.idTeam)
+        )
     }
     showInfoMemberId = (id) => {
         TeamService.getUserInfo(id).then(res => {
@@ -93,7 +90,7 @@ class MainTeam extends Component {
             <Container maxWidth="lg" className="MainTeam">
                 <BasicInfoTeam data={basicInfoTeam}></BasicInfoTeam>
                 <Card className="InfoTeam">
-                    <Grid container>
+                    <Grid container className="header">
                         <Grid item xs={10}>
                             <h3>Thông tin thành viên team</h3>
                         </Grid>
@@ -120,18 +117,28 @@ class MainTeam extends Component {
                 </Card>
                 <ClickAwayListener onClickAway={() => this.controlFormUserInfo()}>
                     <Card className={!setOpenUserInfo ? "noneDisplay" : "infor"}>
-                        <Details
-                            getInfo={() => this.getInfo()}
-                            dataUser={dataUser}
-                            onSaveEditting={this.onSaveEditting}
-                        ></Details>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            onClick={() => this.controlFormUserInfo()}
-                            startIcon={<ExitToApp />}> Đóng
-                        </Button>
+                        <BasicInfo
+                            userName={dataUser.name}
+                            birthday={dataUser.birthday}
+                            address={dataUser.adress}
+                            certificate={dataUser.certificate}
+                            onShowEditInfo={this.onShowEditInfo}
+                        />
+                        <hr></hr>
+                        <Contact
+                            phoneNumber={dataUser.phone}
+                            email={dataUser.email}
+                            socialNetwork={dataUser.socialNetwork}
+                            onShowEditInfo={this.onShowEditInfo}
+                        />
+                        <div className="end">
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => this.controlFormUserInfo()}
+                                startIcon={<ExitToApp />}> Đóng
+                            </Button>
+                        </div>
                     </Card>
                 </ClickAwayListener>
             </Container>

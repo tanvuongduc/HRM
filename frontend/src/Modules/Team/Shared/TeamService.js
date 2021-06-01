@@ -4,14 +4,14 @@ import Axios from "axios";
 
 const API_ENDPOINT = {
   //////// ORG/USER ////////////////
-  GETBASICINFOTEAM: 'teams/team?id=',
-  GETLISTMEMBERTEAM: 'teams/get/members?team=',
+  GETBASICINFOTEAM: 'teams/',
+  GETLISTMEMBER: 'teams/',
   GETLISTUSER: 'users',
-  GETUSERINFO: 'users/user?id=',
+  GETUSERINFO: 'users/',
 
 
-  POSTREMOVEMEMBER: 'teams/remove/members?team=',
-  POSTADDMEMBER: 'teams/add/members?team=',
+  POSTREMOVEMEMBER: 'teams/',
+  POSTADDMEMBER: 'teams/',
 }
 
 class TeamService {
@@ -27,8 +27,8 @@ class TeamService {
   getBasicInfoTeam(id) {
     return Http.get(API_ENDPOINT.GETBASICINFOTEAM + id);
   }
-  getListMemberTeam(id) {
-    return Http.get(API_ENDPOINT.GETLISTMEMBERTEAM + id);
+  getListMember(id) {
+    return Http.get(API_ENDPOINT.GETLISTMEMBER + id + '/members');
   }
   getListUser() {
     return Http.get(API_ENDPOINT.GETLISTUSER);
@@ -40,12 +40,12 @@ class TeamService {
   /////////////////POST
   
   postAddMember(id, data){
-    return Http.post(API_ENDPOINT.POSTADDMEMBER + id, data);
+    return Http.post(API_ENDPOINT.POSTADDMEMBER + id +  '/members', data);
   }
 
   ////////////////DELETE
   postRemoveMember(id, data){
-    return Http.deleteData(API_ENDPOINT.POSTREMOVEMEMBER + id, data);
+    return Http.deleteData(API_ENDPOINT.POSTREMOVEMEMBER  + id + '/members', data);
   }
   
 }
