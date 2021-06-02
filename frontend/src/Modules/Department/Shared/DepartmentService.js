@@ -1,21 +1,26 @@
 import { Http } from "../../../Helper/Http";
 
 const API_ENDPOINT = {
-    LIST_DEPARTMENT :'/departments',
-    GET_DEPARTMENT :'/departments/department?id=',
-    POST_DEPARTMENT :'/departments/department',
-    UPDATE_DEPARTMENT :'/departments/department?id=',
-    LIST_USER :'/users',
+    LIST_DEPARTMENT :'departments',
+    GET_DEPARTMENT :'departments/department?id=',
+    POST_DEPARTMENT :'departments/department',
+    UPDATE_DEPARTMENT :'departments/department?id=',
+    LIST_USER :'users',
+    DELETE_DEPARTMENT:'',
 }
 
-class Department {
+class DepartmentService {
     constructor() {
-      if (Department._instance) {
-        return Department._instance;
+      if (DepartmentService._instance) {
+        return DepartmentService._instance;
       }
-      Department._instance = this;
+      DepartmentService._instance = this;
     }
     
+
+    deleteDepartment() {
+      return Http.delete(API_ENDPOINT.DELETE_DEPARTMENT)
+    }
     listDepartment() {
         return Http.get(API_ENDPOINT.LIST_DEPARTMENT)
     }
@@ -36,6 +41,6 @@ class Department {
 
 }
 
-const instance = new Department();
+const instance = new DepartmentService();
 
 export default instance;

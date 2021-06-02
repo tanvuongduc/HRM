@@ -1,7 +1,6 @@
 @import "./shared";
 @import "./util";
 @import "./variables";
-@import "../Shared/Components/App/App";
 
 /*====================================================*/
 
@@ -11,15 +10,12 @@
 
 /*====================================================*/
 
-@import "../Modules/Department/Department";
-@import "../Modules/Company/Company";
-@import "../Modules/Career/Career";
-@import "../Modules/People/People.scss";
-@import "../Modules/People/Components/MyTeam/MyTeam.scss";
-@import "../Modules/People/Components/User/User.scss";
-@import "../Modules/People/Components/MyTeam/Team/Team.scss";
-@import "../Modules/People/Components/User/ListUser/ListUser.scss";
-@import "../Modules/People/Components/User/NavUser/NavUser.scss";
-@import "../Modules/People/Components/User/User.scss";
-@import "../Modules//Org/Components/Certifecate/CertifecateList/CertifecateList.scss";
-@import "../Modules//Org/Components/Certifecate//CertifecateForm//CertifecateForm.scss";
+@import "../Modules/People/People";
+@import "../Modules/People/Components/MyTeam/MyTeam";
+@import "../Modules/People/Components/User/User";
+@import "../Modules/People/Components/MyTeam/Team/Team";
+@import "../Modules/People/Components/User/ListUser/ListUser";
+@import "../Modules/People/Components/User/NavUser/NavUser";
+@import "../Modules/People/Components/User/User";
+@import "../Modules/Certificate/Components/CertificateList/CertificateList";
+@import "../Modules/Certificate/Components/CertificateForm/CertificateForm";

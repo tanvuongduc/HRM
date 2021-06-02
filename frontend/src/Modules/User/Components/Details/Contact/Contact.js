@@ -21,16 +21,16 @@ class Contact extends Component {
 
   render() {
     let { phoneNumber, email, socialNetwork } = this.props;
-    const socialNetworkAcc = socialNetwork.map((s, index) => {
-      return (
-        <div className="item-info" key={index}>
-          <label>{s.title}</label>
-          <br></br>
-          <FaFacebook className="info-icon" />
-          <span>{s.link}</span>
-        </div>
-      );
-    });
+    // const socialNetworkAcc = socialNetwork.map((s, index) => {
+    //   return (
+    //     <div className="item-info" key={index}>
+    //       <label>{s.title}</label>
+    //       <br></br>
+    //       <FaFacebook className="info-icon" />
+    //       <span>{s.link}</span>
+    //     </div>
+    //   );
+    // });
     return (
       <div className="details-card contact">
         <h4>Contact</h4>
@@ -58,7 +58,7 @@ class Contact extends Component {
           />
         </div>
 
-        {socialNetworkAcc}
+        {/* {socialNetworkAcc} */}
       </div>
     );
   }
