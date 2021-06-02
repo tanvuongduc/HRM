@@ -80,19 +80,20 @@ export class UsersController {
     @Patch(':id')
     async updateUserByAdmin(
         @Request() req,
-        @Param('id') id,
-        @Body('name') name: string,
+        @Param('id') id: String,
+        @Body('name') name: String,
         @Body('birthday') birthday: Date,
-        @Body('adress') adress: string,
-        @Body('certificate') certificate: string,
-        @Body('phone') phone: string,
-        @Body('email') email: string,
+        @Body('adress') adress: String,
+        @Body('certificate') certificate: String,
+        @Body('phone') phone: String,
+        @Body('email') email: String,
         @Body('password') pasword: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
-        @Body('status') status: string
+        @Body('status') status: String,
+        @Body('teams') teams: [String]
     ) {
-        let res = await this.usersService.updateUser(
+        let res = await this.usersService.updateUserByAdmin(
             id,
             name,
             birthday,
@@ -103,7 +104,8 @@ export class UsersController {
             pasword,
             socialNetwork,
             bank,
-            status
+            status,
+            teams
         );
         return res;
     }
@@ -113,16 +115,16 @@ export class UsersController {
     @Patch()
     async updateUser(
         @Request() req,
-        @Body('name') name: string,
+        @Body('name') name: String,
         @Body('birthday') birthday: Date,
-        @Body('adress') adress: string,
-        @Body('certificate') certificate: string,
-        @Body('phone') phone: string,
-        @Body('email') email: string,
+        @Body('adress') adress: String,
+        @Body('certificate') certificate: String,
+        @Body('phone') phone: String,
+        @Body('email') email: String,
         @Body('password') pasword: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
-        @Body('status') status: string
+        @Body('status') status: String
     ) {
         let res = await this.usersService.updateUser(
             req.user.userId,
