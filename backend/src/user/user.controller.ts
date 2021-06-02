@@ -12,6 +12,7 @@ import {
 import { UsersService } from './user.service';
 import { Bank, SocialNetwork } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { identity } from 'rxjs';
 
 
 
@@ -76,6 +77,36 @@ export class UsersController {
         return Users;
     }
 
+    @Patch(':id')
+    async updateUserByAdmin(
+        @Request() req,
+        @Param('id') id,
+        @Body('name') name: string,
+        @Body('birthday') birthday: Date,
+        @Body('adress') adress: string,
+        @Body('certificate') certificate: string,
+        @Body('phone') phone: string,
+        @Body('email') email: string,
+        @Body('password') pasword: String,
+        @Body('socialNetwork') socialNetwork: SocialNetwork,
+        @Body('bank') bank: Bank,
+        @Body('status') status: string
+    ) {
+        let res = await this.usersService.updateUser(
+            id,
+            name,
+            birthday,
+            adress,
+            certificate,
+            phone,
+            email,
+            pasword,
+            socialNetwork,
+            bank,
+            status
+        );
+        return res;
+    }
 
 
     @UseGuards(JwtAuthGuard)
