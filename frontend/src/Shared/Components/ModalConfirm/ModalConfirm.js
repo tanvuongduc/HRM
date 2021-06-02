@@ -11,7 +11,7 @@ class ModalConfirm extends React.Component {
                     <ModalBody>{message}</ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={() => { answer(true) }}>Yes</Button>{' '}
-                        <Button color="secondary" onClick={() => { answer() }}>No</Button>
+                        <Button color="secondary" onClick={() => { answer(false) }}>No</Button>
                     </ModalFooter>
                 </Modal>
             </div>
