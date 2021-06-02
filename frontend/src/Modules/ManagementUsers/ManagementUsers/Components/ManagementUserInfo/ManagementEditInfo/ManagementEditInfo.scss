@@ -1,0 +1,62 @@
+@import '../../../Shared/Style/variables';
+
+.management-edit-info {
+
+    .title {
+        font-size: 40px;
+        color: #ffff;
+        padding: 15px 30px;
+        background-color: $color-background;
+    }
+
+    .form-edit {
+        padding: 40px 30px;
+
+        .form-input {
+            margin-bottom: 1.5em;
+            width: 80%;
+
+            .title-input {
+                font-size: 17px;
+                text-transform: uppercase;
+                font-weight: 500;
+            }
+
+            .input {
+                min-height: 50px;
+                font-size: 18px;
+            }
+
+            .input-teams {
+                font-size: 19px;
+                margin: 3px;
+            }
+
+            .input-birthday {
+                padding: 0;
+            }
+
+            .validate-noti {
+                font-style: italic;
+                display: block;
+                margin-top: 7px;
+                color: red;
+                font-size: 15px;
+            }
+
+            .option-status {
+                font-size: 18px;
+                padding: 15px 20px;
+                
+            }
+        }
+
+
+        .input:disabled {
+            background-color: $color-background;
+        }
+
+    }
+
+
+}

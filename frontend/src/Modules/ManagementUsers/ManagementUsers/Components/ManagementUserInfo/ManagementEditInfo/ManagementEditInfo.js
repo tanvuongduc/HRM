@@ -25,7 +25,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import EditIcon from "@material-ui/icons/Edit";
 import ClearIcon from "@material-ui/icons/Clear";
 import { Form } from "../../../../../Shared";
-import { FormControlLabel, withStyles } from "@material-ui/core";
+import { FormControlLabel, withStyles, useTheme } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { REGEX_TEL } from "../../../../Exam/Shared";
@@ -100,29 +100,40 @@ class ManagementEditInfo extends Form {
       status: statusValue,
       teams: res.data.teams,
     };
-    console.log("Data User", dataUser);
+    const teamUser = [];
+    for (let i = 0; i < res.data.teams.length; i++) {
+      const resTeamId = await Http.get(`teams/${res.data.teams[i]}`);
+      teamUser.push(resTeamId.data);
+      for(let j = 0; j < resTeam.data.length; j++) {
+        if(resTeam.data[j].id === res.data.teams[i].id) {
+          resTeam.data.push(resTeamId.data);
+        }
+      }
+    }
+    console.log("Heelllo");
     this._fillForm(dataUser);
     this.setState({
       teamsCurrent: resTeam.data,
+      teamSelected: teamUser,
     });
-    console.log("Fill form", this.state.form);
   };
 
   onEditInfo = () => {
     this.setState({
       onEditInfo: !this.state.onEditInfo,
     });
-    if(this.state.onEditInfo) {
+    if (this.state.onEditInfo) {
       window.location.reload(true);
     }
   };
 
   onSaveEditUserInfo = async () => {
     this._validateForm();
-    
     this._isFormValid();
     const { form, teamSelected } = this.state;
-    console.log("Err phone", form.phone);
+    const idTeamSelected = teamSelected.map((team) => {
+      return team.id;
+    });
     const { userId } = this.props;
     this.state.form["dirty"] = true;
     const dataUser = {
@@ -139,7 +150,7 @@ class ManagementEditInfo extends Form {
         },
       ],
       status: form.status.value,
-      teams: teamSelected,
+      teams: idTeamSelected,
       bank: {
         bankName: form.bankName.value,
         ownName: form.ownName.value,
@@ -149,32 +160,25 @@ class ManagementEditInfo extends Form {
     console.log("Data user", dataUser);
     const req = await Http.patch(`users/${userId}`, dataUser);
     console.log("Edit user", req.data);
-    
   };
 
-  getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
 
   handleChange = (event) => {
     this.setState({
-      teamSelected: event.target.value,
+      teamSelected: event.target.value
     });
   };
 
   handleChangeMultiple = (event) => {
     const { options } = event.target;
+    const { teamSelected } = this.state;
     const value = [];
     for (let i = 0, l = options.length; i < l; i++) {
       if (options[i].selected) {
-        value.push(options[i].value);
-      }
+          value.push(options[i].value);
+        }
     }
+    
     this.setState({
       teamSelected: value,
     });
@@ -188,10 +192,19 @@ class ManagementEditInfo extends Form {
     console.log("Status", this.state.form.status);
   };
 
+   getStyles(name, personName, theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
   render() {
     const { form, onEditInfo, teamSelected, teamsCurrent } = this.state;
     const { classes, userId } = this.props;
-    console.log("Team current", teamsCurrent);
+    console.log("team Selectedddddddddddd", teamSelected);
     const birthday = new Date(form.birthday.value);
     const month = birthday.getMonth();
     const year = birthday.getFullYear();
@@ -367,10 +380,11 @@ class ManagementEditInfo extends Form {
                   className="input"
                   value={teamSelected}
                   onChange={this.handleChange}
+                  readOnly={!onEditInfo}
                   input={<Input id="select-multiple-chip" />}
                   renderValue={(selected) => (
                     <div className={classes.chips}>
-                      {teamSelected.map((team) => (
+                      {selected.map((team) => (
                         <Chip
                           key={team.id}
                           label={team.name}

@@ -1,0 +1,47 @@
+@import '../../../Shared/Style/variables';
+
+.content-table-item {
+    cursor: pointer;
+
+    .item-id {
+        width: 18%;
+    }
+
+    .item-username {
+        width: 14%;
+    }
+
+    .item-birthday {
+        width: 10%;
+    }
+
+    .item-phone-number {
+        width: 10%;
+    }
+
+    .item-email {
+        width: 17%;
+    }
+
+    .item-team {
+        width: 15%;
+    }
+
+    .item-status {
+        width: 10%;
+    }
+
+    .item-view-detail {
+        width: 10%;
+        font-size: 30px;
+        padding: 0 0 7px 0;
+        cursor: pointer;
+
+        .view-detail-icon {
+            color: $color-primary;
+        }
+
+    }
+
+
+}

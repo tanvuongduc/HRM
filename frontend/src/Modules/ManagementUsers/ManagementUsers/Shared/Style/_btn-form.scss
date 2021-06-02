@@ -1,0 +1,31 @@
+@import './variables';
+
+@mixin styleButton {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.btn-control-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    margin-bottom: 16px;
+
+    .btn-control-primary {
+        color: $color-white;
+        margin-left: 1.2em;
+        @include styleButton();
+
+    }
+
+    .btn-control-default {
+        color: rgb(0, 0, 0);
+       
+        @include styleButton();
+    }
+}
