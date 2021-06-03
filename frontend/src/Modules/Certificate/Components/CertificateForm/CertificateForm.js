@@ -1,11 +1,10 @@
 import React from 'react'
-import { Form } from '../../../Shared'
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CertifecateService from '../../../Shared/CertifecateService'
-import { ModalNoti, ModalConfirm } from "../../../../../Shared";
+import CertifecateService from '../../Shared/CertificateService'
+import { ModalConfirm, Form } from "../../../../Shared";
 
 const useStyles = (theme) => ({
     card: {
