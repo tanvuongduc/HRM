@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Team } from './team.model'
@@ -10,11 +10,12 @@ import { DepartmentService } from '../department/department.service'
 export class TeamService {
     constructor(
         @InjectModel('Team') private readonly teamModel: Model<Team>,
-        @Inject(forwardRef(() =>DepartmentService)) private readonly departmentService: DepartmentService,
+        @Inject(forwardRef(() => DepartmentService)) private readonly departmentService: DepartmentService,
         private readonly usersService: UsersService
     ) { }
 
     async insertTeam(
+        code: String,
         name: String,
         pic: String,
         department: String,
@@ -22,21 +23,86 @@ export class TeamService {
     ) {
         let user = await this.usersService.findUserById(pic);
         await this.departmentService.findDepartmentById(department);
+        let teams = await this.teamModel.find().where({ code: code }).exec()
+        if (teams.length) {
+            throw new HttpException('Team Code Existed', 401);
+        }
         const newTeam = new this.teamModel({
+            code,
             name,
             pic,
             department,
             sologan
         });
         const res = await newTeam.save();
-        if (user.teams.indexOf(res.id) > -1) {
+        if (user.teams.indexOf(res.id) < 0) {
             user.teams.push(res.id)
+            await user.save()
         }
         return {
             id: res.id
         };
     }
 
+    async updateTeam(
+        id: String,
+        code: String,
+        name: String,
+        pic: String,
+        department: String,
+        sologan: String
+    ) {
+        let team = await this.findTeamById(id);
+        let user = await this.usersService.findUserById(pic);
+        await this.departmentService.findDepartmentById(department);
+        if (team.code != code) {
+            let teams = await this.teamModel.find().where({ code: code }).exec()
+            if (teams.length) {
+                throw new HttpException('Team Code Existed', 401);
+            }
+        }
+        team.code = code;
+        team.name = name;
+        team.pic = pic;
+        team.department = department;
+        team.sologan = sologan
+        const res = await team.save();
+        if (user.teams.indexOf(res.id) < 0) {
+            user.teams.push(res.id)
+            await user.save()
+        }
+        return {
+            id: res.id
+        };
+    }
+
+    async getTeamById(id: String) {
+        const team = await this.findTeamById(id);
+        return {
+            id: team.id,
+            code: team.code,
+            pic: team.pic,
+            name: team.name,
+            rate: team.rate,
+            achievements: team.achievements,
+            department: team.department,
+            sologan: team.sologan,
+            createAt: team.createAt
+        }
+    }
+
+    async getAllTeams() {
+        const teams = await this.teamModel.find().populate('pic').exec();
+        return teams.map(team => ({
+            id: team.id,
+            code: team.code,
+            pic: team.pic,
+            name: team.name,
+            rate: team.rate,
+            achievements: team.achievements,
+            department: team.achievements,
+        }));
+    }
 
     async getMembersByTeamId(id: String) {
         const users = await this.usersService.getMembersByTeamId(id);
@@ -69,31 +135,6 @@ export class TeamService {
         return team;
     }
 
-
-    async getTeamById(id: String) {
-        const team = await this.findTeamById(id);
-        return {
-            id: team.id,
-            pic: team.pic,
-            name: team.name,
-            rate: team.rate,
-            achievements: team.achievements,
-            department: team.department,
-            sologan: team.sologan,
-            createAt: team.createAt
-        }
-    }
-    async getAllTeams() {
-        const teams = await this.teamModel.find().populate('pic').exec();
-        return teams.map(team => ({
-            id: team.id,
-            pic: team.pic,
-            name: team.name,
-            rate: team.rate,
-            achievements: team.achievements,
-            department: team.achievements,
-        }));
-    }
     async insertDepartmentForTeamsId(
         teamsId: [String],
         departmentId: String
@@ -132,6 +173,7 @@ export class TeamService {
         const teams = await this.teamModel.find().where({ department: department }).exec();
         return teams.map(team => ({
             id: team.id,
+            code: team.code,
             pic: team.pic,
             name: team.name,
             rate: team.rate,
@@ -152,7 +194,7 @@ export class TeamService {
                 team = await this.teamModel.findById(id).exec()
             } catch (error) {
                 throw new NotFoundException(error);
-            }         
+            }
         }
         if (!team) {
             throw new NotFoundException(`find team err ${id}`);

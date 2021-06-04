@@ -79,10 +79,10 @@ export class CertificateService {
         try {
             Certificate = await this.certificateModel.findById(id).exec();
         } catch (error) {
-            throw new HttpException('Could not find Certificate.', 400);
+            throw new HttpException(`Could not find Certificate id: ${id}`, 400);
         }
         if (!Certificate) {
-            throw new HttpException(`find Certificate err ${id}`, 400);
+            throw new HttpException(`find Certificate err id: ${id}`, 400);
         }
         return Certificate;
     }

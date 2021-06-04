@@ -10,9 +10,8 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
-import { Bank, SocialNetwork } from './user.model'
+import { Bank, SocialNetwork, Certificate } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { identity } from 'rxjs';
 
 
 
@@ -30,25 +29,27 @@ export class UsersController {
         @Body('name') name: String,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: String,
-        @Body('certificate') certificate: String,
+        @Body('certificates') certificates: [Certificate],
         @Body('phone') phone: String,
         @Body('email') email: String,
         @Body('password') password: String,
         @Body('teams') teams: [String],
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
+        @Body('status') status: String
     ) {
         const generatedId = await this.usersService.insertUser(
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             teams,
             password,
             socialNetwork,
-            bank
+            bank,
+            status
         );
         return { id: generatedId };
     }
@@ -65,7 +66,7 @@ export class UsersController {
 
     @Get(':id')
     getUserById(
-        @Param('id') id : String
+        @Param('id') id: String
     ) {
         return this.usersService.getUserById(id);
     }
@@ -84,7 +85,7 @@ export class UsersController {
         @Body('name') name: String,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: String,
-        @Body('certificate') certificate: String,
+        @Body('certificate') certificates: [Certificate],
         @Body('phone') phone: String,
         @Body('email') email: String,
         @Body('password') pasword: String,
@@ -98,7 +99,7 @@ export class UsersController {
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             pasword,
@@ -118,7 +119,7 @@ export class UsersController {
         @Body('name') name: String,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: String,
-        @Body('certificate') certificate: String,
+        @Body('certificate') certificates: [Certificate],
         @Body('phone') phone: String,
         @Body('email') email: String,
         @Body('password') pasword: String,
@@ -131,7 +132,7 @@ export class UsersController {
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             pasword,

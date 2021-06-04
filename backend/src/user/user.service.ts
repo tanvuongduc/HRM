@@ -1,38 +1,57 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, Bank, SocialNetwork } from './user.model';
+import { User, Bank, SocialNetwork, Certificate } from './user.model';
+import { CertificateService } from '../certificate/certificate.service'
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
+        @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService
     ) { }
 
     async insertUser(
         name: String,
         birthday: Date,
         adress: String,
-        certificate: String,
+        certificates: [Certificate],
         phone: String,
         email: String,
         teams: [String],
         password: String,
         socialNetwork: SocialNetwork,
         bank: Bank,
+        status: String
     ) {
 
+        let user = await this.userModel.findOne().where({ email: email }).exec()
+        if (user) {
+            throw new HttpException('Email is existed', 400);
+        }
+        if(!(password&&name)){
+            throw new HttpException('Name and password must be not null', 400);
+        }
+        if (certificates && certificates.length) {
+            for (let cer of certificates) {
+                await this.certificateService.findCertificateById(cer.id);
+                cer.recivedAt = new Date(cer.recivedAt);
+                cer.createdAt = new Date(Date.now());
+            }
+        }
+        status = status === "Working" ? status : "Pending";
         const newUser = new this.userModel({
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             teams,
             password,
             socialNetwork,
             bank,
+            status
         });
         const result = await newUser.save();
         return result.id as String;
@@ -40,12 +59,18 @@ export class UsersService {
 
     async getUserById(uid: String) {
         const user = await this.findUserById(uid);
+        if (user.certificates && user.certificates.length) {
+            for (let cer of user.certificates) {
+                let cert = await this.certificateService.getCertificateById(cer.id);
+                Object.assign(cer, cert)
+            }
+        }
         return {
             id: user.id,
             name: user.name,
             birthday: user.birthday,
             adress: user.adress,
-            certificate: user.certificate,
+            certificates: user.certificates,
             phone: user.phone,
             email: user.email,
             socialNetwork: user.socialNetwork,
@@ -61,7 +86,7 @@ export class UsersService {
         name: String,
         birthday: Date,
         adress: String,
-        certificate: String,
+        certificates: [Certificate],
         phone: String,
         email: String,
         password: String,
@@ -69,15 +94,25 @@ export class UsersService {
         bank: Bank,
         status: String
     ) {
+        let user = await this.userModel.findOne().where({ email: email }).exec()
+        if (user) {
+            throw new HttpException('Email is existed', 400);
+        }
+        if(!(password&&name)){
+            throw new HttpException('Name and password must be not null', 400);
+        }
         const updatedUser = await this.findUserById(uid);
+        if (certificates && certificates.length) {
+            for (let cer of certificates) {
+                await this.certificateService.findCertificateById(cer.id);
+                cer.recivedAt = new Date(cer.recivedAt);
+            }
+        }
         if (name) {
             updatedUser.name = name;
         }
         if (birthday) {
             updatedUser.birthday = birthday;
-        }
-        if (certificate) {
-            updatedUser.certificate = certificate;
         }
         if (phone) {
             updatedUser.phone = phone;
@@ -98,6 +133,7 @@ export class UsersService {
             updatedUser.bank = bank;
         }
         if (status) {
+            status = status === "Working" ? status : "Pending";
             updatedUser.status = status;
         }
         const res = await updatedUser.save();
@@ -106,7 +142,7 @@ export class UsersService {
             name: res.name,
             birthday: res.birthday,
             adress: res.adress,
-            certificate: res.certificate,
+            certificates: res.certificates,
             phone: res.phone,
             email: res.email,
             socialNetwork: res.socialNetwork,
@@ -122,7 +158,7 @@ export class UsersService {
         name: String,
         birthday: Date,
         adress: String,
-        certificate: String,
+        certificates: [Certificate],
         phone: String,
         email: String,
         password: String,
@@ -131,24 +167,25 @@ export class UsersService {
         status: String,
         teams: [String]
     ) {
+        let user = await this.userModel.findOne().where({ email: email }).exec()
+        if (user) {
+            throw new HttpException('Email is existed', 400);
+        }
+        if(!(password&&name)){
+            throw new HttpException('Name and password must be not null', 400);
+        }
         const updatedUser = await this.findUserById(uid);
-        if (name) {
-            updatedUser.name = name;
+        if (certificates && certificates.length) {
+            for (let cer of certificates) {
+                await this.certificateService.findCertificateById(cer.id);
+                cer.recivedAt = new Date(cer.recivedAt);
+            }
         }
         if (birthday) {
             updatedUser.birthday = birthday;
         }
-        if (certificate) {
-            updatedUser.certificate = certificate;
-        }
         if (phone) {
             updatedUser.phone = phone;
-        }
-        if (email) {
-            updatedUser.email = email;
-        }
-        if (password) {
-            updatedUser.password = password;
         }
         if (adress) {
             updatedUser.adress = adress;
@@ -160,9 +197,10 @@ export class UsersService {
             updatedUser.bank = bank;
         }
         if (status) {
+            status = status === "Working" ? status : "Pending";
             updatedUser.status = status;
         }
-        if (teams){
+        if (teams) {
             updatedUser.teams = teams;
         }
         const res = await updatedUser.save();
@@ -171,7 +209,7 @@ export class UsersService {
             name: res.name,
             birthday: res.birthday,
             adress: res.adress,
-            certificate: res.certificate,
+            certificates: res.certificates,
             phone: res.phone,
             email: res.email,
             socialNetwork: res.socialNetwork,
@@ -184,19 +222,29 @@ export class UsersService {
 
     async getUsers() {
         const users = await this.userModel.find().exec();
-        return users.map(user => ({
-            id: user.id,
-            name: user.name,
-            birthday: user.birthday,
-            adress: user.adress,
-            certificate: user.certificate,
-            phone: user.phone,
-            email: user.email,
-            socialNetwork: user.socialNetwork,
-            bank: user.bank,
-            status: user.status,
-            teams: user.teams
-        }));
+        let res = [];
+        for (let user of users) {
+            if (user.certificates && user.certificates.length) {
+                for (let cer of user.certificates) {
+                    let cert = await this.certificateService.getCertificateById(cer.id);
+                    Object.assign(cer, cert)
+                }
+            }
+            res.push({
+                id: user.id,
+                name: user.name,
+                birthday: user.birthday,
+                adress: user.adress,
+                certificates: user.certificates,
+                phone: user.phone,
+                email: user.email,
+                socialNetwork: user.socialNetwork,
+                bank: user.bank,
+                status: user.status,
+                teams: user.teams
+            })
+        }
+        return res;
     }
 
 
