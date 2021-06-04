@@ -10,6 +10,7 @@ import { CertificateSchema } from './certificate.model';
     MongooseModule.forFeature([{name: 'Certificate', schema: CertificateSchema}])
   ],
   providers: [CertificateService],
-  controllers: [CertificateController]
+  controllers: [CertificateController],
+  exports: [CertificateService]
 })
 export class CertificateModule {}

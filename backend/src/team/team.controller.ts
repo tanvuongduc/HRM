@@ -15,15 +15,15 @@ export class TeamController {
     constructor(private readonly teamService: TeamService) { }
 
 
-    
     @Post()
     async insertTeam(
-        @Body('pic') leader: String,
+        @Body('code') code: String,
+        @Body('pic') pic: String,
         @Body('name') name: String,
         @Body('department') department: String,
         @Body('sologan') sologan: String
     ) {
-        const res = await this.teamService.insertTeam(name, leader, department, sologan);
+        const res = await this.teamService.insertTeam(code, name, pic, department, sologan);
         return res;
     }
 
@@ -35,6 +35,20 @@ export class TeamController {
         return res;
     }
 
+    @Get(':id')
+    async getTeamById(
+        @Param('id') id: String
+    ) {
+        const res = await this.teamService.getTeamById(id);
+        return res;
+    }
+
+
+    @Get()
+    async getAllTeams() {
+        const res = await this.teamService.getAllTeams();
+        return res;
+    }
 
     @Get()
     async getAllTeams() {

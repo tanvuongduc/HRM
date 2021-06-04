@@ -13,10 +13,12 @@ import { AuthModule } from './auth/auth.module';
 import { DepartmentModule } from './department/department.module';
 import { CompanyModule } from './company/company.module';
 import { CertificateModule } from './certificate/certificate.module';
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/HRM'),
+        ConfigModule.forRoot(),
+        MongooseModule.forRoot(process.env.DATABASE),
         ServeStaticModule.forRoot({
             rootPath: BASEPATH
         }),

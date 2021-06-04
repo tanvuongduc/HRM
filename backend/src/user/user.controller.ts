@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
-import { Bank, SocialNetwork } from './user.model'
+import { Bank, SocialNetwork, Certificate } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 
@@ -29,25 +29,27 @@ export class UsersController {
         @Body('name') name: String,
         @Body('birthday') birthday: Date,
         @Body('adress') adress: String,
-        @Body('certificate') certificate: String,
+        @Body('certificates') certificates: [Certificate],
         @Body('phone') phone: String,
         @Body('email') email: String,
         @Body('password') password: String,
         @Body('teams') teams: [String],
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
+        @Body('status') status: String
     ) {
         const generatedId = await this.usersService.insertUser(
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             teams,
             password,
             socialNetwork,
-            bank
+            bank,
+            status
         );
         return { id: generatedId };
     }
@@ -64,7 +66,7 @@ export class UsersController {
 
     @Get(':id')
     getUserById(
-        @Param('id') id : String
+        @Param('id') id: String
     ) {
         return this.usersService.getUserById(id);
     }
@@ -76,29 +78,61 @@ export class UsersController {
         return Users;
     }
 
+    @Patch(':id')
+    async updateUserByAdmin(
+        @Request() req,
+        @Param('id') id: String,
+        @Body('name') name: String,
+        @Body('birthday') birthday: Date,
+        @Body('adress') adress: String,
+        @Body('certificate') certificates: [Certificate],
+        @Body('phone') phone: String,
+        @Body('email') email: String,
+        @Body('password') pasword: String,
+        @Body('socialNetwork') socialNetwork: SocialNetwork,
+        @Body('bank') bank: Bank,
+        @Body('status') status: String,
+        @Body('teams') teams: [String]
+    ) {
+        let res = await this.usersService.updateUserByAdmin(
+            id,
+            name,
+            birthday,
+            adress,
+            certificates,
+            phone,
+            email,
+            pasword,
+            socialNetwork,
+            bank,
+            status,
+            teams
+        );
+        return res;
+    }
 
 
     @UseGuards(JwtAuthGuard)
     @Patch()
     async updateUser(
         @Request() req,
-        @Body('name') name: string,
+        @Body('name') name: String,
         @Body('birthday') birthday: Date,
-        @Body('adress') adress: string,
-        @Body('certificate') certificate: string,
-        @Body('phone') phone: string,
-        @Body('email') email: string,
+        @Body('adress') adress: String,
+        @Body('certificate') certificates: [Certificate],
+        @Body('phone') phone: String,
+        @Body('email') email: String,
         @Body('password') pasword: String,
         @Body('socialNetwork') socialNetwork: SocialNetwork,
         @Body('bank') bank: Bank,
-        @Body('status') status: string
+        @Body('status') status: String
     ) {
         let res = await this.usersService.updateUser(
             req.user.userId,
             name,
             birthday,
             adress,
-            certificate,
+            certificates,
             phone,
             email,
             pasword,
