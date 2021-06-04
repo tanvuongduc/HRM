@@ -15,6 +15,7 @@ export class TeamController {
     constructor(private readonly teamService: TeamService) { }
 
 
+
     @Post()
     async insertTeam(
         @Body('code') code: String,
@@ -35,20 +36,6 @@ export class TeamController {
         return res;
     }
 
-    @Get(':id')
-    async getTeamById(
-        @Param('id') id: String
-    ) {
-        const res = await this.teamService.getTeamById(id);
-        return res;
-    }
-
-
-    @Get()
-    async getAllTeams() {
-        const res = await this.teamService.getAllTeams();
-        return res;
-    }
 
     @Get()
     async getAllTeams() {
