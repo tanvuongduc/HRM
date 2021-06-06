@@ -27,10 +27,7 @@ class CertifecateForm extends Form {
     constructor(props) {
         super(props);
         this.state = {
-            form: this._getInitFormData({ name: '', code: '', desc: '' }),
-            name: '',
-            code: '',
-            desc: '',
+            form: this._getInitFormData({ name: '', code: '', desc: '', dirty: false }),
             confirmMessage: ''
         }
     }
@@ -45,19 +42,22 @@ class CertifecateForm extends Form {
             this.setState({
                 confirmMessage: 'Bạn muốn thêm mới Chứng chỉ này không ?'
             });
-
         } else {
             this.setState({
                 confirmMessage: 'Bạn có chắc chắn muốn sửa thông tin này không ?'
             });
         }
     }
+    setErr() {
+        console.log('object')
+    }
+
     answer = (isYes) => {
         const urlId = this.props.match.params.id;
         const payload = {
-            name: this.state.name,
-            code: this.state.code,
-            desc: this.state.desc,
+            name: this.state.form.name.value,
+            code: this.state.form.code.value,
+            desc: this.state.form.desc.value,
         }
         if (urlId === 'create') {
             isYes ? (
@@ -83,11 +83,12 @@ class CertifecateForm extends Form {
         CertifecateService.patchCertifecate(urlId, payload)
     }
     componentDidMount() {
+
         const urlId = this.props.match.params.id;
         if (urlId !== 'create') {
             CertifecateService.getCertifecateById(urlId).then(res => {
                 return (
-                    this.setState({
+                    this._fillForm({
                         name: res.data.name,
                         code: res.data.code,
                         desc: res.data.desc
@@ -100,7 +101,7 @@ class CertifecateForm extends Form {
     render() {
         const { classes } = this.props;
         const urlId = this.props.match.params.id;
-        const { name, code, desc, confirmMessage } = this.state
+        const { name, code, desc, } = this.state.form
         return (
             <Card className={classes.card}>
                 <h2 className={classes.header}>{urlId === 'create' ? "Thêm Chứng chỉ" : "Sửa Chứng Chỉ"}</h2>
@@ -112,11 +113,11 @@ class CertifecateForm extends Form {
                             shrink: true,
                         }}
                         name="name"
-                        defaultValue={name}
+                        defaultValue={name.value}
                         multiline
                         fullWidth
                         margin="normal"
-                        onChange={this.onChange}
+                        onChange={(ev) => this._setValue(ev, "name")}
                     />
                     <TextField
                         id="standard-helperText"
@@ -125,11 +126,11 @@ class CertifecateForm extends Form {
                             shrink: true,
                         }}
                         name="code"
-                        defaultValue={code}
+                        defaultValue={code.value}
                         multiline
                         fullWidth
                         margin="normal"
-                        onChange={this.onChange}
+                        onChange={(ev) => this._setValue(ev, "code")}
                     />
                     <TextField
                         id="standard-helperText"
@@ -138,11 +139,11 @@ class CertifecateForm extends Form {
                             shrink: true,
                         }}
                         name="desc"
-                        defaultValue={desc}
+                        defaultValue={desc.value}
                         margin="normal"
                         multiline
                         fullWidth
-                        onChange={this.onChange}
+                        onChange={(ev) => this._setValue(ev, "desc")}
                     />
                     {
                         urlId === 'create' ? (<>

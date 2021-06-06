@@ -39,7 +39,7 @@ const useStyles = (theme) => ({
     },
     btn: {
         float: `right`,
-        margin: `0px 5px`,
+        margin: `16px 16px`,
     }
 })
 
@@ -115,17 +115,15 @@ class CertifecateList extends Component {
                                                 size="small"
                                                 variant="contained"
                                                 color="secondary"
-                                                className={classes.btn}
                                                 startIcon={<DeleteIcon />}
                                                 onClick={() => (this.onDelete(row.id))}
                                             >Xóa
-                                            </Button>
+                                            </Button>{'  '}
                                             <RouterLink to={`${path}/${row.id}`}>
                                                 <Button
                                                     size="small"
                                                     variant="contained"
                                                     color="primary"
-                                                    className={classes.btn}
                                                 >Sửa
                                                 </Button>
                                             </RouterLink>
