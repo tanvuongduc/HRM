@@ -77,5 +77,4 @@ const ModalAdd = (props) => {
         </div>
     )
 }
-
 export default ModalAdd;

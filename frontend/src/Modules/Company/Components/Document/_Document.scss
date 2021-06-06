@@ -27,15 +27,14 @@
                 height: auto;
                 display: flex;
                 flex-wrap: wrap;
-                text-align: justify;
                 .item-content {
-                    width: 92%;
+                    width: 90%;
                     height: auto;
                 }
                 .item-menuIcon {
-                    width: 8%;
+                    width: 10%;
                     height: auto;
-                    text-align: right;
+                    text-align: center;
                 }
             }
         }

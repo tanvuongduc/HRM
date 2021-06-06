@@ -9,7 +9,7 @@ export class Http {
 			Authorization: `Bearer ${window.localStorage.getItem("token") || ""}`,
 			"Access-Control-Allow-Origin": "*"
 		};
-	}
+	};
 
 	static get = async (endPoint, params) => {
 		const options = {
@@ -40,13 +40,13 @@ export class Http {
 		});
 	};
 
-
 	static delete = (endPoint, payload) => {
 		return Axios.delete(BASE_URL + endPoint, payload, {
 			headers: this._getHeader(),
 			data: payload
 		});
 	};
+
 	static deleteData = (endPoint, payload) => {
 		return Axios.delete(BASE_URL + endPoint, {
 			headers: this._getHeader(),

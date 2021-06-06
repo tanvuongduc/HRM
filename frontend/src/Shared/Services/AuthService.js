@@ -32,5 +32,4 @@ class AuthService extends UtilService {
 }
 
 const instance = new AuthService();
-
 export default instance;
