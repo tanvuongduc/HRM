@@ -13,18 +13,41 @@ export default class Document extends Form {
         this.state = {
             company: {},
             document: [],
-            notiMessage: "",
-            id_delete: ""
+            id_document: [],
+            id_delete: "",
+            notiMessage: ""
         }
     };
+
+    /*----------------------------------------------*/
 
     getDocument = () => {
         CompanyService.getCompanyByLocation()
             .then(res => {
                 this.setState({
+                    company: res.data,
                     document: res.data.documents,
-                    company: res.data
+                    id_document: res.data.documents
                 })
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            })
+    };
+
+    /*----------------------------------------------*/
+
+    updateUpload = (idDocumentUpload, dataDocumentUpload) => {
+        // this.state.document.push(dataDocumentUpload);
+        this.state.id_document.push(idDocumentUpload);
+        this.setState({
+            // document: this.state.document,
+            id_document: this.state.id_document
+        })
+        
+        CompanyService.finishDocumentResult(this.state.id_document, this.state.company)
+            .then(res => {
+                console.log(res, 'okokok')
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -44,17 +67,17 @@ export default class Document extends Form {
 
     answer = (event) => {
         this.setState({ notiMessage: '' })
-        if (event) {
-            const newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
-            this.setState({ document: newDocument })
-            
-            this.state.document.map(event => {
-                CompanyService.finishDocumentResult(event._id, this.state.company)
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    })
-            })
-        } else null
+        // if (event) {
+        //     const newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
+        //     this.setState({ document: newDocument })
+
+        //     this.state.document.map(event => {
+        //         CompanyService.finishDocumentResult(event._id, this.state.company)
+        //             .catch((error) => {
+        //                 console.error('Error:', error);
+        //             })
+        //     })
+        // } else null;
     };
 
     componentDidMount() {
@@ -74,7 +97,7 @@ export default class Document extends Form {
         return (
             <div className="document-content">
                 <div className="document-header">
-                    <h3>Document</h3><Upload />
+                    <h3>Document</h3><Upload idUpload={(id, data) => this.updateUpload(id, data)} />
                 </div>
                 <div className="document-item">
                     {
