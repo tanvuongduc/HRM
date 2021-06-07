@@ -24,7 +24,7 @@ class ManagementUserInfo extends Component {
     return (
       <div className="management-user-info">
         <div className="user-info">
-          <h2 className="title">User info</h2>
+          <h2 className="title">Thông tin chi tiết</h2>
 
           <div className="detail">
             <ManagementEditInfo

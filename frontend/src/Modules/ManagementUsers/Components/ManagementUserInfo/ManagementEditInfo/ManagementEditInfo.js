@@ -24,11 +24,19 @@ import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import EditIcon from "@material-ui/icons/Edit";
 import ClearIcon from "@material-ui/icons/Clear";
-import { Form } from "../../../../../Shared";
-import { FormControlLabel, withStyles } from "@material-ui/core";
+import { Form, ModalNoti } from "../../../../../Shared";
+import {
+  FormControlLabel,
+  withStyles,
+  useTheme,
+  Checkbox,
+  ListItemText,
+} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { REGEX_TEL } from "../../../../Exam/Shared";
+import ManagementService from "../../../Shared/ManagementService";
+import { Autocomplete } from "@material-ui/lab";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -51,80 +59,109 @@ class ManagementEditInfo extends Form {
   constructor(props) {
     super(props);
     this.state = {
+      notiMessage: "",
       form: this._getInitFormData({
         id: "",
         name: "",
         birthday: "",
         adress: "",
-        certificate: "",
+        certificate: [],
         phone: "",
         email: "",
         linkFacebook: "",
         bankName: "",
         ownName: "",
         bankNumber: "",
-        status: null,
+        status: 10,
         dirty: false,
         teams: [],
       }),
       onEditInfo: false,
       teamsCurrent: [],
-      teamSelected: [],
+      teamsSelected: [],
     };
   }
 
   componentDidMount = async () => {
     const { userId } = this.props;
-    const resTeam = await Http.get("teams");
-    const res = await Http.get(`users/${userId}`);
-    const accountFacebook = res.data.socialNetwork.find((acc) => {
-      return acc.title === "facebook";
+    let listTeamsUser = [];
+    ManagementService.getUserInfo(userId).then((res) => {
+      const accountFacebook = res.data.socialNetwork.find((acc) => {
+        return acc.title === "facebook";
+      });
+      const linkAccountFacebook = accountFacebook ? accountFacebook.link : "";
+      let statusValue = 10;
+      if (res.data.status == "Pending") {
+        statusValue = 10;
+      } else if (res.data.status == "Working") {
+        statusValue = 20;
+      }
+      listTeamsUser = res.data.teams;
+      const dataUser = {
+        id: res.data.id,
+        name: res.data.name,
+        birthday: res.data.birthday,
+        adress: res.data.adress,
+        certificate: res.data.certificate,
+        phone: res.data.phone,
+        email: res.data.email,
+        linkFacebook: linkAccountFacebook,
+        bankName: res.data.bank.bankName,
+        ownName: res.data.bank.ownName,
+        bankNumber: res.data.bank.bankNumber,
+        status: statusValue,
+        teams: res.data.teams,
+      };
+      this._fillForm(dataUser);
     });
-    const linkAccountFacebook = accountFacebook ? accountFacebook.link : "";
-    let statusValue = 0;
-    if (res.data.status === "Pending") {
-      statusValue = 10;
-    }
-    const dataUser = {
-      id: res.data.id,
-      name: res.data.name,
-      birthday: res.data.birthday,
-      adress: res.data.adress,
-      certificate: res.data.certificate,
-      phone: res.data.phone,
-      email: res.data.email,
-      linkFacebook: linkAccountFacebook,
-      bankName: res.data.bank.bankName,
-      ownName: res.data.bank.ownName,
-      bankNumber: res.data.bank.bankNumber,
-      status: statusValue,
-      teams: res.data.teams,
-    };
-    console.log("Data User", dataUser);
-    this._fillForm(dataUser);
-    this.setState({
-      teamsCurrent: resTeam.data,
+    ManagementService.getListTeams().then((resTeam) => {
+      for (let i = 0; i < listTeamsUser.length; i++) {
+        ManagementService.getTeamId(listTeamsUser[i]).then((resTeamId) => {
+          const teamUser = [];
+          console.log("RES TEAM IDDDD", resTeamId);
+          teamUser.push(resTeamId.data);
+          for (let j = 0; j < resTeam.data.length; j++) {
+            if (resTeam.data[j].id === listTeamsUser[i]) {
+              resTeam.data.splice(j, 1);
+              resTeam.data.push(resTeamId.data);
+            }
+          }
+          this.setState({
+            teamsSelected: teamUser,
+          });
+        });
+      }
+      this.setState({
+        teamsCurrent: resTeam.data,
+      });
     });
-    console.log("Fill form", this.state.form);
   };
 
   onEditInfo = () => {
     this.setState({
       onEditInfo: !this.state.onEditInfo,
     });
-    if(this.state.onEditInfo) {
+    if (this.state.onEditInfo) {
       window.location.reload(true);
     }
   };
 
   onSaveEditUserInfo = async () => {
     this._validateForm();
-    
-    this._isFormValid();
-    const { form, teamSelected } = this.state;
-    console.log("Err phone", form.phone);
+    const { form, teamsSelected } = this.state;
     const { userId } = this.props;
+    const teamsSelectedId = [];
+    teamsSelected.forEach((item) => {
+      teamsSelectedId.push(item.id);
+    })
+    console.log("TEAM IDDDD", teamsSelectedId);
+    let statusValue = "";
     this.state.form["dirty"] = true;
+    if (form.status.value === 10) {
+      statusValue = "Pending";
+    } else if (form.status.value === 20) {
+      statusValue = "Working";
+    }
     const dataUser = {
       name: form.name.value,
       birthday: form.birthday.value,
@@ -138,45 +175,54 @@ class ManagementEditInfo extends Form {
           link: form.linkFacebook.value,
         },
       ],
-      status: form.status.value,
-      teams: teamSelected,
+      status: statusValue,
+      teams: teamsSelectedId,
       bank: {
         bankName: form.bankName.value,
         ownName: form.ownName.value,
         bankNumber: form.bankNumber.value,
       },
     };
-    console.log("Data user", dataUser);
-    const req = await Http.patch(`users/${userId}`, dataUser);
-    console.log("Edit user", req.data);
-    
-  };
 
-  getStyles(name, personName, theme) {
-    return {
-      fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
+    if (this._isFormValid()) {
+      ManagementService.updateUserInfo(userId, dataUser)
+        .then((req) => {
+          this.setState({
+            notiMessage: "Chỉnh sửa thông tin user thành công",
+            onEditInfo: false,
+          });
+        })
+        .catch((err) => {
+          this.setState({
+            notiMessage: "Chỉnh sửa thông tin user thất bại",
+          });
+        });
+    } else {
+      this.setState({
+        notiMessage: "Vui lòng nhập lại thông tin",
+      });
+    }
+  };
 
   handleChange = (event) => {
     this.setState({
-      teamSelected: event.target.value,
+      teamsSelected: event.target.value,
     });
+    console.log("Team selecteddddddddd", this.state.teamsSelected);
   };
 
   handleChangeMultiple = (event) => {
     const { options } = event.target;
+    const { teamsSelected } = this.state;
     const value = [];
     for (let i = 0, l = options.length; i < l; i++) {
       if (options[i].selected) {
         value.push(options[i].value);
       }
     }
+
     this.setState({
-      teamSelected: value,
+      teamsSelected: value,
     });
   };
 
@@ -188,10 +234,41 @@ class ManagementEditInfo extends Form {
     console.log("Status", this.state.form.status);
   };
 
+  handleChangeTeam = (obj, teams) => {
+    const teamsSelectedId = [];
+    teams.forEach((team) => {
+      teamsSelectedId.push(team.id);
+    });
+    this.setState({
+      teamsSelected: teamsSelectedId,
+    });
+    console.log(this.state.teamsSelected);
+  };
+
+  getStyles(name, personName, theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
+  checkTeamSelected(team) {
+    const { teamsSelected } = this.state;
+    let checkTeamSelected = false;
+    teamsSelected.forEach(item => {
+      if(item.id === team.id) {
+        checkTeamSelected = true
+      }
+    });
+    return checkTeamSelected;
+  }
+
   render() {
-    const { form, onEditInfo, teamSelected, teamsCurrent } = this.state;
+    const { form, onEditInfo, teamsSelected, teamsCurrent } = this.state;
     const { classes, userId } = this.props;
-    console.log("Team current", teamsCurrent);
+    console.log("formmmmmmmmmmmm", form);
     const birthday = new Date(form.birthday.value);
     const month = birthday.getMonth();
     const year = birthday.getFullYear();
@@ -234,7 +311,7 @@ class ManagementEditInfo extends Form {
             }
             startIcon={onEditInfo ? <ClearIcon /> : <EditIcon />}
           >
-            {onEditInfo ? "Cancel editing" : "Edit"}
+            {onEditInfo ? "Hủy chỉnh sửa" : "Chỉnh sửa"}
           </Button>
         </div>
         <div className="form-edit">
@@ -245,7 +322,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Username
+                 Họ và tên
                 </InputLabel>
                 <Input
                   className="input"
@@ -272,7 +349,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Birthday
+                  Ngày sinh
                 </InputLabel>
                 <Input
                   type="date"
@@ -303,7 +380,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Address
+                  Địa chỉ
                 </InputLabel>
                 <Input
                   className="input"
@@ -332,7 +409,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Certificate
+                  Bằng cấp
                 </InputLabel>
                 <Input
                   className="input"
@@ -354,27 +431,22 @@ class ManagementEditInfo extends Form {
                 </span>
               </FormControl>
               <FormControl className="form-input">
-                <InputLabel
-                  className="title-input"
-                  htmlFor="input-with-icon-adornment"
-                >
-                  Teams
-                </InputLabel>
+                <InputLabel id="demo-mutiple-checkbox-label" className="title-input">Teams</InputLabel>
                 <Select
-                  labelId="demo-mutiple-chip-label"
-                  id="demo-mutiple-chip"
+                  labelId="demo-mutiple-checkbox-label"
+                  id="demo-mutiple-checkbox"
                   multiple
-                  className="input"
-                  value={teamSelected}
+                  value={teamsSelected}
                   onChange={this.handleChange}
                   input={<Input id="select-multiple-chip" />}
+                  readOnly={!onEditInfo}
                   renderValue={(selected) => (
                     <div className={classes.chips}>
-                      {teamSelected.map((team) => (
+                      {teamsSelected.map((team) => (
                         <Chip
                           key={team.id}
                           label={team.name}
-                          className="input-teams"
+                          className={classes.chip}
                         />
                       ))}
                     </div>
@@ -382,15 +454,19 @@ class ManagementEditInfo extends Form {
                   MenuProps={MenuProps}
                   startAdornment={
                     <InputAdornment position="start">
-                      <GroupIcon />
-                    </InputAdornment>
+                    <GroupIcon/>
+                  </InputAdornment>
                   }
                 >
                   {teamsCurrent.map((team) => (
                     <MenuItem key={team.id} value={team}>
-                      {team.name}
+                      <Checkbox
+                        checked={this.checkTeamSelected(team)}
+                      />
+                      <ListItemText primary={team.name} />
                     </MenuItem>
                   ))}
+
                 </Select>
               </FormControl>
             </div>
@@ -400,7 +476,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Phone number
+                  Số điện thoại
                 </InputLabel>
                 <Input
                   className="input"
@@ -430,7 +506,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Email
+                  Email cá nhân
                 </InputLabel>
                 <Input
                   className="input"
@@ -477,11 +553,11 @@ class ManagementEditInfo extends Form {
                 />
               </FormControl>
               <FormControl className="form-input">
-                <InputLabel className="title-input">Status</InputLabel>
-                <NativeSelect
+                <InputLabel className="title-input">Tình trạng</InputLabel>
+                <Select
                   className="input"
                   id="demo-simple-select"
-                  defaultValue={form.status.value}
+                  value={form.status.value}
                   onChange={(ev) => this.handleChangeStatus(ev)}
                   disabled={!onEditInfo}
                   startAdornment={
@@ -495,13 +571,13 @@ class ManagementEditInfo extends Form {
                     </InputAdornment>
                   }
                 >
-                  <option className="option-status" value={10}>
+                  <MenuItem className="option-status" value={10}>
                     Pending
-                  </option>
-                  <option className="option-status" value={20}>
-                    Hello
-                  </option>
-                </NativeSelect>
+                  </MenuItem>
+                  <MenuItem className="option-status" value={20}>
+                    Working
+                  </MenuItem>
+                </Select>
               </FormControl>
             </div>
             <div className="col-sm-4">
@@ -510,7 +586,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Bank Name
+                  Tên ngân hàng
                 </InputLabel>
                 <Input
                   className="input"
@@ -537,7 +613,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Bank Account Holder
+                  Chủ tài khoản
                 </InputLabel>
                 <Input
                   className="input"
@@ -564,7 +640,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                  Bank Account Number
+                  Số tài khoản
                 </InputLabel>
                 <Input
                   className="input"
@@ -596,7 +672,7 @@ class ManagementEditInfo extends Form {
             href="/app/management/users"
             className="btn-control-default"
           >
-            Close
+            Thoát
           </Button>
           {onEditInfo ? (
             <Button
@@ -605,12 +681,16 @@ class ManagementEditInfo extends Form {
               className="btn-control-primary"
               onClick={this.onSaveEditUserInfo}
             >
-              Save Change
+              Lưu thay đổi
             </Button>
           ) : (
             ""
           )}
         </div>
+        <ModalNoti
+          message={this.state.notiMessage}
+          done={() => this.setState({ notiMessage: "" })}
+        ></ModalNoti>
       </Card>
     );
   }
