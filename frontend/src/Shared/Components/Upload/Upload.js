@@ -28,8 +28,7 @@ class Upload extends Component {
 		);
 		const upload = await axios.post("http://103.138.108.104:3000/upload", formData)
 		const idDocumentUpload = upload.data.id;
-		const dataDocumentUpload = upload.data;
-		this.props.idUpload(idDocumentUpload, dataDocumentUpload)
+		this.props.idUpload(idDocumentUpload)
 
 		this.setState({ modal: !this.state.modal })
 	};

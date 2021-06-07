@@ -13,7 +13,6 @@ export default class Document extends Form {
         this.state = {
             company: {},
             document: [],
-            id_document: [],
             id_delete: "",
             notiMessage: ""
         }
@@ -26,8 +25,7 @@ export default class Document extends Form {
             .then(res => {
                 this.setState({
                     company: res.data,
-                    document: res.data.documents,
-                    id_document: res.data.documents
+                    document: res.data.documents
                 })
             })
             .catch((error) => {
@@ -37,18 +35,13 @@ export default class Document extends Form {
 
     /*----------------------------------------------*/
 
-    updateUpload = (idDocumentUpload, dataDocumentUpload) => {
-        // this.state.document.push(dataDocumentUpload);
-        this.state.id_document.push(idDocumentUpload);
+    updateUpload = (idDocumentUpload) => {
+        this.state.document.push(idDocumentUpload);
         this.setState({
-            // document: this.state.document,
-            id_document: this.state.id_document
+            document: this.state.document
         })
-        
-        CompanyService.finishDocumentResult(this.state.id_document, this.state.company)
-            .then(res => {
-                console.log(res, 'okokok')
-            })
+
+        CompanyService.finishDocumentResult(this.state.document, this.state.company)
             .catch((error) => {
                 console.error('Error:', error);
             })
@@ -57,6 +50,8 @@ export default class Document extends Form {
     winOpen = (event) => {
         AuthService._winOpen(event.target.value)
     };
+
+    /*----------------------------------------------*/
 
     handleDelete = (event) => {
         this.setState({
@@ -67,18 +62,19 @@ export default class Document extends Form {
 
     answer = (event) => {
         this.setState({ notiMessage: '' })
-        // if (event) {
-        //     const newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
-        //     this.setState({ document: newDocument })
+        if (event) {
+            const newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
+            this.setState({ document: newDocument })
 
-        //     this.state.document.map(event => {
-        //         CompanyService.finishDocumentResult(event._id, this.state.company)
-        //             .catch((error) => {
-        //                 console.error('Error:', error);
-        //             })
-        //     })
-        // } else null;
+            const _idDocument = newDocument.map(e => e._id)
+            CompanyService.finishDocumentResult(_idDocument, this.state.company)
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+        } else null;
     };
+
+    /*----------------------------------------------*/
 
     componentDidMount() {
         this.getDocument();
@@ -97,7 +93,7 @@ export default class Document extends Form {
         return (
             <div className="document-content">
                 <div className="document-header">
-                    <h3>Document</h3><Upload idUpload={(id, data) => this.updateUpload(id, data)} />
+                    <h3>Document</h3><Upload idUpload={(idDocumentUpload) => this.updateUpload(idDocumentUpload)} />
                 </div>
                 <div className="document-item">
                     {

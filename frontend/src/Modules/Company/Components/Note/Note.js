@@ -16,9 +16,8 @@ export default class Note extends Form {
             anchorEl: null,
             company: {},
             note: [],
-            notiMessage: '',
-            index_delete: '',
-            index: null
+            notiMessage: "",
+            index_delete: ""
         }
     };
 
@@ -66,33 +65,29 @@ export default class Note extends Form {
     /*--------------------------------------------------*/
 
     handleDelete = (event) => {
-        console.log(event.target.value)
-        this.state.note.map((e, i) => {
-            this.setState({ index: i })
-        })
-        console.log(this.state.index, 'hihiiiokkkkk')
-
+        console.log(event, 'llll')
         // this.setState({
-        //     index_delete: event.target.value,
+        //     index_delete: event,
         //     notiMessage: 'Are you sure you want to delete this note ?',
         //     anchorEl: null
         // })
     };
 
-    // answer = async (event) => {
-    //     this.setState({ notiMessage: '' })
-    //     if (event) {
-    //         this.state.note.map((index) => {
-    //             this.state.note.splice(index, this.state.index_delete)
-    //             this.setState({ note: this.state.note })
+    answer = async (event) => {
+        this.setState({ notiMessage: '' })
+        
+        // if (event) {
+        //     this.state.note.map((index) => {
+        //         this.state.note.splice(index, this.state.index_delete)
+        //         this.setState({ note: this.state.note })
 
-    //         })
-    //         // await CompanyService.finishNoteResult(this.state.note, this.state.company)
-    //         //     .catch((error) => {
-    //         //         console.error('Error:', error);
-    //         //     })
-    //     } else null
-    // };
+        //     })
+        //     // await CompanyService.finishNoteResult(this.state.note, this.state.company)
+        //     //     .catch((error) => {
+        //     //         console.error('Error:', error);
+        //     //     })
+        // } else null
+    };
 
     /*--------------------------------------------------*/
 
@@ -118,7 +113,7 @@ export default class Note extends Form {
                                         </IconButton>
                                         <Menu id="simple-menu" anchorEl={this.state.anchorEl} keepMounted open={Boolean(this.state.anchorEl)} onClose={this.handleClose}>
                                             <MenuItem onClick={this.handleEdit}><EditIcon />&emsp;Edit Note</MenuItem>
-                                            <MenuItem value={index} onClick={(i) => this.handleDelete(i)}><DeleteIcon />&emsp;Delete Note</MenuItem>
+                                            <MenuItem onClick={(index) => this.handleDelete(index)}><DeleteIcon />&emsp;Delete Note</MenuItem>
                                             <ModalConfirm message={this.state.notiMessage} answer={(event) => this.answer(event)} />
                                         </Menu>
                                     </div>
