@@ -41,25 +41,19 @@ export class CompanyService {
         email: String,
         phone: String,
         pic: String,
-        socialNetwork: [SocialNetwork],
-        overviews: [Overview],
-        notes: [Note],
-        documents: [String]
+        socialNetwork: SocialNetwork[],
+        overviews: Overview[],
+        notes: Note[],
+        documents: String[]
     ) {
         await this.usersService.findUserById(pic)
         let company = await this.findCompany();
-        if (name)
-            company.name = name;
-        if (domain)
-            company.domain = domain;
-        if (website)
-            company.website = website;
-        if (address)
-            company.address = address;
-        if (email)
-            company.email = email;
-        if (phone)
-            company.phone = phone;
+        company.name = name;
+        company.domain = domain;
+        company.website = website;
+        company.address = address;
+        company.email = email;
+        company.phone = phone;
         company.pic = pic;
         company.socialNetwork = socialNetwork;
         company.overviews = overviews;

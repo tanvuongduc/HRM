@@ -60,8 +60,8 @@ export interface Company extends mongoose.Document {
     email: String;
     phone: String;
     pic: String;
-    socialNetwork?: [SocialNetwork];
-    overviews?: [Overview];
-    notes?: [Note];
-    documents?: [String]
+    socialNetwork?: SocialNetwork[];
+    overviews?: Overview[];
+    notes?: Note[];
+    documents?: String[];
 }

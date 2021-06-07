@@ -63,7 +63,7 @@ export class DepartmentService {
     }
 
     async removeTeamsByDepartmentId(
-        teamsId: [String],
+        teamsId: String[],
         departmentId: String
     ) {
         await this.findDepartmentById(departmentId);
@@ -80,7 +80,7 @@ export class DepartmentService {
         name: String,
         pic: String,
         desc: String,
-        documents: [String]
+        documents: String[]
     ) {
         await this.usersService.findUserById(pic)
         let department = await this.findDepartmentById(id);
@@ -122,7 +122,7 @@ export class DepartmentService {
     }
 
     async insertTeamsByDepartmentId(
-        teamsId: [String],
+        teamsId: String[],
         departmentId: String
     ) {
         await this.findDepartmentById(departmentId);

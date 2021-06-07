@@ -111,7 +111,7 @@ export class TeamService {
 
 
     async insertTeamIdForMembers(
-        ids: [String],
+        ids: String[],
         idTeam: String
     ) {
         const team = await this.findTeamById(idTeam);
@@ -124,7 +124,7 @@ export class TeamService {
 
 
     async removeMembersByTeamId(
-        ids: [String],
+        ids: String[],
         idTeam: String
     ) {
         const team = await this.findTeamById(idTeam);
@@ -136,7 +136,7 @@ export class TeamService {
     }
 
     async insertDepartmentForTeamsId(
-        teamsId: [String],
+        teamsId: String[],
         departmentId: String
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
@@ -152,7 +152,7 @@ export class TeamService {
     }
 
     async removeDepartmentFromTeamsId(
-        teamsId: [String],
+        teamsId: String[],
         departmentId: String
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();

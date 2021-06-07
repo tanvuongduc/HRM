@@ -1,3 +1,4 @@
+import { isStringRequired, isArrayString } from './../validator/joi.validate';
 import { Param } from '@nestjs/common';
 import {
     Patch,
@@ -18,10 +19,10 @@ export class DepartmentController {
 
     @Post()
     async insertDepartment(
-        @Body('code') code: String,
-        @Body('name') name: String,
-        @Body('pic') pic: String,
-        @Body('desc') desc: String,
+        @Body('code', isStringRequired) code: String,
+        @Body('name', isStringRequired) name: String,
+        @Body('pic', isStringRequired) pic: String,
+        @Body('desc', isStringRequired) desc: String,
     ) {
         const res = await this.departmentService.insertDepartment(code, name, pic, desc);
         return res;
@@ -30,7 +31,7 @@ export class DepartmentController {
 
     @Get(':id')
     async getDepartmentById(
-        @Param('id') id: String
+        @Param('id', isStringRequired) id: String
     ) {
         const res = await this.departmentService.getDepartmentById(id);
         return res;
@@ -38,12 +39,12 @@ export class DepartmentController {
 
     @Patch(':id')
     async updateDepartmentById(
-        @Param('id') id: String,
-        @Body('code') code: String,
-        @Body('name') name: String,
-        @Body('pic') pic: String,
-        @Body('desc') desc: String,
-        @Body('documents') documents: [String]
+        @Param('id', isStringRequired) id: String,
+        @Body('code', isStringRequired) code: String,
+        @Body('name', isStringRequired) name: String,
+        @Body('pic', isStringRequired) pic: String,
+        @Body('desc', isStringRequired) desc: String,
+        @Body('documents', isArrayString) documents: String[]
     ) {
         const res = await this.departmentService.updateDepartmentById(id, code, name, pic, desc, documents);
         return res;
@@ -61,17 +62,16 @@ export class DepartmentController {
 
     @Get(':id/teams')
     async getTeamsByDepartmentId(
-        @Param('id') id: String
+        @Param('id', isStringRequired) id: String
     ) {
-        console.log(id)
         const res = await this.departmentService.getTeamsByDepartmentId(id);
         return res;
     }
 
     @Patch(':id/teams')
     async insertTeamsByDepartmentId(
-        @Param('id') id: String,
-        @Body('teamsId') teamsId: [String]
+        @Param('id', isStringRequired) id: String,
+        @Body('teamsId', isStringRequired) teamsId: String[]
     ) {
         const res = await this.departmentService.insertTeamsByDepartmentId(teamsId, id);
         return res;
@@ -80,8 +80,8 @@ export class DepartmentController {
 
     @Delete(':id/teams')
     async removeTeamsByDepartmentId(
-        @Param('id') id: String,
-        @Body('teamsId') teamsId: [String]
+        @Param('id', isStringRequired) id: String,
+        @Body('teamsId', isStringRequired) teamsId: String[]
     ) {
         const res = await this.departmentService.removeTeamsByDepartmentId(teamsId, id);
         return res;

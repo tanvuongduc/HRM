@@ -1,3 +1,4 @@
+import { isStringRequired, isArrayStringRequired, isString } from './../validator/joi.validate';
 import {
     Controller,
     Post,
@@ -18,11 +19,11 @@ export class TeamController {
 
     @Post()
     async insertTeam(
-        @Body('code') code: String,
-        @Body('pic') pic: String,
-        @Body('name') name: String,
-        @Body('department') department: String,
-        @Body('sologan') sologan: String
+        @Body('code', isStringRequired) code: String,
+        @Body('pic', isStringRequired) pic: String,
+        @Body('name', isStringRequired) name: String,
+        @Body('department', isStringRequired) department: String,
+        @Body('sologan', isString) sologan: String
     ) {
         const res = await this.teamService.insertTeam(code, name, pic, department, sologan);
         return res;
@@ -30,7 +31,7 @@ export class TeamController {
 
     @Get(':id')
     async getTeamById(
-        @Param('id') id: String
+        @Param('id', isStringRequired) id: String
     ) {
         const res = await this.teamService.getTeamById(id);
         return res;
@@ -45,8 +46,8 @@ export class TeamController {
 
     @Post(':team/members')
     async insertMembersByTeamId(
-        @Body('members') ids: [string],
-        @Param('team') teamId: string
+        @Body('members', isArrayStringRequired) ids: String[],
+        @Param('team', isStringRequired) teamId: String
     ) {
         const res = this.teamService.insertTeamIdForMembers(ids, teamId);
         return res;
@@ -55,8 +56,8 @@ export class TeamController {
 
     @Delete(':team/members')
     async removeMembersByTeamId(
-        @Body('members') ids: [string],
-        @Param('team') teamId: string
+        @Body('members', isArrayStringRequired) ids: String[],
+        @Param('team', isStringRequired) teamId: String
     ) {
         const res = this.teamService.removeMembersByTeamId(ids, teamId);
         return res;
@@ -65,7 +66,7 @@ export class TeamController {
 
     @Get(':team/members')
     async getMembersByTeamId(
-        @Param('team') teamId: string
+        @Param('team', isStringRequired) teamId: String
     ) {
         const res = this.teamService.getMembersByTeamId(teamId);
         return res;

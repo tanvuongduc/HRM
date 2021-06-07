@@ -1,3 +1,5 @@
+import { SocialNetworksValidate, OverviewsValidate, NotesValidate } from './company.validate';
+import { isStringRequired, isEmailRequired, isPhoneNumberRequired, isArrayString } from './../validator/joi.validate';
 import {
     Controller,
     Body,
@@ -23,17 +25,17 @@ export class CompanyController {
 
     @Patch()
     async updateCompany(
-        @Body('name') name: String,
-        @Body('domain') domain: String,
-        @Body('website') website: String,
-        @Body('address') address: String,
-        @Body('email') email: String,
-        @Body('phone') phone: String,
-        @Body('pic') pic: String,
-        @Body('socialNetwork') socialNetwork: [SocialNetwork],
-        @Body('overviews') overviews: [Overview],
-        @Body('notes') notes: [Note],
-        @Body('documents') documents: [String]
+        @Body('name', isStringRequired) name: String,
+        @Body('domain', isStringRequired) domain: String,
+        @Body('website', isStringRequired) website: String,
+        @Body('address', isStringRequired) address: String,
+        @Body('email', isEmailRequired) email: String,
+        @Body('phone', isPhoneNumberRequired) phone: String,
+        @Body('pic', isStringRequired) pic: String,
+        @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
+        @Body('overviews', OverviewsValidate) overviews: Overview[],
+        @Body('notes', NotesValidate) notes: Note[],
+        @Body('documents', isArrayString) documents: String[]
     ) {
         const res = await this.companyService.updateCompany(name, domain, website, address, email, phone, pic, socialNetwork, overviews, notes, documents);
         return res;

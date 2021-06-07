@@ -1,7 +1,7 @@
 import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, Bank, SocialNetwork, Certificate } from './user.model';
+import { User, Bank, SocialNetwork, Certificate, UserStatus } from './user.model';
 import { CertificateService } from '../certificate/certificate.service'
 
 @Injectable()
@@ -15,21 +15,21 @@ export class UsersService {
         name: String,
         birthday: Date,
         adress: String,
-        certificates: [Certificate],
+        certificates: Certificate[],
         phone: String,
         email: String,
-        teams: [String],
+        teams: String[],
         password: String,
-        socialNetwork: SocialNetwork,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String
+        status: UserStatus
     ) {
 
         let user = await this.userModel.findOne().where({ email: email }).exec()
         if (user) {
             throw new HttpException('Email is existed', 400);
         }
-        if(!(password&&name)){
+        if (!(password && name)) {
             throw new HttpException('Name and password must be not null', 400);
         }
         if (certificates && certificates.length) {
@@ -39,7 +39,6 @@ export class UsersService {
                 cer.createdAt = new Date(Date.now());
             }
         }
-        status = status === "Working" ? status : "Pending";
         const newUser = new this.userModel({
             name,
             birthday,
@@ -86,56 +85,29 @@ export class UsersService {
         name: String,
         birthday: Date,
         adress: String,
-        certificates: [Certificate],
+        certificates: Certificate[],
         phone: String,
         email: String,
         password: String,
-        socialNetwork: SocialNetwork,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String
+        status: UserStatus
     ) {
-        let user = await this.userModel.findOne().where({ email: email }).exec()
-        if (user) {
-            throw new HttpException('Email is existed', 400);
-        }
-        if(!(password&&name)){
-            throw new HttpException('Name and password must be not null', 400);
-        }
+        await this.userModel.findOne().where({ email: email }).exec()
         const updatedUser = await this.findUserById(uid);
-        if (certificates && certificates.length) {
-            for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
-            }
+        for (let cer of certificates) {
+            await this.certificateService.findCertificateById(cer.id);
+            cer.recivedAt = new Date(cer.recivedAt);
         }
-        if (name) {
-            updatedUser.name = name;
-        }
-        if (birthday) {
-            updatedUser.birthday = birthday;
-        }
-        if (phone) {
-            updatedUser.phone = phone;
-        }
-        if (email) {
-            updatedUser.email = email;
-        }
-        if (password) {
-            updatedUser.password = password;
-        }
-        if (adress) {
-            updatedUser.adress = adress;
-        }
-        if (socialNetwork) {
-            updatedUser.socialNetwork = socialNetwork;
-        }
-        if (bank) {
-            updatedUser.bank = bank;
-        }
-        if (status) {
-            status = status === "Working" ? status : "Pending";
-            updatedUser.status = status;
-        }
+        updatedUser.name = name;
+        updatedUser.birthday = birthday;
+        updatedUser.phone = phone;
+        updatedUser.email = email;
+        updatedUser.password = password;
+        updatedUser.adress = adress;
+        updatedUser.socialNetwork = socialNetwork;
+        updatedUser.bank = bank;
+        updatedUser.status = status;
         const res = await updatedUser.save();
         return {
             id: res.id,
@@ -158,51 +130,28 @@ export class UsersService {
         name: String,
         birthday: Date,
         adress: String,
-        certificates: [Certificate],
+        certificates: Certificate[],
         phone: String,
         email: String,
         password: String,
-        socialNetwork: SocialNetwork,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String,
-        teams: [String]
+        status: UserStatus,
+        teams: String[]
     ) {
-        let user = await this.userModel.findOne().where({ email: email }).exec()
-        if (user) {
-            throw new HttpException('Email is existed', 400);
-        }
-        if(!(password&&name)){
-            throw new HttpException('Name and password must be not null', 400);
-        }
+        await this.userModel.findOne().where({ email: email }).exec()
         const updatedUser = await this.findUserById(uid);
-        if (certificates && certificates.length) {
-            for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
-            }
+        for (let cer of certificates) {
+            await this.certificateService.findCertificateById(cer.id);
+            cer.recivedAt = new Date(cer.recivedAt);
         }
-        if (birthday) {
-            updatedUser.birthday = birthday;
-        }
-        if (phone) {
-            updatedUser.phone = phone;
-        }
-        if (adress) {
-            updatedUser.adress = adress;
-        }
-        if (socialNetwork) {
-            updatedUser.socialNetwork = socialNetwork;
-        }
-        if (bank) {
-            updatedUser.bank = bank;
-        }
-        if (status) {
-            status = status === "Working" ? status : "Pending";
-            updatedUser.status = status;
-        }
-        if (teams) {
-            updatedUser.teams = teams;
-        }
+        updatedUser.birthday = birthday;
+        updatedUser.phone = phone;
+        updatedUser.adress = adress;
+        updatedUser.socialNetwork = socialNetwork;
+        updatedUser.bank = bank;
+        updatedUser.status = status;
+        updatedUser.teams = teams;
         const res = await updatedUser.save();
         return {
             id: res.id,
@@ -256,7 +205,7 @@ export class UsersService {
     }
 
     async removeTeamIdFromUsers(
-        ids: [String],
+        ids: String[],
         teamId: String
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()
@@ -281,7 +230,7 @@ export class UsersService {
     }
 
     async insertTeamIdForUsers(
-        ids: [String],
+        ids: String[],
         teamId: String
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()

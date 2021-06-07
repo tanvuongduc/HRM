@@ -16,5 +16,5 @@ export interface Department extends mongoose.Document {
     pic: String;
     desc?: String;
     createdAt: Date;
-    documents: [String];
+    documents: String[];
 }

@@ -22,7 +22,7 @@ export interface Team extends mongoose.Document {
     sologan?: String;
     rate?: Number;
     achievements?: String;
-    mission?: String;
+    mission?: String[];
     department: String;
     createAt: Date;
     creatBy: String;
