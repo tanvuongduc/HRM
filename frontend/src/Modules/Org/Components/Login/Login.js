@@ -34,7 +34,11 @@ class Login extends Form {
 
   login() {
     const { username, password } = this.state.form;
-    AuthService.login(username.value, password.value)
+    this._validateForm();
+    console.log("formmmmmm", this.state.form);
+    this.state.form["dirty"] = true;
+    if(this._isFormValid()) {
+      AuthService.login(username.value, password.value)
       .then((res) => {
         window.localStorage.setItem("token", res.access_token);
         AuthService.getUserInfo()
@@ -57,6 +61,8 @@ class Login extends Form {
           notiMessage: "Có lỗi xảy ra trong lúc đăng nhập, xin thử lại sau!",
         });
       });
+    }
+    
   }
 
   goTo(url = "") {
@@ -71,7 +77,8 @@ class Login extends Form {
   }
 
   render() {
-    const { username, password, showPassword } = this.state;
+    const { username, password, dirty } = this.state.form;
+    const { showPassword } = this.state;
     const classes = this.props;
     return (
       <div className="login-page">
@@ -92,7 +99,7 @@ class Login extends Form {
               type="text"
               className="input"
               id="input-with-icon-adornment"
-              value={username}
+              value={username.value}
               name="username"
               placeholder="Nhập tài khoản"
               onChange={(ev) => this._setValue(ev, "username")}
@@ -103,6 +110,7 @@ class Login extends Form {
                 </InputAdornment>
               }
             />
+            <span className="validate-noti">{username.err.valueOf("*") && dirty === true ? "Vui lòng nhập tài khoản" : ""}</span>
           </FormControl>
           <FormControl className="form-input">
             <InputLabel
@@ -115,7 +123,7 @@ class Login extends Form {
               type={showPassword ? "text" : "password"}
               className="input"
               id="input-with-icon-adornment"
-              value={password}
+              value={password.value}
               name="password"
               placeholder="Nhập mật khẩu"
               onChange={(ev) => this._setValue(ev, "password")}
@@ -134,6 +142,8 @@ class Login extends Form {
                 </IconButton>
               }
             />
+            <span className="validate-noti">{password.err.valueOf("*") && dirty === true ? "Vui lòng nhập mật khẩu" : ""}</span>
+
           </FormControl>
           
           <div className="btn-control-box">
