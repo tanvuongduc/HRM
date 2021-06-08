@@ -1,18 +1,19 @@
 @import '../../../ManagementUsers/Shared/Style/variables';
 
 .login-page {
-    background-image: url(../../Shared/Image/HRM_BACKGROUND.jpg);
+    background-image: url(../../Shared/Image/hrm-background.jpg);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-position: 0 -100px;
     box-shadow: inset 0 0 0 2000px #0000008e;
     height: 100vh;
-    padding-top: 200px;
+    padding-top: 150px;
 
     .loginCard {
         width: 500px;
-        height: 550px;
+        min-height: 570px;
         padding: 20px 60px;
         margin: auto;
         background-color: $color-white;
@@ -81,7 +82,7 @@
         }
 
         .btn-control-box {
-            margin-top: 20px;
+            margin-top: 30px;
             margin-right: 0;
 
             .btn-control-primary {

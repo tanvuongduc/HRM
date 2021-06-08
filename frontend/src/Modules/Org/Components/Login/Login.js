@@ -3,6 +3,7 @@ import {
   Card,
   FormControl,
   Grid,
+  IconButton,
   Input,
   InputAdornment,
   InputLabel,
@@ -12,7 +13,7 @@ import React, { Fragment } from "react";
 import { withRouter } from "react-router";
 import { AuthService, Form, ModalNoti } from "../../Shared";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { AccountCircle } from "@material-ui/icons";
+import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 import LockIcon from "@material-ui/icons/Lock";
 import SendIcon from '@material-ui/icons/Send';
 
@@ -27,6 +28,7 @@ class Login extends Form {
     this.state = {
       notiMessage: "",
       form: this._getInitFormData({ username: "", password: "" }),
+      showPassword: false
     };
   }
 
@@ -62,8 +64,14 @@ class Login extends Form {
     window.location.replace(url);
   }
 
+  handleClickShowPassword = () => {
+    this.setState({
+      showPassword: !this.state.showPassword
+    });
+  }
+
   render() {
-    const { username, password } = this.state;
+    const { username, password, showPassword } = this.state;
     const classes = this.props;
     return (
       <div className="login-page">
@@ -104,7 +112,7 @@ class Login extends Form {
               Mật khẩu
             </InputLabel>
             <Input
-              type="password"
+              type={showPassword ? "text" : "password"}
               className="input"
               id="input-with-icon-adornment"
               value={password}
@@ -115,10 +123,19 @@ class Login extends Form {
               startAdornment={
                 <InputAdornment position="start">
                   <LockIcon />
-                </InputAdornment>
+                </InputAdornment>            
+              }
+              endAdornment={
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={this.handleClickShowPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
               }
             />
           </FormControl>
+          
           <div className="btn-control-box">
             <Button className="btn-control-primary" onClick={() => this.login()} variant="contained" color="primary">
               Đăng nhập
