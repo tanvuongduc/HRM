@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { JoiValidationPipe } from '../validator/joi.engine'
 import * as Joi from '@hapi/joi';
 
@@ -21,5 +22,12 @@ export const BankValidate = new JoiValidationPipe(Joi.object({
     bankNumber: Joi.string().required()
 }));
 export const UserStatusValidate = new JoiValidationPipe(
-    Joi.string().regex(/^working{1}$|^retired{1}$|^pending{1}$/).required()
+    Joi.string().regex(/^working$|^retired$|^pending$/).required()
 );
+
+export const EmailValidate = (email:string, domain:string) => {
+    const re = new RegExp(`/${domain}$/`);
+    if(!re.test(email)){
+        throw new HttpException(`email must be have domain is ${domain}`, 400);
+    }
+}

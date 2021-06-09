@@ -1,3 +1,5 @@
+import { EmailValidate } from './user.validate';
+import { CompanyService } from './../company/company.service';
 import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -8,7 +10,8 @@ import { CertificateService } from '../certificate/certificate.service'
 export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
-        @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService
+        @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService,
+        @Inject(forwardRef(()=> CompanyService)) private readonly companyService: CompanyService
     ) { }
 
     async insertUser(
@@ -24,14 +27,12 @@ export class UsersService {
         bank: Bank,
         status: UserStatus
     ) {
-
-        let user = await this.userModel.findOne().where({ email: email }).exec()
+        let user = await this.userModel.findOne().where({ email: email }).exec();
         if (user) {
             throw new HttpException('Email is existed', 400);
         }
-        if (!(password && name)) {
-            throw new HttpException('Name and password must be not null', 400);
-        }
+        const domain = await this.companyService.getDomainCompany();
+        EmailValidate(email,domain);
         if (certificates && certificates.length) {
             for (let cer of certificates) {
                 await this.certificateService.findCertificateById(cer.id);
@@ -94,6 +95,8 @@ export class UsersService {
         status: UserStatus
     ) {
         await this.userModel.findOne().where({ email: email }).exec()
+        const domain = await this.companyService.getDomainCompany();
+        EmailValidate(email,domain);
         const updatedUser = await this.findUserById(uid);
         for (let cer of certificates) {
             await this.certificateService.findCertificateById(cer.id);
@@ -140,6 +143,8 @@ export class UsersService {
         teams: string[]
     ) {
         await this.userModel.findOne().where({ email: email }).exec()
+        const domain = await this.companyService.getDomainCompany();
+        EmailValidate(email,domain);
         const updatedUser = await this.findUserById(uid);
         for (let cer of certificates) {
             await this.certificateService.findCertificateById(cer.id);

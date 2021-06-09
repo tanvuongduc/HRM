@@ -87,7 +87,7 @@ export class UsersController {
     async updateUserByAdmin(
         @Request() req,
         @Param('id', isStringRequired) id: string,
-        @Body('name', isDateRequired) name: string,
+        @Body('name', isStringRequired) name: string,
         @Body('birthday', isDateRequired) birthday: Date,
         @Body('adress', isStringRequired) adress: string,
         @Body('certificate', CertificatesValidate) certificates: Certificate[],
