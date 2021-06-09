@@ -34,17 +34,17 @@ export class CompanyService {
     }
 
     async updateCompany(
-        name: String,
-        domain: String,
-        website: String,
-        address: String,
-        email: String,
-        phone: String,
-        pic: String,
+        name: string,
+        domain: string,
+        website: string,
+        address: string,
+        email: string,
+        phone: string,
+        pic: string,
         socialNetwork: SocialNetwork[],
         overviews: Overview[],
         notes: Note[],
-        documents: String[]
+        documents: string[]
     ) {
         await this.usersService.findUserById(pic)
         let company = await this.findCompany();
@@ -75,6 +75,11 @@ export class CompanyService {
             documents: res.documents
         }
 
+    }
+
+    async getDomainCompany(){
+        const company = await this.companyModel.findOne().select('domain').exec();
+        return company.domain;
     }
 
     async findCompany(): Promise<Company> {

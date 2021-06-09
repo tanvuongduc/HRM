@@ -14,6 +14,7 @@ import { DepartmentModule } from './department/department.module';
 import { CompanyModule } from './company/company.module';
 import { CertificateModule } from './certificate/certificate.module';
 import { ConfigModule } from '@nestjs/config'
+import { MailModule } from './mail/mail.module';
 
 @Module({
     imports: [
@@ -30,7 +31,8 @@ import { ConfigModule } from '@nestjs/config'
         AuthModule,
         DepartmentModule,
         CompanyModule,
-        CertificateModule],
+        CertificateModule,
+        MailModule],
     controllers: [AppController],
     providers: [AppService],
 })

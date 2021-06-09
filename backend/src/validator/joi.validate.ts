@@ -37,8 +37,8 @@ export const isDateRequired = new JoiValidationPipe(
     Joi.date().required()
 );
 export const isArrayString = new JoiValidationPipe(
-    Joi.array().ordered(Joi.string())
+    Joi.array().items(Joi.string())
 );
 export const isArrayStringRequired = new JoiValidationPipe(
-    Joi.array().ordered(Joi.string().required())
+    Joi.array().items(Joi.string().required())
 );

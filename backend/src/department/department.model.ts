@@ -10,11 +10,11 @@ export const DepartmentSchema = new mongoose.Schema({
 })
 
 export interface Department extends mongoose.Document {
-    id: String;
-    code: String;
-    name: String;
-    pic: String;
-    desc?: String;
+    id: string;
+    code: string;
+    name: string;
+    pic: string;
+    desc?: string;
     createdAt: Date;
-    documents: String[];
+    documents: string[];
 }

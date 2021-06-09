@@ -15,11 +15,11 @@ export class TeamService {
     ) { }
 
     async insertTeam(
-        code: String,
-        name: String,
-        pic: String,
-        department: String,
-        sologan: String
+        code: string,
+        name: string,
+        pic: string,
+        department: string,
+        sologan: string
     ) {
         let user = await this.usersService.findUserById(pic);
         await this.departmentService.findDepartmentById(department);
@@ -45,12 +45,12 @@ export class TeamService {
     }
 
     async updateTeam(
-        id: String,
-        code: String,
-        name: String,
-        pic: String,
-        department: String,
-        sologan: String
+        id: string,
+        code: string,
+        name: string,
+        pic: string,
+        department: string,
+        sologan: string
     ) {
         let team = await this.findTeamById(id);
         let user = await this.usersService.findUserById(pic);
@@ -76,7 +76,7 @@ export class TeamService {
         };
     }
 
-    async getTeamById(id: String) {
+    async getTeamById(id: string) {
         const team = await this.findTeamById(id);
         return {
             id: team.id,
@@ -104,15 +104,15 @@ export class TeamService {
         }));
     }
 
-    async getMembersByTeamId(id: String) {
+    async getMembersByTeamId(id: string) {
         const users = await this.usersService.getMembersByTeamId(id);
         return users;
     }
 
 
     async insertTeamIdForMembers(
-        ids: String[],
-        idTeam: String
+        ids: string[],
+        idTeam: string
     ) {
         const team = await this.findTeamById(idTeam);
         if (team) {
@@ -124,8 +124,8 @@ export class TeamService {
 
 
     async removeMembersByTeamId(
-        ids: String[],
-        idTeam: String
+        ids: string[],
+        idTeam: string
     ) {
         const team = await this.findTeamById(idTeam);
         if (team) {
@@ -136,8 +136,8 @@ export class TeamService {
     }
 
     async insertDepartmentForTeamsId(
-        teamsId: String[],
-        departmentId: String
+        teamsId: string[],
+        departmentId: string
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
         let teamsArr = [];
@@ -152,8 +152,8 @@ export class TeamService {
     }
 
     async removeDepartmentFromTeamsId(
-        teamsId: String[],
-        departmentId: String
+        teamsId: string[],
+        departmentId: string
     ) {
         let teams = await this.teamModel.find().where('_id').in(teamsId).exec();
         let teamsArr = [];
@@ -169,7 +169,7 @@ export class TeamService {
         }
     }
 
-    async getTeamsByDepartmentId(department: String) {
+    async getTeamsByDepartmentId(department: string) {
         const teams = await this.teamModel.find().where({ department: department }).exec();
         return teams.map(team => ({
             id: team.id,
@@ -185,7 +185,7 @@ export class TeamService {
     }
 
 
-    async findTeamById(id: String): Promise<Team> {
+    async findTeamById(id: string): Promise<Team> {
         let team: any;
         try {
             team = await this.teamModel.findById(id).populate('pic').populate('department').exec();

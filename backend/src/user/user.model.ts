@@ -20,7 +20,7 @@ export const UserSchema = new mongoose.Schema({
     socialNetwork: {
         type: {
             title: String, //twiter facebook zalo
-            link: String
+            url: String
         },
         default: null
     },
@@ -37,34 +37,34 @@ export const UserSchema = new mongoose.Schema({
 });
 
 export interface SocialNetwork {
-    title: String;
-    link: String;
+    title: string;
+    url: string;
 }
 export interface Certificate {
-    id: String;
+    id: string;
     recivedAt: Date;
     createdAt: Date;
-    note: String;
+    note: string;
 }
 export interface Bank {
-    bankName: String;
-    ownName: String;
-    bankNumber: String;
+    bankName: string;
+    ownName: string;
+    bankNumber: string;
 }
 export type UserStatus = 'pending' | 'working' | 'retired';
 
 export interface User extends mongoose.Document {
-    id: String;
-    name: String;
-    password: String;
-    avatar: String;
+    id: string;
+    name: string;
+    password: string;
+    avatar: string;
     birthday: Date;
-    adress: String;
+    adress: string;
     certificates: Certificate[];
-    phone: String;
-    email: String;
+    phone: string;
+    email: string;
     socialNetwork: SocialNetwork[];
     bank: Bank;
     status: UserStatus;
-    teams: String[];
+    teams: string[];
 }

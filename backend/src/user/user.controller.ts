@@ -1,3 +1,4 @@
+import { CompanyService } from './../company/company.service';
 import { CertificatesValidate, UserStatusValidate, BankValidate, SocialNetworksValidate } from './user.validate';
 import { isStringRequired, isDateRequired, isPhoneNumberRequired, isEmailRequired, isArrayString } from './../validator/joi.validate';
 import {
@@ -21,25 +22,27 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class UsersController {
 
 
-    constructor(private readonly usersService: UsersService) { }
-
-
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly companyService: CompanyService
+    ) { }
     // @UseGuards(JwtAuthGuard)
     @Post()
     async insertUser(
         // @Body() req,
-        @Body('name', isStringRequired) name: String,
+        @Body('name', isStringRequired) name: string,
         @Body('birthday', isDateRequired) birthday: Date,
-        @Body('adress', isStringRequired) adress: String,
+        @Body('adress', isStringRequired) adress: string,
         @Body('certificates', CertificatesValidate) certificates: Certificate[],
-        @Body('phone', isPhoneNumberRequired) phone: String,
-        @Body('email', isEmailRequired) email: String,
-        @Body('password', isStringRequired) password: String,
-        @Body('teams', isArrayString) teams: String[],
+        @Body('phone', isPhoneNumberRequired) phone: string,
+        @Body('email', isEmailRequired) email: string,
+        @Body('password', isStringRequired) password: string,
+        @Body('teams', isArrayString) teams: string[],
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus
     ) {
+        
         const generatedId = await this.usersService.insertUser(
             name,
             birthday,
@@ -68,7 +71,7 @@ export class UsersController {
 
     @Get(':id')
     getUserById(
-        @Param('id', isStringRequired) id: String
+        @Param('id', isStringRequired) id: string
     ) {
         return this.usersService.getUserById(id);
     }
@@ -83,18 +86,18 @@ export class UsersController {
     @Patch(':id')
     async updateUserByAdmin(
         @Request() req,
-        @Param('id', isStringRequired) id: String,
-        @Body('name', isDateRequired) name: String,
+        @Param('id', isStringRequired) id: string,
+        @Body('name', isDateRequired) name: string,
         @Body('birthday', isDateRequired) birthday: Date,
-        @Body('adress', isStringRequired) adress: String,
+        @Body('adress', isStringRequired) adress: string,
         @Body('certificate', CertificatesValidate) certificates: Certificate[],
-        @Body('phone', isPhoneNumberRequired) phone: String,
-        @Body('email', isEmailRequired) email: String,
-        @Body('password', isStringRequired) pasword: String,
+        @Body('phone', isPhoneNumberRequired) phone: string,
+        @Body('email', isEmailRequired) email: string,
+        @Body('password', isStringRequired) pasword: string,
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus,
-        @Body('teams', isArrayString) teams: String[]
+        @Body('teams', isArrayString) teams: string[]
     ) {
         let res = await this.usersService.updateUserByAdmin(
             id,
@@ -118,13 +121,13 @@ export class UsersController {
     @Patch()
     async updateUser(
         @Request() req,
-        @Body('name', isDateRequired) name: String,
+        @Body('name', isDateRequired) name: string,
         @Body('birthday', isDateRequired) birthday: Date,
-        @Body('adress', isStringRequired) adress: String,
+        @Body('adress', isStringRequired) adress: string,
         @Body('certificate', CertificatesValidate) certificates: Certificate[],
-        @Body('phone', isPhoneNumberRequired) phone: String,
-        @Body('email', isEmailRequired) email: String,
-        @Body('password', isStringRequired) pasword: String,
+        @Body('phone', isPhoneNumberRequired) phone: string,
+        @Body('email', isEmailRequired) email: string,
+        @Body('password', isStringRequired) pasword: string,
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus

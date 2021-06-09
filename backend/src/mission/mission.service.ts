@@ -12,10 +12,10 @@ export class MissionService {
 
 
     async insertMission(
-        title: String,
-        content: String,
-        department: String,
-        team: String,
+        title: string,
+        content: string,
+        department: string,
+        team: string,
     ) {
         const newMission = new this.missionModel({
             title,
@@ -25,7 +25,7 @@ export class MissionService {
             createBy: "me"
         });
         const res = await newMission.save();
-        return res.id as String;
+        return res.id as string;
     }
     async getMissions() {
         const missions = await this.missionModel.find().exec();
@@ -41,7 +41,7 @@ export class MissionService {
         }));
     }
     async getDepartmentMissions(
-        department: String
+        department: string
     ) {
         const missions = await this.missionModel.find().select({department:department}).exec();
         return missions.map(mission=>({
@@ -56,7 +56,7 @@ export class MissionService {
         }));
     }
     async getSingleMission(
-        mid: String
+        mid: string
     ) {
         const mission = await this.findMission(mid);
         return {
@@ -70,8 +70,8 @@ export class MissionService {
         }
     }
     async setStatusMission(
-        mid: String,
-        status: String
+        mid: string,
+        status: string
     ) {
         const mission = await this.findMission(mid);
         mission.status = status;
@@ -87,8 +87,8 @@ export class MissionService {
         }
     }
     async setTeamMission(
-        mid: String,
-        team: String
+        mid: string,
+        team: string
     ) {
         const mission = await this.findMission(mid);
         mission.team = team;
@@ -103,7 +103,7 @@ export class MissionService {
             createBy: result.createBy,
         }
     }
-    private async findMission(id: String): Promise<Mission> {
+    private async findMission(id: string): Promise<Mission> {
         let mission: any;
         try {
             mission = await this.missionModel.findById(id).exec();

@@ -12,14 +12,14 @@ export class UsersService {
     ) { }
 
     async insertUser(
-        name: String,
+        name: string,
         birthday: Date,
-        adress: String,
+        adress: string,
         certificates: Certificate[],
-        phone: String,
-        email: String,
-        teams: String[],
-        password: String,
+        phone: string,
+        email: string,
+        teams: string[],
+        password: string,
         socialNetwork: SocialNetwork[],
         bank: Bank,
         status: UserStatus
@@ -53,10 +53,10 @@ export class UsersService {
             status
         });
         const result = await newUser.save();
-        return result.id as String;
+        return result.id as string;
     }
 
-    async getUserById(uid: String) {
+    async getUserById(uid: string) {
         const user = await this.findUserById(uid);
         if (user.certificates && user.certificates.length) {
             for (let cer of user.certificates) {
@@ -81,14 +81,14 @@ export class UsersService {
     }
 
     async updateUser(
-        uid: String,
-        name: String,
+        uid: string,
+        name: string,
         birthday: Date,
-        adress: String,
+        adress: string,
         certificates: Certificate[],
-        phone: String,
-        email: String,
-        password: String,
+        phone: string,
+        email: string,
+        password: string,
         socialNetwork: SocialNetwork[],
         bank: Bank,
         status: UserStatus
@@ -126,18 +126,18 @@ export class UsersService {
     }
 
     async updateUserByAdmin(
-        uid: String,
-        name: String,
+        uid: string,
+        name: string,
         birthday: Date,
-        adress: String,
+        adress: string,
         certificates: Certificate[],
-        phone: String,
-        email: String,
-        password: String,
+        phone: string,
+        email: string,
+        password: string,
         socialNetwork: SocialNetwork[],
         bank: Bank,
         status: UserStatus,
-        teams: String[]
+        teams: string[]
     ) {
         await this.userModel.findOne().where({ email: email }).exec()
         const updatedUser = await this.findUserById(uid);
@@ -197,7 +197,7 @@ export class UsersService {
     }
 
 
-    async getMembersByTeamId(id: String) {
+    async getMembersByTeamId(id: string) {
         const members = await this.userModel.find({ teams: { $all: [id] } })
         return {
             members: members
@@ -205,8 +205,8 @@ export class UsersService {
     }
 
     async removeTeamIdFromUsers(
-        ids: String[],
-        teamId: String
+        ids: string[],
+        teamId: string
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()
         if (users.length < 0) throw new HttpException('Nobody here.', 400);
@@ -230,8 +230,8 @@ export class UsersService {
     }
 
     async insertTeamIdForUsers(
-        ids: String[],
-        teamId: String
+        ids: string[],
+        teamId: string
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()
         if (users.length < 0) throw new HttpException('Nobody here.', 400);
@@ -253,7 +253,7 @@ export class UsersService {
         return res;
     }
 
-    async findUserById(id: String): Promise<User> {
+    async findUserById(id: string): Promise<User> {
         let user: any;
         try {
             user = await this.userModel.findById(id).exec();
@@ -266,8 +266,8 @@ export class UsersService {
         return user;
     }
 
-    async findInfoUserByEmail(email: String) {
-        let user
+    async findInfoUserByEmail(email: string) {
+        let user;
         try {
             user = await this.userModel.findOne().where({ email: email }).exec();
         } catch (error) {
@@ -291,5 +291,18 @@ export class UsersService {
             // avatar: user.avatar,
             // teams: user.teams
         };
+    }
+    async findMailOfAllUsers() {
+        try {
+            const users = await this.userModel.find().select("mail name phone -_id").exec();
+            return users.map(user => ({
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            }));
+        }
+        catch {
+            return [];
+        }
     }
 }

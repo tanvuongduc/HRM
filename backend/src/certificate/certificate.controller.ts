@@ -16,9 +16,9 @@ export class CertificateController {
 
     @Post()
     async insertCertificate(
-        @Body('code') code: String,
-        @Body('name') name: String,
-        @Body('desc') desc: String,
+        @Body('code') code: string,
+        @Body('name') name: string,
+        @Body('desc') desc: string,
     ) {
         const res = await this.certificateService.insertCertificate(code, name, desc);
         return res;
@@ -26,7 +26,7 @@ export class CertificateController {
 
     @Get(':id')
     async getCertificateById(
-        @Param('id') id: String
+        @Param('id') id: string
     ) {
         const res = await this.certificateService.getCertificateById(id);
         return res;
@@ -41,10 +41,10 @@ export class CertificateController {
 
     @Patch(':id')
     async updateCertificate(
-        @Param('id') id: String,
-        @Body('code') code: String,
-        @Body('name') name: String,
-        @Body('desc') desc: String,
+        @Param('id') id: string,
+        @Body('code') code: string,
+        @Body('name') name: string,
+        @Body('desc') desc: string,
     ) {
         const res = await this.certificateService.updateCertificate(id, code, name, desc);
         return res;

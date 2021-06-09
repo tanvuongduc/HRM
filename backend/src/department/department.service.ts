@@ -19,10 +19,10 @@ export class DepartmentService {
     }
 
     async insertDepartment(
-        code: String,
-        name: String,
-        pic: String,
-        desc: String,
+        code: string,
+        name: string,
+        pic: string,
+        desc: string,
     ) {
         if (!code) {
             throw new HttpException('Code must be not null!', 400);
@@ -47,7 +47,7 @@ export class DepartmentService {
     }
 
     async getDepartmentById(
-        id: String
+        id: string
     ) {
         const department = await this.findDepartmentById(id);
 
@@ -63,8 +63,8 @@ export class DepartmentService {
     }
 
     async removeTeamsByDepartmentId(
-        teamsId: String[],
-        departmentId: String
+        teamsId: string[],
+        departmentId: string
     ) {
         await this.findDepartmentById(departmentId);
         const res = await this.teamService.removeDepartmentFromTeamsId(teamsId, departmentId)
@@ -75,12 +75,12 @@ export class DepartmentService {
     }
 
     async updateDepartmentById(
-        id: String,
-        code: String,
-        name: String,
-        pic: String,
-        desc: String,
-        documents: String[]
+        id: string,
+        code: string,
+        name: string,
+        pic: string,
+        desc: string,
+        documents: string[]
     ) {
         await this.usersService.findUserById(pic)
         let department = await this.findDepartmentById(id);
@@ -116,14 +116,14 @@ export class DepartmentService {
     }
 
     async getTeamsByDepartmentId(
-        id: String
+        id: string
     ) {
         return this.teamService.getTeamsByDepartmentId(id);
     }
 
     async insertTeamsByDepartmentId(
-        teamsId: String[],
-        departmentId: String
+        teamsId: string[],
+        departmentId: string
     ) {
         await this.findDepartmentById(departmentId);
         const res = await this.teamService.insertDepartmentForTeamsId(teamsId, departmentId)
@@ -134,7 +134,7 @@ export class DepartmentService {
     }
 
 
-    async findDepartmentById(id: String): Promise<Department> {
+    async findDepartmentById(id: string): Promise<Department> {
         let department: any;
         try {
             department = await this.departmentModel.findById(id).populate('pic').populate('documents').exec();

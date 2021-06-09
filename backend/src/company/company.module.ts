@@ -11,6 +11,7 @@ import {UserModule} from '../user/user.module';
     MongooseModule.forFeature([{name: 'Company', schema: CompanySchema}]),
   ],
   providers: [CompanyService],
-  controllers: [CompanyController]
+  controllers: [CompanyController],
+  exports:[CompanyService]
 })
 export class CompanyModule { }
