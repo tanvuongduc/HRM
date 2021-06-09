@@ -9,6 +9,7 @@ import Certificate from '../../../Modules/Certificate/Certificate'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
 import Department from '../../../Modules/Department/Department';
+import AppHeader from '../AppHeader/NavBar/AppHeader'
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
         return (
             <Switch>
                 {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
+                <Route path={`${path}/header`} component={AppHeader} />
                 <Route path={`${path}/company`} component={Company} />
                 <Route path={`${path}/career`} component={Career} />
                 <Route path={`${path}/exam`} component={Exam} />
