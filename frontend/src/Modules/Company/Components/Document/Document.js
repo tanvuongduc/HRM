@@ -13,9 +13,16 @@ export default class Document extends Form {
         this.state = {
             company: {},
             document: [],
-            id_delete: "",
-            notiMessage: ""
+            id_document: null,
+            id_delete: null,
+            notiMessage: null
         }
+    };
+
+    handleStyleEditing = () => {
+        if (this.props.handleEditing) {
+            return { display: 'block' };
+        } else return { display: 'none' };
     };
 
     /*----------------------------------------------*/
@@ -23,9 +30,11 @@ export default class Document extends Form {
     getDocument = () => {
         CompanyService.getCompanyByLocation()
             .then(res => {
+                let id_document = res.data.documents.map(id => ({ id: id._id }))
                 this.setState({
                     company: res.data,
-                    document: res.data.documents
+                    document: res.data.documents,
+                    id_document: id_document
                 })
             })
             .catch((error) => {
@@ -35,20 +44,20 @@ export default class Document extends Form {
 
     /*----------------------------------------------*/
 
-    updateUpload = (idDocumentUpload) => {
-        this.state.document.push(idDocumentUpload);
-        this.setState({
-            document: this.state.document
-        })
+    winOpen = (event) => {
+        AuthService._winOpen(event.target.value)
+    };
 
-        CompanyService.finishDocumentResult(this.state.document, this.state.company)
+    updateUpload = (idUpload, DocumentUpload) => {
+        this.state.document.push(DocumentUpload)
+        this.state.id_document.push({ id: idUpload })
+        this.setState({ document: this.state.document })
+
+        let _idUpdate = this.state.id_document.map(id => id.id)
+        CompanyService.finishDocumentResult(_idUpdate, this.state.company)
             .catch((error) => {
                 console.error('Error:', error);
             })
-    };
-
-    winOpen = (event) => {
-        AuthService._winOpen(event.target.value)
     };
 
     /*----------------------------------------------*/
@@ -61,13 +70,13 @@ export default class Document extends Form {
     };
 
     answer = (event) => {
-        this.setState({ notiMessage: '' })
+        this.setState({ notiMessage: null })
         if (event) {
-            const newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
+            let newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
             this.setState({ document: newDocument })
 
-            const _idDocument = newDocument.map(e => e._id)
-            CompanyService.finishDocumentResult(_idDocument, this.state.company)
+            let _idDelete = this.state.document.map(id => id._id)
+            CompanyService.finishDocumentResult(_idDelete, this.state.company)
                 .catch((error) => {
                     console.error('Error:', error);
                 })
@@ -80,6 +89,8 @@ export default class Document extends Form {
         this.getDocument();
     };
 
+    /*----------------------------------------------*/
+
     niceBytes = (x) => {
         const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         let l = 0, n = parseInt(x, 10) || 0;
@@ -89,11 +100,19 @@ export default class Document extends Form {
         return (n.toFixed(n < 10 && l > 0 ? 1 : 0) + ' ' + units[l]);
     };
 
+    formatDate = (d) => {
+        let newDate = new Date(d.toLocaleString())
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        return `${year}/${month < 10 ? `0${month}` : `${month}`}/${date < 10 ? `0${date}` : `${date}`}`
+    };
+
     render() {
         return (
             <div className="document-content">
                 <div className="document-header">
-                    <h3>Document</h3><Upload idUpload={(idDocumentUpload) => this.updateUpload(idDocumentUpload)} />
+                    <h3>Document</h3><Upload Upload={(idUpload, DocumentUpload) => this.updateUpload(idUpload, DocumentUpload)} />
                 </div>
                 <div className="document-item">
                     {
@@ -102,14 +121,14 @@ export default class Document extends Form {
                                 <div className="document-item-title">
                                     <div className="item-content">
                                         <p><b>File name: </b>{event.fileName}{'.'}{event.extension}</p>
-                                        <p><b>Created: </b>{event.createdAt}</p>
+                                        <p><b>Created: </b>{this.formatDate(event.createdAt)}</p>
                                         <p><b>Size: </b>{this.niceBytes(event.size)}</p>
                                     </div>
                                     <div className="item-menuIcon">
-                                        <IconButton color="primary" value={event.url} onClick={(event) => this.winOpen(event)} >
+                                        <IconButton color="primary" value={event.url} onClick={(event) => this.winOpen(event)}>
                                             <SaveAltIcon />
                                         </IconButton>
-                                        <IconButton color="secondary" value={event._id} onClick={this.handleDelete}>
+                                        <IconButton color="secondary" value={event._id} onClick={this.handleDelete} style={this.handleStyleEditing()}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </div>

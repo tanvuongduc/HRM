@@ -28,22 +28,29 @@
                 display: flex;
                 flex-wrap: wrap;
                 text-align: justify;
+                justify-content: space-between;
                 .item-content {
                     width: 92%;
+                    display: flex;
+                    flex-wrap: wrap;
                     height: auto;
-                }
-                .item-content:first-child {
-                    margin: auto;
+                    justify-content: space-between;
+                    .item-form {
+                        width: 49.5%;
+                        height: auto;
+                        .item-form-textfield {
+                            background-color: rgb(255, 246, 235);
+                        }
+                    }
                 }
                 .item-menuIcon {
-                    width: 8%;
+                    width: 6%;
                     height: auto;
-                    text-align: right;
                 }
             }
         }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         margin-top: 15px;
     }
 }

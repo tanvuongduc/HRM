@@ -54,16 +54,16 @@ export class Http {
 		});
 	};
 
-	static upload(file, title, desc) {
-		const formData = new FormData();
-		formData.append('file', file, file.name)
-		formData.append('title', title)
-		formData.append('desc', desc)
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data'
-			}
-		}
-		return Axios.post(BASE_URL + "upload", formData, config)
-	}
+	// static upload(file, title, desc) {
+	// 	const formData = new FormData();
+	// 	formData.append('file', file, file.name)
+	// 	formData.append('title', title)
+	// 	formData.append('desc', desc)
+	// 	const config = {
+	// 		headers: {
+	// 			'content-type': 'multipart/form-data'
+	// 		}
+	// 	}
+	// 	return Axios.post(BASE_URL + "upload", formData, config)
+	// }
 }

@@ -1,7 +1,7 @@
 import { Modal, Button, FormControl, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import React from 'react'
 
 const getModalStyle = () => {
@@ -58,7 +58,7 @@ const ModalAdd = (props) => {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Note</Button>
+            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<NoteAddIcon />}>Add note</Button>
             <Modal open={modal} onClose={handleModal} >
                 <div style={modalStyle}>
                     <h4>Create a new note</h4><hr />

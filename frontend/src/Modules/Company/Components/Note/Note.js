@@ -1,11 +1,9 @@
 import React from 'react'
 import ModalAdd from './ModalAdd';
-import Menu from '@material-ui/core/Menu';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import CompanyService from '../../Shared/CompanyService';
 import { ModalConfirm, Form } from '../../Shared/';
 
@@ -13,22 +11,41 @@ export default class Note extends Form {
     constructor(props) {
         super(props);
         this.state = {
-            anchorEl: null,
             company: {},
             note: [],
-            notiMessage: "",
-            index_delete: ""
+            index_delete: null,
+
+            index_update: null,
+            note_update: {},
+            title_update: null,
+            desc_update: null,
+
+            notiMessage: null,
         }
     };
 
-    getNote() {
+    handleStyleEditing = () => {
+        if (this.props.handleEditing) {
+            return { display: 'block' };
+        } else return { display: 'none' };
+    };
+
+    editingNote = (event) => {
+        let name = event.target.name;
+        let value = event.target.value;
+
+        // this.setState({ note_update: { [name]: value } })
+        // console.log(this.state.note_update, 'oooo')
+    };
+
+    /*--------------------------------------------------*/
+
+    getNote = () => {
         CompanyService.getCompanyByLocation()
             .then(res => {
                 this.setState({
+                    ompany: res.data,
                     note: res.data.notes
-                })
-                this.setState({
-                    company: res.data
                 })
             })
             .catch((error) => {
@@ -38,9 +55,7 @@ export default class Note extends Form {
 
     addNote = (item) => {
         this.state.note.push(item)
-        this.setState({
-            note: this.state.note
-        });
+        this.setState({ note: this.state.note })
 
         CompanyService.finishNoteResult(this.state.note, this.state.company)
             .catch((error) => {
@@ -50,43 +65,24 @@ export default class Note extends Form {
 
     /*--------------------------------------------------*/
 
-    handleClick = (e) => {
-        this.setState({ anchorEl: e.currentTarget });
-    };
-
-    handleClose = () => {
-        this.setState({ anchorEl: null })
-    };
-
-    handleEdit = () => {
-        this.setState({ anchorEl: null })
-    };
-
-    /*--------------------------------------------------*/
-
     handleDelete = (event) => {
-        console.log(event, 'llll')
-        // this.setState({
-        //     index_delete: event,
-        //     notiMessage: 'Are you sure you want to delete this note ?',
-        //     anchorEl: null
-        // })
+        this.setState({
+            index_delete: event.target.value,
+            notiMessage: 'Are you sure you want to delete this note ?'
+        })
     };
 
-    answer = async (event) => {
-        this.setState({ notiMessage: '' })
-        
-        // if (event) {
-        //     this.state.note.map((index) => {
-        //         this.state.note.splice(index, this.state.index_delete)
-        //         this.setState({ note: this.state.note })
+    answer = (event) => {
+        this.setState({ notiMessage: null })
+        if (event) {
+            this.state.note.splice(this.state.index_delete, 1)
+            this.setState({ note: this.state.note })
 
-        //     })
-        //     // await CompanyService.finishNoteResult(this.state.note, this.state.company)
-        //     //     .catch((error) => {
-        //     //         console.error('Error:', error);
-        //     //     })
-        // } else null
+            CompanyService.finishNoteResult(this.state.note, this.state.company)
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+        } else null;
     };
 
     /*--------------------------------------------------*/
@@ -106,19 +102,27 @@ export default class Note extends Form {
                         this.state.note.map((event, index) => (
                             <div key={index}>
                                 <div className="note-item-title">
-                                    <div className="item-content"><b>{event.title}</b></div>
-                                    <div className="item-menuIcon">
-                                        <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={(e) => this.handleClick(e)}>
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                        <Menu id="simple-menu" anchorEl={this.state.anchorEl} keepMounted open={Boolean(this.state.anchorEl)} onClose={this.handleClose}>
-                                            <MenuItem onClick={this.handleEdit}><EditIcon />&emsp;Edit Note</MenuItem>
-                                            <MenuItem onClick={(index) => this.handleDelete(index)}><DeleteIcon />&emsp;Delete Note</MenuItem>
-                                            <ModalConfirm message={this.state.notiMessage} answer={(event) => this.answer(event)} />
-                                        </Menu>
-                                    </div>
                                     <div className="item-content">
-                                        <p><b>Description: </b>{event.desc}</p>
+                                        <FormControl className="item-form" fullWidth>
+                                            {
+                                                (this.props.handleEditing) ?
+                                                    <TextField className="item-form-textfield" label="Title" name="title" defaultValue={event.title} multiline variant="outlined" onChange={(event) => this.editingNote(event)} InputProps={{ readOnly: !this.props.handleEditing }} /> :
+                                                    <TextField className="item-form-textfield" disabled label="Title" defaultValue={event.title} multiline variant="outlined" />
+                                            }
+                                        </FormControl><br /><br />
+                                        <FormControl className="item-form" fullWidth>
+                                            {
+                                                (this.props.handleEditing) ?
+                                                    <TextField className="item-form-textfield" label="Description" name="desc" defaultValue={event.desc} multiline variant="outlined" onChange={(event) => this.editingNote(event)} InputProps={{ readOnly: !this.props.handleEditing }} /> :
+                                                    <TextField className="item-form-textfield" disabled label="Description" defaultValue={event.desc} multiline variant="outlined" />
+                                            }
+                                        </FormControl>
+                                    </div>
+                                    <div className="item-menuIcon" style={this.handleStyleEditing()}>
+                                        <IconButton color="secondary" value={index} onClick={(event) => this.handleDelete(event)} >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                        <ModalConfirm message={this.state.notiMessage} answer={(event) => this.answer(event)} />
                                     </div>
                                 </div><hr />
                             </div>

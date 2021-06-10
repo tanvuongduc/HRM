@@ -27,19 +27,19 @@
                 height: auto;
                 display: flex;
                 flex-wrap: wrap;
+                justify-content: space-between;
                 .item-content {
-                    width: 90%;
+                    width: 92%;
                     height: auto;
                 }
                 .item-menuIcon {
-                    width: 10%;
+                    width: 6%;
                     height: auto;
-                    text-align: center;
                 }
             }
         }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         margin-top: 15px;
     }
 }

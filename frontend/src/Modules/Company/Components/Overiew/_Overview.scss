@@ -1,7 +1,7 @@
-@import '../Quickview/Quickview';
-@import '../Contact/Contact';
-@import '../Note/Note';
-@import '../Document/Document';
+@import "../Quickview/Quickview";
+@import "../Contact/Contact";
+@import "../Note/Note";
+@import "../Document/Document";
 
 .overview-content {
     box-sizing: border-box;
@@ -11,4 +11,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    .overview-btn-edit {
+        width: 100%;
+        height: auto;
+        margin-top: 50px;
+        text-align: right;
+    }
+    @media (max-width: 1024px) {
+        .overview-btn-edit {
+            margin-top: 15px;
+        }
+    }
 }

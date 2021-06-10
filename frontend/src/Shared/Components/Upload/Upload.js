@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { Modal, Button } from '@material-ui/core';
 
 class Upload extends Component {
@@ -14,22 +14,23 @@ class Upload extends Component {
 
 	handleModal = () => {
 		this.setState({ modal: !this.state.modal })
-	}
+	};
 
 	onFileUpload = async (event) => {
 		event.preventDefault();
 		event.target.reset();
 
-		const formData = new FormData();
+		let formData = new FormData();
 		formData.append(
 			"file",
 			this.state.selectedFile,
 			this.state.selectedFile.name
 		);
-		const upload = await axios.post("http://103.138.108.104:3000/upload", formData)
-		const idDocumentUpload = upload.data.id;
-		this.props.idUpload(idDocumentUpload)
+		let upload = await axios.post("http://103.138.108.104:3000/upload", formData)
+		let idUpload = upload.data.id
+		let DocumentUpload = upload.data
 
+		this.props.Upload(idUpload, DocumentUpload)
 		this.setState({ modal: !this.state.modal })
 	};
 
@@ -62,7 +63,7 @@ class Upload extends Component {
 	render() {
 		return (
 			<div>
-				<Button variant="contained" color="primary" onClick={this.handleModal} startIcon={<AddCircleIcon />}>Document</Button>
+				<Button variant="contained" color="primary" onClick={this.handleModal} startIcon={<AttachFileIcon />}>Upload file</Button>
 				<Modal open={this.state.modal} onClose={this.handleModal} >
 					<div className="modalStyle">
 						<h4>Upload new file</h4><hr />

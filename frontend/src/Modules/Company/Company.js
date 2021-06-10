@@ -13,5 +13,4 @@ const Company = (props) => {
 		</div>
 	)
 }
-
 export default withRouter(Company);
