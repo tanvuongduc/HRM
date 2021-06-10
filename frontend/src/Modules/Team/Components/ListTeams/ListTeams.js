@@ -10,7 +10,6 @@ import ModalConfirm from '../../../../Shared/Components/ModalConfirm/ModalConfir
 import { Link } from "react-router-dom";
 import { Delete } from '@material-ui/icons';
 import TeamService from '../../Shared/TeamService';
-import { teal } from "@material-ui/core/colors";
 
 const useStyles = (theme) => ({
   btn: {
@@ -71,7 +70,7 @@ class Teams extends Component {
                 <TableCell align="centrer"><strong>Trưởng team</strong></TableCell>
                 <TableCell align="centrer"><strong>Phòng ban</strong></TableCell>
                 <TableCell align="centrer"><strong>Số lượng thành viên</strong></TableCell>
-                <TableCell><div className={classes.btn}><Button size="small" variant="contained" color="primary" href="./Teams/0">Thêm mới</Button></div></TableCell>
+                <TableCell><div className={classes.btn}><Button size="small" variant="contained" color="primary" href="./team/0">Thêm mới</Button></div></TableCell>
               </TableRow>
             </TableHead>
             <TableBody >
@@ -85,7 +84,7 @@ class Teams extends Component {
                   <TableCell align="centrer">{item.desc}</TableCell>
                   <TableCell >
                     <div className={classes.btn}>
-                      <Link to={`Teams/${item.id}`}>
+                      <Link to={`team/${item.id}`}>
                         <Button size="small" variant="contained" color="primary" >Sửa</Button>
                       </Link>
                     </div>

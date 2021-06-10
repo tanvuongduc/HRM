@@ -1,10 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import {
-  Card,
   Container,
   Grid,
   Button,
-  TextField,
   Table,
   TableBody,
   TableCell,
@@ -20,10 +18,13 @@ import MemberInfoTeam from "./MemberInfoTeam/MemberInfoTeam";
 import form from "../../../Shared/Components/Form/Form";
 import AddMember from "../Components/AddMember/AddMember";
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import ModalNoti from "../../../Shared/Components/ModalNoti/ModalNoti";
+import ModalConfirm from "../../../Shared/Components/ModalConfirm/ModalConfirm"
+import { Fragment } from "react";
 
 const useStyles = (theme) => ({
   infor: {
-    padding: "30px 0px 10px 0px",
+    padding: "10px 0px 10px 0px",
   },
   title: {
     padding: "5px 5px 5px 20px ",
@@ -38,13 +39,19 @@ const useStyles = (theme) => ({
     border: "1px solid #c3c3c3",
     padding: "30px 10px 10px 10px",
   },
+  btn: {
+    padding: theme.spacing(1),
+    marginRight: `10px`,
+    float: "right"
+  },
 });
 
 class MainTeam extends form {
   constructor(props) {
     super(props);
     this.state = {
-      basicInfoTeam: [],
+      notiMessage: '',
+      confirmMessage: '',
       listMemberTeam: [],
       listMembers:[],
       listMemberChoosed:[],
@@ -53,17 +60,18 @@ class MainTeam extends form {
       dataUser: [],
       ////control form
       idItemChoosed: null,
-   
       tags: [],
       form: this._getInitFormData({
-        name: "",
-        pic: "",
-        department: "",
+        name:"",
+        pic: [],
+        code: "",
+        department:[],
         sologan: "",
         achievements: "",
+        createAt: "",
       }),
   
-    anchorEl: null,
+    anchorEl: true,
     open: false,
     checkedB: true
     };
@@ -73,23 +81,20 @@ class MainTeam extends form {
   componentDidMount = () => {
     TeamService.getBasicInfoTeam(this.state.idTeam).then((res) => {
       let data = res.data;
-      let _data = {
-        name: data.name,
-        sologan: data.sologan,
+      this._fillForm({
+        name:data.name,
+        pic: data.pic._id,
+        code: data.code,
+        department:data.department._id,
+        sologan:data.sologan,
+        achievements:data.achievements,
         createAt: data.createAt,
-        department: data.department,
-        achievements: data.achievements,
-        pic:data.pic._id
-      };
-      this.setState({
-        basicInfoTeam: _data,
       });
     });
     
     //list member of team by idTeam
     TeamService.getListMemberTeam(this.state.idTeam).then((res) => {
       let Users = res.data.members;
-      console.log(Users);
       let _listMemberTeam = [];
       Users.map((user, i) => {
         _listMemberTeam.push(user);
@@ -100,12 +105,8 @@ class MainTeam extends form {
     });
   };
 
-
-
-  deleteMemberId = (id) => {
-    TeamService.deleteRemoveMember(this.state.idTeam);
-  };
  
+ // 
   handleClick = (event) => {
     const { currentTarget } = event;
     this.setState((state) => ({
@@ -118,6 +119,8 @@ class MainTeam extends form {
       open: false
     });
   };
+
+
   addMembersToTeam = (listMemberChoosed) =>{
     this.setState({
       listMemberChoosed:listMemberChoosed
@@ -136,20 +139,81 @@ class MainTeam extends form {
     });
      TeamService.postAddMember(this.state.idTeam,listID)
   }
-  onSubmit =()=>{
-    
-    
+  onDelete=(id) =>{
+      let data={
+        members:[id]
+      }
+      TeamService.deleteRemoveMember(this.state.idTeam,data)
+     let list = this.state.listMemberTeam
+     let newList=[]
+     list.map((data,i) =>{
+      if( data._id !==id){
+         newList.push(data)
+       };
+     });
+     this.setState({
+      listMemberTeam:newList
+     })
   }
+///
+  onSubmit = () => {
+    let id = this.props.match.params.id;
+    if (id !=="0") {
+      this.setState({
+        confirmMessage: 'Bạn muốn cập nhập thông tin này không ?'
+      });
+    } else {
+      this.setState({
+        confirmMessage: 'Bạn muốn thêm mới thành viên này không ?'
+      });
+    }
+  }
+  answer = (answer) => {
+    let id = this.props.match.params.id;
+    let { name , pic, department,code,sologan,achievements} = this.state.form;
+    let data = {
+     name:name.value,
+     pic:pic.value,
+     code: code.value,
+     department:department.value,
+     sologan:sologan.value,
+     achievements:achievements.value,
+  }
+    if (answer) {
+      let method = (id == "0") ? TeamService.postNewTeam(data) : TeamService.updateTeam(id,data);
+      let notiMessage = (id) ? 'Cập nhât thành công' : 'Tạo mới thành công'
+      method.then(response => {
+        if (response.status === 200) {
+          this.setState({
+            notiMessage
+          });
+        }
+      }); 
+    }
+    else {
+      this.setState({
+        confirmMessage: ''
+      })
+    }
+  }
+  doneAlret = () => {
+    if (this.state.notiMessage) {
+      window.location.reload(false); 
+    } else {
+      this.setState({ notiMessage: '' })
+    }
+  }
+
 
   render() {
     const { classes } = this.props;
-    let { basicInfoTeam, listMemberTeam, listMemberChoosed, idTeam,form } = this.state;
+    let {  listMemberTeam , idTeam,form } = this.state;
     let _listMemberTeam = listMemberTeam.map((data, i) => {
       return (
         <MemberInfoTeam
           index={i}
           dataMember={data}
-          deleteMember={this.deleteMemberId}
+          onDelete={this.onDelete}
         />
       );
     });
@@ -157,27 +221,28 @@ class MainTeam extends form {
     console.log(form);
     return (
       <Container maxWidth="lg">
+         <ModalConfirm
+            message={this.state.confirmMessage}
+            answer={this.answer}
+          ></ModalConfirm>
+          <ModalNoti
+            message={this.state.notiMessage}
+            done={this.doneAlret}
+          ></ModalNoti>
         <div className={classes.infor}>
-          <BasicInfoTeam data={basicInfoTeam} quantity={listMemberTeam.length} _setValue={this._setValue} onSubmit={this.onSubmit} idTeam={idTeam}/>
-        </div>
-        <div className={classes.title}>
-          <h2>Thông tin thành viên team</h2>
+          <BasicInfoTeam data={form} quantity={listMemberTeam.length} _setValue={this._setValue} _setValueNotCheck={this._setValueNotCheck} onSubmit={this.onSubmit} idTeam={idTeam}/>
         </div>
         <Grid container>
-          <Grid xs="6">
-            <div className={classes.add}>
-            </div>
-          </Grid>
-          <Grid xs="6">
-          <Button variant="contained" color="primary" size="small" startIcon={<PeopleOutlineIcon/>} onClick={this.handleClick}> Chọn để tìm thành viên</Button>
+          <h2>Thông tin thành viên team</h2>
+        <div  className={classes.btn}>
+        <Button variant="contained" color="primary" size="small" startIcon={<PeopleOutlineIcon/>} onClick={this.handleClick}> Chọn để tìm thành viên</Button>
            <Popper  open={open} anchorEl={anchorEl} >
               <ClickAwayListener onClickAway={this.handleClickAway}>
                 <AddMember idTeam={idTeam} addMembersToTeam={this.addMembersToTeam}/>
               </ClickAwayListener>
           </Popper>
+        </div>
           </Grid>
-        </Grid>
-
         <TableContainer className={classes.table}>
           <Table size="small" aria-label="a dense table">
             <TableHead>

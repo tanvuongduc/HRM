@@ -10,6 +10,8 @@ const API_ENDPOINT = {
   GETLISTUSER: 'users',
   GETLIStDEPARTMENT:'departments',
   GETLISTTEAM:'teams',
+  ADDNEWTEAM:'teams',
+  UPDATETEAM:'teams/',
   POSTREMOVEMEMBER: 'teams/',
   POSTADDMEMBER: 'teams/',
 }
@@ -42,6 +44,12 @@ class TeamService {
   /////////////////POST
   postAddMember(id, data){
     return Http.post(API_ENDPOINT.POSTADDMEMBER + id+"/members",data);
+  }
+  postNewTeam(data){
+    return Http.post(API_ENDPOINT.ADDNEWTEAM ,data);
+  }
+  updateTeam(id,data){
+    return Http.patch(API_ENDPOINT.UPDATETEAM +id,data);
   }
 
   ////////////////DELETE

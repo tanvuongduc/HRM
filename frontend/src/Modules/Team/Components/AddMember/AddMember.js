@@ -137,7 +137,7 @@ chooseMember = (id) => {
     return (
         <div className="add-members-box">
           <div className="add-members-to-team">
-            <h4 className="title">Add members to team</h4>
+            <h5 className="title">Thêm</h5>
             <div className="list-members" id="list-members">
               <div className="search-bar">
                 <input
