@@ -16,20 +16,23 @@ class App extends Component {
     render() {
         const { path } = this.props.match;
         return (
-            <Switch>
-                {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
-                <Route path={`${path}/header`} component={AppHeader} />
-                <Route path={`${path}/company`} component={Company} />
-                <Route path={`${path}/career`} component={Career} />
-                <Route path={`${path}/exam`} component={Exam} />
-                <Route path={`${path}/team`} component={Team} />
-                <Route path={`${path}/org`} component={Org} />
-                <Route path={`${path}/department`} component={Department} />
-                <Route path={`${path}/certificate`} component={Certificate} />
-                <Route path={`${path}/user`} component={User} />
-                <Route path={`${path}/management/users`} component={ManagementUsers} />
-
-            </Switch>
+            <div>
+                <Switch>
+                    {/* <Route exact path={`${path}/department`} component={Department} /> */}
+                    <Route exact path={`${path}/company`} component={Company} />
+                    <Route exact path={`${path}/career`} component={Career} />
+                    <Route exact path={`${path}/exam`} component={Exam} />
+                    <Route path={`${path}/team/:id`} component={MainTeam} />
+                    <Route path={`${path}/teams`} component={Teams} />
+                    <Route path={`${path}/1/add`} component={add} />
+                    {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
+                    <Route  path={`${path}/department`} exact component={Listdepartment} />
+                    {/* <Route  path={`${path}/department/:id`} exact component={Formdepartment} /> */}
+                    <Route path={`${path}/management/users`} component={ManagementUsers}/>
+                    <Route path={`${path}/user`} component={User}/>
+            
+                </Switch>
+            </div>
         );
     }
 }
