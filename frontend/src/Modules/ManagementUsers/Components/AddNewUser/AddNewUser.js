@@ -50,7 +50,7 @@ class AddNewUser extends Form {
         bankName: "",
         ownName: "",
         bankNumber: "",
-        status: 20,
+        status: 1,
         dirty: false,
         teams: [],
       }),
@@ -91,9 +91,9 @@ class AddNewUser extends Form {
     this.state.form["dirty"] = true;
     const { form, teamsSelected } = this.state;
     let statusValue = "";
-    if (form.status.value === 10) {
+    if (form.status.value === 1) {
       statusValue = "Pending";
-    } else if (form.status.value === 20) {
+    } else if (form.status.value === 2) {
       statusValue = "Working";
     }
     console.log("STATUS VALUEEEE", statusValue);
@@ -331,8 +331,8 @@ class AddNewUser extends Form {
                     onChange={(ev) => this.onChangeStatusValue(ev, "status")}
                     required
                   >
-                    <MenuItem value={10}>Pending</MenuItem>
-                    <MenuItem value={20}>Working</MenuItem>
+                    <MenuItem value={1}>Pending</MenuItem>
+                    <MenuItem value={2}>Working</MenuItem>
                   </Select>
                 </FormControl>
                 <span className="validate-noti">
