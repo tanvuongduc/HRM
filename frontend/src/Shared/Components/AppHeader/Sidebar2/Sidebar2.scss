@@ -1,0 +1,25 @@
+.list-item{
+    padding-top: 25px;
+    .item{
+        .icon{
+            width: 30%;
+            text-align: center;
+        }
+        .text{
+            text-align: left;
+            font-size: 20px;
+            width: 70%;
+        }
+        border-radius: 10px;
+        display: flex;
+
+        align-items: center;
+        padding: 4px 0px;
+        margin: 9px 3px;
+        &:hover {
+            background-color: gray;
+            cursor: pointer;
+        }
+        
+    }
+}
