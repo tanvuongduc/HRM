@@ -13,7 +13,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Person from '@material-ui/icons/Person';
 import ChatBubble from '@material-ui/icons/ChatBubble';
-import SideBar from './../SideBar/SideBar';
+import { withRouter } from "react-router-dom";
+import Sidebar2 from '../Sidebar2/Sidebar2';
 const useStyles = makeStyles((theme) => ({
 
     iconBackground: {
@@ -94,21 +95,13 @@ export default function AppHeader() {
   const classes = useStyles();
   const menuId = 'primary-search-account-menu';
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  
 
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-            <SideBar></SideBar>
-          </IconButton>
+          
+        <Sidebar2></Sidebar2>
           <Typography className={classes.title} variant="h6" noWrap>
             HRM
           </Typography>
