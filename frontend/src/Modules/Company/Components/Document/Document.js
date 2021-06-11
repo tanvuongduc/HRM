@@ -72,10 +72,10 @@ export default class Document extends Form {
     answer = (event) => {
         this.setState({ notiMessage: null })
         if (event) {
-            let newDocument = this.state.document.filter((item) => item._id !== this.state.id_delete)
+            let newDocument = this.state.document.filter(id => id._id !== this.state.id_delete)
             this.setState({ document: newDocument })
 
-            let _idDelete = this.state.document.map(id => id._id)
+            let _idDelete = newDocument.map(id => id._id)
             CompanyService.finishDocumentResult(_idDelete, this.state.company)
                 .catch((error) => {
                     console.error('Error:', error);
@@ -105,7 +105,7 @@ export default class Document extends Form {
         let date = newDate.getDate();
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
-        return `${year}/${month < 10 ? `0${month}` : `${month}`}/${date < 10 ? `0${date}` : `${date}`}`
+        return `${date < 10 ? `0${date}` : `${date}`}-${month < 10 ? `0${month}` : `${month}`}-${year}`
     };
 
     render() {

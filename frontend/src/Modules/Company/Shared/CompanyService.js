@@ -23,20 +23,20 @@ class Exam extends UtilService {
 		return await Http.get(url, location_id);
 	};
 
-	async finishNoteResult(noteResult, companyResult) {
+	async finishNoteResult(noteResult, documentResult, companyResult) {
 		return await Http.patch(`${API_ENDPOINT.BASE}`,
 			{
 				"id": companyResult.id,
 				"name": companyResult.name,
 				"domain": companyResult.domain,
-				"website": companyResult.website,
 				"address": companyResult.address,
+				"website": companyResult.website,
 				"email": companyResult.email,
 				"phone": companyResult.phone,
-				"pic": companyResult.pic,
+				"pic": companyResult.pic._id,
 				"overviews": companyResult.overviews,
 				"notes": noteResult,
-				"documents": companyResult.documents
+				"documents": documentResult
 			}
 		)
 	};
@@ -47,11 +47,11 @@ class Exam extends UtilService {
 				"id": companyResult.id,
 				"name": companyResult.name,
 				"domain": companyResult.domain,
-				"website": companyResult.website,
 				"address": companyResult.address,
+				"website": companyResult.website,
 				"email": companyResult.email,
 				"phone": companyResult.phone,
-				"pic": companyResult.pic,
+				"pic": companyResult.pic._id,
 				"overviews": companyResult.overviews,
 				"notes": companyResult.notes,
 				"documents": documentResult
