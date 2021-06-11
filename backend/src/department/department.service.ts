@@ -142,7 +142,7 @@ export class DepartmentService {
             try {
                 department = await this.departmentModel.findById(id).exec()
             } catch (error) {
-                throw new HttpException('Could not find department.', 400);
+                throw new HttpException(`Could not find department id: ${id}`, 400);
             }
         }
         if (!department) {

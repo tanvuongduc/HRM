@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./ManagementUsers.scss";
 import ManagementContent from "./Components/ManagementContent/ManagementContent";
 import {
   BrowserRouter,

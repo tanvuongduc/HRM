@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from 'react-router';
 import Overview from './Components/Overiew/Overview';
 
 const Company = () => {
-  const path = window.location.pathname;
+  const { path } = this.props.match;
   return (
     <div>
       <Switch>

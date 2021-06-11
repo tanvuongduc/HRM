@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import Department from '../../../Modules/Department/Department';
 import Company from '../../../Modules/Company/Company';
 import Career from '../../../Modules/Career/Career';
 import Exam from '../../../Modules/Exam/Exam';
-import MainTeam from '../../../Modules/Team/Components/MainTeam';
-// import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
-import Listdepartment from  '../../../Modules/Org/Components/Department/Department'
-import Formdepartment from  '../../../Modules/Org/Components/Department/Formdepartment'
+import Team from '../../../Modules/Team/Team';
+import Org from '../../../Modules/Org/Org'
+import Certificate from '../../../Modules/Certificate/Certificate'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
-import add from '../../../Modules/Team/Components/AddMember/AddMember'
-import Teams from '../../../Modules/Team/Components/ListTeams/ListTeams'
+import Department from '../../../Modules/Department/Department';
+import AppHeader from '../AppHeader/NavBar/AppHeader'
+// import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
+
 class App extends Component {
     render() {
         const { path } = this.props.match;
