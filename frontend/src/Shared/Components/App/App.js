@@ -9,7 +9,8 @@ import Certificate from '../../../Modules/Certificate/Certificate'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
 import Department from '../../../Modules/Department/Department';
-import AppHeader from '../AppHeader/NavBar/AppHeader'
+import AppHeader from '../AppHeader/NavBar/AppHeader';
+import MainTeam from '../../../../src/Modules/Team/Components/MainTeam';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
@@ -17,17 +18,14 @@ class App extends Component {
         const { path } = this.props.match;
         return (
             <div>
+                <AppHeader/>
                 <Switch>
-                    {/* <Route exact path={`${path}/department`} component={Department} /> */}
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/exam`} component={Exam} />
                     <Route path={`${path}/team/:id`} component={MainTeam} />
-                    <Route path={`${path}/teams`} component={Teams} />
-                    <Route path={`${path}/1/add`} component={add} />
-                    {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
-                    <Route  path={`${path}/department`} exact component={Listdepartment} />
-                    {/* <Route  path={`${path}/department/:id`} exact component={Formdepartment} /> */}
+                    <Route path={`${path}/teams`} component={Team} />
+                    <Route  path={`${path}/department`} exact component={Department} />
                     <Route path={`${path}/management/users`} component={ManagementUsers}/>
                     <Route path={`${path}/user`} component={User}/>
             
