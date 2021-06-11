@@ -30,10 +30,6 @@ const useStyles = makeStyles({
     }
     
 })
-const goTo = (url = '') => {
-        url = window.location.origin + '/' + url
-        window.location.replace(url)
-}
 export default function Sidebar2(){
     const classes = useStyles()
     const goTo = (url = '') => {
@@ -44,31 +40,31 @@ export default function Sidebar2(){
         <div className={classes.parent}>
             <div className={classes.child}>
                 <ul className='list-item'>
-                    <li className='item' onClick={() => this.goTo('app')}>
+                    <li className='item' onClick={() => goTo('app')}>
                         <div className="icon">
                         <i className="fa fa-home" />
                         </div>
                         <div className='text'><span>Home</span></div>
                     </li>
-                    <li className='item' onClick={() => this.goTo('app/company')}>
+                    <li className='item' onClick={() => goTo('app/company')}>
                         <div className="icon">
                         <i className="fa fa-building" />
                         </div>
                         <div className='text'><span>Company</span></div>
                     </li>
-                    <li className='item' onClick={() => this.goTo('app/career')}>
+                    <li className='item' onClick={() => goTo('app/career')}>
                         <div className="icon">
                         <i className="fa fa-suitcase" />
                         </div>
                         <div className='text'><span>Career</span></div>
                     </li>
-                    <li className='item' onClick={() => this.goTo('app/team')}>
+                    <li className='item' onClick={() => goTo('app/team')}>
                         <div className="icon">
                         <i className="fa fa-user-friends" />
                         </div>
                         <div className='text'><span>Team</span></div>
                     </li>
-                    <li className='item' onClick={() => this.goTo('app/org')}>
+                    <li className='item' onClick={() => goTo('app/org')}>
                         <div className="icon">
                         <i class="fas fa-layer-group"></i>
                         </div>
