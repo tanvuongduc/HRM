@@ -7,40 +7,16 @@ import { BiImageAdd } from "react-icons/bi";
 import { BrowserRouter, Link, Switch } from "react-router-dom";
 import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 import { Http } from "../../../../Helper/Http";
+import { BASE_URL } from "../../../../Constances/const";
 
 class HeaderUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: "",
-      email: "",
       avatar: null,
-      isDisplayChangeAvatar: false,
+      isDisplayChangeAvatar: false
     };
   }
-
-  async componentDidMount() {
-    let data = await this.getInfo();
-  }
-
-  async getInfo() {
-    const res = await Http.get("users/user", {
-      id: "6088cc2b80660b2f2818ae8a",
-    });
-    await this.setState({
-      userName: res.data.name,
-      email: res.data.email,
-    });
-    return res.data;
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    this.setState({
-      avatar: nextProps.avatar,
-      userName: nextProps.userName,
-      email: nextProps.emailUser,
-    });
-  };
 
   onDisplayChangeAvatar = () => {
     this.setState({
@@ -60,7 +36,8 @@ class HeaderUser extends Component {
   };
 
   render() {
-    const { userName, email, avatar, isDisplayChangeAvatar } = this.state;
+    const { avatar, isDisplayChangeAvatar } = this.state;
+    const { userName, emailUser } = this.props;
 
     const elmChangeAvatar = isDisplayChangeAvatar ? (
       <ChangeAvatar
@@ -80,7 +57,7 @@ class HeaderUser extends Component {
             style={avatar === null ? { backgroundColor: "white" } : null}
           >
             <img
-              src={"http://localhost:3000" + avatar}
+              src={BASE_URL + avatar}
               className="user-avatar"
             />
             {avatarDefault}
@@ -95,7 +72,7 @@ class HeaderUser extends Component {
             <h3 className="username">{userName}</h3>
             <p className="email">
               <FaEnvelope className="email-icon" />
-              {email}
+              {emailUser}
             </p>
           </div>
         </div>

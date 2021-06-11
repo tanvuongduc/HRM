@@ -35,7 +35,6 @@ class Login extends Form {
   login() {
     const { username, password } = this.state.form;
     this._validateForm();
-    console.log("formmmmmm", this.state.form);
     this.state.form["dirty"] = true;
     if(this._isFormValid()) {
       AuthService.login(username.value, password.value)
@@ -43,7 +42,8 @@ class Login extends Form {
         window.localStorage.setItem("token", res.access_token);
         AuthService.getUserInfo()
           .then((_res) => {
-            let user = _res.userId;
+            let user = _res.id;
+            console.log("Userrrr", user);
             window.localStorage.setItem("userId", JSON.stringify(user));
             AuthService.userInfo = user;
           })

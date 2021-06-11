@@ -9,6 +9,7 @@ import Certificate from '../../../Modules/Certificate/Certificate'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
 import Department from '../../../Modules/Department/Department';
+import TimeOff from '../../../Modules/TimeOff/TimeOff';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                 <Route path={`${path}/certificate`} component={Certificate} />
                 <Route path={`${path}/user`} component={User} />
                 <Route path={`${path}/management/users`} component={ManagementUsers} />
+                <Route path={`${path}/timeoff`} component={TimeOff} />
 
             </Switch>
         );

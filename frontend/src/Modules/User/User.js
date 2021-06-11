@@ -13,23 +13,13 @@ import {
 } from "react-router-dom";
 import NavBarUser from "./Components/NavBarUser/NavBarUser";
 import HeaderUser from "./Components/HeaderUser/HeaderUser";
-import ChangeAvatar from "./Components/HeaderUser/ChangeAvatar/ChangeAvatar";
-
+import UserService from "./Shared/UserService";
 class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataUser: {
-        name: "",
-        birthday: "",
-        adress: "",
-        certificate: "",
-        phone: "",
-        email: "",
-        socialNetwork: [],
-        bank: [],
-        status: "Pendding",
-        avatar: "",
+        avatar: ""
       },
     };
   }
@@ -38,23 +28,23 @@ class User extends Component {
     await this.getInfo();
   }
 
-  async getInfo() {
-    const res = await Http.get("users/myinfo");
-    await this.setState({
-      dataUser: res.data,
+  getInfo() {
+    let userId = "60ba34061f194c0c78c99338";
+    UserService.getMyInfo(userId).then((res) => {
+      this.setState({
+        dataUser: res.data,
+      });
     });
   }
 
   async updateInfo(data) {
-    const req = await Http.patch("users/6088cc2b80660b2f2818ae8a", data);
+    const req = await Http.patch("users/60ba34061f194c0c78c99338", data);
   }
 
-  onSaveEditting = async (data) => {
-    await this.setState({
-      dataUser: data,
-    });
+  onSaveEditInfo = (data) => {
+    console.log("DATAAAAA", data);
     this.updateInfo(data);
-  };
+  }
 
   async uploadAvatar(data, type) {
     let option = {
@@ -79,7 +69,7 @@ class User extends Component {
             emailUser={dataUser.email}
             uploadAvatar={this.uploadAvatar}
           />
-          <NavBarUser path={path}/>
+          <NavBarUser path={path} />
         </div>
         <div className="profile-main">
           <div className="container">
@@ -88,7 +78,7 @@ class User extends Component {
                 <Details
                   getInfo={() => this.getInfo()}
                   dataUser={dataUser}
-                  onSaveEditting={this.onSaveEditting}
+                  onSaveEditInfo={this.onSaveEditInfo}
                 />
               </Route>
             </Switch>
