@@ -11,6 +11,7 @@ import User from '../../../Modules/User/User';
 import Department from '../../../Modules/Department/Department';
 import AppHeader from '../AppHeader/NavBar/AppHeader';
 import MainTeam from '../../../../src/Modules/Team/Components/MainTeam';
+import { TimerOff } from '@material-ui/icons';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route  path={`${path}/department`} exact component={Department} />
                     <Route path={`${path}/management/users`} component={ManagementUsers}/>
                     <Route path={`${path}/user`} component={User}/>
+                    <Route path={`${path}/timeoff`} component={TimerOff} />
             
                 </Switch>
             </div>
