@@ -16,7 +16,7 @@ export const CompanySchema = new mongoose.Schema({
             value: String
         }
     },
-    pic: { type: mongoose.Types.ObjectId, require: true, default: null },
+    pic: { type: mongoose.Types.ObjectId, require: true, default: null, ref: 'User' },
     overviews: {
         type: {
             img: String,
