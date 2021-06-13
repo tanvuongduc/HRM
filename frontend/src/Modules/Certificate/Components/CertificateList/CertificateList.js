@@ -8,8 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Link as RouterLink } from 'react-router-dom'
-import CertificateService from '../../Shared/CertificateService'
-import ModalConfirm from '../../../../Shared/Components/ModalConfirm/ModalConfirm';
+import CertifecateService from '../../Shared/CertificateService'
+import { ModalConfirm } from '../../../../Shared';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -30,16 +30,20 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = (theme) => ({
-    table: {
-        flexGrow: 1,
-        margin: `auto`,
-        border: "1px solid #c3c3c3",
-        padding: "50px 50px 50px 50px",
-        width: "80%"
+    card: {
+        margin: `100px`,
+    },
+    header: {
+        display: `inline-block`,
+        margin: `20px`
+    },
+    btn: {
+        float: `right`,
+        margin: `16px 16px`,
     }
 })
 
-class CertificateList extends Component {
+class CertifecateList extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -50,7 +54,7 @@ class CertificateList extends Component {
     }
     componentDidMount() {
         let certifecateArr = []
-        certifecateArr.push(CertificateService.getAllCertifecate())
+        certifecateArr.push(CertifecateService.getAllCertifecate())
         Promise.all(certifecateArr).then(([res]) => {
             let certifecates = res.data
             this.setState({
@@ -65,27 +69,35 @@ class CertificateList extends Component {
         })
 
     }
+    answer = (isYes) => {
+        const { id } = this.state
+        if (isYes) {
+            console.log(id)
+        } else {
+            this.setState({
+                notiConfirm: ''
+            })
+        }
+    }
     render() {
         const { classes } = this.props;
         const { path } = this.props.match;
         const { certifecates, notiConfirm } = this.state
         return (
-            <Card >
-                <div >
-                    <h2 className="certifetace-header">Danh sách chứng chỉ</h2>
-                    <div className="certifetace-btn">
-                        <RouterLink to={`${path}/0`} >
-                            <Button size="small" variant="contained" color="primary" >Thêm mới</Button>
-                        </RouterLink>
-                    </div>
+            <Card className={classes.card}>
+                <h2 className={classes.header}>Danh sách chứng chỉ</h2>
+                <div className={classes.btn}>
+                    <RouterLink to={`${path}/create`} >
+                        <Button size="small" variant="contained" color="primary" >Thêm mới</Button>
+                    </RouterLink>
                 </div>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell align="center">STT</StyledTableCell>
-                                <StyledTableCell align="center">Tên Trường</StyledTableCell>
-                                <StyledTableCell align="center">Mã Trường</StyledTableCell>
+                                <StyledTableCell align="center">Tên Chứng chỉ</StyledTableCell>
+                                <StyledTableCell align="center">Mã Chứng chỉ</StyledTableCell>
                                 <StyledTableCell align="center">Xếp Loại</StyledTableCell>
                                 <StyledTableCell align="center">Status</StyledTableCell>
                             </TableRow>
@@ -99,24 +111,23 @@ class CertificateList extends Component {
                                         <StyledTableCell align="center">{row.code}</StyledTableCell>
                                         <StyledTableCell align="center">{row.desc}</StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <RouterLink to={`${path}/${row.id}`}>
-                                                <Button
-                                                    size="small"
-                                                    variant="contained"
-                                                    color="primary"
-
-                                                >Sửa
-                                                    </Button>{'  '}
-                                            </RouterLink>
                                             <Button
-
                                                 size="small"
                                                 variant="contained"
                                                 color="secondary"
                                                 startIcon={<DeleteIcon />}
                                                 onClick={() => (this.onDelete(row.id))}
                                             >Xóa
-                                        </Button>
+                                            </Button>{'  '}
+                                            <RouterLink to={`${path}/${row.id}`}>
+                                                <Button
+                                                    size="small"
+                                                    variant="contained"
+                                                    color="primary"
+                                                >Sửa
+                                                </Button>
+                                            </RouterLink>
+
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 ))}
@@ -129,4 +140,4 @@ class CertificateList extends Component {
     }
 }
 
-export default withStyles(useStyles)(CertificateList);
+export default withStyles(useStyles)(CertifecateList);

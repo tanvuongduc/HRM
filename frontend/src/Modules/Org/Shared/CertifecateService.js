@@ -6,7 +6,7 @@ const API_ENDPOINT = {
     GET_ALL_CERTIFECATE: "certificates",
     GET_ONE_CERTIFECATE: "certificates/",
     POST_CERTIFECATE: "certificates",
-    PATCH_CERTIFECATE: "certificates/",
+    PATCH_CERTIFECATE: "ertificates/update/",
 };
 
 class Certifecate {
