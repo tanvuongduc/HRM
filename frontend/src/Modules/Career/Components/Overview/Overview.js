@@ -1,94 +1,108 @@
-import React from 'react'
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react'
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import OverviewService from '../../Shared/OverviewService'
+import { withStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = () => ({
     paper: {
         padding: '6px 16px',
-    },
-    secondaryTail: {
-        backgroundColor: theme.palette.secondary.main,
-    },
-}));
+    }
+})
+class Overview extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            carrers: []
+        }
 
-const Overview = () => {
-    const classes = useStyles();
-    return (
-        <Container maxWidth="md" style={{ paddingTop: '100px' }}>
-            <Timeline align="alternate">
+    }
+    componentDidMount() {
+        let carrarArr = []
+        carrarArr.push(OverviewService.getCarrer())
+        Promise.all(carrarArr).then(([res]) => {
+            let carrers = res.data.certificates
+            this.setState({
+                carrers
+            })
+        })
+    }
+    render() {
+        const { carrers } = this.state
+        const { classes } = this.props
+        return (
+            <div>
+                <Timeline align="alternate">
+                    {
+                        carrers.map((row, index) => (
 
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography variant="body2" color="textSecondary">9:30 am </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot>
-                        </TimelineDot>
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography variant="h6" component="h1"> Eat</Typography>
-                            <Typography>Because you need strength</Typography>
-                        </Paper>
-                    </TimelineContent>
-                </TimelineItem>
+                            <TimelineItem key={row.id}>
+                                <TimelineSeparator>
+                                    <TimelineDot />
+                                    <TimelineConnector />
+                                </TimelineSeparator>
+                                <TimelineContent>
+                                    <Paper elevation={3} className={classes.paper}>
+                                        <Typography variant="h6" component="h1">{row.name}</Typography>
+                                        <Typography>{row.desc}</Typography>
+                                        <Typography variant="body2" color="textSecondary">{row.recivedAt}</Typography>
+                                    </Paper>
+                                </TimelineContent>
+                            </TimelineItem>
+                        ))
+                    }
+                    <TimelineItem>
+                        <TimelineSeparator>
+                            <TimelineDot />
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                            <Paper elevation={3} className={classes.paper}>
+                                <Typography variant="h6" component="h1">Code</Typography>
+                                <Typography>Because it&apos;s awesome!</Typography>
+                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
 
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography variant="body2" color="textSecondary">10:00 am</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot >
-                        </TimelineDot>
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography variant="h6" component="h1">Code</Typography>
-                            <Typography>Because it&apos;s awesome!</Typography>
-                        </Paper>
-                    </TimelineContent>
-                </TimelineItem>
+                            </Paper>
+                        </TimelineContent>
+                    </TimelineItem>
 
-                <TimelineItem>
-                    <TimelineSeparator>
-                        <TimelineDot >
-                        </TimelineDot>
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography variant="h6" component="h1">Sleep</Typography>
-                            <Typography>Because you need rest</Typography>
-                        </Paper>
-                    </TimelineContent>
-                </TimelineItem>
+                    <TimelineItem>
+                        <TimelineSeparator>
+                            <TimelineDot />
+                            <TimelineConnector />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                            <Paper elevation={3} className={classes.paper}>
+                                <Typography variant="h6" component="h1">Sleep</Typography>
+                                <Typography>Because you need rest</Typography>
+                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
+                            </Paper>
+                        </TimelineContent>
+                    </TimelineItem>
 
-                <TimelineItem>
-                    <TimelineSeparator>
-                        <TimelineDot >
-                        </TimelineDot>
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography variant="h6" component="h1">Repeat</Typography>
-                            <Typography>Because this is the life you love!</Typography>
-                        </Paper>
-                    </TimelineContent>
-                </TimelineItem>
-            </Timeline>
-        </Container>
-    )
+                    <TimelineItem>
+                        <TimelineSeparator>
+                            <TimelineDot />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                            <Paper elevation={3} className={classes.paper}>
+                                <Typography variant="h6" component="h1">Repeat</Typography>
+                                <Typography>Because this is the life you love!</Typography>
+                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
+                            </Paper>
+                        </TimelineContent>
+                    </TimelineItem>
+
+                </Timeline>
+            </div>
+        )
+    }
 }
 
-export default Overview;
+export default withStyles(useStyles)(Overview)
