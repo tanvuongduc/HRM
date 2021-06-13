@@ -9,25 +9,28 @@ import Certificate from '../../../Modules/Certificate/Certificate'
 import ManagementUsers from '../../../Modules/ManagementUsers/ManagementUsers';
 import User from '../../../Modules/User/User';
 import Department from '../../../Modules/Department/Department';
+import AppHeader from '../AppHeader/NavBar/AppHeader';
+import MainTeam from '../../../../src/Modules/Team/Components/MainTeam';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
     render() {
         const { path } = this.props.match;
         return (
-            <Switch>
-                {/* <Route path={`${path}/notauthorized`} component={NotAuthorized} /> */}
-                <Route path={`${path}/company`} component={Company} />
-                <Route path={`${path}/career`} component={Career} />
-                <Route path={`${path}/exam`} component={Exam} />
-                <Route path={`${path}/team`} component={Team} />
-                <Route path={`${path}/org`} component={Org} />
-                <Route path={`${path}/department`} component={Department} />
-                <Route path={`${path}/certificate`} component={Certificate} />
-                <Route path={`${path}/user`} component={User} />
-                <Route path={`${path}/management/users`} component={ManagementUsers} />
-
-            </Switch>
+            <div>
+                <AppHeader/>
+                <Switch>
+                    <Route exact path={`${path}/company`} component={Company} />
+                    <Route exact path={`${path}/career`} component={Career} />
+                    <Route exact path={`${path}/exam`} component={Exam} />
+                    <Route path={`${path}/team/:id`} component={MainTeam} />
+                    <Route path={`${path}/teams`} component={Team} />
+                    <Route  path={`${path}/department`} exact component={Department} />
+                    <Route path={`${path}/management/users`} component={ManagementUsers}/>
+                    <Route path={`${path}/user`} component={User}/>
+            
+                </Switch>
+            </div>
         );
     }
 }

@@ -5,9 +5,12 @@ export interface SocialNetwork {
   title: String;
   link: String;
 }
-// interface Certificate{
-//   title: String;
-// }
+export interface Certificate {
+  id: String;
+  recivedAt: Date;
+  createdAt: Date;
+  note: String;
+}
 export interface Bank {
   bankName: String;
   ownName: String;
@@ -17,11 +20,19 @@ export interface Bank {
 
 export const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  password: { type: String, require: true},
-  avatar: {type: mongoose.Types.ObjectId, ref: 'Upload'},
+  password: { type: String, require: true },
+  avatar: { type: mongoose.Types.ObjectId, ref: 'Upload' },
   birthday: { type: Date, required: true },
   adress: { type: String, require: true },
-  certificate: { type: String },
+  certificates: {
+    type: {
+      id: mongoose.Types.ObjectId,
+      recivedAt: Date,
+      createdAt: Date,
+      note: String
+    },
+    require: true
+  },
   phone: { type: String, required: true },
   email: { type: String, require: true },
   socialNetwork: {
@@ -32,7 +43,7 @@ export const UserSchema = new mongoose.Schema({
     default: null
   },
   bank: {
-    type: { bankName: String, ownName: String,bankNumber: String },
+    type: { bankName: String, ownName: String, bankNumber: String },
     require: true
   },
   status: {
@@ -40,7 +51,7 @@ export const UserSchema = new mongoose.Schema({
     require: true,
     default: "Pending"
   },
-  teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team', default:[] }]
+  teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: [] }]
 });
 
 export interface User extends mongoose.Document {
@@ -50,7 +61,7 @@ export interface User extends mongoose.Document {
   avatar: String;
   birthday: Date;
   adress: String;
-  certificate: String;
+  certificates: Certificate[];
   phone: String;
   email: String;
   socialNetwork: SocialNetwork;

@@ -38,6 +38,19 @@ class Form extends Component {
         })
     }
 
+    _setValueNotCheck = (ev, key) => {
+        ev.persist();
+        this.setState(prevState => {
+            prevState.form.dirty = false;
+            prevState.form[key] = {
+                value: ev.target.value,
+                err: '',
+            }
+            return prevState;
+        });
+    }
+
+
     _setValue = (ev, key) => {
         ev.persist();
         this.setState(prevState => {
