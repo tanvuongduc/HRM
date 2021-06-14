@@ -15,7 +15,7 @@ class OverviewService {
 
 
   async getCarrer() {
-    const url = `users/60ba33fa1f194c0c78c99337`;
+    const url = `users/60c711a52ff85804f8d90961`;
     return await Http.get(url);
   }
 }

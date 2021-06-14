@@ -57,47 +57,7 @@ class Overview extends Component {
                             </TimelineItem>
                         ))
                     }
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>
-                            <Paper elevation={3} className={classes.paper}>
-                                <Typography variant="h6" component="h1">Code</Typography>
-                                <Typography>Because it&apos;s awesome!</Typography>
-                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
 
-                            </Paper>
-                        </TimelineContent>
-                    </TimelineItem>
-
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>
-                            <Paper elevation={3} className={classes.paper}>
-                                <Typography variant="h6" component="h1">Sleep</Typography>
-                                <Typography>Because you need rest</Typography>
-                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
-                            </Paper>
-                        </TimelineContent>
-                    </TimelineItem>
-
-                    <TimelineItem>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                        </TimelineSeparator>
-                        <TimelineContent>
-                            <Paper elevation={3} className={classes.paper}>
-                                <Typography variant="h6" component="h1">Repeat</Typography>
-                                <Typography>Because this is the life you love!</Typography>
-                                <Typography variant="body2" color="textSecondary">10:00 am</Typography>
-                            </Paper>
-                        </TimelineContent>
-                    </TimelineItem>
 
                 </Timeline>
             </div>

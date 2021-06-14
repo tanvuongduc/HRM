@@ -8,6 +8,7 @@ const Career = (props) => {
         <div>
             <Switch>
                 <Route exact path={`${path}`} component={Overview} />
+                <Route exact path={`${path}/:id`} component={Overview} />
             </Switch>
         </div>
     )
