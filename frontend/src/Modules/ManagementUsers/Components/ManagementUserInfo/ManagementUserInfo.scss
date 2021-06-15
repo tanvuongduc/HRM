@@ -11,9 +11,11 @@
         width: 100%;
 
         .title {
-            font-size: 35px;
+            font-size: 29px;
             color: $color-primary;
             border-bottom: 2px solid $color-primary;
+            padding-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .detail {

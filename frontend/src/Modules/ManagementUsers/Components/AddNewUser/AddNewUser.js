@@ -8,11 +8,13 @@ import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Form } from "../../../../Shared";
+import { Form, ModalNoti } from "../../../../Shared";
 import { REGEX_TEL } from "../../../Exam/Shared";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import { Card } from "@material-ui/core";
+import ManagementService from "../../Shared/ManagementService";
+import { Autocomplete } from "@material-ui/lab";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -41,41 +43,60 @@ class AddNewUser extends Form {
         name: "",
         birthday: "",
         adress: "",
-        certificate: "",
+        certificate: [],
         phone: "",
         email: "",
         linkFacebook: "",
         bankName: "",
         ownName: "",
         bankNumber: "",
-        status: 10,
+        status: 1,
         dirty: false,
         teams: [],
       }),
-      teamSelected: [],
-      teamsName: [],
+      teamsSelected: [],
+      listTeams: [],
+      listCertificates: [],
+      certificateSelected: []
     };
   }
 
   componentDidMount = async () => {
-    const res = await Http.get("teams");
-    this.setState({
-      teamsName: res.data
+    ManagementService.getListTeams().then((res) => {
+      this.setState({
+        listTeams: res.data,
+      });
     });
-    console.log("TeamsName", this.state.teamsName);
+    ManagementService.getCertificates().then((res) => {
+      this.setState({
+        listCertificates: res.data,
+      });
+    });
+    
   };
 
-  addMemberToTeam(teamId, userId) {
-    const req = Http.post("teams/add/members?team=" + teamId, userId);
-  }
+  onChangeStatusValue = (ev, key) => {
+    const target = ev.target;
+    const value = target.value;
+    console.log("Value status", value);
+    this.state.form[key] = {
+      value: value,
+      err: "",
+    };
+    console.log("State status", this.state.form.status);
+  };
 
   onSubmitAddNewUser = async () => {
     this._validateForm();
     this.state.form["dirty"] = true;
-    const { form, teamSelected } = this.state;
-    if (form.status.value == 10) {
-      form.status.value = "Pending";
+    const { form, teamsSelected } = this.state;
+    let statusValue = "";
+    if (form.status.value === 1) {
+      statusValue = "Pending";
+    } else if (form.status.value === 2) {
+      statusValue = "Working";
     }
+    console.log("STATUS VALUEEEE", statusValue);
     const newDataUser = {
       name: form.name.value,
       birthday: form.birthday.value,
@@ -94,28 +115,28 @@ class AddNewUser extends Form {
         ownName: form.ownName.value,
         bankNumber: form.bankNumber.value,
       },
-      status: form.status.value,
-      teams: teamSelected
+      status: statusValue,
+      teams: teamsSelected,
     };
-    try {
-      const req = await Http.post("users", newDataUser);
-      console.log("New User", req.data);
-      this.props.onSubmitAddNewUser();
-      this.props.onCloseAddNewUser();
-    } catch (error) {
-      console.log("Error add new user");
+    console.log("new dater userrrr", newDataUser);
+    if (this._isFormValid()) {
+      ManagementService.postNewUser(newDataUser)
+        .then((res) => {
+          this.setState({
+            notiMessage: "Thêm mới user thành công",
+          });
+          this.props.onCloseAddNewUser();
+        })
+        .catch((err) => {
+          this.setState({
+            notiMessage: "Thêm mới user thất bại",
+          });
+        });
+    } else {
+      this.setState({
+        notiMessage: "Vui lòng nhập lại thông tin user",
+      });
     }
-  };
-
-  onChangeStatusValue = (ev, key) => {
-    const target = ev.target;
-    const value = target.value;
-    console.log("Value status", value);
-    this.state.form[key] = {
-      value: value,
-      err: "",
-    };
-    console.log("State status", this.state.form.status);
   };
 
   getStyles(name, personName, theme) {
@@ -127,29 +148,24 @@ class AddNewUser extends Form {
     };
   }
 
-  handleChange = (event) => {
-    this.setState({
-      teamSelected: event.target.value,
+  handleChangeTeam = (obj, teams) => {
+    const teamsSelectedId = [];
+    teams.forEach((team) => {
+      teamsSelectedId.push(team.id);
     });
-  };
+    this.setState({
+      teamsSelected: teamsSelectedId
+    });
+    console.log(this.state.teamsSelected);
+  }
 
-  handleChangeMultiple = (event) => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    this.setState({
-      teamSelected: event.target.value,
-    });
-    console.log("Team selected", this.state.teamSelected);
-  };
+  handleChangeCertificate = (value) => {
+    
+  }
 
   render() {
     const { classes } = this.props;
-    const { teamsName, teamSelected } = this.state;
+    const { listTeams, listCertificates } = this.state;
     const {
       name,
       birthday,
@@ -177,18 +193,17 @@ class AddNewUser extends Form {
         },
       },
     };
-
     return (
       <div className="management-add-user">
         <Card className="add-new-user">
-          <h3 className="title">Add new user</h3>
+          <h3 className="title">Thêm mới nhân viên</h3>
           <div className="input">
             <div className="row">
               <div className="col-sm-6">
                 <TextField
                   type="text"
                   name="name"
-                  label="Username"
+                  label="Họ và tên"
                   className="input-field"
                   value={name.value}
                   onChange={(ev) => this._setValue(ev, "name")}
@@ -201,7 +216,7 @@ class AddNewUser extends Form {
                 </span>
                 <TextField
                   type="date"
-                  label="Birthday"
+                  label="Ngày sinh"
                   name="birthday"
                   className="input-field input-field-date"
                   onChange={(ev) => this._setValue(ev, "birthday")}
@@ -218,7 +233,7 @@ class AddNewUser extends Form {
 
                 <TextField
                   type="text"
-                  label="Address"
+                  label="Địa chỉ"
                   name="adress"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "adress")}
@@ -229,52 +244,47 @@ class AddNewUser extends Form {
                     ? requiredNoti + " address"
                     : ""}
                 </span>
-                <TextField
-                  type="text"
-                  name="certificate"
-                  label="Certificate"
-                  className="input-field"
-                  onChange={(ev) => this._setValue(ev, "certificate")}
-                />
+                <FormControl className="input-field">
+                  <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={listCertificates}
+                    getOptionLabel={(certificate) => certificate.name}
+                    getOptionSelected={(value) => this.handleChangeCertificate(value)}
+                    renderInput={(params) => (  
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        label="Bằng cấp"
+                      />
+                    )}
+                  />
+                </FormControl>
                 <span className="validate-noti">
                   {certificate.err.length > 0 && dirty ? certificate.err : ""}
                 </span>
                 <FormControl className="input-field">
-                  <InputLabel id="demo-mutiple-chip-label">Teams</InputLabel>
-                  <Select
-                    labelId="demo-mutiple-chip-label"
-                    id="demo-mutiple-chip"
+                  <Autocomplete
                     multiple
-                    name="teams"
-                    value={teamSelected}
-                    onChange={this.handleChange}
-                    input={<Input id="select-multiple-chip" />}
-                    renderValue={(selected) => (
-                      <div className={classes.chips}>
-                        {teamSelected.map((team) => (
-                          <Chip
-                            key={team.id}
-                            label={team.name}
-                            className={classes.chip}
-                          />
-                        ))}
-                      </div>
+                    id="tags-standard"
+                    options={listTeams}
+                    getOptionLabel={(team) => team.name}
+                    onChange={(obj, value) => this.handleChangeTeam(obj, value)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="standard"
+                        label="Teams"
+                      />
                     )}
-                    MenuProps={MenuProps}
-                  >
-                    {teamsName.map((team) => (
-                      <MenuItem key={team.id} value={team}>
-                        {team.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </FormControl>
                 <span className="validate-noti">{dirty ? teams.err : ""}</span>
                 <TextField
                   type="text"
                   name="phone"
                   inputProps={{ pattern: REGEX_TEL }}
-                  label="Phone number"
+                  label="Số điện thoại"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "phone")}
                   required
@@ -319,10 +329,10 @@ class AddNewUser extends Form {
                     name="status"
                     labelId="demo-simple-select-outlined-label"
                     onChange={(ev) => this.onChangeStatusValue(ev, "status")}
-                    value={status.value}
                     required
                   >
-                    <MenuItem value={10}>Pending</MenuItem>
+                    <MenuItem value={1}>Pending</MenuItem>
+                    <MenuItem value={2}>Working</MenuItem>
                   </Select>
                 </FormControl>
                 <span className="validate-noti">
@@ -332,7 +342,7 @@ class AddNewUser extends Form {
                 </span>
                 <TextField
                   type="text"
-                  label="Bank"
+                  label="Tên ngân hàng"
                   name="bankName"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "bankName")}
@@ -346,7 +356,7 @@ class AddNewUser extends Form {
                 <TextField
                   type="text"
                   name="ownName"
-                  label="Bank Account Holder"
+                  label="Chủ tài khoản"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "ownName")}
                   required
@@ -359,7 +369,7 @@ class AddNewUser extends Form {
                 <TextField
                   type="text"
                   name="bankNumber"
-                  label="Bank Account Number"
+                  label="Số tài khoản"
                   className="input-field"
                   onChange={(ev) => this._setValue(ev, "bankNumber")}
                   required
@@ -391,6 +401,10 @@ class AddNewUser extends Form {
             </Button>
           </div>
         </Card>
+        <ModalNoti
+          message={this.state.notiMessage}
+          done={() => this.setState({ notiMessage: "" })}
+        ></ModalNoti>
       </div>
     );
   }

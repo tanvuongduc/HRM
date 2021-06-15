@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./ManagementUsers.scss";
 import ManagementContent from "./Components/ManagementContent/ManagementContent";
 import {
   BrowserRouter,
@@ -9,6 +10,7 @@ import {
   withRouter,
 } from "react-router-dom";
 import ManagementUserInfo from "./Components/ManagementUserInfo/ManagementUserInfo";
+
 
 class ManagementUsers extends Component {
   constructor(props) {

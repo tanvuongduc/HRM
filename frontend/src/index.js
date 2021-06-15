@@ -9,8 +9,8 @@ import { AuthService } from "./Shared";
 import App from "./Shared/Components/App/App";
 import Login from "./Modules/Org/Components/Login/Login";
 
-// const isLogged = !!AuthService.userInfo;
-const isLogged = true;
+const isLogged = !!AuthService.userInfo;
+// const isLogged = false;
 
 export const Root = (
   <BrowserRouter>

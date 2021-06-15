@@ -3,7 +3,7 @@ import { Http } from "../../Helper/Http";
 
 const API_ENDPOINT = {
     LOGIN: "login",
-    ME: "me",
+    ME: "users/myinfo",
 };
 
 class AuthService extends UtilService {
