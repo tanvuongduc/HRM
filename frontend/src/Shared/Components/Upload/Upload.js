@@ -4,6 +4,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import { Modal, Button } from '@material-ui/core';
+import { BASE_URL } from '../../../Constances/const';
 
 class Upload extends Component {
 
@@ -26,7 +27,7 @@ class Upload extends Component {
 			this.state.selectedFile,
 			this.state.selectedFile.name
 		);
-		let upload = await axios.post("http://103.138.108.104:3000/upload", formData)
+		let upload = await axios.post(`${BASE_URL}upload`, formData)
 		let idUpload = upload.data.id
 		let DocumentUpload = upload.data
 

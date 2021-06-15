@@ -12,12 +12,11 @@ export default class Note extends Form {
         super(props);
         this.state = {
             company: {},
-            note: [],
-            
-            title_update: '',
-            desc_update: '',
-            index_update: '',
-
+            notes: [],
+            //
+            index_update: null,
+            notes_onchange: {},
+            //
             index_delete: null,
             notiMessage: null,
         }
@@ -32,31 +31,32 @@ export default class Note extends Form {
     editingNote = (event, index) => {
         let { name, value } = event.target;
         this.setState({
-            title_update: name,
-            desc_update: value,
-            index_update: index
+            index_update: index,
+            notes_onchange: { [name]: value }
         })
 
-        console.log(index)
+        // this.setState({ notes_update: this.state.notes_update })
 
-        // let { note, title_update, desc_update, index_update } = this.state;
+        // console.log(this.state.notes_update, 'bbbbb')
+        this.state.notes.splice(index, 1, { [name]: value })
+        // this.setState({ notes: this.state.notes })
 
-        // console.log(title_update, desc_update, index_update, 'ttt')
-        // if (!this.props.handleEditing) {
-        //     let newNote = note.splice(index_update, 1, { [title_update]: desc_update });
-        //     this.setState({ note: newNote })
-        //     console.log(newNote, 'ttt')
-        // } else null;
+        // let idDocument = this.state.company.documents.map(id => id._id)
+        // CompanyService.finishNoteResult(this.state.notes, idDocument, this.state.company)
+        //     .then(res => res)
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     })
     };
 
     /*--------------------------------------------------*/
 
-    getNote = () => {
+    getNotes = () => {
         CompanyService.getCompanyByLocation()
             .then(res => {
                 this.setState({
                     company: res.data,
-                    note: res.data.notes
+                    notes: res.data.notes
                 })
             })
             .catch((error) => {
@@ -65,11 +65,12 @@ export default class Note extends Form {
     };
 
     addNote = (item) => {
-        this.state.note.push(item)
-        this.setState({ note: this.state.note })
+        this.state.notes.push(item)
+        this.setState({ notes: this.state.notes })
 
         let idDocument = this.state.company.documents.map(id => id._id)
-        CompanyService.finishNoteResult(this.state.note, idDocument, this.state.company)
+        CompanyService.finishNoteResult(this.state.notes, idDocument, this.state.company)
+            .then(res => res)
             .catch((error) => {
                 console.error('Error:', error);
             })
@@ -87,11 +88,12 @@ export default class Note extends Form {
     answer = (event) => {
         this.setState({ notiMessage: null })
         if (event) {
-            this.state.note.splice(this.state.index_delete, 1)
-            this.setState({ note: this.state.note })
+            this.state.notes.splice(this.state.index_delete, 1)
+            this.setState({ notes: this.state.notes })
 
             let idDocument = this.state.company.documents.map(id => id._id)
-            CompanyService.finishNoteResult(this.state.note, idDocument, this.state.company)
+            CompanyService.finishNoteResult(this.state.notes, idDocument, this.state.company)
+                .then(res => res)
                 .catch((error) => {
                     console.error('Error:', error);
                 })
@@ -101,7 +103,7 @@ export default class Note extends Form {
     /*--------------------------------------------------*/
 
     componentDidMount() {
-        this.getNote();
+        this.getNotes();
     };
 
     render() {
@@ -112,23 +114,15 @@ export default class Note extends Form {
                 </div>
                 <div className="note-item">
                     {
-                        this.state.note.map((event, index) => (
+                        this.state.notes.map((event, index) => (
                             <div key={index}>
                                 <div className="note-item-title">
                                     <div className="item-content">
                                         <FormControl className="item-form" fullWidth>
-                                            {
-                                                (this.props.handleEditing) ?
-                                                    <TextField className="item-form-textfield" label="Title" name="title" defaultValue={event.title} multiline variant="outlined" onChange={(event, index) => this.editingNote(event, index)} InputProps={{ readOnly: !this.props.handleEditing }} /> :
-                                                    <TextField className="item-form-textfield" disabled label="Title" defaultValue={event.title} multiline variant="outlined" />
-                                            }
+                                            <TextField className="item-form-textfield" disabled={!this.props.handleEditing} label="Title" name="title" defaultValue={event.title} multiline variant="outlined" onChange={(event) => this.editingNote(event, index)} InputProps={{ readOnly: !this.props.handleEditing }} />
                                         </FormControl><br /><br />
                                         <FormControl className="item-form" fullWidth>
-                                            {
-                                                (this.props.handleEditing) ?
-                                                    <TextField className="item-form-textfield" label="Description" name="desc" defaultValue={event.desc} multiline variant="outlined" onChange={(event, index) => this.editingNote(event, index)} InputProps={{ readOnly: !this.props.handleEditing }} /> :
-                                                    <TextField className="item-form-textfield" disabled label="Description" defaultValue={event.desc} multiline variant="outlined" />
-                                            }
+                                            <TextField className="item-form-textfield" disabled={!this.props.handleEditing} label="Description" name="desc" defaultValue={event.desc} multiline variant="outlined" onChange={(event) => this.editingNote(event, index)} InputProps={{ readOnly: !this.props.handleEditing }} />
                                         </FormControl>
                                     </div>
                                     <div className="item-menuIcon" style={this.handleStyleEditing()}>
