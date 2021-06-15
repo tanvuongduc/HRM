@@ -8,10 +8,36 @@ export const UserSchema = new mongoose.Schema({
     adress: { type: String, require: true },
     certificates: {
         type: {
-            id: mongoose.Types.ObjectId,
-            recivedAt: Date,
-            createdAt: Date,
-            note: String
+            certNo: {
+                type: String,
+                require: true
+            },
+            createdAt: {
+                type: Date,
+                require: true,
+                default: Date.now()
+            },
+            recivedAt: {
+                type: Date,
+                require: true
+            },
+            org: {
+                type: String,
+                require: true
+            },
+            classification: String,
+            major: String,
+            note: String,
+            degree: {
+                type: String,
+                require: true
+            },
+            docs: [String],
+            status: {
+                type: String,
+                require: true,
+                default: 'pending'
+            },
         },
         require: true
     },
@@ -40,12 +66,22 @@ export interface SocialNetwork {
     title: string;
     url: string;
 }
+
+export type CertificateStatus = 'pending'|'approved'|'rejected'
+
 export interface Certificate {
-    id: string;
-    recivedAt: Date;
+    certNo?: string;
     createdAt: Date;
-    note: string;
+    recivedAt: Date;
+    org: string;
+    classification?: string;
+    major?: string;
+    note?: string;
+    degree: string;
+    docs?: string[];
+    status: CertificateStatus;
 }
+
 export interface Bank {
     bankName: string;
     ownName: string;

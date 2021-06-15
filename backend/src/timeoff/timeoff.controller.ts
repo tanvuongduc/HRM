@@ -11,12 +11,13 @@ export class TimeoffController {
 
     @Post()
     async insertTimeoff(
-        @Body('reason', isStringRequired) reason: String,
+        @Body('reason', isStringRequired) reason: string,
         @Body('from', isDateRequired) from: Date,
         @Body('to', isDateRequired) to: Date,
-        @Body('by', isStringRequired) by: String,
+        @Body('by', isStringRequired) by: string,
+        @Body('pic', isStringRequired) pic: string,
     ) {
-        return this.timeoffService.insertTimeoff(reason, from, to, by);
+        return this.timeoffService.insertTimeoff(reason, from, to, by, pic);
     }
 
     @Get()
@@ -26,7 +27,7 @@ export class TimeoffController {
 
     @Patch(':id')
     async handleTimeoff(
-        @Param('id', isStringRequired) id: String,
+        @Param('id', isStringRequired) id: string,
         @Body('status', timeoffStatusValidate) status: TimeoffStatus
     ) {
         return this.timeoffService.handleTimeoff(id, status)

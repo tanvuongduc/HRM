@@ -1,3 +1,4 @@
+import { DocumentService } from './../document/document.service';
 import { EmailValidate } from './user.validate';
 import { CompanyService } from './../company/company.service';
 import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
@@ -11,7 +12,8 @@ export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
         @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService,
-        @Inject(forwardRef(()=> CompanyService)) private readonly companyService: CompanyService
+        @Inject(forwardRef(() => CompanyService)) private readonly companyService: CompanyService,
+        @Inject(forwardRef(() => DocumentService)) private readonly documentService: DocumentService
     ) { }
 
     async insertUser(
@@ -32,12 +34,11 @@ export class UsersService {
             throw new HttpException('Email is existed', 400);
         }
         const domain = await this.companyService.getDomainCompany();
-        EmailValidate(email,domain);
+        EmailValidate(email, domain);
         if (certificates && certificates.length) {
             for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
-                cer.createdAt = new Date(Date.now());
+                if (cer.docs)
+                    await this.documentService.getDocuments(cer.docs);
             }
         }
         const newUser = new this.userModel({
@@ -60,10 +61,14 @@ export class UsersService {
     async getUserById(uid: string) {
         const user = await this.findUserById(uid);
         if (user.certificates && user.certificates.length) {
+
             for (let cer of user.certificates) {
-                let cert = await this.certificateService.getCertificateById(cer.id);
-                Object.assign(cer, cert)
+                if (cer.docs && cer.docs.length) {
+                    let docs = await this.documentService.getDocuments(cer.docs);
+                    Object.assign(cer.docs, docs);
+                }
             }
+
         }
         return {
             id: user.id,
@@ -94,23 +99,35 @@ export class UsersService {
         bank: Bank,
         status: UserStatus
     ) {
-        await this.userModel.findOne().where({ email: email }).exec()
-        const domain = await this.companyService.getDomainCompany();
-        EmailValidate(email,domain);
         const updatedUser = await this.findUserById(uid);
-        for (let cer of certificates) {
-            await this.certificateService.findCertificateById(cer.id);
-            cer.recivedAt = new Date(cer.recivedAt);
+        if (certificates) {
+            for (let cer of certificates) {
+                if (cer.docs)
+                    await this.documentService.getDocuments(cer.docs);
+            }
         }
-        updatedUser.name = name;
-        updatedUser.birthday = birthday;
-        updatedUser.phone = phone;
-        updatedUser.email = email;
-        updatedUser.password = password;
-        updatedUser.adress = adress;
-        updatedUser.socialNetwork = socialNetwork;
-        updatedUser.bank = bank;
-        updatedUser.status = status;
+        if (email) {
+            await this.userModel.findOne().where({ email: email }).exec()
+            const domain = await this.companyService.getDomainCompany();
+            EmailValidate(email, domain);
+            updatedUser.email = email;
+        }
+        if (name)
+            updatedUser.name = name;
+        if (birthday)
+            updatedUser.birthday = birthday;
+        if (phone)
+            updatedUser.phone = phone;
+        if (password)
+            updatedUser.password = password;
+        if (adress)
+            updatedUser.adress = adress;
+        if (socialNetwork)
+            updatedUser.socialNetwork = socialNetwork;
+        if (bank)
+            updatedUser.bank = bank;
+        if (status)
+            updatedUser.status = status;
         const res = await updatedUser.save();
         return {
             id: res.id,
@@ -144,11 +161,11 @@ export class UsersService {
     ) {
         await this.userModel.findOne().where({ email: email }).exec()
         const domain = await this.companyService.getDomainCompany();
-        EmailValidate(email,domain);
+        EmailValidate(email, domain);
         const updatedUser = await this.findUserById(uid);
         for (let cer of certificates) {
-            await this.certificateService.findCertificateById(cer.id);
-            cer.recivedAt = new Date(cer.recivedAt);
+            if (cer.docs)
+                await this.documentService.getDocuments(cer.docs);
         }
         updatedUser.birthday = birthday;
         updatedUser.phone = phone;
@@ -180,8 +197,10 @@ export class UsersService {
         for (let user of users) {
             if (user.certificates && user.certificates.length) {
                 for (let cer of user.certificates) {
-                    let cert = await this.certificateService.getCertificateById(cer.id);
-                    Object.assign(cer, cert)
+                    if (cer.docs && cer.docs.length) {
+                        let docs = await this.documentService.getDocuments(cer.docs);
+                        Object.assign(cer.docs, docs);
+                    }
                 }
             }
             res.push({

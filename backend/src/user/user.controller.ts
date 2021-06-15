@@ -90,7 +90,7 @@ export class UsersController {
         @Body('name', isStringRequired) name: string,
         @Body('birthday', isDateRequired) birthday: Date,
         @Body('adress', isStringRequired) adress: string,
-        @Body('certificate', CertificatesValidate) certificates: Certificate[],
+        @Body('certificates', CertificatesValidate) certificates: Certificate[],
         @Body('phone', isPhoneNumberRequired) phone: string,
         @Body('email', isEmailRequired) email: string,
         @Body('password', isStringRequired) pasword: string,
@@ -99,7 +99,7 @@ export class UsersController {
         @Body('status', UserStatusValidate) status: UserStatus,
         @Body('teams', isArrayString) teams: string[]
     ) {
-        let res = await this.usersService.updateUserByAdmin(
+        let res = await this.usersService.updateUser(
             id,
             name,
             birthday,
@@ -110,8 +110,7 @@ export class UsersController {
             pasword,
             socialNetwork,
             bank,
-            status,
-            teams
+            status
         );
         return res;
     }

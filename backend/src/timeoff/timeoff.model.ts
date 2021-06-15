@@ -13,11 +13,11 @@ export const TimeoffSchema = new mongoose.Schema({
 
 
 export interface Timeoff extends mongoose.Document {
-    id: String;
-    reason: String;
+    id: string;
+    reason: string;
     from: Date;
     to: Date;
-    by: String;
+    by: string;
     status: TimeoffStatus;
-    pic: String;
+    pic: string;
 }

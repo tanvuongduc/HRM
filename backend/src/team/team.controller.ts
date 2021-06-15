@@ -7,6 +7,7 @@ import {
     Get,
     Query,
     Param,
+    Patch,
 } from '@nestjs/common';
 
 import { TeamService } from './team.service';
@@ -37,6 +38,18 @@ export class TeamController {
         return res;
     }
 
+    @Patch(':id')
+    async updateTeam(
+        @Param('id', isStringRequired) id: string,
+        @Body('code', isStringRequired) code: string,
+        @Body('pic', isStringRequired) pic: string,
+        @Body('name', isStringRequired) name: string,
+        @Body('department', isStringRequired) department: string,
+        @Body('sologan', isString) sologan: string
+    ) {
+        const res = await this.teamService.updateTeam(id, code, name, pic, department, sologan);
+        return res;
+    }
 
     @Get()
     async getAllTeams() {

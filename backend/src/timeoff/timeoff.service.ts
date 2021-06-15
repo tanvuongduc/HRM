@@ -1,23 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { UsersService } from './../user/user.service';
+import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Timeoff, TimeoffStatus } from './timeoff.model'
 @Injectable()
 export class TimeoffService {
     constructor(
-        @InjectModel('Timeoff') private readonly timeoffModel: Model<Timeoff>
+        @InjectModel('Timeoff') private readonly timeoffModel: Model<Timeoff>,
+        @Inject(forwardRef(()=>UsersService)) private readonly usersService: UsersService
     ) { }
     async insertTimeoff(
-        reason: String,
+        reason: string,
         from: Date,
         to: Date,
-        by: String,
+        by: string,
+        pic: string
     ) {
+        await this.usersService.findUserById(pic);
         let timeoff = new this.timeoffModel({
             reason,
             from,
             to,
-            by
+            by,
+            pic
         })
         await timeoff.save();
         return timeoff;
@@ -38,7 +43,7 @@ export class TimeoffService {
         }));
     }
     async handleTimeoff(
-        id: String,
+        id: string,
         status: TimeoffStatus
     ) {
         const timeoff = await this.findTimeoff(id);
@@ -47,7 +52,7 @@ export class TimeoffService {
         return timeoff;
     }
 
-    private async findTimeoff(id: String): Promise<Timeoff> {
+    private async findTimeoff(id: string): Promise<Timeoff> {
         let Timeoff: any;
         try {
             Timeoff = await this.timeoffModel.findById(id).populate('pic').populate('by').exec();
