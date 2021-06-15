@@ -28,7 +28,6 @@ class App extends Component {
                     <Route  path={`${path}/department`} exact component={Department} />
                     <Route path={`${path}/management/users`} component={ManagementUsers}/>
                     <Route path={`${path}/user`} component={User}/>
-            
                 </Switch>
             </div>
         );
