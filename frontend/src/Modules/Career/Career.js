@@ -1,17 +1,20 @@
-import React from 'react'
-import { Route, Switch, withRouter } from "react-router-dom";
-import Overview from './Components/Overview/Overview';
 
-const Career = (props) => {
-    const { path } = props.match;
-    return (
-        <div>
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import Overview from './Components/Overview/Overview';
+import CareerList from "./Components/CareerList/CareerList";
+
+
+class Career extends Component {
+    render() {
+        const { path } = this.props.match;
+        return (
             <Switch>
                 <Route exact path={`${path}`} component={Overview} />
-                <Route exact path={`${path}/:id`} component={Overview} />
+                <Route exact path={`${path}/:id`} component={CareerList} />
             </Switch>
-        </div>
-    )
+        );
+    }
 }
 
-export default withRouter(Career);
+export default Career;

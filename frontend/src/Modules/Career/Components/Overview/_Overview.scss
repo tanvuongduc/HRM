@@ -1,0 +1,11 @@
+.carrer-overview{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    .carrer-timeline, .carrer-btn{
+        width: 100%;
+        text-align: center;
+    }
+
+}

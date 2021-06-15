@@ -9,17 +9,21 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import OverviewService from '../../Shared/OverviewService'
 import { withStyles } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+
 
 const useStyles = () => ({
     paper: {
         padding: '6px 16px',
-    }
+    },
 })
 class Overview extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            carrers: []
+            carrers: [],
+            SliceNumber: 1
         }
 
     }
@@ -33,33 +37,51 @@ class Overview extends Component {
             })
         })
     }
+    showMore = () => {
+        const { SliceNumber } = this.state
+        this.setState({
+            SliceNumber: SliceNumber + 1
+        })
+    }
     render() {
-        const { carrers } = this.state
+        const { carrers, SliceNumber } = this.state
         const { classes } = this.props
+        const { path } = this.props.match;
         return (
-            <div>
-                <Timeline align="alternate">
-                    {
-                        carrers.map((row, index) => (
+            <div className="carrer-overview">
+                <div className="carrer-timeline">
+                    <Timeline align="alternate">
+                        {
+                            carrers.slice(0, SliceNumber).map((row, index) => (
 
-                            <TimelineItem key={row.id}>
-                                <TimelineSeparator>
-                                    <TimelineDot />
-                                    <TimelineConnector />
-                                </TimelineSeparator>
-                                <TimelineContent>
-                                    <Paper elevation={3} className={classes.paper}>
-                                        <Typography variant="h6" component="h1">{row.name}</Typography>
-                                        <Typography>{row.desc}</Typography>
-                                        <Typography variant="body2" color="textSecondary">{row.recivedAt}</Typography>
-                                    </Paper>
-                                </TimelineContent>
-                            </TimelineItem>
-                        ))
-                    }
+                                <TimelineItem key={row.id}>
+                                    <TimelineSeparator>
+                                        <TimelineDot />
+                                        <TimelineConnector />
+                                    </TimelineSeparator>
+                                    <TimelineContent>
+                                        <RouterLink to={`${path}/${index}`}>
+                                            <Paper elevation={3} className={classes.paper}>
+                                                <Typography variant="h6" component="h1">{row.name}</Typography>
+                                                <Typography>{row.desc}</Typography>
+                                                <Typography variant="body2" color="textSecondary">{row.recivedAt}</Typography>
+                                            </Paper>
+                                        </RouterLink>
+                                    </TimelineContent>
+                                </TimelineItem>
+                            ))
+                        }
 
-
-                </Timeline>
+                    </Timeline>
+                </div>
+                <div className="carrer-btn">
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={this.showMore}
+                    >load more
+                    </Button>
+                </div>
             </div>
         )
     }
