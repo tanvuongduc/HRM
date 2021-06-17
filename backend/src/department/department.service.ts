@@ -82,7 +82,6 @@ export class DepartmentService {
         desc: string,
         documents: string[]
     ) {
-        await this.usersService.findUserById(pic)
         let department = await this.findDepartmentById(id);
         if (code != department.code) {
             const checkCode = await this.departmentModel.find().where({ code: code }).exec();
@@ -90,11 +89,18 @@ export class DepartmentService {
                 throw new HttpException('Code exsited!', 409);
             }
         }
-        department.code = code;
-        department.name = name;
-        department.pic = pic;
-        department.desc = desc;
-        department.documents = documents;
+        if (code)
+            department.code = code;
+        if (name)
+            department.name = name;
+        if (pic) {
+            await this.usersService.findUserById(pic)
+            department.pic = pic;
+        }
+        if (desc)
+            department.desc = desc;
+        if (documents)
+            department.documents = documents;
         const res = await department.save();
         return {
             id: res.id

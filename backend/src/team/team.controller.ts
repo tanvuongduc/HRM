@@ -41,10 +41,10 @@ export class TeamController {
     @Patch(':id')
     async updateTeam(
         @Param('id', isStringRequired) id: string,
-        @Body('code', isStringRequired) code: string,
-        @Body('pic', isStringRequired) pic: string,
-        @Body('name', isStringRequired) name: string,
-        @Body('department', isStringRequired) department: string,
+        @Body('code', isString) code: string,
+        @Body('pic', isString) pic: string,
+        @Body('name', isString) name: string,
+        @Body('department', isString) department: string,
         @Body('sologan', isString) sologan: string
     ) {
         const res = await this.teamService.updateTeam(id, code, name, pic, department, sologan);

@@ -105,6 +105,7 @@ export class UsersService {
                 if (cer.docs)
                     await this.documentService.getDocuments(cer.docs);
             }
+            updatedUser.certificates = certificates;
         }
         if (email) {
             await this.userModel.findOne().where({ email: email }).exec()

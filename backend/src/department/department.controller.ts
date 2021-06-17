@@ -1,4 +1,4 @@
-import { isStringRequired, isArrayString } from './../validator/joi.validate';
+import { isStringRequired, isArrayString, isString} from './../validator/joi.validate';
 import { Param } from '@nestjs/common';
 import {
     Patch,
@@ -40,10 +40,10 @@ export class DepartmentController {
     @Patch(':id')
     async updateDepartmentById(
         @Param('id', isStringRequired) id: string,
-        @Body('code', isStringRequired) code: string,
-        @Body('name', isStringRequired) name: string,
-        @Body('pic', isStringRequired) pic: string,
-        @Body('desc', isStringRequired) desc: string,
+        @Body('code', isString) code: string,
+        @Body('name', isString) name: string,
+        @Body('pic', isString) pic: string,
+        @Body('desc', isString) desc: string,
         @Body('documents', isArrayString) documents: string[]
     ) {
         const res = await this.departmentService.updateDepartmentById(id, code, name, pic, desc, documents);

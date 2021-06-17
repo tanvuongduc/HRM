@@ -25,6 +25,13 @@ export class TimeoffController {
         return this.timeoffService.getAllTimeoffInMonth()
     }
 
+    @Get(':id')
+    async getAllTimeoffInMonthOfUserId(
+        @Param('id', isStringRequired) id: string
+    ) {
+        return this.timeoffService.getAllTimeoffInMonthOfUserId(id)
+    }
+
     @Patch(':id')
     async handleTimeoff(
         @Param('id', isStringRequired) id: string,

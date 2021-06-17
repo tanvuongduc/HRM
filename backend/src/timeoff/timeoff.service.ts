@@ -1,5 +1,5 @@
 import { UsersService } from './../user/user.service';
-import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, NotFoundException, forwardRef, Inject, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Timeoff, TimeoffStatus } from './timeoff.model'
@@ -7,7 +7,7 @@ import { Timeoff, TimeoffStatus } from './timeoff.model'
 export class TimeoffService {
     constructor(
         @InjectModel('Timeoff') private readonly timeoffModel: Model<Timeoff>,
-        @Inject(forwardRef(()=>UsersService)) private readonly usersService: UsersService
+        @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService
     ) { }
     async insertTimeoff(
         reason: string,
@@ -29,7 +29,7 @@ export class TimeoffService {
     }
 
     async getAllTimeoffInMonth(
-    ){
+    ) {
         let date = Date.now()
         const timeoffs = await this.timeoffModel.find().where(`from>${date}`).exec();
         return timeoffs.map(time => ({
@@ -42,6 +42,27 @@ export class TimeoffService {
             pic: time.pic,
         }));
     }
+
+    async getAllTimeoffInMonthOfUserId(
+        id: string
+    ) {
+        let date = Date.now()
+        try {
+            const timeoffs = await this.timeoffModel.find({ by: id }).where(`from>${date}`).exec();
+            return timeoffs.map(time => ({
+                id: time.id,
+                reason: time.reason,
+                from: time.from,
+                to: time.to,
+                by: time.by,
+                status: time.status,
+                pic: time.pic,
+            }));
+        } catch {
+            throw new HttpException('Không tìm thấy user',422);
+        }
+    }
+
     async handleTimeoff(
         id: string,
         status: TimeoffStatus

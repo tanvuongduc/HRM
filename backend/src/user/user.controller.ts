@@ -1,6 +1,6 @@
 import { CompanyService } from './../company/company.service';
 import { CertificatesValidate, UserStatusValidate, BankValidate, SocialNetworksValidate } from './user.validate';
-import { isStringRequired, isDateRequired, isPhoneNumberRequired, isEmailRequired, isArrayString } from './../validator/joi.validate';
+import { isStringRequired, isDateRequired, isPhoneNumberRequired, isEmailRequired, isArrayString, isString, isPhoneNumber, isEmail, isDate } from './../validator/joi.validate';
 import {
     Controller,
     Request,
@@ -42,7 +42,7 @@ export class UsersController {
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus
     ) {
-        
+
         const generatedId = await this.usersService.insertUser(
             name,
             birthday,
@@ -87,13 +87,13 @@ export class UsersController {
     async updateUserByAdmin(
         @Request() req,
         @Param('id', isStringRequired) id: string,
-        @Body('name', isStringRequired) name: string,
-        @Body('birthday', isDateRequired) birthday: Date,
-        @Body('adress', isStringRequired) adress: string,
+        @Body('name', isString) name: string,
+        @Body('birthday', isDate) birthday: Date,
+        @Body('adress', isString) adress: string,
         @Body('certificates', CertificatesValidate) certificates: Certificate[],
-        @Body('phone', isPhoneNumberRequired) phone: string,
-        @Body('email', isEmailRequired) email: string,
-        @Body('password', isStringRequired) pasword: string,
+        @Body('phone', isPhoneNumber) phone: string,
+        @Body('email', isEmail) email: string,
+        @Body('password', isString) pasword: string,
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus,
@@ -120,13 +120,13 @@ export class UsersController {
     @Patch()
     async updateUser(
         @Request() req,
-        @Body('name', isDateRequired) name: string,
-        @Body('birthday', isDateRequired) birthday: Date,
-        @Body('adress', isStringRequired) adress: string,
+        @Body('name', isDate) name: string,
+        @Body('birthday', isDate) birthday: Date,
+        @Body('adress', isString) adress: string,
         @Body('certificate', CertificatesValidate) certificates: Certificate[],
-        @Body('phone', isPhoneNumberRequired) phone: string,
-        @Body('email', isEmailRequired) email: string,
-        @Body('password', isStringRequired) pasword: string,
+        @Body('phone', isPhoneNumber) phone: string,
+        @Body('email', isEmail) email: string,
+        @Body('password', isString) pasword: string,
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('bank', BankValidate) bank: Bank,
         @Body('status', UserStatusValidate) status: UserStatus

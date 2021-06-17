@@ -53,21 +53,28 @@ export class TeamService {
         sologan: string
     ) {
         let team = await this.findTeamById(id);
-        let user = await this.usersService.findUserById(pic);
-        await this.departmentService.findDepartmentById(department);
-        if (team.code != code) {
+        if (code && team.code != code) {
             let teams = await this.teamModel.find().where({ code: code }).exec()
             if (teams.length) {
                 throw new HttpException('Team Code Existed', 401);
             }
+            team.code = code;
         }
-        team.code = code;
-        team.name = name;
-        team.pic = pic;
-        team.department = department;
+
+        if (name)
+            team.name = name;
+        let user
+        if (pic) {
+            user = await this.usersService.findUserById(pic);
+            team.pic = pic;
+        }
+        if (department) {
+            await this.departmentService.findDepartmentById(department);
+            team.department = department;
+        }
         team.sologan = sologan
         const res = await team.save();
-        if (user.teams.indexOf(res.id) < 0) {
+        if (user && user.teams.indexOf(res.id) < 0) {
             user.teams.push(res.id)
             await user.save()
         }

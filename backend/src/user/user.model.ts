@@ -8,6 +8,10 @@ export const UserSchema = new mongoose.Schema({
     adress: { type: String, require: true },
     certificates: {
         type: {
+            name: {
+                type: String,
+                require: true
+            },
             certNo: {
                 type: String,
                 require: true
@@ -70,6 +74,7 @@ export interface SocialNetwork {
 export type CertificateStatus = 'pending'|'approved'|'rejected'
 
 export interface Certificate {
+    name: string;
     certNo?: string;
     createdAt: Date;
     recivedAt: Date;

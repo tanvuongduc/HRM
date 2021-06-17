@@ -5,7 +5,8 @@ import * as Joi from '@hapi/joi';
 
 export const CertificatesValidate = new JoiValidationPipe(Joi.array().items(
     Joi.object({
-        certNo: Joi.string(),
+        name: Joi.string().required(),
+        certNo: Joi.string().required(),
         recivedAt: Joi.date().required(),
         org: Joi.string().required(),
         classification: Joi.string(),
