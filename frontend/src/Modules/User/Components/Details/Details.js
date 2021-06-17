@@ -61,7 +61,7 @@ class Details extends Component {
                 birthday={dataUser.birthday}
                 address={dataUser.adress}
                 certificate={dataUser.certificate}
-                onShowEditInfo={this.onShowEditInfo}
+                onSaveEditInfo={this.props.onSaveEditInfo}
               />
             </div>
             <div className="col-md-4">

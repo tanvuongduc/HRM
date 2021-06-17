@@ -15,7 +15,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import { Paper } from "@material-ui/core";
+import { InputAdornment, Paper, TextField } from "@material-ui/core";
+import ManagementService from "../../Shared/ManagementService";
+import SearchIcon from "@material-ui/icons/Search";
 
 class ManagementContent extends Component {
   constructor(props) {
@@ -23,9 +25,10 @@ class ManagementContent extends Component {
     this.state = {
       listUsers: [],
       onDisplayAddNewUser: false,
-      onSubmitAddNewUser: false,
       page: 0,
       rowsPerPage: 10,
+      searchValue: "",
+      onSearchValue: false,
     };
   }
 
@@ -34,22 +37,17 @@ class ManagementContent extends Component {
   }
 
   getUsers = async () => {
-    const res = await Http.get("users");
-    this.setState({
-      listUsers: res.data,
+    ManagementService.getListUsers().then((res) => {
+      this.setState({
+        listUsers: res.data,
+      });
+      console.log(res.data);
     });
-    console.log(res.data);
   };
 
   onDisplayAddNewUser = () => {
     this.setState({
       onDisplayAddNewUser: true,
-    });
-  };
-
-  onSubmitAddNewUser = () => {
-    this.setState({
-      onSubmitAddNewUser: true,
     });
   };
 
@@ -73,13 +71,46 @@ class ManagementContent extends Component {
     });
   };
 
-  render() {
-    const { listUsers, onDisplayAddNewUser, onSubmitAddNewUser } = this.state;
-    const { path } = this.props.match;
-    const { page, rowsPerPage } = this.state;
-    const userItems = listUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user) => {
-      return <LineUser key={user.id} user={user} path={path}/>;
+  handleChangeSearch = (ev) => {
+    const value = ev.target.value;
+    const { searchValue } = this.state;
+    this.setState({
+      searchValue: value,
     });
+    if(searchValue === "") {
+      this.setState({
+        onSearchValue: false
+      });
+    }
+  };
+
+  onSearchValue = () => {
+    this.setState({
+      onSearchValue: true,
+    });
+  };
+
+  render() {
+    let { listUsers, onDisplayAddNewUser, searchValue } =
+      this.state;
+    const { path } = this.props.match;
+    const { page, rowsPerPage, onSearchValue } = this.state;
+    console.log("Search value", onSearchValue);
+    if (onSearchValue) {
+      listUsers = listUsers.filter((user) => {
+        return (
+          user.name.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
+        );
+      });
+    }
+
+    console.log("Paramss", this.props.match);
+
+    const userItems = listUsers
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((user) => {
+        return <LineUser key={user.id} user={user} path={path} />;
+      });
     const displayAddNewUser = onDisplayAddNewUser ? (
       <AddNewUser
         onCloseAddNewUser={this.onCloseAddNewUser}
@@ -88,7 +119,6 @@ class ManagementContent extends Component {
     ) : (
       ""
     );
-  
 
     return (
       <div className="management-users-content">
@@ -100,24 +130,49 @@ class ManagementContent extends Component {
             startIcon={<AddCircleIcon />}
             onClick={this.onDisplayAddNewUser}
           >
-            Add new user
+            Tạo mới nhân viên
           </Button>
         </div>
-
         <Paper>
+          <div className="search-bar">
+            <TextField
+              className="search-input"
+              id="outlined-basic"
+              placeholder="Tìm kiếm theo họ tên, mã nhân viên"
+              variant="outlined"
+              onChange={this.handleChangeSearch}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <div className="btn-control-box">
+              <Button
+                className="btn-control-primary"
+                variant="contained"
+                color="primary"
+                onClick={this.onSearchValue}
+              >
+                Tìm kiếm
+              </Button>
+            </div>
+          </div>
           <TableContainer className="table-container">
             <Table aria-label="simple table">
               <TableHead className="table-header">
                 <TableRow>
                   <TableCell className="table-cell-label">Id</TableCell>
-                  <TableCell className="table-cell-label">Username</TableCell>
-                  <TableCell className="table-cell-label">Birthday</TableCell>
+                  <TableCell className="table-cell-label">Họ và tên</TableCell>
+                  <TableCell className="table-cell-label">Ngày sinh</TableCell>
                   <TableCell className="table-cell-label">
-                    Phone number
+                    Số điện thoại
                   </TableCell>
                   <TableCell className="table-cell-label">Email</TableCell>
                   <TableCell className="table-cell-label">Team</TableCell>
-                  <TableCell className="table-cell-label">Status</TableCell>
+                  <TableCell className="table-cell-label">Tình trạng</TableCell>
                   <TableCell className="table-cell-label"></TableCell>
                 </TableRow>
               </TableHead>
@@ -126,7 +181,8 @@ class ManagementContent extends Component {
           </TableContainer>
 
           <TablePagination
-            rowsPerPageOptions={[10, 20, 50]}
+            labelRowsPerPage="Số hàng mỗi trang"
+            rowsPerPageOptions={[10, 20, 50, 100]}
             component="div"
             count={listUsers.length}
             rowsPerPage={rowsPerPage}
