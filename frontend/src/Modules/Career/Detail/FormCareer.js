@@ -7,12 +7,14 @@ import {
 import { FaCheck } from "react-icons/fa";
 import CareerService from "../Shared/CareerService"
 import form from '../../../Shared/Components/Form/Form';
+import { LocalGasStation } from "@material-ui/icons";
 
 class FormCareer  extends form{
     constructor(props) {
         super(props);
         this.state = {
            certificate:[],
+           indexOfCert:"",
            form:this._getInitFormData({
             name :"",
             certNo :"",
@@ -30,8 +32,9 @@ class FormCareer  extends form{
     componentDidMount = () => {
        CareerService.getUserById(this.props.idUser).then((res)=>{
         let certificates =res.data.certificates
+        this.setState({indexOfCert:this.props.indexOfCert})
         certificates.map((data,index) => {
-            if(index == this.props.indexOfCert){
+            if(index === this.state.indexOfCert){
               this.setState({certificate:data})
               console.log(data);
               this._fillForm({
@@ -50,11 +53,17 @@ class FormCareer  extends form{
         });
      }); 
     }
+    
 
     render(){
-    const {idUser,indexOfCert} =this.props;
+    let {idUser,indexOfCert} =this.props;
+    let certificate=this.state.certificate
+    // let content = certificate.map((data,index)=>{
+
+    //  });
     let form= this.state.form;
-    console.log(this.state.form);
+
+    console.log(form);
         return(
             <Fragment>
                 <h4 className="title-career">Thông tin chi tiết</h4>
