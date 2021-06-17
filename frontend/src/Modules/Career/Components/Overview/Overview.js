@@ -7,7 +7,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import CareerService from '../../Shared/CareerService'
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import{ Paper,Button,Typography }from '@material-ui/core';
+import { Paper, Button, Typography } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import FormCareer from '../../Detail/FormCareer';
@@ -20,17 +20,17 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-class Overview extends Component{
+class Overview extends Component {
     constructor(props) {
         super(props);
-        this.state= {
-            anchorEl:false,
-            open :false,
-            _open :false,
+        this.state = {
+            anchorEl: false,
+            open: false,
+            _open: false,
             careers: [],
             sliceNumber: 2,
             userId: '60b9aab51f194c0c78c9932b',
-            indexOfCert:""
+            indexOfCert: ""
         }
     }
     componentDidMount() {
@@ -51,64 +51,64 @@ class Overview extends Component{
     }
 
     handleClickOpen = (index) => {
-       this.setState({
-           open:true,
-           indexOfCert:index
-       })
-      };
-      handleClose = () => {
         this.setState({
-            open:false,
+            open: true,
+            indexOfCert: index
         })
-      };
+    };
+    handleClose = () => {
+        this.setState({
+            open: false,
+        })
+    };
 
-      color = (index)=>{
-         if (index %3 == 1){return "primary"}
-         else if(index %3 == 2){return "inherit"}
-         else {return "grey"}
-      }
-    render(){
+    color = (index) => {
+        if (index % 3 == 1) { return "primary" }
+        else if (index % 3 == 2) { return "inherit" }
+        else { return "grey" }
+    }
+    render() {
         let idUser = "60b9aab51f194c0c78c9932b";
         let { careers, sliceNumber, indexOfCert } = this.state
         let _index = "-1"
         console.log(indexOfCert);
         let dialog = careers.slice(0, sliceNumber).map((row, index) => (
             <TimelineItem key={row.id}>
-                 <TimelineOppositeContent>
+                <TimelineOppositeContent>
                     <Typography color="textSecondary">{row.recivedAt}</Typography>
                 </TimelineOppositeContent>
                 <TimelineSeparator>
-                <TimelineDot color={this.color(index)}>
-                    <TodayIcon />
-                </TimelineDot>
-               <TimelineConnector />
+                    <TimelineDot color={this.color(index)}>
+                        <TodayIcon />
+                    </TimelineDot>
+                    <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
-                    <Paper className="TimelineContent" Container  onClick={() => { this.handleClickOpen(index)}}>
+                    <Paper className="TimelineContent" Container onClick={() => { this.handleClickOpen(index) }}>
 
                         <Typography variant="h6" component="h1">{row.name}</Typography>
                         <Typography>{row.certNo}</Typography>
                         <Typography variant="body2" color="textSecondary">{row.major}</Typography>
-                         {this.state.open ?   <Dialog
+                        {this.state.open ? <Dialog
                             className="Dialog"
-                            fullScreen 
+                            fullScreen
                             open={this.state.open}
                         >
                             <Slide direction="up" in={this.state.open} timeout={100}>
                                 <AppBar>
                                     <Toolbar>
                                         <IconButton edge="start" color="inherit" onClick={this.handleClose} aria-label="close">
-                                        <CloseIcon />
+                                            <CloseIcon />
                                         </IconButton>
                                         <Typography variant="h6" >
-                                        Sound
+                                            Sound
                                         </Typography>
                                         <Button autoFocus color="inherit" onClick={this.handleClose}>
-                                        save
+                                            save
                                         </Button>
                                     </Toolbar>
                                 </AppBar>
-                                <_FormCareer idUser={idUser} indexOfCert={indexOfCert}/>
+                                <_FormCareer idUser={idUser} indexOfCert={indexOfCert} />
                             </Slide>
                         </Dialog> : null}
                     </Paper>
@@ -117,45 +117,45 @@ class Overview extends Component{
         ))
         return (
             <Container maxWidth="md" style={{ paddingTop: '100px' }}>
-           
-            {/* Dialog */}
+
+                {/* Dialog */}
                 <div>
-                    <div className ="btn-addNew">
-                    <Button variant="contained" color="primary" size="small"  onClick={() => { this.handleClickOpen(_index)}}>
-                        Thêm mới
-                    </Button>
+                    <div className="btn-addNew">
+                        <Button variant="contained" color="primary" size="small" onClick={() => { this.handleClickOpen(_index) }}>
+                            Thêm mới
+                        </Button>
                     </div>
                     <Dialog
-                         className="Dialog"
+                        className="Dialog"
                         paper
                         keepMounted
                         onClose={this.handleClose}
                         aria-labelledby="alert-dialog-slide-title"
                         aria-describedby="alert-dialog-slide-description"
                     >
-                          <Slide direction="up" in={this.state.open}>
+                        <Slide direction="up" in={this.state.open}>
                             <Paper elevation={100} >
-                            <DialogContent>
-                          <FormCareer idUser={idUser} indexOfCert={indexOfCert}/>
-                        </DialogContent>
+                                <DialogContent>
+                                    <FormCareer idUser={idUser} indexOfCert={indexOfCert} />
+                                </DialogContent>
                             </Paper>
-                            </Slide>
+                        </Slide>
                     </Dialog>
                 </div>
                 {/*  */}
                 <div className="carrer-timeline">
-                    <Timeline align="alternate">
+                    <Timeline >
                         {dialog}
                     </Timeline>
                 </div>
                 <div className="carrer-btn">
                     <Button
                         onClick={this.showMore}
-                    >xem thêm<ChevronRightIcon/>
+                    >xem thêm<ChevronRightIcon />
                     </Button>
                 </div>
             </Container>
-        ) 
+        )
     }
 }
 
