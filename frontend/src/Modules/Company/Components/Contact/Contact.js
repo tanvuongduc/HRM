@@ -6,6 +6,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import CompanyService from '../../Shared/CompanyService';
 import { Form } from '../../Shared/';
+import Card from '@material-ui/core/Card';
 
 export default class Contact extends Form {
     constructor(props) {
@@ -30,7 +31,7 @@ export default class Contact extends Form {
     render() {
         let { phone, domain, website, email, address } = this.state.dataContact;
         return (
-            <div className="contact-content">
+            <Card className="contact-content">
                 <h3>Contact</h3>
                 <div className="contact-item">
                     <div>
@@ -49,7 +50,7 @@ export default class Contact extends Form {
                         <LocationOnIcon />{' '}Address : {address}
                     </div>
                 </div>
-            </div>
+            </Card>
         )
     }
 }

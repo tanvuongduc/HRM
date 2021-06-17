@@ -8,7 +8,6 @@ const Company = (props) => {
 		<div>
 			<Switch>
 				<Route exact path={`${path}`} component={Overview} />
-				{/* <Route exact path={`${path}/:id`} component={} /> */}
 			</Switch>
 		</div>
 	)

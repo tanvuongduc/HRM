@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CompanyService from '../../Shared/CompanyService';
+import Card from '@material-ui/core/Card';
 
 export default class Quickview extends Component {
 
@@ -47,7 +48,7 @@ export default class Quickview extends Component {
 
     render() {
         return (
-            <div className="quickview-content">
+            <Card className="quickview-content">
                 <h3>Overview</h3>
                 <div className="quickview-item">
                     <div>
@@ -60,7 +61,7 @@ export default class Quickview extends Component {
                         <b>{this.state.countPeoples}</b><p>Peoples</p>
                     </div>
                 </div>
-            </div>
+            </Card>
         )
     }
 }

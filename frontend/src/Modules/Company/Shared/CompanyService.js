@@ -5,11 +5,7 @@ const API_ENDPOINT = {
 	BASE: "company",
 	BASE_DEPARTMENTS: "departments",
 	BASE_TEAMS: "teams",
-	BASE_PEOPLE: "users",
-	// GET_CUS_BY_LOC: "/step/list",
-	// GET_EXAM_BY_LOC: "/location/service/list",
-	// GET_EXAM_INDEX_LIST_BY_SER_ID: "/service/step/get_byServiceId",
-	// UPDATE_EXAM_RESULT: "/step/finish",
+	BASE_PEOPLE: "users"
 };
 
 class Exam extends UtilService {
@@ -34,40 +30,12 @@ class Exam extends UtilService {
 		return await Http.get(url, location_id);
 	};
 
-	async finishNoteResult(noteResult, documentResult, companyResult) {
-		return await Http.patch(`${API_ENDPOINT.BASE}`,
-			{
-				"id": companyResult.id,
-				"name": companyResult.name,
-				"domain": companyResult.domain,
-				"address": companyResult.address,
-				"website": companyResult.website,
-				"email": companyResult.email,
-				"phone": companyResult.phone,
-				"pic": companyResult.pic._id,
-				"overviews": companyResult.overviews,
-				"notes": noteResult,
-				"documents": documentResult
-			}
-		)
+	async finishNoteResult(noteResult) {
+		return await Http.patch(`${API_ENDPOINT.BASE}`, { "notes": noteResult })
 	};
 
-	async finishDocumentResult(documentResult, companyResult) {
-		return await Http.patch(`${API_ENDPOINT.BASE}`,
-			{
-				"id": companyResult.id,
-				"name": companyResult.name,
-				"domain": companyResult.domain,
-				"address": companyResult.address,
-				"website": companyResult.website,
-				"email": companyResult.email,
-				"phone": companyResult.phone,
-				"pic": companyResult.pic._id,
-				"overviews": companyResult.overviews,
-				"notes": companyResult.notes,
-				"documents": documentResult
-			}
-		)
+	async finishDocumentResult(documentResult) {
+		return await Http.patch(`${API_ENDPOINT.BASE}`, { "documents": documentResult })
 	};
 }
 

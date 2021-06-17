@@ -6,13 +6,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CompanyService from '../../Shared/CompanyService';
 import { AuthService } from '../../Shared/';
 import Upload from '../../../../Shared/Components/Upload/Upload';
+import Card from '@material-ui/core/Card';
 
 export default class Document extends Form {
     constructor(props) {
         super(props);
         this.state = {
-            company: {},
-            document: [],
+            documents: [],
             id_document: null,
             id_delete: null,
             notiMessage: null
@@ -32,8 +32,7 @@ export default class Document extends Form {
             .then(res => {
                 let id_document = res.data.documents.map(id => ({ id: id._id }))
                 this.setState({
-                    company: res.data,
-                    document: res.data.documents,
+                    documents: res.data.documents,
                     id_document: id_document
                 })
             })
@@ -49,12 +48,12 @@ export default class Document extends Form {
     };
 
     updateUpload = (idUpload, DocumentUpload) => {
-        this.state.document.push(DocumentUpload)
+        this.state.documents.push(DocumentUpload)
         this.state.id_document.push({ id: idUpload })
-        this.setState({ document: this.state.document })
+        this.setState({ documents: this.state.documents })
 
         let _idUpdate = this.state.id_document.map(id => id.id)
-        CompanyService.finishDocumentResult(_idUpdate, this.state.company)
+        CompanyService.finishDocumentResult(_idUpdate)
             .catch((error) => {
                 console.error('Error:', error);
             })
@@ -72,21 +71,15 @@ export default class Document extends Form {
     answer = (event) => {
         this.setState({ notiMessage: null })
         if (event) {
-            let newDocument = this.state.document.filter(id => id._id !== this.state.id_delete)
-            this.setState({ document: newDocument })
+            let newDocument = this.state.documents.filter(id => id._id !== this.state.id_delete)
+            this.setState({ documents: newDocument })
 
             let _idDelete = newDocument.map(id => id._id)
-            CompanyService.finishDocumentResult(_idDelete, this.state.company)
+            CompanyService.finishDocumentResult(_idDelete)
                 .catch((error) => {
                     console.error('Error:', error);
                 })
         } else null;
-    };
-
-    /*----------------------------------------------*/
-
-    componentDidMount() {
-        this.getDocument();
     };
 
     /*----------------------------------------------*/
@@ -108,15 +101,19 @@ export default class Document extends Form {
         return `${date < 10 ? `0${date}` : `${date}`}-${month < 10 ? `0${month}` : `${month}`}-${year}`
     };
 
+    componentDidMount() {
+        this.getDocument();
+    };
+
     render() {
         return (
-            <div className="document-content">
+            <Card className="document-content">
                 <div className="document-header">
-                    <h3>Document</h3><Upload Upload={(idUpload, DocumentUpload) => this.updateUpload(idUpload, DocumentUpload)} />
+                    <h3>Documents</h3><Upload Upload={(idUpload, DocumentUpload) => this.updateUpload(idUpload, DocumentUpload)} />
                 </div>
                 <div className="document-item">
                     {
-                        this.state.document.map((event, index) => (
+                        this.state.documents.map((event, index) => (
                             <div key={index}>
                                 <div className="document-item-title">
                                     <div className="item-content">
@@ -138,7 +135,7 @@ export default class Document extends Form {
                     }
                 </div>
                 <ModalConfirm message={this.state.notiMessage} answer={(event) => this.answer(event)} />
-            </div>
+            </Card>
         )
     }
 }
