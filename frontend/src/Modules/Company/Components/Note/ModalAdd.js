@@ -1,14 +1,14 @@
 import { Modal, Button, FormControl, TextField } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import React from 'react'
 
 const getModalStyle = () => {
     return {
         top: '35%',
         left: '50%',
-        width: '600px',
+        width: '50%',
         padding: '30px',
         borderRadius: '4px',
         position: 'absolute',
@@ -27,22 +27,29 @@ const getFormControlStyle = () => {
     }
 }
 
-const Modaladd = () => {
+/*--------------------------------------------------*/
+
+const ModalAdd = (props) => {
     const [modalStyle] = React.useState(getModalStyle);
     const [formStyle] = React.useState(getFormStyle);
     const [formControlStyle] = React.useState(getFormControlStyle);
     const [modal, setModal] = React.useState(false);
-
-    /*--------------------------------------------------*/
-
-    const [document, setDocument] = React.useState({});
+    const [note, setNote] = React.useState({});
 
     const handleOnchange = (event) => {
-        setDocument({ ...document, [event.target.name]: [event.target.value] })
+        setNote({ ...note, [event.target.name]: event.target.value })
     };
 
-    const patchDocument = (event) => {
+    const patchNote = async (event) => {
         event.preventDefault();
+        event.target.reset();
+
+        const item = {};
+        item.title = note.title;
+        item.desc = note.desc;
+        props.add(item);
+
+        setModal(!modal)
     };
 
     const handleModal = () => {
@@ -51,11 +58,11 @@ const Modaladd = () => {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<AddCircleIcon />}>Document</Button>
+            <Button variant="contained" color="primary" onClick={handleModal} startIcon={<NoteAddIcon />}>Add note</Button>
             <Modal open={modal} onClose={handleModal} >
                 <div style={modalStyle}>
-                    <h4>Create a new document</h4><hr />
-                    <form autoComplete="off" style={formStyle} onSubmit={patchDocument}>
+                    <h4>Create a new note</h4><hr />
+                    <form style={formStyle} onSubmit={patchNote}>
                         <FormControl style={formControlStyle} fullWidth>
                             <TextField label="Enter title" helperText="Some important text" name="title" onChange={handleOnchange} required />
                         </FormControl>
@@ -70,5 +77,4 @@ const Modaladd = () => {
         </div>
     )
 }
-
-export default Modaladd;
+export default ModalAdd;

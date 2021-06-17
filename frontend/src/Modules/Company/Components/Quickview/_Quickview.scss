@@ -1,9 +1,6 @@
 .quickview-content {
     width: 60%;
     height: auto;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 0px 2px 1px -1px gray, 0px 1px 1px 0px gray, 0px 1px 3px 0px gray;
     padding: 30px;
     .quickview-item {
         width: 100%;
@@ -17,7 +14,7 @@
             font-size: 20px;
         }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         width: 100%;
     }
 }
