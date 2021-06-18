@@ -76,14 +76,14 @@ export default function Sidebar2(){
                         </div>
                         <div className='text'><span>Department</span></div>
                     </li>
-                    <li className='item' onClick={() => this.goTo('app/reception/order')}>
+                    <li className='item' onClick={() => this.goTo('app/certificate')}>
                         <div className="icon">
-                        <i class="fas fa-award" />
+                        <i class="fas fa-award"></i>
                         </div>
                         <div className='text'><span>Certificate</span></div>
                     </li>
                     <Divider className={classes.divide}/>
-                    <li className='item' onClick={() => this.goTo('app/certificate')}>
+                    <li className='item' onClick={() => this.goTo('app/reception/order')}>
                         <div className="icon">
                         <i className="fa fa-people-carry" />
                         </div>

@@ -1,5 +1,14 @@
 import * as React from "react";
 import Paper from "@material-ui/core/Paper";
+import Button from '@material-ui/core/Button';
+//
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+//
 import {
   ViewState,
   EditingState,
@@ -45,6 +54,7 @@ class TimeOff extends React.PureComponent {
       addedAppointment: {},
       appointmentChanges: {},
       editingAppointment: undefined,
+      isShowTimeOff: false
     };
   }
 
@@ -92,10 +102,15 @@ class TimeOff extends React.PureComponent {
     this.setState({ data });
     console.log("DDDDD", this.state.addedAppointment);
   };
+  showTimeOff = () => {
+    this.setState({isShowTimeOff: !this.state.isShowTimeOff});
+    
+  }
 
   render() {
-    const { data, addedAppointment, appointmentChanges, editingAppointment } =
-      this.state;
+    let {data, addedAppointment, appointmentChanges, editingAppointment, isShowTimeOff}=this.state;
+      console.log(isShowTimeOff)
+      
 
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
@@ -103,7 +118,29 @@ class TimeOff extends React.PureComponent {
     const yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
 
+    
     return (
+      <div>
+      {isShowTimeOff? (
+      <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Id</TableCell>
+                <TableCell align="center">title</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map(item => (
+                <TableRow>
+                  <TableCell align="center">{item.id}</TableCell>
+                  <TableCell align="center">{item.title}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ):(
       <Paper>
         <Scheduler height={1000} data={data}>
           <ViewState defaultCurrentDate={today} />
@@ -127,6 +164,13 @@ class TimeOff extends React.PureComponent {
           <AppointmentForm />
         </Scheduler>
       </Paper>
+      )}
+      
+      <Button onClick={() => this.showTimeOff()} variant="contained" color="primary">
+        {isShowTimeOff ? "Close" : "Show"}
+      </Button>
+
+      </div>
     );
   }
 }
