@@ -2,7 +2,7 @@ import { Http } from "../../Company/Shared";
 
 
 const API_ENDPOINT = {
-    GETLISTTIMEOFF: "timeoff"
+    GETLISTTIMEOFF: "timeoff/609ca06b8d576b2184936f7d"
 }
 
 class TimeOffService {
