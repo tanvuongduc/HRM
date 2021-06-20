@@ -4,6 +4,11 @@ import DepartmentList from "./Components/List/List";
 import FormDepartment from "./Components/Detail/Formdepartment";
 
 class Department extends Component {
+    constructor(props) {
+        super(props);
+    }
+s
+
     render() {
         const { path } = this.props.match;
         return (

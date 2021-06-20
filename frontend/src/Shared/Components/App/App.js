@@ -24,12 +24,12 @@ class App extends Component {
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />
                     <Route exact path={`${path}/exam`} component={Exam} />
-                    <Route path={`${path}/team/:id`} component={MainTeam} />
-                    <Route path={`${path}/teams`} component={Team} />
+                    {/* <Route path={`${path}/team/:id`} component={MainTeam} /> */}
+                    <Route path={`${path}/team`} component={Team} />
                     <Route  path={`${path}/department`} exact component={Department} />
                     <Route path={`${path}/management/users`} component={ManagementUsers}/>
                     <Route path={`${path}/user`} component={User}/>
-                    <Route path={`${path}/timeoff`} component={TimerOff} />
+                    <Route path={`${path}/certificate`} component={Certificate}/>
             
                 </Switch>
             </div>
