@@ -2,7 +2,8 @@ import { Http } from "../../Company/Shared";
 
 
 const API_ENDPOINT = {
-    GETLISTTIMEOFF: "timeoff/609ca06b8d576b2184936f7d"
+    GETLISTTIMEOFF: "timeoff/60cff5e174c34ea254311e8d",
+    ADDTIMEOFF: "timeoff"
 }
 
 class TimeOffService {
@@ -15,6 +16,10 @@ class TimeOffService {
 
     async getListTimeOff() {
         return await Http.get(API_ENDPOINT.GETLISTTIMEOFF);
+    }
+
+    async addTimeOff(data) {
+        return await Http.post(API_ENDPOINT.ADDTIMEOFF, data);
     }
 }
 

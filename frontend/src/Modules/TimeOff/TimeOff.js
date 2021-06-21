@@ -48,58 +48,60 @@ import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
 import DoneIcon from "@material-ui/icons/Done";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import Typography from '@material-ui/core/Typography';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import Typography from "@material-ui/core/Typography";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
-const styles = theme => ({
-  
+const styles = (theme) => ({
   apptContent: {
-    '&>div>div': {
-      whiteSpace: 'normal !important',
+    "&>div>div": {
+      whiteSpace: "normal !important",
       lineHeight: 1.2,
     },
   },
   flexibleSpace: {
-    margin: '0 auto 0 0',
+    margin: "0 auto 0 0",
   },
   flexContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    float: 'left'
+    display: "flex",
+    alignItems: "center",
+    float: "left",
   },
   prioritySelector: {
     marginLeft: theme.spacing(2),
     minWidth: 140,
-    '@media (max-width: 500px)': {
+    "@media (max-width: 500px)": {
       minWidth: 0,
-      fontSize: '0.75rem',
+      fontSize: "0.75rem",
       marginLeft: theme.spacing(0.5),
     },
   },
-});
 
+  FormResource: {
+    display: "none"
+  }
+});
 
 const usePrioritySelectorItemStyles = makeStyles(({ palette, spacing }) => ({
   bullet: ({ color }) => ({
     backgroundColor: color ? color[400] : palette.divider,
-    borderRadius: '50%',
+    borderRadius: "50%",
     width: spacing(2),
     height: spacing(2),
     marginRight: spacing(2),
-    display: 'inline-block',
+    display: "inline-block",
   }),
   prioritySelectorItem: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   priorityText: {
-    '@media (max-width: 500px)': {
-      display: 'none',
+    "@media (max-width: 500px)": {
+      display: "none",
     },
   },
   priorityShortText: {
-    '@media (min-width: 500px)': {
-      display: 'none',
+    "@media (min-width: 500px)": {
+      display: "none",
     },
   },
 }));
@@ -114,7 +116,6 @@ const Appoinment = ({ children, style, ...restProps }) => (
     }}
   >
     {children}
-    {console.log("555555555", children[1].props)}
     <Chip
       size="small"
       style={{
@@ -179,7 +180,7 @@ const Content = withStyles(style, { name: "Content" })(
         </Grid>
         <Grid item xs={10}>
           <span>Người xét duyệt: </span>
-          <span>{appointmentData.pic}</span>
+          <span>{appointmentData.pic.name}</span>
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
@@ -223,18 +224,25 @@ const TextEditor = (props) => {
 const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
   const optionsPic = [
     {
-      id: "60b9aab51f194c0c78c9932b",
-      text: "Trieu Le",
+      id: "60cff2ed74c34ea254311e8a",
+      text: "Triều Lê",
     },
     {
-      id: "60ba34061f194c0c78c99338",
-      text: "Trieu Le 110",
+      id: "60cff742dbec139b90add99f",
+      text: "Đăng Jinner",
     },
   ];
+  
+  console.log("999999999", appointmentData);
 
   const onCustomFieldChange = (nextValue) => {
     onFieldChange({ pic: nextValue });
+  };
+  const picDefault = {
+    id: "60cff2ed74c34ea254311e8a",
+    text: "Triều Lê",
   }
+  const picId = appointmentData.pic !== undefined ? appointmentData.pic._id : picDefault.id;
   return (
     <AppointmentForm.BasicLayout
       appointmentData={appointmentData}
@@ -245,18 +253,32 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
       <AppointmentForm.Label text="Người xét duyệt" type="title" />
       <AppointmentForm.Select
         type="filledSelect"
+        value={picId}
         onValueChange={onCustomFieldChange}
         availableOptions={optionsPic}
+        readOnly={appointmentData.status === 2 ? true : false}
       />
     </AppointmentForm.BasicLayout>
   );
-}
+};
 
-const PrioritySelectorItem = ({
-  color, text: resourceTitle,
-}) => {
-  const text = resourceTitle || 'Tất cả trạng thái';
-  const shortText = resourceTitle ? text.substring(0, 1) : 'All';
+const onCustomResource = withStyles(style, { name: "FormResource" })(
+  ({ onResourceChange, appointmentResources, resource, ...restProps }) => {
+    return (
+      <AppointmentForm.ResourceEditor
+        readOnly={true}
+        appointmentResources={appointmentResources}
+        resource={resource}
+        {...restProps}
+      >
+      </AppointmentForm.ResourceEditor>
+    );
+  }
+);
+
+const PrioritySelectorItem = ({ color, text: resourceTitle }) => {
+  const text = resourceTitle || "Tất cả trạng thái";
+  const shortText = resourceTitle ? text.substring(0, 1) : "All";
   const classes = usePrioritySelectorItemStyles({ color });
 
   return (
@@ -268,43 +290,43 @@ const PrioritySelectorItem = ({
   );
 };
 
-const PrioritySelector = withStyles(styles, { name: 'PrioritySelector' })(({
-  classes, priorityChange, priority,
-}) => {
-  const currentPriority = priority > 0 ? instance_resourse[priority - 1] : {};
-  return (
-    <FormControl className={classes.prioritySelector}>
-      <Select
-        disableUnderline
-        value={priority}
-        onChange={(e) => 
-          priorityChange(e.target.value)
-        }
-        renderValue={() => (
-          <PrioritySelectorItem text={currentPriority.text} color={currentPriority.color} />
-        )}
-      >
-        <MenuItem value={0}>
-          <PrioritySelectorItem />
-        </MenuItem>
-        {instance_resourse.map(({ id, color, text }) => (
-          <MenuItem value={id} key={id.toString()}>
-            <PrioritySelectorItem color={color} text={text} />
+const PrioritySelector = withStyles(styles, { name: "PrioritySelector" })(
+  ({ classes, priorityChange, priority }) => {
+    const currentPriority = priority > 0 ? instance_resourse[priority - 1] : {};
+    return (
+      <FormControl className={classes.prioritySelector}>
+        <Select
+          disableUnderline
+          value={priority}
+          onChange={(e) => priorityChange(e.target.value)}
+          renderValue={() => (
+            <PrioritySelectorItem
+              text={currentPriority.text}
+              color={currentPriority.color}
+            />
+          )}
+        >
+          <MenuItem value={0}>
+            <PrioritySelectorItem />
           </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
-});
+          {instance_resourse.map(({ id, color, text }) => (
+            <MenuItem value={id} key={id.toString()}>
+              <PrioritySelectorItem color={color} text={text} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
+  }
+);
 
-
-const FlexibleSpace = withStyles(styles, { name: 'FlexibleSpace' })(({
-  classes, priority, priorityChange, ...restProps
-}) => (
-  <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
-    <PrioritySelector priority={priority} priorityChange={priorityChange} />
-  </Toolbar.FlexibleSpace>
-));
+const FlexibleSpace = withStyles(styles, { name: "FlexibleSpace" })(
+  ({ classes, priority, priorityChange, ...restProps }) => (
+    <Toolbar.FlexibleSpace {...restProps} className={classes.flexibleSpace}>
+      <PrioritySelector priority={priority} priorityChange={priorityChange} />
+    </Toolbar.FlexibleSpace>
+  )
+);
 
 class TimeOff extends React.PureComponent {
   constructor(props) {
@@ -322,6 +344,7 @@ class TimeOff extends React.PureComponent {
           instances: instance_resourse,
         },
       ],
+      locale: 'vn-VI',
     };
   }
 
@@ -331,11 +354,11 @@ class TimeOff extends React.PureComponent {
       const dataAppointment = res.data;
       dataAppointment.forEach((item) => {
         let statusId = 0;
-        if(item.status === "pending") {
+        if (item.status === "pending") {
           statusId = 1;
-        } else if(item.status === "approved") {
+        } else if (item.status === "approved") {
           statusId = 2;
-        } else if(item.status === "rejected") {
+        } else if (item.status === "rejected") {
           statusId = 3;
         }
         const timeOffItem = {
@@ -343,7 +366,7 @@ class TimeOff extends React.PureComponent {
           title: item.reason,
           startDate: new Date(item.from),
           endDate: new Date(item.to),
-          pic: item.pic.name,
+          pic: item.pic,
           status: statusId,
         };
         data.push(timeOffItem);
@@ -388,35 +411,39 @@ class TimeOff extends React.PureComponent {
       reason: addedAppointment.title,
       from: addedAppointment.startDate,
       to: addedAppointment.endDate,
-      by: "609ca06b8d576b2184936f7d",
-      pic: addedAppointment.pic
+      by: "60cff5e174c34ea254311e8d",
+      pic: addedAppointment.pic !== undefined ? addedAppointment.pic : "60cff2ed74c34ea254311e8a",
+      status: 1,
     };
-    const res = Http.post("timeoff", timeOff);
-    this.setState({ data });
+    TimeOffService.addTimeOff(timeOff).then((res) => {
+      this.setState({ data });
+    });
   };
 
   priorityChange = (value) => {
     const { resources } = this.state;
-    const nextResources = [{
-      ...resources[0],
-      instances: value > 0 ? [instance_resourse[value - 1]] : instance_resourse,
-    }];
+    const nextResources = [
+      {
+        ...resources[0],
+        instances:
+          value > 0 ? [instance_resourse[value - 1]] : instance_resourse,
+      },
+    ];
 
     this.setState({ currentPriority: value, resources: nextResources });
   };
 
-  flexibleSpace = () => connectProps(FlexibleSpace, () => {
-    const { currentPriority } = this.state;
-    return {
-      priority: currentPriority,
-      priorityChange: this.priorityChange,
-    };
-  });
-  
-  filterTasks = (items, status) => items.filter(task => (
-    !status || task.status === status
-  ));
+  flexibleSpace = () =>
+    connectProps(FlexibleSpace, () => {
+      const { currentPriority } = this.state;
+      return {
+        priority: currentPriority,
+        priorityChange: this.priorityChange,
+      };
+    });
 
+  filterTasks = (items, status) =>
+    items.filter((task) => !status || task.status === status);
 
   render() {
     const {
@@ -425,7 +452,8 @@ class TimeOff extends React.PureComponent {
       appointmentChanges,
       editingAppointment,
       resources,
-      currentPriority
+      currentPriority,
+      locale
     } = this.state;
 
     let today = new Date();
@@ -435,7 +463,12 @@ class TimeOff extends React.PureComponent {
     today = yyyy + "-" + mm + "-" + dd;
     return (
       <Paper>
-        <Scheduler className="scheduler-table" height={1000} data={this.filterTasks(data, currentPriority)}>
+        <Scheduler
+          className="scheduler-table"
+          height={1000}
+          data={this.filterTasks(data, currentPriority)}
+          locale={locale}
+        >
           <ViewState defaultCurrentDate={today} />
           <MonthView />
           <WeekView startDayHour={9} endDayHour={15} />
@@ -463,7 +496,7 @@ class TimeOff extends React.PureComponent {
             showCloseButton
           />
           <ViewSwitcher />
-          <AppointmentForm 
+          <AppointmentForm
             messages={{
               detailsLabel: "Xin nghỉ phép",
               allDayLabel: "Cả ngày",
@@ -482,6 +515,7 @@ class TimeOff extends React.PureComponent {
             }}
             basicLayoutComponent={BasicLayout}
             textEditorComponent={TextEditor}
+            resourceEditorComponent={onCustomResource}
           />
           <DragDropProvider />
           <Resources data={resources} />
