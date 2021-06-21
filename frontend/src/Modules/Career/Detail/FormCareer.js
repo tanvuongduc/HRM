@@ -16,7 +16,7 @@ class FormCareer extends form {
         this.state = {
             certificate: [],
             indexOfCert: "",
-            certificates:[],
+            certificates: [],
             notiConfirm: "",
             form: this._getInitFormData({
                 name: "",
@@ -36,7 +36,7 @@ class FormCareer extends form {
         CareerService.getUserById(this.props.idUser).then((res) => {
             let certificates = res.data.certificates
             console.log(certificates);
-            this.setState({certificates:certificates})
+            this.setState({ certificates: certificates })
             this.setState({ indexOfCert: this.props.indexOfCert })
             console.log(this.props.indexOfCert);
             certificates.map((data, index) => {
@@ -59,24 +59,23 @@ class FormCareer extends form {
             });
         }).catch((err) => {
             this.setState({
-              notiMessage: 'Lỗi vui lòng bạn thử lại sau !!'
+                notiMessage: 'Lỗi vui lòng bạn thử lại sau !!'
             })
             console.log(err);
-          });
+        });
     }
 
 
     render() {
         let { idUser, indexOfCert } = this.props;
-        let {certificates} =this.state
-        let certificate =certificates.map((data,i) =>{
-            if(i == indexOfCert){
+        let { certificates } = this.state
+        let certificate = certificates.map((data, i) => {
+            if (i == indexOfCert) {
                 return data;
             }
         })
         let form = this.state.form;
 
-        console.log(indexOfCert);
         return (
             <Fragment>
                 <Grid className="form-career">
@@ -94,7 +93,7 @@ class FormCareer extends form {
                             <Grid sm="8" className="input" ><TextField fullWidth id="classification" name="classification" onChange={(ev) => { this._setValueNotCheck(ev, "classification") }} /></Grid>
                         </Grid>
                         <Grid sm="6" container>
-                        <Grid sm="4" className="label" align="right">Chuyên ngành :</Grid>
+                            <Grid sm="4" className="label" align="right">Chuyên ngành :</Grid>
                             <Grid sm="8" className="input" ><TextField fullWidth value={form.major.value} id="major" name="major" onChange={(ev) => { this._setValueNotCheck(ev, "major") }} /></Grid>
                             <Grid sm="4" className="label" align="right">Học vị :</Grid>
                             <Grid sm="8" className="input" ><TextField fullWidth value={form.degree.value} id="degree" name="degree" onChange={(ev) => { this._setValueNotCheck(ev, "degree") }} /></Grid>
