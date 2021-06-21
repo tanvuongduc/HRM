@@ -2,12 +2,9 @@ import * as React from "react";
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
 //
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+
+
+import LisTimeOff from './Components/ListTimeOff/ListTimeOff'
 //
 import {
   ViewState,
@@ -31,6 +28,9 @@ import {
 import "./TimeOff.scss";
 import { Http } from "../Company/Shared";
 import TimeOffService from "./Shared/TimeOffService";
+import { makeStyles } from "@material-ui/core";
+import Container from '@material-ui/core/Container';
+
 
 const data = [];
 TimeOffService.getListTimeOff().then((res) => {
@@ -59,7 +59,7 @@ class TimeOff extends React.PureComponent {
   }
 
   componentDidMount = async () => {
-    console.log("DATAA", data);
+    console.log("DATA", data);
   };
 
   changeAddedAppointment = (addedAppointment) => {
@@ -121,28 +121,12 @@ class TimeOff extends React.PureComponent {
     
     return (
       <div>
+        <Container>
       {isShowTimeOff? (
-      <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Id</TableCell>
-                <TableCell align="center">title</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map(item => (
-                <TableRow>
-                  <TableCell align="center">{item.id}</TableCell>
-                  <TableCell align="center">{item.title}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <LisTimeOff />
       ):(
       <Paper>
-        <Scheduler height={1000} data={data}>
+        <Scheduler height={"auto"} data={data}>
           <ViewState defaultCurrentDate={today} />
           <MonthView />
           <Toolbar />
@@ -167,9 +151,9 @@ class TimeOff extends React.PureComponent {
       )}
       
       <Button onClick={() => this.showTimeOff()} variant="contained" color="primary">
-        {isShowTimeOff ? "Close" : "Show"}
+        {isShowTimeOff ? "Đóng" : "Chi tiết"}
       </Button>
-
+      </Container>
       </div>
     );
   }

@@ -16,5 +16,4 @@ class Company extends Component{
     )
   }
 }
-
 export default withRouter(Company);

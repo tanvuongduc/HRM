@@ -11,8 +11,9 @@ const useStyles = makeStyles({
         position:'absolute',
         top: '45px',
         width: '60px',
-        height: '100vh',
+        height: '200vh',
         overflow:'hidden',
+        zIndex: '1',
         '&:hover' :{
             overflow:'inherit'
         }
@@ -20,7 +21,8 @@ const useStyles = makeStyles({
         
     },
     child: {
-        height: '100vh',
+        zIndex: '1',
+        height: '200vh',
         width: '194px',
         backgroundColor : '#3f51b5',
     },
