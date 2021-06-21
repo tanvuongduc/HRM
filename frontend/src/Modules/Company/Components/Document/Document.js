@@ -12,7 +12,6 @@ export default class Document extends Form {
     constructor(props) {
         super(props);
         this.state = {
-            documents: [],
             id_document: null,
             id_delete: null,
             notiMessage: null
@@ -28,17 +27,10 @@ export default class Document extends Form {
     /*----------------------------------------------*/
 
     getDocument = () => {
-        CompanyService.getCompanyByLocation()
-            .then(res => {
-                let id_document = res.data.documents.map(id => ({ id: id._id }))
-                this.setState({
-                    documents: res.data.documents,
-                    id_document: id_document
-                })
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            })
+        let id_document = this.props.documents.map(id => ({ id: id._id }))
+        this.setState({
+            id_document: id_document
+        })
     };
 
     /*----------------------------------------------*/
@@ -48,9 +40,9 @@ export default class Document extends Form {
     };
 
     updateUpload = (idUpload, DocumentUpload) => {
-        this.state.documents.push(DocumentUpload)
+        this.props.documents.push(DocumentUpload)
         this.state.id_document.push({ id: idUpload })
-        this.setState({ documents: this.state.documents })
+        this.setState({ documents: this.props.documents })
 
         let _idUpdate = this.state.id_document.map(id => id.id)
         CompanyService.finishDocumentResult(_idUpdate)
@@ -71,7 +63,7 @@ export default class Document extends Form {
     answer = (event) => {
         this.setState({ notiMessage: null })
         if (event) {
-            let newDocument = this.state.documents.filter(id => id._id !== this.state.id_delete)
+            let newDocument = this.props.documents.filter(id => id._id !== this.state.id_delete)
             this.setState({ documents: newDocument })
 
             let _idDelete = newDocument.map(id => id._id)
@@ -113,7 +105,7 @@ export default class Document extends Form {
                 </div>
                 <div className="document-item">
                     {
-                        this.state.documents.map((event, index) => (
+                        this.props.documents.map((event, index) => (
                             <div key={index}>
                                 <div className="document-item-title">
                                     <div className="item-content">
