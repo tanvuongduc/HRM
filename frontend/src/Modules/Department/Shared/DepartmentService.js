@@ -9,12 +9,12 @@ const API_ENDPOINT = {
     DELETE_DEPARTMENT:'',
 }
 
-class Department {
+class DepartmentService {
     constructor() {
-      if (Department._instance) {
-        return Department._instance;
+      if (DepartmentService._instance) {
+        return DepartmentService._instance;
       }
-      Department._instance = this;
+      DepartmentService._instance = this;
     }
     
 
@@ -41,6 +41,6 @@ class Department {
 
 }
 
-const instance = new Department();
+const instance = new DepartmentService();
 
 export default instance;

@@ -1,18 +1,18 @@
-import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom';
-import ItemDepartment from './Components/ItemDepartment/ItemDepartment';
-import DetailDepartment from './Components/DetailDepartment/DetailDepartment';
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import DepartmentList from "./Components/List/List";
+import FormDepartment from "./Components/Detail/Formdepartment";
 
-const Department = () => {
-    const path = window.location.pathname;
-    return (
-        <div>
+class Department extends Component {
+    render() {
+        const { path } = this.props.match;
+        return (
             <Switch>
-                <Route exact path={`${path}`} component={ItemDepartment} />
-                <Route exact path={`${path}/detail:id`} component={DetailDepartment} />
+                <Route exact path={`${path}`} component={DepartmentList} />
+                <Route exact path={`${path}/:id`} component={FormDepartment} />
             </Switch>
-        </div>
-    )
+        );
+    }
 }
 
-export default withRouter(Department);
+export default Department;

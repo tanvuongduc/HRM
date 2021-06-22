@@ -5,7 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import { TableRow, Button } from "@material-ui/core";
-import Departmentservice from "../../Shared/Departmentservice"
+import DepartmentService from "../../Shared/DepartmentService"
 import { withStyles } from '@material-ui/core/styles';
 import ModalConfirm from '../../../../Shared/Components/ModalConfirm/ModalConfirm';
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ const useStyles = (theme) => ({
 })
 
 
-class Department extends Component {
+class DepartmentList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,7 +51,7 @@ class Department extends Component {
   }
   // list data   
   getData() {
-    Departmentservice.listDepartment().then((res) => {
+    DepartmentService.listDepartment().then((res) => {
       let listDepartment = res.data;
       this.setState({
         listDepartment
@@ -78,7 +78,7 @@ class Department extends Component {
         id: this.state.id
       }
       console.log(data);
-      Departmentservice.deleteDepartment(data)
+      DepartmentService.deleteDepartment(data)
         .then((response) => {
           this.setState({ notiConfirm: '' })
           this.getData();
@@ -108,7 +108,7 @@ class Department extends Component {
                 <TableCell align="right"><strong>Tên phòng ban</strong></TableCell>
                 <TableCell align="right"><strong>Trưởng phòng</strong></TableCell>
                 <TableCell align="right"><strong>Chú thích</strong></TableCell>
-                <TableCell><div className={classes.btn}><Button size="small" variant="contained" color="primary" href="./department/0">Thêm mới</Button></div></TableCell>
+                <TableCell><div className={classes.btn}><Button size="small" variant="contained" color="primary" href="/app/department/0">Thêm mới</Button></div></TableCell>
               </TableRow>
             </TableHead>
             <TableBody >
@@ -122,7 +122,7 @@ class Department extends Component {
                   <TableCell align="right">{item.desc}</TableCell>
                   <TableCell >
                     <div className={classes.btn}>
-                      <Link to={`department/${item.id}`}>
+                      <Link to={`/app/department/${item.id}`}>
                         <Button size="small" variant="contained" color="primary" >Sửa</Button>
                       </Link>
                     </div>
@@ -140,4 +140,4 @@ class Department extends Component {
     );
   }
 }
-export default withStyles(useStyles)(Department);
+export default withStyles(useStyles)(DepartmentList);

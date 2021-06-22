@@ -13,7 +13,8 @@ export default class Overview extends Component {
         super(props)
         this.state = {
             companyInfo: {
-                notes: []
+                notes: [],
+                documents: []
             },
             editing: false,
         }
@@ -65,8 +66,8 @@ export default class Overview extends Component {
         return (
             <div className="overview-content">
                 <Quickview />
-                <Contact />
-                <Document handleEditing={this.state.editing} />
+                <Contact companyInfo={this.state.companyInfo} />
+                <Document handleEditing={this.state.editing} documents={this.state.companyInfo.documents} />
                 <Note handleEditing={this.state.editing} notes={this.state.companyInfo.notes} onChange={() => this.setState} />
                 <div className="overview-btn-edit">
                     {this.btnEditing()}

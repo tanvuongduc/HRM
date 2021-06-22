@@ -18,9 +18,9 @@ class NavBarUser extends Component {
             className="nav-item"
             activeStyle={{
               display: "block",
-              color: "#19e4d3",
-              borderBottom: "4px solid #19e4d3",
-              backgroundColor: "#125297",
+              color: "#ffff",
+              borderBottom: "4px solid rgb(104, 189, 249)",
+              backgroundColor: "rgb(44, 56, 123)",
               paddingBottom: "16px",
             }}
           >

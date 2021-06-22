@@ -23,7 +23,6 @@ class ExamEdit extends Form {
                 <input type="number" placeholder="Huyết áp" value={pres.value} min="3" onChange={(ev) => this._setValue(ev, 'pres')}></input>
                 <input type="text" pattern={REGEX_TEL} placeholder="Nhịp tim" value={hRate.value} required onChange={(ev) => this._setValue(ev, 'hRate')}></input>
                 <button onClick={() => console.log('aaaaaaaaaaaaaaaaaaaa', this.state)}>test</button>
-                
                 <h1>{JSON.stringify(this.state.form)}</h1>
                 <ModalNoti message={this.state.notiMessage} done={() => this.setState({ notiMessage: '' })}></ModalNoti>
             </div>

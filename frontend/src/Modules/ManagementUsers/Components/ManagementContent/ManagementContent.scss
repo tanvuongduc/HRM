@@ -4,6 +4,23 @@
 
     padding: 50px 45px;
 
+    .search-bar {
+        width: 40%;
+        display: flex;
+
+        .search-input {
+            width: 80%;
+        }
+
+        .btn-control-box {
+            .btn-control-primary {
+                height: 55px;
+                margin-left: 5px;
+            }
+        }
+
+    }
+
     .add-user {
         float: right;
         margin-bottom: 20px;

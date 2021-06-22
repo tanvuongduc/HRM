@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { Link, useParams } from "react-router-dom";
 import {
   Grid,
-  Paper,
   TextField,
   Button,Card,MenuItem 
 } from "@material-ui/core";
-import Departmentservice from "../../Shared/Departmentservice"
+import Departmentservice from "../../Shared/DepartmentService"
 import { withStyles } from '@material-ui/core/styles';
-import { ModalNoti, ModalConfirm } from "../../Shared";
+import { ModalNoti, ModalConfirm } from "../../../../Shared";
 const useStyles = (theme) => ({
   form: {
     flexGrow: 1,
@@ -35,7 +33,7 @@ const useStyles = (theme) => ({
   }
 })
 
-class formDepartment extends Component {
+class FormDepartment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -207,4 +205,4 @@ class formDepartment extends Component {
   }
 
 };
-export default withStyles(useStyles)(formDepartment);
+export default withStyles(useStyles)(FormDepartment);
