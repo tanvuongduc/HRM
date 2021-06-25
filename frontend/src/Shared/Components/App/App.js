@@ -19,7 +19,7 @@ class App extends Component {
         const { path } = this.props.match;
         return (
             <div>
-                {/* <AppHeader/> */}
+                <AppHeader/>
                 <Switch>
                     <Route exact path={`${path}/company`} component={Company} />
                     <Route exact path={`${path}/career`} component={Career} />

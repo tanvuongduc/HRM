@@ -105,7 +105,7 @@ export default function AppHeader() {
           <Typography className={classes.title} variant="h6" noWrap>
             HRM
           </Typography>
-          {/* <div className={classes.search}>
+          <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -117,7 +117,7 @@ export default function AppHeader() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
-          </div> */}
+          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
           <IconButton color="inherit" className={classes.iconBackground}>
