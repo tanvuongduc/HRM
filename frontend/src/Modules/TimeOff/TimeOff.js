@@ -238,8 +238,6 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
     },
   ];
 
-  console.log("999999999", appointmentData.pic);
-
   const onCustomFieldChange = (nextValue) => {
     onFieldChange({ pic: nextValue });
   };
@@ -445,9 +443,6 @@ class TimeOff extends React.PureComponent {
     this.setState({ editingAppointment, setVisibleAppoinment: true });
   };
 
-  getDefaultAppointment = (data) => {
-    console.log("dasdasd", data);
-  };
 
   commitChanges = ({ added, changed, deleted }) => {
     let { data, addedAppointment } = this.state;
@@ -480,7 +475,6 @@ class TimeOff extends React.PureComponent {
           : "60cff2ed74c34ea254311e8a",
       status: 1,
     };
-    console.log("8888888888888888888", timeOff);
     TimeOffService.addTimeOff(timeOff).then((res) => {
       this.setState({ data });
     });
