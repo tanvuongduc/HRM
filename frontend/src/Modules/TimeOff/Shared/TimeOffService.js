@@ -1,10 +1,13 @@
 import { Http } from "../../Company/Shared";
 
 
+const userId = JSON.parse(localStorage.getItem("userId"));
+
 const API_ENDPOINT = {
-    GETLISTTIMEOFF: "timeoff/60cff5e174c34ea254311e8d",
-    ADDTIMEOFF: "timeoff"
+    GETLISTTIMEOFF: "timeoff/"+userId,
+    ADDTIMEOFF: "timeoff/"
 }
+
 
 class TimeOffService {
     constructor() {

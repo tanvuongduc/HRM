@@ -8,7 +8,6 @@ import {
 } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
-  MonthView,
   Toolbar,
   DateNavigator,
   Appointments,
@@ -22,6 +21,8 @@ import {
   DayView,
   WeekView,
   DragDropProvider,
+  MonthView,
+  CurrentTimeIndicator,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import "./TimeOff.scss";
 import IconButton from "@material-ui/core/IconButton";
@@ -50,6 +51,7 @@ import DoneIcon from "@material-ui/icons/Done";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import Typography from "@material-ui/core/Typography";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import { Form, ModalNoti } from "../../Shared";
 
 const styles = (theme) => ({
   apptContent: {
@@ -77,8 +79,8 @@ const styles = (theme) => ({
   },
 
   FormResource: {
-    display: "none"
-  }
+    display: "none",
+  },
 });
 
 const usePrioritySelectorItemStyles = makeStyles(({ palette, spacing }) => ({
@@ -113,6 +115,14 @@ const Appoinment = ({ children, style, ...restProps }) => (
       ...style,
       borderRadius: "8px",
       fontSize: "16px",
+      backgroundColor:
+        children[1].props.data.status === 1
+          ? "#FFC107"
+          : children[1].props.data.status === 2
+          ? "#00a1ff"
+          : children[1].props.data.status === 3
+          ? "#ef2c2c"
+          : "#FFC107",
     }}
   >
     {children}
@@ -127,7 +137,9 @@ const Appoinment = ({ children, style, ...restProps }) => (
           ? "Đang chờ duyệt"
           : children[1].props.data.status === 2
           ? "Đã được duyệt"
-          : "Không được duyệt"
+          : children[1].props.data.status === 3
+          ? "Không được duyệt"
+          : "Đang chờ duyệt"
       }
       clickable
       color="primary"
@@ -154,17 +166,10 @@ const style = ({ palette }) => ({
 const Header = withStyles(style, { name: "Header" })(
   ({ children, appointmentData, classes, ...restProps }) => (
     <AppointmentTooltip.Header
-      {...restProps}
       className={classNames(classes.header)}
       appointmentData={appointmentData}
-    >
-      <IconButton
-        onClick={() => alert(JSON.stringify(appointmentData))}
-        className={classes.commandButton}
-      >
-        <MoreIcon />
-      </IconButton>
-    </AppointmentTooltip.Header>
+      {...restProps}
+    ></AppointmentTooltip.Header>
   )
 );
 
@@ -232,17 +237,13 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
       text: "Đăng Jinner",
     },
   ];
-  
-  console.log("999999999", appointmentData);
+
+  console.log("999999999", appointmentData.pic);
 
   const onCustomFieldChange = (nextValue) => {
     onFieldChange({ pic: nextValue });
   };
-  const picDefault = {
-    id: "60cff2ed74c34ea254311e8a",
-    text: "Triều Lê",
-  }
-  const picId = appointmentData.pic !== undefined ? appointmentData.pic._id : picDefault.id;
+
   return (
     <AppointmentForm.BasicLayout
       appointmentData={appointmentData}
@@ -253,7 +254,7 @@ const BasicLayout = ({ onFieldChange, appointmentData, ...restProps }) => {
       <AppointmentForm.Label text="Người xét duyệt" type="title" />
       <AppointmentForm.Select
         type="filledSelect"
-        value={picId}
+        value={appointmentData.pic}
         onValueChange={onCustomFieldChange}
         availableOptions={optionsPic}
         readOnly={appointmentData.status === 2 ? true : false}
@@ -270,8 +271,7 @@ const onCustomResource = withStyles(style, { name: "FormResource" })(
         appointmentResources={appointmentResources}
         resource={resource}
         {...restProps}
-      >
-      </AppointmentForm.ResourceEditor>
+      ></AppointmentForm.ResourceEditor>
     );
   }
 );
@@ -344,11 +344,13 @@ class TimeOff extends React.PureComponent {
           instances: instance_resourse,
         },
       ],
-      locale: 'vn-VI',
+      locale: "vn-VI",
+      setVisibleAppoinment: false,
+      message: "",
     };
   }
 
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     const data = [];
     await TimeOffService.getListTimeOff().then((res) => {
       const dataAppointment = res.data;
@@ -377,16 +379,74 @@ class TimeOff extends React.PureComponent {
     });
   };
 
-  changeAddedAppointment = (addedAppointment) => {
-    this.setState({ addedAppointment });
+  changeAddedAppointment = async (addedAppointment) => {
+    let today = new Date();
+    let checkUnique = true;
+    await TimeOffService.getListTimeOff().then((res) => {
+      res.data.forEach((item) => {
+        let convertDate = new Date(item.from);
+        let convertDateEnd = new Date(item.to);
+        if (
+          addedAppointment.startDate 
+          && (addedAppointment.startDate.getTime() === convertDate.getTime() 
+          || ( convertDate.getTime() < addedAppointment.startDate.getTime() && convertDateEnd.getTime() > addedAppointment.endDate.getTime() )
+          || (addedAppointment.startDate.getTime() > convertDate.getTime() && addedAppointment.startDate.getTime() < convertDateEnd.getTime())) 
+        ) {
+          checkUnique = false;
+        }
+      });
+    });
+    if (!checkUnique) {
+      this.setState({
+        message: "Bạn không được phép xin nghỉ ngày này nữa",
+      });
+    }
+
+    if (addedAppointment.startDate < today) {
+      this.setState({
+        message: "Bạn không được phép xin nghỉ ngày trong quá khứ",
+      });
+    } else if (
+      addedAppointment.startDate &&
+      (addedAppointment.startDate.getDay() === 6 ||
+        addedAppointment.startDate.getDay() === 0)
+    ) {
+      this.setState({
+        message: "Bạn không được phép xin nghỉ thứ bảy và chủ nhật",
+      });
+    }
+    if (
+      addedAppointment.startDate &&
+      addedAppointment.startDate.getDate() +
+        addedAppointment.startDate.getMonth() ===
+        today.getDate() + today.getMonth()
+    ) {
+      this.setState({
+        message: "Bạn không được phép xin nghỉ vào ngày hôm nay",
+      });
+    }
+
+    if (
+      checkUnique &&
+      addedAppointment.startDate > today &&
+      addedAppointment.startDate.getDay() !== 6 &&
+      addedAppointment.startDate.getDay() !== 0
+    ) {
+      this.setState({ addedAppointment, setVisibleAppoinment: true });
+    }
   };
 
   changeAppointmentChanges = (appointmentChanges) => {
     this.setState({ appointmentChanges });
+
   };
 
   changeEditingAppointment = (editingAppointment) => {
-    this.setState({ editingAppointment });
+    this.setState({ editingAppointment, setVisibleAppoinment: true });
+  };
+
+  getDefaultAppointment = (data) => {
+    console.log("dasdasd", data);
   };
 
   commitChanges = ({ added, changed, deleted }) => {
@@ -407,14 +467,20 @@ class TimeOff extends React.PureComponent {
       data = data.filter((appointment) => appointment.id !== deleted);
     }
 
+    const userId = JSON.parse(localStorage.getItem("userId"));
+
     const timeOff = {
       reason: addedAppointment.title,
       from: addedAppointment.startDate,
       to: addedAppointment.endDate,
-      by: "60cff5e174c34ea254311e8d",
-      pic: addedAppointment.pic !== undefined ? addedAppointment.pic : "60cff2ed74c34ea254311e8a",
+      by: userId,
+      pic:
+        addedAppointment.pic !== undefined
+          ? addedAppointment.pic
+          : "60cff2ed74c34ea254311e8a",
       status: 1,
     };
+    console.log("8888888888888888888", timeOff);
     TimeOffService.addTimeOff(timeOff).then((res) => {
       this.setState({ data });
     });
@@ -445,6 +511,12 @@ class TimeOff extends React.PureComponent {
   filterTasks = (items, status) =>
     items.filter((task) => !status || task.status === status);
 
+  onHandleVisible = (visible) => {
+    this.setState({
+      setVisibleAppoinment: visible,
+    });
+  };
+
   render() {
     const {
       data,
@@ -453,7 +525,9 @@ class TimeOff extends React.PureComponent {
       editingAppointment,
       resources,
       currentPriority,
-      locale
+      locale,
+      setVisibleAppoinment,
+      message,
     } = this.state;
 
     let today = new Date();
@@ -470,14 +544,16 @@ class TimeOff extends React.PureComponent {
           locale={locale}
         >
           <ViewState defaultCurrentDate={today} />
-          <MonthView />
-          <WeekView startDayHour={9} endDayHour={15} />
-          <DayView startDayHour={9} endDayHour={15} />
+          <MonthView displayName="Tháng" />
+          <WeekView displayName="Tuần" startDayHour={9} endDayHour={15} />
+          <DayView displayName="Ngày" startDayHour={9} endDayHour={15} />
+
           <Toolbar flexibleSpaceComponent={this.flexibleSpace()} />
           <DateNavigator />
-          <TodayButton />
+          <TodayButton messages={{today: "Hôm nay"}} />
           <Appointments appointmentComponent={Appoinment} />
           <EditingState
+            defaultAddedAppointment={this.getDefaultAppointment}
             onCommitChanges={this.commitChanges}
             addedAppointment={addedAppointment}
             onAddedAppointmentChange={this.changeAddedAppointment}
@@ -497,6 +573,10 @@ class TimeOff extends React.PureComponent {
           />
           <ViewSwitcher />
           <AppointmentForm
+            onVisibilityChange={
+              setVisibleAppoinment ? this.onHandleVisible : null
+            }
+            visible={setVisibleAppoinment}
             messages={{
               detailsLabel: "Xin nghỉ phép",
               allDayLabel: "Cả ngày",
@@ -513,13 +593,21 @@ class TimeOff extends React.PureComponent {
               endRepeatLabel: "Hạn hết thúc",
               moreInformationLabel: "",
             }}
+            appointmentData={{
+              pic: "60cff2ed74c34ea254311e8a",
+            }}
             basicLayoutComponent={BasicLayout}
             textEditorComponent={TextEditor}
             resourceEditorComponent={onCustomResource}
           />
           <DragDropProvider />
           <Resources data={resources} />
+          <ConfirmationDialog messages={{ confirmCancelMessage: "Bạn có chắc chắn muốn thoát ?", discardButton: "Đồng ý", cancelButton: "Hủy" }}/>
         </Scheduler>
+        <ModalNoti
+          message={message}
+          done={() => this.setState({ message: "" })}
+        ></ModalNoti>
       </Paper>
     );
   }
