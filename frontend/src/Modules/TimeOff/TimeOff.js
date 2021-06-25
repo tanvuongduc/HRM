@@ -1,10 +1,11 @@
 import * as React from "react";
 import Paper from "@material-ui/core/Paper";
 import Button from '@material-ui/core/Button';
+
 //
 
 
-import LisTimeOff from './Components/ListTimeOff/ListTimeOff'
+import ListTimeOff from './Components/ListTimeOff/ListTimeOff'
 //
 import {
   ViewState,
@@ -103,15 +104,15 @@ class TimeOff extends React.PureComponent {
     console.log("DDDDD", this.state.addedAppointment);
   };
   showTimeOff = () => {
-    this.setState({isShowTimeOff: !this.state.isShowTimeOff});
+    this.setState({isShowTimeOff: false});
     
+  }
+  showListTimeOff = () => {
+    this.setState({isShowTimeOff: true})
   }
 
   render() {
-    let {data, addedAppointment, appointmentChanges, editingAppointment, isShowTimeOff}=this.state;
-      console.log(isShowTimeOff)
-      
-
+    let { data, addedAppointment, appointmentChanges, editingAppointment, isShowTimeOff}=this.state;
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
     const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -120,13 +121,22 @@ class TimeOff extends React.PureComponent {
 
     
     return (
+
       <div>
         <Container>
+        <div className='btnOptions'>
+        <Button onClick={() => this.showTimeOff()} className='btnSchedule' variant="contained" color="primary">
+          Xem dưới dạng lịch
+        </Button>
+        <Button onClick={() => this.showListTimeOff()} variant="contained" color="primary">
+          Xem dưới dạng danh sách
+        </Button>
+        </div>
       {isShowTimeOff? (
-        <LisTimeOff />
+        <ListTimeOff />
       ):(
       <Paper>
-        <Scheduler height={"auto"} data={data}>
+        <Scheduler height={'500'} data={data}>
           <ViewState defaultCurrentDate={today} />
           <MonthView />
           <Toolbar />
@@ -149,10 +159,6 @@ class TimeOff extends React.PureComponent {
         </Scheduler>
       </Paper>
       )}
-      
-      <Button onClick={() => this.showTimeOff()} variant="contained" color="primary">
-        {isShowTimeOff ? "Đóng" : "Chi tiết"}
-      </Button>
       </Container>
       </div>
     );

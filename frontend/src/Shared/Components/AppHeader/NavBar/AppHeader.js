@@ -98,7 +98,7 @@ export default function AppHeader() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           
         <Sidebar2></Sidebar2>

@@ -22,19 +22,19 @@ class App extends Component {
         return (
             <div>
                 <AppHeader/>
-                <Switch>
-                    <Route exact path={`${path}/company`} component={Company} />
-                    <Route exact path={`${path}/career`} component={Career} />
-                    <Route exact path={`${path}/exam`} component={Exam} />
-                    <Route path={`${path}/team/:id`} component={MainTeam} />
-                    <Route path={`${path}/teams`} component={Team} />
-                    <Route  path={`${path}/department`} exact component={Department} />
-                    <Route path={`${path}/management/users`} component={ManagementUsers}/>
-                    <Route path={`${path}/user`} component={User}/>
-                    <Route path={`${path}/timeoff`} component={TimeOff} />
-                    
-            
-                </Switch>
+                <div style={{margin:"80px 0 0 20px"}}>
+                    <Switch>
+                        <Route exact path={`${path}/company`} component={Company} />
+                        <Route exact path={`${path}/career`} component={Career} />
+                        <Route exact path={`${path}/exam`} component={Exam} />
+                        <Route path={`${path}/team/:id`} component={MainTeam} />
+                        <Route path={`${path}/teams`} component={Team} />
+                        <Route  path={`${path}/department`} exact component={Department} />
+                        <Route path={`${path}/management/users`} component={ManagementUsers}/>
+                        <Route path={`${path}/user`} component={User}/>
+                        <Route path={`${path}/timeoff`} component={TimeOff} />
+                    </Switch>
+                </div>
             </div>
         );
     }
