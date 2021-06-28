@@ -46,6 +46,7 @@ class Login extends Form {
             console.log("Userrrr", user);
             window.localStorage.setItem("userId", JSON.stringify(user));
             AuthService.userInfo = user;
+            this.goTo("app");
           })
           .catch((err) => {
             console.log("Err", err);
@@ -62,6 +63,7 @@ class Login extends Form {
         });
       });
     }
+    
     
   }
 
@@ -96,7 +98,7 @@ class Login extends Form {
               Tài khoản
             </InputLabel>
             <Input
-              type="text"
+              type="email"
               className="input"
               id="input-with-icon-adornment"
               value={username.value}

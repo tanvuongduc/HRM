@@ -24,13 +24,13 @@ class User extends Component {
     };
   }
 
-  async componentDidMount() {
-    await this.getInfo();
+   componentDidMount = async () =>  {
+     await this.getInfo();
   }
 
-  getInfo() {
-    let userId = "60ba34061f194c0c78c99338";
-    UserService.getMyInfo(userId).then((res) => {
+  getInfo = async () => {
+    const userId = JSON.parse(localStorage.getItem("userId")) ;
+    await UserService.getMyInfo(userId).then((res) => {
       this.setState({
         dataUser: res.data,
       });

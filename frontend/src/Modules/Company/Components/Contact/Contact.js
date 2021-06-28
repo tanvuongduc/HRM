@@ -4,32 +4,12 @@ import DomainIcon from '@material-ui/icons/Domain';
 import LanguageIcon from '@material-ui/icons/Language';
 import EmailIcon from '@material-ui/icons/Email';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import CompanyService from '../../Shared/CompanyService';
 import { Form } from '../../Shared/';
 import Card from '@material-ui/core/Card';
 
 export default class Contact extends Form {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dataContact: {}
-        }
-    };
-
-    getDataContact = () => {
-        CompanyService.getCompanyByLocation()
-            .then(res => this.setState({ dataContact: res.data }))
-            .catch(error => {
-                console.log(error)
-            })
-    };
-
-    componentDidMount() {
-        this.getDataContact();
-    };
-
     render() {
-        let { phone, domain, website, email, address } = this.state.dataContact;
+        let { phone, domain, website, email, address } = this.props.companyInfo;
         return (
             <Card className="contact-content">
                 <h3>Contact</h3>
