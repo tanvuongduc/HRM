@@ -4,7 +4,7 @@ import { Http } from "../../Company/Shared";
 const userId = JSON.parse(localStorage.getItem("userId"));
 
 const API_ENDPOINT = {
-    GETLISTTIMEOFF: "timeoff/"+userId,
+    GETLISTTIMEOFF: `timeoff/${userId}`,
     ADDTIMEOFF: "timeoff/"
 }
 

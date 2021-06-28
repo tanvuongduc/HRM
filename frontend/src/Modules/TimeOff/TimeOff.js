@@ -52,6 +52,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import Typography from "@material-ui/core/Typography";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { Form, ModalNoti } from "../../Shared";
+import { Card } from "@material-ui/core";
 
 const styles = (theme) => ({
   apptContent: {
@@ -530,11 +531,11 @@ class TimeOff extends React.PureComponent {
     const yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
     return (
-      <Paper>
+      <Card>
         <Scheduler
           className="scheduler-table"
-          height={1000}
           data={this.filterTasks(data, currentPriority)}
+          height={900}
           locale={locale}
         >
           <ViewState defaultCurrentDate={today} />
@@ -602,7 +603,7 @@ class TimeOff extends React.PureComponent {
           message={message}
           done={() => this.setState({ message: "" })}
         ></ModalNoti>
-      </Paper>
+      </Card>
     );
   }
 }
