@@ -36,7 +36,7 @@ export const UserSchema = new mongoose.Schema({
                 type: String,
                 require: true
             },
-            docs: [String],
+            docs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Document', default: [] }],
             status: {
                 type: String,
                 require: true,

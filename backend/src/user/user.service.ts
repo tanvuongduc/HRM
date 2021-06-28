@@ -281,7 +281,7 @@ export class UsersService {
     async findUserById(id: string): Promise<User> {
         let user: any;
         try {
-            user = await this.userModel.findById(id).exec();
+            user = await this.userModel.findById(id).populate('cetificates.docs').exec();
         } catch (error) {
             throw new HttpException('Could not find user.', 400);
         }

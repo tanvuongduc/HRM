@@ -30,9 +30,16 @@ export const CompanySchema = new mongoose.Schema({
             desc: String,
         }
     },
+    config: {
+        type: {
+            emailSupport: String,
+            publicHoliday: [String],
+            numberHolidays: Number,
+            typeHoliday: Number
+        }
+    },
     documents: [{ type: mongoose.Types.ObjectId, ref: 'Document' }]
 })
-
 
 export interface Note {
     title: string;
@@ -49,7 +56,6 @@ export interface SocialNetwork {
     key: string;
     value: string;
 }
-
 
 export interface Company extends mongoose.Document {
     id: string;

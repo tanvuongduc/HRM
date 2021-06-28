@@ -16,6 +16,7 @@ export class TimeoffService {
         by: string,
         pic: string
     ) {
+        await this.usersService.findUserById(by);
         await this.usersService.findUserById(pic);
         let timeoff = new this.timeoffModel({
             reason,
@@ -31,7 +32,7 @@ export class TimeoffService {
     async getAllTimeoffInMonth(
     ) {
         let date = Date.now()
-        const timeoffs = await this.timeoffModel.find().where(`from>${date}`).exec();
+        const timeoffs = await this.timeoffModel.find().where(`from>${date}`).populate('pic').populate('by').exec();
         return timeoffs.map(time => ({
             id: time.id,
             reason: time.reason,
@@ -48,7 +49,7 @@ export class TimeoffService {
     ) {
         let date = Date.now()
         try {
-            const timeoffs = await this.timeoffModel.find({ by: id }).where(`from>${date}`).exec();
+            const timeoffs = await this.timeoffModel.find({ by: id }).where(`from>${date}`).populate('pic').exec();
             return timeoffs.map(time => ({
                 id: time.id,
                 reason: time.reason,
