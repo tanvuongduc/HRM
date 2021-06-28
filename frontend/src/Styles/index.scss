@@ -7,9 +7,11 @@
 @import "../Shared/Components/ModalConfirm/ModalConfirm";
 @import "../Shared/Components/ModalNoti/ModalNoti";
 @import "../Modules/Org/Components/Login/Login";
+@import "../Shared/Components/Upload/Upload";
 
 /*====================================================*/
 
+@import "../Modules/Company/Company";
 @import "../Modules/People/People";
 @import "../Modules/People/Components/MyTeam/MyTeam";
 @import "../Modules/People/Components/User/User";
@@ -19,3 +21,4 @@
 @import "../Modules/People/Components/User/User";
 @import "../Modules/Certificate/Components/CertificateList/CertificateList";
 @import "../Modules/Certificate/Components/CertificateForm/CertificateForm";
+@import "../Shared/Components/AppHeader/AppHeader"

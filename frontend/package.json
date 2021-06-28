@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-core": "^2.7.5",
+    "@devexpress/dx-react-scheduler": "^2.7.5",
+    "@devexpress/dx-react-scheduler-material-ui": "^2.7.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -17,11 +20,11 @@
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.1",
     "node-sass": "^4.14.1",
-    "react-modal": "^3.13.1",
     "react": "^17.0.2",
     "react-avatar-edit": "^1.0.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
+    "react-modal": "^3.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "reactstrap": "^8.7.1"

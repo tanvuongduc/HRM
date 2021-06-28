@@ -1,0 +1,27 @@
+.main-content {
+    margin-block-start: 80px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+@keyframes divSwitchSide {
+    from {
+        padding-inline-start: 100px;
+        padding-inline-end: 20px;
+    }
+    to {
+        padding-inline-start: 240px;
+        padding-inline-end: 20px;
+    }
+}
+
+@keyframes divSwitch {
+    from {
+        padding-inline-start: 240px;
+        padding-inline-end: 20px;
+    }
+    to {
+        padding-inline-end: 20px;
+        padding-inline-start: 100px;
+    }
+}

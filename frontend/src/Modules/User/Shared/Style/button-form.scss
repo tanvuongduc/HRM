@@ -1,0 +1,31 @@
+.btn-form-control{
+    padding: 15px 20px;
+    width: 100%;
+    margin-top: 2rem;
+    background-color: rgba(128, 128, 128, 0.185);
+    height: 4.5rem;
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        display: block;
+    }
+
+    .btn-control-close {
+        background-color: grey;
+        color: white;
+        padding: 10px 12px;
+        float: left;
+    }
+
+    .btn-control-save {
+        padding: 10px 15px;
+        background-color: $c-primary;
+        color: white;
+        float: right;
+    }
+}
