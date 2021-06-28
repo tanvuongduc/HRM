@@ -22,6 +22,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SchoolIcon from '@material-ui/icons/School';
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import 'photoswipe/dist/photoswipe.css'
+import 'photoswipe/dist/default-skin/default-skin.css'
 
 
 class Overview extends Component {
@@ -130,6 +133,7 @@ class Overview extends Component {
                         dataLength={this.state.sliceNumber}
                         next={() => { this.showMore() }}
                         hasMore={true}
+                        style={{ width: 800, height: 500 }}
                     >
                         <Timeline >
                             {careers.slice(0, sliceNumber).map((row, index) => (
@@ -144,7 +148,7 @@ class Overview extends Component {
                                         <TimelineConnector />
                                     </TimelineSeparator>
                                     <TimelineContent>
-                                        <Paper className="TimelineContent" Container onClick={() => { this.setOpen(index) }}>
+                                        <Paper className="TimelineContent" Container onClick={() => { this.setOpen(index) }} >
 
                                             <Typography variant="h6" component="h1">{row.name}</Typography>
                                             <Typography>{row.certNo}</Typography>
@@ -170,6 +174,31 @@ class Overview extends Component {
                             ))}
                         </Timeline>
                     </InfiniteScroll>
+                </div>
+                <hr></hr>
+                <div>
+                    <Gallery>
+                        <Item
+                            original="https://placekitten.com/1024/768?image=1"
+                            thumbnail="https://placekitten.com/80/60?image=1"
+                            width="1024"
+                            height="768"
+                        >
+                            {({ ref, open }) => (
+                                <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=1" />
+                            )}
+                        </Item>
+                        <Item
+                            original="https://placekitten.com/1024/768?image=2"
+                            thumbnail="https://placekitten.com/80/60?image=2"
+                            width="1024"
+                            height="768"
+                        >
+                            {({ ref, open }) => (
+                                <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=2" />
+                            )}
+                        </Item>
+                    </Gallery>
                 </div>
             </div>
         )
