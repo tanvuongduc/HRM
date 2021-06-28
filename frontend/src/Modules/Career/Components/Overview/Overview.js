@@ -20,6 +20,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import InfiniteScroll from 'react-infinite-scroll-component';
 class Overview extends Component {
     constructor(props) {
         super(props);
@@ -28,8 +29,8 @@ class Overview extends Component {
             open: false,
             careers: [],
             sliceNumber: 2,
-            userId: '60b9aab51f194c0c78c9932b',
-            indexOfCert: ""
+            userId: '60d005eadbec139b90add9a9',
+            indexOfCert:'',
         }
     }
     componentDidMount() {
@@ -43,17 +44,21 @@ class Overview extends Component {
         })
     }
     showMore = () => {
-        const { sliceNumber } = this.state
-        this.setState({
-            sliceNumber: sliceNumber + 2
-        })
+        const { sliceNumber, careers } = this.state
+        if (careers.length > sliceNumber) {
+
+            this.setState({
+                sliceNumber: sliceNumber + 1
+            })
+        }
     }
 
-    setOpen = (index) => {
+    setOpen = (row) => {
         this.setState({
             open: true,
-            indexOfCert:index
+            indexOfCert:row
         })
+        console.log(row);
     };
     setClose = (i) => {
         this.setState({
@@ -69,10 +74,10 @@ class Overview extends Component {
         else { return "grey" }
     }
     render() {
-        let idUser = "  ";
+        let idUser = "60d005eadbec139b90add9a9";
         let { careers, sliceNumber, indexOfCert } = this.state
-        let _index = "-1"
-        console.log(this.state.indexOfCert);
+        let _index = -1
+        console.log(indexOfCert);
         return (
             <Container maxWidth="md" style={{ paddingTop: '100px' }}>
 
@@ -83,7 +88,7 @@ class Overview extends Component {
                             Thêm mới
                         </Button>
                     </div>
-                    <Dialog
+                   {this.state.open ?   <Dialog
                         className="Dialog"
                         paper
                         fullScreen
@@ -107,16 +112,19 @@ class Overview extends Component {
                                             111111111121
                         </Button>
                         <Slide direction="up" in={this.state.open}>
-                           
                                 <DialogContent>
-                                    <FormCareer idUser={idUser} indexOfCert={indexOfCert} />
+                                    <FormCareer idUser={idUser} index={indexOfCert} />
                                 </DialogContent>
-   
                         </Slide>
-                    </Dialog>
+                    </Dialog>: null}
                 </div>
                 {/*  */}
                 <div className="carrer-timeline">
+                <InfiniteScroll
+                        dataLength={this.state.sliceNumber}
+                        next={() => { this.showMore() }}
+                        hasMore={true}
+                    >
                     <Timeline align="alternate">
                      {careers.slice(0, sliceNumber).map((row, index) => (
                         <TimelineItem key={row.id}>
@@ -131,38 +139,21 @@ class Overview extends Component {
                             </TimelineSeparator>
                             <TimelineContent>
                                 <Paper className="TimelineContent" Container onClick={() => { this.setOpen(index) }}>
-
                                     <Typography variant="h6" component="h1">{row.name}</Typography>
                                     <Typography>{row.certNo}</Typography>
                                     <Typography variant="body2" color="textSecondary">{row.major}</Typography>
                                 </Paper>
-                                {/* <Dialog
-                                        className="Dialog"
-                                        fullScreen
-                                        open={this.state.  otherOpen}
-                                    > <Button color="inherit" onClick={() => { this.setClose_View }}>
-                                    111111111121
-                                </Button>
-                                          <_FormCareer idUser={idUser} indexOfCert={indexOfCert} />
-                                        <Slide direction="up" in={this.state.  otherOpen} timeout={100} mountOnEnter unmountOnExit>
-                                        <Button color="inherit" onClick={() => { this.setClose_View }}>
-                                            111111111121
-                                        </Button>
-                                            <_FormCareer idUser={idUser} indexOfCert={indexOfCert} />
-                                        </Slide>
-                                    </Dialog> */}
                             </TimelineContent>
                         </TimelineItem>
                     ))}
                     </Timeline>
+                 </InfiniteScroll>
                 </div>
                 <div className="carrer-btn">
                     <Button
                         onClick={this.showMore}
                     >xem thêm<ChevronRightIcon />
                     </Button>
-                     <Button color="inherit" onClick={() => { this.setOpen (2323)}}>111111111121</Button> 
-                    <Button color="inherit" onClick={() => { this.setClose ()}}>vvvczvxcv</Button>
                 </div>
             </Container>
         )

@@ -19,8 +19,10 @@ class careerService {
   getUserById(id) {
       return Http.get(API_ENDPOINT.GETUSERBYID+id)
   }
-  updateUser(id,data){
-      return Http.patch(API_ENDPOINT.UPDATEUSER+id,data)
+  updateUser(id,payload){
+      console.log(payload);
+      console.log( Http.patch(API_ENDPOINT.UPDATEUSER+id,payload));
+      return Http.patch(API_ENDPOINT.UPDATEUSER+id,payload)
   }
   
 }

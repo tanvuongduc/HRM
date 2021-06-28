@@ -1,6 +1,7 @@
 .form-career{
-    padding: 5px 20px 5px 0px;
-    margin: 10px 50px 30px 0px;
+    padding: 10px 20px 10px 0px;
+    margin: 60px 50px 30px 0px;
+    border: 1px solid #c3c3c3;
     .label{
         font-weight: bold;
        padding: 20px;
@@ -8,14 +9,19 @@
     .input{
         padding: 15px 10px 5px 0;
     }
-    .btn-update{
-        margin-left: 370px; 
-     
-    }
 }
 .title-career{
     padding: 15px 20px;
     color: white;
     background-color: $c-primary;
+
+}
+.grid-btn{
+    padding: 5px 50px 5px 0px;
+    margin: 10px 50px 30px 0px;
+    .btn-grid-update{
+      float: right;
+      padding: 5px;
+    }
 
 }
