@@ -14,10 +14,10 @@ export class MissionController {
 
     @Post()
     async addMission(
-        @Body('title') title: String,
-        @Body('content') content: String,
-        @Body('department') department: String,
-        @Body('team') team: String,
+        @Body('title') title: string,
+        @Body('content') content: string,
+        @Body('department') department: string,
+        @Body('team') team: string,
     ) {
         const res = await this.missionService.insertMission(
             title,
@@ -34,22 +34,22 @@ export class MissionController {
     }
     @Get('department')
     async getDepartmentMissions(
-        @Param('id') id: String
+        @Param('id') id: string
     ) {
         const res = await this.missionService.getDepartmentMissions(id);
         return res;
     }
     @Get('mission')
     async getSingleMission(
-        @Param('id') id: String
+        @Param('id') id: string
     ) {
         const res = await this.missionService.getSingleMission(id);
         return res;
     }
     @Patch('status')
     async setStatusMission(
-        @Param('mid') mid: String,
-        @Body('status')status: String
+        @Param('mid') mid: string,
+        @Body('status')status: string
     ) {
         const res = await this.missionService.setStatusMission(mid, status);
         return res;
@@ -57,8 +57,8 @@ export class MissionController {
 
     @Patch('team')
     async setTeamMission(
-        @Param('mid')mid: String,
-        @Body('team')team: String
+        @Param('mid')mid: string,
+        @Body('team')team: string
     ) {
         const res = await this.setTeamMission(mid, team);
         return res;

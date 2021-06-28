@@ -30,38 +30,44 @@ export const CompanySchema = new mongoose.Schema({
             desc: String,
         }
     },
+    config: {
+        type: {
+            emailSupport: String,
+            publicHoliday: [String],
+            numberHolidays: Number,
+            typeHoliday: Number
+        }
+    },
     documents: [{ type: mongoose.Types.ObjectId, ref: 'Document' }]
 })
 
-
 export interface Note {
-    title: String;
-    desc: String;
+    title: string;
+    desc: string;
 }
 
 export interface Overview {
-    img: String;
-    title: String;
-    desc: String;
+    img: string;
+    title: string;
+    desc: string;
 }
 
 export interface SocialNetwork {
-    key: String;
-    value: String;
+    key: string;
+    value: string;
 }
 
-
 export interface Company extends mongoose.Document {
-    id: String;
-    name: String;
-    domain: String;
-    website?: String;
-    address: String;
-    email: String;
-    phone: String;
-    pic: String;
-    socialNetwork?: [SocialNetwork];
-    overviews?: [Overview];
-    notes?: [Note];
-    documents?: [String]
+    id: string;
+    name: string;
+    domain: string;
+    website?: string;
+    address: string;
+    email: string;
+    phone: string;
+    pic: string;
+    socialNetwork?: SocialNetwork[];
+    overviews?: Overview[];
+    notes?: Note[];
+    documents?: string[];
 }

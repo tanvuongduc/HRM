@@ -1,32 +1,38 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { UsersService } from './../user/user.service';
+import { Injectable, NotFoundException, forwardRef, Inject, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Timeoff } from './timeoff.model'
+import { Timeoff, TimeoffStatus } from './timeoff.model'
 @Injectable()
 export class TimeoffService {
     constructor(
-        @InjectModel('Timeoff') private readonly timeoffModel: Model<Timeoff>
+        @InjectModel('Timeoff') private readonly timeoffModel: Model<Timeoff>,
+        @Inject(forwardRef(() => UsersService)) private readonly usersService: UsersService
     ) { }
     async insertTimeoff(
-        reason: String,
+        reason: string,
         from: Date,
         to: Date,
-        by: String,
+        by: string,
+        pic: string
     ) {
+        await this.usersService.findUserById(by);
+        await this.usersService.findUserById(pic);
         let timeoff = new this.timeoffModel({
             reason,
             from,
             to,
-            by
+            by,
+            pic
         })
-        await timeoff.save()
-        return timeoff.id
+        await timeoff.save();
+        return timeoff;
     }
 
     async getAllTimeoffInMonth(
-    ){
+    ) {
         let date = Date.now()
-        const timeoffs = await this.timeoffModel.find().where(`from>${date}`).exec();
+        const timeoffs = await this.timeoffModel.find().where(`from>${date}`).populate('pic').populate('by').exec();
         return timeoffs.map(time => ({
             id: time.id,
             reason: time.reason,
@@ -37,22 +43,41 @@ export class TimeoffService {
             pic: time.pic,
         }));
     }
-    async handleTimeoff(
-        id: String,
-        status: String
+
+    async getAllTimeoffInMonthOfUserId(
+        id: string
     ) {
-        const timeoff = await this.findTimeoff(id);
-        timeoff.status = (status === "Approved" || status === "Rejected") ? status : "Pendding";
-        timeoff.save();
-        return {
-            id: id
+        let date = Date.now()
+        try {
+            const timeoffs = await this.timeoffModel.find({ by: id }).where(`from>${date}`).populate('pic').exec();
+            return timeoffs.map(time => ({
+                id: time.id,
+                reason: time.reason,
+                from: time.from,
+                to: time.to,
+                by: time.by,
+                status: time.status,
+                pic: time.pic,
+            }));
+        } catch {
+            throw new HttpException('Không tìm thấy user',422);
         }
     }
 
-    private async findTimeoff(id: String): Promise<Timeoff> {
+    async handleTimeoff(
+        id: string,
+        status: TimeoffStatus
+    ) {
+        const timeoff = await this.findTimeoff(id);
+        timeoff.status = status;
+        timeoff.save();
+        return timeoff;
+    }
+
+    private async findTimeoff(id: string): Promise<Timeoff> {
         let Timeoff: any;
         try {
-            Timeoff = await this.timeoffModel.findById(id).populate('pic').exec();
+            Timeoff = await this.timeoffModel.findById(id).populate('pic').populate('by').exec();
         } catch (error) {
             throw new NotFoundException('Could not find Timeoff.');
         }

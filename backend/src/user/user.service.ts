@@ -1,45 +1,46 @@
+import { DocumentService } from './../document/document.service';
+import { EmailValidate } from './user.validate';
+import { CompanyService } from './../company/company.service';
 import { Injectable, HttpException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, Bank, SocialNetwork, Certificate } from './user.model';
+import { User, Bank, SocialNetwork, Certificate, UserStatus } from './user.model';
 import { CertificateService } from '../certificate/certificate.service'
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
-        @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService
+        @Inject(forwardRef(() => CertificateService)) private readonly certificateService: CertificateService,
+        @Inject(forwardRef(() => CompanyService)) private readonly companyService: CompanyService,
+        @Inject(forwardRef(() => DocumentService)) private readonly documentService: DocumentService
     ) { }
 
     async insertUser(
-        name: String,
+        name: string,
         birthday: Date,
-        adress: String,
-        certificates: [Certificate],
-        phone: String,
-        email: String,
-        teams: [String],
-        password: String,
-        socialNetwork: SocialNetwork,
+        adress: string,
+        certificates: Certificate[],
+        phone: string,
+        email: string,
+        teams: string[],
+        password: string,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String
+        status: UserStatus
     ) {
-
-        let user = await this.userModel.findOne().where({ email: email }).exec()
+        let user = await this.userModel.findOne().where({ email: email }).exec();
         if (user) {
             throw new HttpException('Email is existed', 400);
         }
-        if(!(password&&name)){
-            throw new HttpException('Name and password must be not null', 400);
-        }
+        const domain = await this.companyService.getDomainCompany();
+        EmailValidate(email, domain);
         if (certificates && certificates.length) {
             for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
-                cer.createdAt = new Date(Date.now());
+                if (cer.docs)
+                    await this.documentService.getDocuments(cer.docs);
             }
         }
-        status = status === "Working" ? status : "Pending";
         const newUser = new this.userModel({
             name,
             birthday,
@@ -54,16 +55,20 @@ export class UsersService {
             status
         });
         const result = await newUser.save();
-        return result.id as String;
+        return result.id as string;
     }
 
-    async getUserById(uid: String) {
+    async getUserById(uid: string) {
         const user = await this.findUserById(uid);
         if (user.certificates && user.certificates.length) {
+
             for (let cer of user.certificates) {
-                let cert = await this.certificateService.getCertificateById(cer.id);
-                Object.assign(cer, cert)
+                if (cer.docs && cer.docs.length) {
+                    let docs = await this.documentService.getDocuments(cer.docs);
+                    Object.assign(cer.docs, docs);
+                }
             }
+
         }
         return {
             id: user.id,
@@ -82,60 +87,48 @@ export class UsersService {
     }
 
     async updateUser(
-        uid: String,
-        name: String,
+        uid: string,
+        name: string,
         birthday: Date,
-        adress: String,
-        certificates: [Certificate],
-        phone: String,
-        email: String,
-        password: String,
-        socialNetwork: SocialNetwork,
+        adress: string,
+        certificates: Certificate[],
+        phone: string,
+        email: string,
+        password: string,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String
+        status: UserStatus
     ) {
-        let user = await this.userModel.findOne().where({ email: email }).exec()
-        if (user) {
-            throw new HttpException('Email is existed', 400);
-        }
-        if(!(password&&name)){
-            throw new HttpException('Name and password must be not null', 400);
-        }
         const updatedUser = await this.findUserById(uid);
-        if (certificates && certificates.length) {
+        if (certificates) {
             for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
+                if (cer.docs)
+                    await this.documentService.getDocuments(cer.docs);
             }
-        }
-        if (name) {
-            updatedUser.name = name;
-        }
-        if (birthday) {
-            updatedUser.birthday = birthday;
-        }
-        if (phone) {
-            updatedUser.phone = phone;
+            updatedUser.certificates = certificates;
         }
         if (email) {
+            await this.userModel.findOne().where({ email: email }).exec()
+            const domain = await this.companyService.getDomainCompany();
+            EmailValidate(email, domain);
             updatedUser.email = email;
         }
-        if (password) {
+        if (name)
+            updatedUser.name = name;
+        if (birthday)
+            updatedUser.birthday = birthday;
+        if (phone)
+            updatedUser.phone = phone;
+        if (password)
             updatedUser.password = password;
-        }
-        if (adress) {
+        if (adress)
             updatedUser.adress = adress;
-        }
-        if (socialNetwork) {
+        if (socialNetwork)
             updatedUser.socialNetwork = socialNetwork;
-        }
-        if (bank) {
+        if (bank)
             updatedUser.bank = bank;
-        }
-        if (status) {
-            status = status === "Working" ? status : "Pending";
+        if (status)
             updatedUser.status = status;
-        }
         const res = await updatedUser.save();
         return {
             id: res.id,
@@ -154,55 +147,34 @@ export class UsersService {
     }
 
     async updateUserByAdmin(
-        uid: String,
-        name: String,
+        uid: string,
+        name: string,
         birthday: Date,
-        adress: String,
-        certificates: [Certificate],
-        phone: String,
-        email: String,
-        password: String,
-        socialNetwork: SocialNetwork,
+        adress: string,
+        certificates: Certificate[],
+        phone: string,
+        email: string,
+        password: string,
+        socialNetwork: SocialNetwork[],
         bank: Bank,
-        status: String,
-        teams: [String]
+        status: UserStatus,
+        teams: string[]
     ) {
-        let user = await this.userModel.findOne().where({ email: email }).exec()
-        if (user) {
-            throw new HttpException('Email is existed', 400);
-        }
-        if(!(password&&name)){
-            throw new HttpException('Name and password must be not null', 400);
-        }
+        await this.userModel.findOne().where({ email: email }).exec()
+        const domain = await this.companyService.getDomainCompany();
+        EmailValidate(email, domain);
         const updatedUser = await this.findUserById(uid);
-        if (certificates && certificates.length) {
-            for (let cer of certificates) {
-                await this.certificateService.findCertificateById(cer.id);
-                cer.recivedAt = new Date(cer.recivedAt);
-            }
+        for (let cer of certificates) {
+            if (cer.docs)
+                await this.documentService.getDocuments(cer.docs);
         }
-        if (birthday) {
-            updatedUser.birthday = birthday;
-        }
-        if (phone) {
-            updatedUser.phone = phone;
-        }
-        if (adress) {
-            updatedUser.adress = adress;
-        }
-        if (socialNetwork) {
-            updatedUser.socialNetwork = socialNetwork;
-        }
-        if (bank) {
-            updatedUser.bank = bank;
-        }
-        if (status) {
-            status = status === "Working" ? status : "Pending";
-            updatedUser.status = status;
-        }
-        if (teams) {
-            updatedUser.teams = teams;
-        }
+        updatedUser.birthday = birthday;
+        updatedUser.phone = phone;
+        updatedUser.adress = adress;
+        updatedUser.socialNetwork = socialNetwork;
+        updatedUser.bank = bank;
+        updatedUser.status = status;
+        updatedUser.teams = teams;
         const res = await updatedUser.save();
         return {
             id: res.id,
@@ -226,8 +198,10 @@ export class UsersService {
         for (let user of users) {
             if (user.certificates && user.certificates.length) {
                 for (let cer of user.certificates) {
-                    let cert = await this.certificateService.getCertificateById(cer.id);
-                    Object.assign(cer, cert)
+                    if (cer.docs && cer.docs.length) {
+                        let docs = await this.documentService.getDocuments(cer.docs);
+                        Object.assign(cer.docs, docs);
+                    }
                 }
             }
             res.push({
@@ -248,7 +222,7 @@ export class UsersService {
     }
 
 
-    async getMembersByTeamId(id: String) {
+    async getMembersByTeamId(id: string) {
         const members = await this.userModel.find({ teams: { $all: [id] } })
         return {
             members: members
@@ -256,8 +230,8 @@ export class UsersService {
     }
 
     async removeTeamIdFromUsers(
-        ids: [String],
-        teamId: String
+        ids: string[],
+        teamId: string
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()
         if (users.length < 0) throw new HttpException('Nobody here.', 400);
@@ -281,8 +255,8 @@ export class UsersService {
     }
 
     async insertTeamIdForUsers(
-        ids: [String],
-        teamId: String
+        ids: string[],
+        teamId: string
     ) {
         const users = await this.userModel.find().where('_id').in(ids).exec()
         if (users.length < 0) throw new HttpException('Nobody here.', 400);
@@ -304,10 +278,10 @@ export class UsersService {
         return res;
     }
 
-    async findUserById(id: String): Promise<User> {
+    async findUserById(id: string): Promise<User> {
         let user: any;
         try {
-            user = await this.userModel.findById(id).exec();
+            user = await this.userModel.findById(id).populate('cetificates.docs').exec();
         } catch (error) {
             throw new HttpException('Could not find user.', 400);
         }
@@ -317,8 +291,8 @@ export class UsersService {
         return user;
     }
 
-    async findInfoUserByEmail(email: String) {
-        let user
+    async findInfoUserByEmail(email: string) {
+        let user;
         try {
             user = await this.userModel.findOne().where({ email: email }).exec();
         } catch (error) {
@@ -342,5 +316,18 @@ export class UsersService {
             // avatar: user.avatar,
             // teams: user.teams
         };
+    }
+    async findMailOfAllUsers() {
+        try {
+            const users = await this.userModel.find().select("mail name phone -_id").exec();
+            return users.map(user => ({
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            }));
+        }
+        catch {
+            return [];
+        }
     }
 }

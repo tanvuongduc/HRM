@@ -34,19 +34,18 @@ export class CompanyService {
     }
 
     async updateCompany(
-        name: String,
-        domain: String,
-        website: String,
-        address: String,
-        email: String,
-        phone: String,
-        pic: String,
-        socialNetwork: [SocialNetwork],
-        overviews: [Overview],
-        notes: [Note],
-        documents: [String]
+        name: string,
+        domain: string,
+        website: string,
+        address: string,
+        email: string,
+        phone: string,
+        pic: string,
+        socialNetwork: SocialNetwork[],
+        overviews: Overview[],
+        notes: Note[],
+        documents: string[]
     ) {
-        await this.usersService.findUserById(pic)
         let company = await this.findCompany();
         if (name)
             company.name = name;
@@ -60,11 +59,18 @@ export class CompanyService {
             company.email = email;
         if (phone)
             company.phone = phone;
-        company.pic = pic;
-        company.socialNetwork = socialNetwork;
-        company.overviews = overviews;
-        company.notes = notes;
-        company.documents = documents
+        if (pic) {
+            company.pic = pic;
+            await this.usersService.findUserById(pic);
+        }
+        if (socialNetwork)
+            company.socialNetwork = socialNetwork;
+        if (overviews)
+            company.overviews = overviews;
+        if (notes)
+            company.notes = notes;
+        if (documents)
+            company.documents = documents
         const res = await company.save();
         return {
             id: res.id,
@@ -81,6 +87,11 @@ export class CompanyService {
             documents: res.documents
         }
 
+    }
+
+    async getDomainCompany() {
+        const company = await this.companyModel.findOne().select('domain').exec();
+        return company.domain;
     }
 
     async findCompany(): Promise<Company> {

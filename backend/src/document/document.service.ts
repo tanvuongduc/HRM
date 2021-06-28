@@ -45,7 +45,7 @@ export class DocumentService {
         } catch {
             throw new HttpException('File load err', 500);
         }
-        
+
         document.url = path;
         const res = await document.save();
         return {
@@ -58,5 +58,54 @@ export class DocumentService {
             url: res.url,
             createdAt: res.createdAt,
         }
+    }
+
+    async getDocuments(
+        ids: string[]
+    ){
+        const docs = await this.documentModel.find().where('_id').in(ids).exec()
+        return docs.map(doc=>({
+            id: doc.id,
+            fileName: doc.fileName,
+            title: doc.title,
+            desc: doc.desc,
+            size: doc.size,
+            extension: doc.extension,
+            url: doc.url,
+            createdAt: doc.createdAt,
+        }))
+    }
+
+    async getDocumentById(
+        id: string
+    ) {
+        const doc = await this.findDocumentById(id);
+        return {
+            id: doc.id,
+            fileName: doc.fileName,
+            title: doc.title,
+            desc: doc.desc,
+            size: doc.size,
+            extension: doc.extension,
+            url: doc.url,
+            createdAt: doc.createdAt,
+        }
+
+    }
+
+    async findDocumentById(
+        id: string
+    ): Promise<Document> {
+        let doc;
+        try {
+            doc = await this.documentModel.findById(id).exec()
+        }
+        catch {
+            throw new HttpException('has an error when find document, try again', 422);
+        }
+        if (!doc) {
+            throw new HttpException(`Could not find documrnt${id}`, 400);
+        }
+        return doc;
     }
 }
