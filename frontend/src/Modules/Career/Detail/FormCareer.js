@@ -8,6 +8,9 @@ import { FaCheck } from "react-icons/fa";
 import CareerService from "../Shared/CareerService"
 import form from '../../../Shared/Components/Form/Form';
 import ModalConfirm from '../../../Shared/Components/ModalConfirm/ModalConfirm'
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import 'photoswipe/dist/photoswipe.css'
+import 'photoswipe/dist/default-skin/default-skin.css'
 
 
 class FormCareer extends form {
@@ -76,6 +79,7 @@ class FormCareer extends form {
         })
         let form = this.state.form;
 
+
         return (
             <Fragment>
                 <Grid className="form-career">
@@ -107,6 +111,31 @@ class FormCareer extends form {
                         <Grid>
                             <Button className="btn-update" variant="contained" color="primary">Cập nhật </Button>
                         </Grid>
+                    </Grid>
+                    <hr></hr>
+                    <Grid container paper>
+                        <Gallery >
+                            <Item
+                                original="https://placekitten.com/1024/768?image=1"
+                                thumbnail="https://placekitten.com/80/60?image=1"
+                                width="1024"
+                                height="768"
+                            >
+                                {({ ref, open }) => (
+                                    <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=1" />
+                                )}
+                            </Item>
+                            <Item
+                                original="https://placekitten.com/1024/768?image=2"
+                                thumbnail="https://placekitten.com/80/60?image=2"
+                                width="1024"
+                                height="768"
+                            >
+                                {({ ref, open }) => (
+                                    <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=2" />
+                                )}
+                            </Item>
+                        </Gallery>
                     </Grid>
                 </Grid>
                 <ModalConfirm message={this.state.notiConfirm} answer={this.answer}></ModalConfirm>
