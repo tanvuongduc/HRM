@@ -37,6 +37,7 @@ export class Http {
   static patch = (endPoint, payload) => {
     return Axios.patch(BASE_URL + endPoint, payload, {
       headers: this._getHeader(),
+      data: payload
     });
   };
 
