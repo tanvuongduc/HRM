@@ -1,6 +1,5 @@
+import { config } from 'node:process';
 import * as mongoose from 'mongoose';
-
-
 
 
 export const CompanySchema = new mongoose.Schema({
@@ -32,18 +31,67 @@ export const CompanySchema = new mongoose.Schema({
     },
     config: {
         type: {
-            emailSupport: String,
-            publicHoliday: [String],
+            emailSupport: {
+                type:{
+                    user: String,
+                    pass: String
+                }
+            },
+            publicHoliday: [Date],
             numberHolidays: Number,
-            typeHoliday: Number
+            workingDay: {
+                type: {
+                    from: Number,
+                    to: Number
+                }
+            },
+            workingTime: {
+                am: {
+                    type: {
+                        from: String,
+                        to: String
+                    }
+                },
+                pm: {
+                    type: {
+                        from: String,
+                        to: String
+                    }
+                },
+            }
         }
     },
     documents: [{ type: mongoose.Types.ObjectId, ref: 'Document' }]
 })
 
+
+
 export interface Note {
     title: string;
     desc: string;
+}
+
+export interface Config {
+    emailSupport: {
+        user: string,
+        pass: string
+    },
+    publicHoliday: [Date],
+    numberHolidays: Number,
+    workingDay: {
+        from: Number,
+        to: Number
+    },
+    workingTime: {
+        am: {
+            from: string,
+            to: string
+        },
+        pm: {
+            from: string,
+            to: string
+        },
+    }
 }
 
 export interface Overview {
@@ -70,4 +118,5 @@ export interface Company extends mongoose.Document {
     overviews?: Overview[];
     notes?: Note[];
     documents?: string[];
+    config: Config;
 }

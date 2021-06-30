@@ -1,3 +1,5 @@
+import { CompanyService } from './../company/company.service';
+import { CompanyModule } from './../company/company.module';
 import { Module, forwardRef } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { UserModule } from '../user/user.module';
@@ -5,9 +7,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 import { MailController } from './mail.controller';
+
+
 @Module({
 	imports: [
 		forwardRef(() => UserModule),
+		forwardRef(() => CompanyModule),
 		MailerModule.forRoot({
 			transport: {
 				host: 'smtp.gmail.com',
@@ -15,8 +20,8 @@ import { MailController } from './mail.controller';
 				secure: true,
 				service: 'gmail',
 				auth: {
-					user: 'anhtrieuhotboy00hoi@gmail.com',
-					pass: 'kikaka97'
+					user: process.env.SUPPORT_MAIL,
+					pass: process.env.PASSWORD_MAIL 
 				},
 			},
 			defaults: {

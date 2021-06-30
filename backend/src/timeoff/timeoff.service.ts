@@ -16,8 +16,21 @@ export class TimeoffService {
         by: string,
         pic: string
     ) {
+        if(from>to){
+            throw new HttpException('{to} must be greater than {from}', 422);
+        }
+        if(from<new Date()){
+            throw new HttpException('too late', 422);
+        }
         await this.usersService.findUserById(by);
         await this.usersService.findUserById(pic);
+        const after = await this.timeoffModel.find({ 
+            "to": { $gte: new Date(from) },
+            "from": { $lte: new Date(to) }
+        }).exec();
+        if (after.length) {
+            throw new HttpException('Bị trùng lịch nghỉ', 422);
+        }
         let timeoff = new this.timeoffModel({
             reason,
             from,
@@ -60,7 +73,7 @@ export class TimeoffService {
                 pic: time.pic,
             }));
         } catch {
-            throw new HttpException('Không tìm thấy user',422);
+            throw new HttpException('Không tìm thấy user', 422);
         }
     }
 

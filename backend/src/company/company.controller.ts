@@ -1,4 +1,4 @@
-import { SocialNetworksValidate, OverviewsValidate, NotesValidate } from './company.validate';
+import { SocialNetworksValidate, OverviewsValidate, NotesValidate, ConfigValidate } from './company.validate';
 import { isStringRequired, isEmailRequired, isPhoneNumberRequired, isArrayString, isEmail, isPhoneNumber, isString } from './../validator/joi.validate';
 import {
     Controller,
@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 
 import { CompanyService } from './company.service';
-import { Overview, Note, SocialNetwork } from './company.model';
+import { Overview, Note, SocialNetwork, Config } from './company.model';
 
 @Controller('company')
 export class CompanyController {
@@ -22,6 +22,11 @@ export class CompanyController {
         return res;
     }
 
+    @Get('config')
+    async getConfig() {
+        const res = await this.companyService.getConfig();
+        return res;
+    }
 
     @Patch()
     async updateCompany(
@@ -35,9 +40,10 @@ export class CompanyController {
         @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
         @Body('overviews', OverviewsValidate) overviews: Overview[],
         @Body('notes', NotesValidate) notes: Note[],
-        @Body('documents', isArrayString) documents: string[]
+        @Body('documents', isArrayString) documents: string[],
+        @Body('config', ConfigValidate) config: Config
     ) {
-        const res = await this.companyService.updateCompany(name, domain, website, address, email, phone, pic, socialNetwork, overviews, notes, documents);
+        const res = await this.companyService.updateCompany(name, domain, website, address, email, phone, pic, socialNetwork, overviews, notes, documents, config);
         return res;
     }
 }

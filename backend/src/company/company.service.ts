@@ -1,7 +1,7 @@
 import { Injectable, HttpException, forwardRef, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Company, Overview, Note, SocialNetwork } from './company.model';
+import { Company, Overview, Note, SocialNetwork, Config } from './company.model';
 import { UsersService } from '../user/user.service'
 
 @Injectable()
@@ -29,7 +29,8 @@ export class CompanyService {
             socialNetwork: res.socialNetwork,
             overviews: res.overviews,
             notes: res.notes,
-            documents: res.documents
+            documents: res.documents,
+            config: res.config
         }
     }
 
@@ -44,7 +45,8 @@ export class CompanyService {
         socialNetwork: SocialNetwork[],
         overviews: Overview[],
         notes: Note[],
-        documents: string[]
+        documents: string[],
+        config: Config
     ) {
         let company = await this.findCompany();
         if (name)
@@ -70,7 +72,9 @@ export class CompanyService {
         if (notes)
             company.notes = notes;
         if (documents)
-            company.documents = documents
+            company.documents = documents;
+        if(config)
+            company.config = config;
         const res = await company.save();
         return {
             id: res.id,
@@ -84,7 +88,8 @@ export class CompanyService {
             socialNetwork: res.socialNetwork,
             overviews: res.overviews,
             notes: res.notes,
-            documents: res.documents
+            documents: res.documents,
+            config: res.config
         }
 
     }
@@ -92,6 +97,11 @@ export class CompanyService {
     async getDomainCompany() {
         const company = await this.companyModel.findOne().select('domain').exec();
         return company.domain;
+    }
+
+    async getConfig() {
+        const company = await this.companyModel.findOne().select('config').exec();
+        return company.config;
     }
 
     async findCompany(): Promise<Company> {
