@@ -53,7 +53,7 @@ class Sidebar2 extends Component {
                 <i className="fa fa-home" />
               </div>
               <div className="text" style={{animation: openSideBar ? "showText 500ms linear forwards " : "hideText 500ms linear forwards"}}>
-                <span>Home</span>
+                <span>Trang chủ</span>
               </div>
             </li>
             <li className="item" onClick={() => this.goTo("app/company")}>
@@ -61,7 +61,7 @@ class Sidebar2 extends Component {
                 <i className="fa fa-building" />
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Company</span>
+                <span>Công ty</span>
               </div>
             </li>
             <li className="item" onClick={() => this.goTo("app/career")}>
@@ -69,7 +69,7 @@ class Sidebar2 extends Component {
                 <i className="fa fa-suitcase" />
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Career</span>
+                <span>Sự nghiệp</span>
               </div>
             </li>
             <li className="item" onClick={() => this.goTo("app/team")}>
@@ -85,7 +85,7 @@ class Sidebar2 extends Component {
               <i className="far fa-calendar-times"/>
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Timeoff</span>
+                <span>Xin nghỉ </span>
               </div>
             </li>
             <li className="item" onClick={() => this.goTo("app/org")}>
@@ -101,7 +101,7 @@ class Sidebar2 extends Component {
                 <i className="fas fa-users"></i>
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Department</span>
+                <span>Phòng ban</span>
               </div>
             </li>
             <li
@@ -112,7 +112,7 @@ class Sidebar2 extends Component {
                 <i className="fas fa-award" />
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Certificate</span>
+                <span>Chứng chỉ</span>
               </div>
             </li>
             <li
@@ -123,7 +123,7 @@ class Sidebar2 extends Component {
               <i className="fas fa-user-cog"/>
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Management</span>
+                <span>Quản lý</span>
               </div>
             </li>
             <Divider className={classes.divide} />
@@ -132,7 +132,7 @@ class Sidebar2 extends Component {
                 <i className="fa fa-people-carry" />
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Helps</span>
+                <span>Hỗ trợ</span>
               </div>
             </li>
             <li
@@ -143,7 +143,7 @@ class Sidebar2 extends Component {
                 <i className="fa fa-users-cog" />
               </div>
               <div className="text"  style={{animation: openSideBar ? "showText 500ms linear forwards" : "hideText 500ms linear forwards"}}>
-                <span>Setting</span>
+                <span>Cài đặt</span>
               </div>
             </li>
           </ul>
