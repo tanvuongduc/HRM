@@ -13,8 +13,8 @@ class UserService{
         UserService._instance = this;
     }
 
-    getMyInfo(userId) {
-        return Http.get(API_ENDPOINT.GETMYINFO + userId);
+    async getMyInfo(userId) {
+        return await Http.get(API_ENDPOINT.GETMYINFO + userId);
     }
 
 }
