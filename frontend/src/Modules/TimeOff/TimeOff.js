@@ -1,5 +1,12 @@
 import * as React from "react";
 import Paper from "@material-ui/core/Paper";
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+//
+
+
+import ListTimeOff from './Components/ListTimeOff/ListTimeOff'
+//
 import {
   ViewState,
   EditingState,
@@ -109,6 +116,8 @@ const usePrioritySelectorItemStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
+
+//set màu Appointments
 const Appoinment = ({ children, style, ...restProps }) => (
   <Appointments.Appointment
     {...restProps}
@@ -266,7 +275,7 @@ const onCustomResource = withStyles(style, { name: "FormResource" })(
   ({ onResourceChange, appointmentResources, resource, ...restProps }) => {
     return (
       <AppointmentForm.ResourceEditor
-        readOnly={true}
+        readOnly={false}
         appointmentResources={appointmentResources}
         resource={resource}
         {...restProps}
@@ -274,7 +283,7 @@ const onCustomResource = withStyles(style, { name: "FormResource" })(
     );
   }
 );
-
+//lựa chọn ưu tiên
 const PrioritySelectorItem = ({ color, text: resourceTitle }) => {
   const text = resourceTitle || "Tất cả trạng thái";
   const shortText = resourceTitle ? text.substring(0, 1) : "All";
@@ -346,11 +355,13 @@ class TimeOff extends React.PureComponent {
       locale: "vn-VI",
       setVisibleAppoinment: false,
       message: "",
+      isShowList: false,
     };
   }
 
   componentDidMount = async () => {
     const data = [];
+    //get data
     await TimeOffService.getListTimeOff().then((res) => {
       const dataAppointment = res.data;
       dataAppointment.forEach((item) => {
@@ -480,7 +491,7 @@ class TimeOff extends React.PureComponent {
       this.setState({ data });
     });
   };
-
+  // hàm thay đổi sự ưu tiên
   priorityChange = (value) => {
     const { resources } = this.state;
     const nextResources = [
@@ -511,6 +522,9 @@ class TimeOff extends React.PureComponent {
       setVisibleAppoinment: visible,
     });
   };
+  showList = () => {
+    this.setState({isShowList : !this.state.isShowList})
+  }
 
   render() {
     const {
@@ -523,7 +537,10 @@ class TimeOff extends React.PureComponent {
       locale,
       setVisibleAppoinment,
       message,
+      isShowList
     } = this.state;
+    console.log('ishsowlist:', isShowList);
+    console.log('datahahaha:', data);
 
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
@@ -531,6 +548,12 @@ class TimeOff extends React.PureComponent {
     const yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
     return (
+      <div>
+        <Button variant="contained" color="primary" onClick={()=> this.showList()}>
+        {isShowList ?'Hiển thị dạng lịch':'Hiển thị dạng danh sách'}
+        </Button>
+        { isShowList ? <ListTimeOff prop={this.state}/> :
+      (
       <Card>
         <Scheduler
           className="scheduler-table"
@@ -604,6 +627,8 @@ class TimeOff extends React.PureComponent {
           done={() => this.setState({ message: "" })}
         ></ModalNoti>
       </Card>
+      )}
+      </div>
     );
   }
 }
