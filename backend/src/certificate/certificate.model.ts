@@ -8,8 +8,8 @@ export const CertificateSchema = new mongoose.Schema({
 })
 
 export interface Certificate extends mongoose.Document {
-    id: String;
-    code: String;
-    name: String;
-    desc: String;
+    id: string;
+    code: string;
+    name: string;
+    desc: string;
 }

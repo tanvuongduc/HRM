@@ -1,3 +1,6 @@
+import { CompanyService } from './../company/company.service';
+import { CertificatesValidate, UserStatusValidate, BankValidate, SocialNetworksValidate } from './user.validate';
+import { isStringRequired, isDateRequired, isPhoneNumberRequired, isEmailRequired, isArrayString, isString, isPhoneNumber, isEmail, isDate } from './../validator/joi.validate';
 import {
     Controller,
     Request,
@@ -10,7 +13,7 @@ import {
 } from '@nestjs/common';
 
 import { UsersService } from './user.service';
-import { Bank, SocialNetwork, Certificate } from './user.model'
+import { Bank, SocialNetwork, Certificate, UserStatus } from './user.model'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 
@@ -19,25 +22,27 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class UsersController {
 
 
-    constructor(private readonly usersService: UsersService) { }
-
-
+    constructor(
+        private readonly usersService: UsersService,
+        private readonly companyService: CompanyService
+    ) { }
     // @UseGuards(JwtAuthGuard)
     @Post()
     async insertUser(
         // @Body() req,
-        @Body('name') name: String,
-        @Body('birthday') birthday: Date,
-        @Body('adress') adress: String,
-        @Body('certificates') certificates: [Certificate],
-        @Body('phone') phone: String,
-        @Body('email') email: String,
-        @Body('password') password: String,
-        @Body('teams') teams: [String],
-        @Body('socialNetwork') socialNetwork: SocialNetwork,
-        @Body('bank') bank: Bank,
-        @Body('status') status: String
+        @Body('name', isStringRequired) name: string,
+        @Body('birthday', isDateRequired) birthday: Date,
+        @Body('adress', isStringRequired) adress: string,
+        @Body('certificates', CertificatesValidate) certificates: Certificate[],
+        @Body('phone', isPhoneNumberRequired) phone: string,
+        @Body('email', isEmailRequired) email: string,
+        @Body('password', isStringRequired) password: string,
+        @Body('teams', isArrayString) teams: string[],
+        @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
+        @Body('bank', BankValidate) bank: Bank,
+        @Body('status', UserStatusValidate) status: UserStatus
     ) {
+
         const generatedId = await this.usersService.insertUser(
             name,
             birthday,
@@ -66,7 +71,7 @@ export class UsersController {
 
     @Get(':id')
     getUserById(
-        @Param('id') id: String
+        @Param('id', isStringRequired) id: string
     ) {
         return this.usersService.getUserById(id);
     }
@@ -81,20 +86,20 @@ export class UsersController {
     @Patch(':id')
     async updateUserByAdmin(
         @Request() req,
-        @Param('id') id: String,
-        @Body('name') name: String,
-        @Body('birthday') birthday: Date,
-        @Body('adress') adress: String,
-        @Body('certificate') certificates: [Certificate],
-        @Body('phone') phone: String,
-        @Body('email') email: String,
-        @Body('password') pasword: String,
-        @Body('socialNetwork') socialNetwork: SocialNetwork,
-        @Body('bank') bank: Bank,
-        @Body('status') status: String,
-        @Body('teams') teams: [String]
+        @Param('id', isStringRequired) id: string,
+        @Body('name', isString) name: string,
+        @Body('birthday', isDate) birthday: Date,
+        @Body('adress', isString) adress: string,
+        @Body('certificates', CertificatesValidate) certificates: Certificate[],
+        @Body('phone', isPhoneNumber) phone: string,
+        @Body('email', isEmail) email: string,
+        @Body('password', isString) pasword: string,
+        @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
+        @Body('bank', BankValidate) bank: Bank,
+        @Body('status', UserStatusValidate) status: UserStatus,
+        @Body('teams', isArrayString) teams: string[]
     ) {
-        let res = await this.usersService.updateUserByAdmin(
+        let res = await this.usersService.updateUser(
             id,
             name,
             birthday,
@@ -105,8 +110,7 @@ export class UsersController {
             pasword,
             socialNetwork,
             bank,
-            status,
-            teams
+            status
         );
         return res;
     }
@@ -116,16 +120,16 @@ export class UsersController {
     @Patch()
     async updateUser(
         @Request() req,
-        @Body('name') name: String,
-        @Body('birthday') birthday: Date,
-        @Body('adress') adress: String,
-        @Body('certificate') certificates: [Certificate],
-        @Body('phone') phone: String,
-        @Body('email') email: String,
-        @Body('password') pasword: String,
-        @Body('socialNetwork') socialNetwork: SocialNetwork,
-        @Body('bank') bank: Bank,
-        @Body('status') status: String
+        @Body('name', isDate) name: string,
+        @Body('birthday', isDate) birthday: Date,
+        @Body('adress', isString) adress: string,
+        @Body('certificate', CertificatesValidate) certificates: Certificate[],
+        @Body('phone', isPhoneNumber) phone: string,
+        @Body('email', isEmail) email: string,
+        @Body('password', isString) pasword: string,
+        @Body('socialNetwork', SocialNetworksValidate) socialNetwork: SocialNetwork[],
+        @Body('bank', BankValidate) bank: Bank,
+        @Body('status', UserStatusValidate) status: UserStatus
     ) {
         let res = await this.usersService.updateUser(
             req.user.userId,

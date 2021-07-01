@@ -1,3 +1,4 @@
+import { isStringRequired, isArrayStringRequired, isString } from './../validator/joi.validate';
 import {
     Controller,
     Post,
@@ -6,6 +7,7 @@ import {
     Get,
     Query,
     Param,
+    Patch,
 } from '@nestjs/common';
 
 import { TeamService } from './team.service';
@@ -18,11 +20,11 @@ export class TeamController {
 
     @Post()
     async insertTeam(
-        @Body('code') code: String,
-        @Body('pic') pic: String,
-        @Body('name') name: String,
-        @Body('department') department: String,
-        @Body('sologan') sologan: String
+        @Body('code', isStringRequired) code: string,
+        @Body('pic', isStringRequired) pic: string,
+        @Body('name', isStringRequired) name: string,
+        @Body('department', isStringRequired) department: string,
+        @Body('sologan', isString) sologan: string
     ) {
         const res = await this.teamService.insertTeam(code, name, pic, department, sologan);
         return res;
@@ -30,12 +32,24 @@ export class TeamController {
 
     @Get(':id')
     async getTeamById(
-        @Param('id') id: String
+        @Param('id', isStringRequired) id: string
     ) {
         const res = await this.teamService.getTeamById(id);
         return res;
     }
 
+    @Patch(':id')
+    async updateTeam(
+        @Param('id', isStringRequired) id: string,
+        @Body('code', isString) code: string,
+        @Body('pic', isString) pic: string,
+        @Body('name', isString) name: string,
+        @Body('department', isString) department: string,
+        @Body('sologan', isString) sologan: string
+    ) {
+        const res = await this.teamService.updateTeam(id, code, name, pic, department, sologan);
+        return res;
+    }
 
     @Get()
     async getAllTeams() {
@@ -45,8 +59,8 @@ export class TeamController {
 
     @Post(':team/members')
     async insertMembersByTeamId(
-        @Body('members') ids: [string],
-        @Param('team') teamId: string
+        @Body('members', isArrayStringRequired) ids: string[],
+        @Param('team', isStringRequired) teamId: string
     ) {
         const res = this.teamService.insertTeamIdForMembers(ids, teamId);
         return res;
@@ -55,8 +69,8 @@ export class TeamController {
 
     @Delete(':team/members')
     async removeMembersByTeamId(
-        @Body('members') ids: [string],
-        @Param('team') teamId: string
+        @Body('members', isArrayStringRequired) ids: string[],
+        @Param('team', isStringRequired) teamId: string
     ) {
         const res = this.teamService.removeMembersByTeamId(ids, teamId);
         return res;
@@ -65,7 +79,7 @@ export class TeamController {
 
     @Get(':team/members')
     async getMembersByTeamId(
-        @Param('team') teamId: string
+        @Param('team', isStringRequired) teamId: string
     ) {
         const res = this.teamService.getMembersByTeamId(teamId);
         return res;

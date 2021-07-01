@@ -116,6 +116,8 @@ const usePrioritySelectorItemStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
+
+//set màu Appointments
 const Appoinment = ({ children, style, ...restProps }) => (
   <Appointments.Appointment
     {...restProps}
@@ -273,7 +275,7 @@ const onCustomResource = withStyles(style, { name: "FormResource" })(
   ({ onResourceChange, appointmentResources, resource, ...restProps }) => {
     return (
       <AppointmentForm.ResourceEditor
-        readOnly={true}
+        readOnly={false}
         appointmentResources={appointmentResources}
         resource={resource}
         {...restProps}
@@ -281,7 +283,7 @@ const onCustomResource = withStyles(style, { name: "FormResource" })(
     );
   }
 );
-
+//lựa chọn ưu tiên
 const PrioritySelectorItem = ({ color, text: resourceTitle }) => {
   const text = resourceTitle || "Tất cả trạng thái";
   const shortText = resourceTitle ? text.substring(0, 1) : "All";
@@ -489,7 +491,7 @@ class TimeOff extends React.PureComponent {
       this.setState({ data });
     });
   };
-
+  // hàm thay đổi sự ưu tiên
   priorityChange = (value) => {
     const { resources } = this.state;
     const nextResources = [
@@ -538,6 +540,8 @@ class TimeOff extends React.PureComponent {
       isShowList
     } = this.state;
     console.log('ishsowlist:', isShowList);
+    console.log('datahahaha:', data);
+
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
     const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -545,13 +549,10 @@ class TimeOff extends React.PureComponent {
     today = yyyy + "-" + mm + "-" + dd;
     return (
       <div>
-        {/* <Link href="listtimeoff" variant="contained" color="primary" type="button">
-          Hiển thị dạng danh sách
-        </Link> */}
         <Button variant="contained" color="primary" onClick={()=> this.showList()}>
         {isShowList ?'Hiển thị dạng lịch':'Hiển thị dạng danh sách'}
         </Button>
-        { isShowList ? <ListTimeOff data={data}/> :
+        { isShowList ? <ListTimeOff prop={this.state}/> :
       (
       <Card>
         <Scheduler

@@ -4,33 +4,38 @@ import { Http } from "../../../Helper/Http";
 
 const API_ENDPOINT = {
     GET_ALL_CERTIFECATE: "certificates",
-    PATCH_CERTIFECATE: "certificates",
-    POST_CERTIFECATE: "certificates/update",
+    GET_ONE_CERTIFECATE: "certificates/",
+    POST_CERTIFECATE: "certificates",
+    PATCH_CERTIFECATE: "certificates/",
 };
 
-class CertificateService {
+class Certifecate {
     constructor() {
-        if (CertificateService._instance) {
-            return CertificateService._instance;
+        if (Certifecate._instance) {
+            return Certifecate._instance;
         }
-        CertificateService._instance = this;
+        Certifecate._instance = this;
     }
 
 
     async getAllCertifecate() {
         return await Http.get(API_ENDPOINT.GET_ALL_CERTIFECATE);
     }
+    async getCertifecateById(id) {
+        const url = `${API_ENDPOINT.GET_ONE_CERTIFECATE}` + id;
+        return await Http.get(url);
+    }
     async postCertifecate(payload) {
         const url = `${API_ENDPOINT.POST_CERTIFECATE}`;
-        return (await Http.post(url, payload)).data;
+        return (await Http.post(url, payload));
     }
-    async patchCertifecate(payload, id) {
+    async patchCertifecate(id, payload) {
         const url = `${API_ENDPOINT.PATCH_CERTIFECATE + id}`;
-        return (await Http.patch(url, payload)).data;
+        return (await Http.patch(url, payload));
     }
 
 }
 
-const instance = new CertificateService();
+const instance = new Certifecate();
 
 export default instance;
