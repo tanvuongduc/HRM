@@ -30,6 +30,11 @@ class Exam extends UtilService {
 		return await Http.get(url, location_id);
 	};
 
+	async patchCompanyByLocation(companyResult) {
+		const url = `${API_ENDPOINT.BASE}`;
+		return await Http.patch(url, { "domain": companyResult });
+	};
+
 	async finishNoteResult(noteResult) {
 		return await Http.patch(`${API_ENDPOINT.BASE}`, { "notes": noteResult })
 	};

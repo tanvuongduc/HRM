@@ -1,0 +1,42 @@
+.configuration {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 100px;
+    .configuration-content {
+        width: 100%;
+        height: auto;
+        padding: 30px;
+    }
+    .configuration-item {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 15px 0 30px 0;
+        border-top: 1px solid #e6e9eb;
+        .content-item {
+            width: 50%;
+            height: auto;
+        }
+        .background-item {
+            width: 50%;
+            height: auto;
+            text-align: center;
+            img {
+                width: 50%;
+                height: auto;
+                opacity: 0.8;
+            }
+        }
+    }
+    .configuration-btn {
+        width: 100%;
+        height: auto;
+        text-align: right;
+    }
+    @media (max-width: 1024px) {
+        width: 100%;
+    }
+}

@@ -1,14 +1,18 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router';
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
+import Configuration from './Components/Configuration/Configuration';
 import Overview from './Components/Overiew/Overview';
 
 const Company = (props) => {
 	const { path } = props.match;
 	return (
 		<div>
-			<Switch>
-				<Route exact path={`${path}`} component={Overview} />
-			</Switch>
+			<Router>
+				<Switch>
+					<Route exact path={`${path}`} component={Overview} />
+					<Route exact path={`${path}/configuration`} component={Configuration} />
+				</Switch>
+			</Router>
 		</div>
 	)
 }

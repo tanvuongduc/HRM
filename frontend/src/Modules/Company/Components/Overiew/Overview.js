@@ -66,7 +66,7 @@ export default class Overview extends Component {
         return (
             <div className="overview-content">
                 <Quickview />
-                <Contact companyInfo={this.state.companyInfo} />
+                <Contact handleEditing={this.state.editing} companyInfo={this.state.companyInfo} />
                 <Document handleEditing={this.state.editing} documents={this.state.companyInfo.documents} />
                 <Note handleEditing={this.state.editing} notes={this.state.companyInfo.notes} onChange={() => this.setState} />
                 <div className="overview-btn-edit">

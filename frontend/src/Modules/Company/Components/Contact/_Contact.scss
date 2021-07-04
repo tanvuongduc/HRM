@@ -4,6 +4,13 @@
     display: flex;
     flex-wrap: wrap;
     padding: 30px;
+    .header-contact {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
     .contact-item {
         width: 100%;
         height: auto;
