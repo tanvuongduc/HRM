@@ -43,7 +43,6 @@ class Login extends Form {
         AuthService.getUserInfo()
           .then((_res) => {
             let user = _res.id;
-            console.log("Userrrr", user);
             window.localStorage.setItem("userId", JSON.stringify(user));
             AuthService.userInfo = user;
             this.goTo("app");

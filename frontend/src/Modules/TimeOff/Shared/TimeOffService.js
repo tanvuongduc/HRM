@@ -5,7 +5,7 @@ const userId = JSON.parse(localStorage.getItem("userId"));
 
 const API_ENDPOINT = {
     GETLISTTIMEOFF: `timeoff/${userId}`,
-    ADDTIMEOFF: "timeoff/"
+    ADDTIMEOFF: "timeoff"
 }
 
 
