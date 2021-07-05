@@ -49,8 +49,6 @@ class Form extends Component {
             return prevState;
         });
     }
-
-
     _setValue = (ev, key) => {
         ev.persist();
         this.setState(prevState => {
@@ -62,7 +60,6 @@ class Form extends Component {
             return prevState;
         });
     }
-
     _getInvalidErr(domEl) {
         if (domEl.validity.valid) return '';
         if (domEl.type === 'email' && domEl.validity.typeMismatch) return ERR_MSG.EMAIL;

@@ -1,32 +1,38 @@
-import React, { Component, Fragment } from "react";
-import { Grid, TextField, Button, ThemeProvider } from "@material-ui/core";
+import React, { Fragment } from "react";
+import { Grid, TextField, Button, Input } from "@material-ui/core";
 import { FaCheck } from "react-icons/fa";
 import CareerService from "../Shared/CareerService";
 import form from "../../../Shared/Components/Form/Form";
-import ModalConfirm from "../../../Shared/Components/ModalConfirm/ModalConfirm";
-import ModalNoti from "../../../Shared/Components/ModalNoti/ModalNoti"
+import ModalNoti from "../../../Shared/Components/ModalNoti/ModalNoti";
 import Upload from "../../../Shared/Components/Upload/Upload";
-import CompanyService from "../../../Modules/Company/Shared/CompanyService";
-import Container from '@material-ui/core/Container';
+// import { Gallery, Item } from 'react-photoswipe-gallery'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 class FormCareer extends form {
   constructor(props) {
     super(props);
     this.state = {
+      multiple: "true",
       id_document: [],
-      id_delete: null,
       documents: [],
-      data_user: [],
-      certificates:[],
+      certificates: [],
       status: "",
       indexOfCert: this.props.index,
-      notiConfirm: "",
-      notiMessage: '',
-      confirmMessage: "",
+      notiMessage: "",
       data: this.props.certificate,
       form: this._getInitFormData({
         name: "",
         certNo: "",
-        reciveAt: "",
+        recivedAt: "",
         org: "",
         classification: "",
         major: "",
@@ -39,36 +45,57 @@ class FormCareer extends form {
   }
   componentDidMount = () => {
     CareerService.getUserById(this.props.idUser).then((res) => {
-      let certificates = res.data.certificates
-      certificates.map((data, index) => {
-        if (index == this.props.index) {
-          this.setState({ certificate: data })
-          this._fillForm({
-            name: data.name,
-            reciveAt: data.reciveAt,
-            certNo: data.certNo,
-            org: data.org,
-            classification: data.classification,
-            major: data.major,
-            note: data.note,
-            degree: data.degree,
-            docs: data.docs,
-            status: data.status,
-          });
-        };
-      });
+      let certificates = res.data.certificates;
+      if(certificates){
+        certificates.map((data, index) => {
+          if (index == this.props.index) {
+            this.setState({ certificate: data });
+            console.log();
+            this._fillForm({
+              name: data.name,
+              recivedAt: data.recivedAt,
+              certNo: data.certNo,
+              org: data.org,
+              classification: data.classification,
+              major: data.major,
+              note: data.note,
+              degree: data.degree,
+              docs: data.docs,
+              status: data.status,
+            });
+          }
+        });
+      }
+      
       this.setState({
         certificates: res.data.certificates,
-        status: res.data.status
+        status: res.data.status,
       });
     });
   };
   onSubmit = () => {
-    
-    let idUser = this.props.idUser
-    let { certificates } = this.state;
-    let index = parseInt(this.state.indexOfCert)
-    let { name, certNo, reciveAt, org, classification, major, note, degree, docs, status } = this.state.form;
+    let idUser = this.props.idUser;
+    let { certificates, documents, id_document } = this.state;
+    let index = parseInt(this.state.indexOfCert);
+    let {
+      name,
+      certNo,
+      recivedAt,
+      org,
+      classification,
+      major,
+      note,
+      degree,
+      docs,
+    } = this.state.form;
+    let value_docs= docs.value
+    let id_docs =[];
+    for( let i= 0; i<value_docs.length;i++){
+      id_docs.push(value_docs[i].id)
+    }
+    console.log(id_docs);
+    let newImgList=[...id_docs,...id_document]
+    console.log(newImgList);
     let data = {
       name: name.value,
       certNo: certNo.value,
@@ -77,80 +104,86 @@ class FormCareer extends form {
       major: major.value,
       degree: degree.value,
       note: note.value,
-      reciveAt: reciveAt.value,
-      docs: this.state.documents,
-      status: "pending"
-    }
-    certificates.splice(index, 1,data),
-    console.log(certificates);
+      recivedAt: recivedAt.value,
+      docs: newImgList,
+      status: "pending",
+    };
+    certificates.splice(index, 1, data), console.log(certificates);
     let post_data = {
-      certificate: certificates,
-      status: this.state.status
-    }
+      certificates: certificates,
+      status: this.state.status,
+    };
     let method = CareerService.updateUser(idUser, post_data);
-    method.then(response => {
-      if (response.status === 200) {
-        console.log("fasdfasd");
+    method.then((response) => {
+      console.log(response.status);
+      if (response.status == 200) {
         this.setState({
-          notiMessage:"Yêu cầu thành công"
+          notiMessage: "Yêu cầu thành công",
+        });
+      } else {
+        this.setState({
+          notiMessage: "Thử lại",
         });
       }
-      else {
-        this.setState({
-          confirmMessage: 'Thử lại'
-        })
-      }
-    });
-  }
-  updateUpload = (idUpload, DocumentUpload) => {
-    this.state.documents.push(DocumentUpload);
-    this.state.id_document.push({ id: idUpload });
-    this.setState({ documents: this.state.documents });
-
-    let _idUpdate = this.state.id_document.map((id) => id.id);
-    CompanyService.finishDocumentResult(_idUpdate).catch((error) => {
-      console.error("Error:", error);
     });
   };
-  //   componentDidUpdate = () =>{
-  //     if(this.state.indexOfCert !== this.props.index){
-  //       CareerService.getUserById(this.props.idUser).then((res) => {
-  //         this.setState({
-  //           indexOfCert:this.props.index
-  //         })
-  //         let certificates = res.data.certificates
-  //         certificates.map((data, index) => {
-  //             if (index ==   this.props.index){
-  //                 this.setState({ certificate: data })
-  //                 this._fillForm({
-  //                     name: data.name,
-  //                     reciveAt: data.reciveAt,
-  //                     certNo: data.certNo,
-  //                     org: data.org,
-  //                     classification: data.classification,
-  //                     major: data.major,
-  //                     note: data.note,
-  //                     degree: data.degree,
-  //                     docs :data.docs,
-  //                     status: data.status,
-  //                 });
-  //             };
-  //         });
-  //     }).catch((err) => {
-  //         this.setState({
-  //           notiMessage: 'Lỗi vui lòng bạn thử lại sau !!'
-  //         })
-  //         console.log(err);
-  //       });
-  //     }
-  // };
+  onChange = (ev, key) => {
+    let date = Date.parse(ev);
+    console.log(date);
+    this.setState((prevState) => {
+      prevState.form[key] = {
+        value: date,
+        err: "",
+      };
+      return prevState;
+    });
+  };
+  updateUpload = (idUpload, DocumentUpload) => {
+    console.log(idUpload);
+    let id_Uploads = [];
+    id_Uploads.push(idUpload);
+    let documents=[];
+    for(let i= 0; i <DocumentUpload.length;i++){
+      documents.push(DocumentUpload[i]);
+    }
+    this.setState({
+      id_document: id_Uploads,
+    });
+    this.setState({ documents: documents});
+  };
   render() {
-    let { idUser, index } = this.props;
-    let { form, indexOfCert,certificates } = this.state;
-   console.log(certificates);
-   console.log(this.state.documents);
+   let { form } = this.state;
+   let img =form.docs.value[0]?.url;
+   console.log(img);
+   let docs= this.state.form.docs.value;
+   let id_docs =[];
+   id_docs.push(docs.id)
+   let documents = this.state.documents;
+   let newImgList = [...docs,...documents];
+   console.log(documents);
+   console.log();
+   console.log(newImgList);
+   let imgList = newImgList.map((data)=>{
+           return(
+            <GridListTile key={data.img}>
+            <img src={"http://103.124.95.189:3000/"+data.url} alt={data.title} />
+            <GridListTileBar
+              title={data.title}
+              actionIcon={
+                <IconButton aria-label={`star ${data.title}`}>
+                  <StarBorderIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+     )
+   })
     return (
       <Fragment>
+        <ModalNoti 
+          message={this.state.notiMessage}
+          done={() => this.setState({ notiMessage: "" })}>
+        </ModalNoti>
         <Grid className="form-career">
           <Grid container paper>
             <Grid sm="6" container>
@@ -200,16 +233,24 @@ class FormCareer extends form {
                 Thời gian nhận :
               </Grid>
               <Grid sm="8" className="input">
-                <TextField
-                  fullWidth
-                  value={form.reciveAt.value}
-                  id="reciveAt"
-                  name="reciveAt"
-                  onChange={(e) => {
-                    this._setValue(e, "reciveAt");
-                  }}
-                  type="date"
-                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid container justify="space-around">
+                    <KeyboardDatePicker
+                      variant="inline"
+                      fullWidth
+                      format="dd/MM/yyyy"
+                      value={form.recivedAt.value}
+                      id="recivedAt"
+                      name="recivedAt"
+                      onChange={(e) => {
+                        this.onChange(e, "recivedAt");
+                      }}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
               </Grid>
               <Grid sm="4" className="label" align="right">
                 Xếp loại :
@@ -280,20 +321,36 @@ class FormCareer extends form {
             </Grid>
           </Grid>
         </Grid>
-        <Grid container className="grid-btn">      
-           <Grid sm="8"></Grid>    
-           <Grid sm="4">
-             <div className="btn-grid-update"> <Upload Upload={(idUpload, DocumentUpload) =>this.updateUpload(idUpload, DocumentUpload)}/></div>
-             <div className="btn-grid-update"><Button variant="contained" color="primary" onClick={() =>{this.onSubmit()}}>Cập nhật</Button></div>
-            </Grid>
+        <Grid container className="grid-btn">
+          <Grid sm="8"></Grid>
+          <Grid sm="4">
+            <div className="btn-grid-update">
+              {" "}
+              <Upload
+                multiple={this.state.multiple}
+                Upload={(idUpload, DocumentUpload) =>
+                  this.updateUpload(idUpload, DocumentUpload)
+                }
+              />
+            </div>
+            <div className="btn-grid-update">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  this.onSubmit();
+                }}
+              >
+                Cập nhật
+              </Button>
+            </div>
+          </Grid>
         </Grid>
-       
-        <ModalNoti message={this.state.notiMessage}>
-
-        </ModalNoti>
-        <ModalConfirm
-          message={this.state.notiConfirm}
-        ></ModalConfirm>
+        <Grid container paper>
+          <div className="root">
+          <GridList className='gridList' cols={2.5}> {imgList}</GridList>
+          </div>
+        </Grid>
       </Fragment>
     );
   }

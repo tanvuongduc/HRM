@@ -31,12 +31,15 @@ import {
   useTheme,
   Checkbox,
   ListItemText,
+  Slide
 } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { REGEX_TEL } from "../../../../Exam/Shared";
 import ManagementService from "../../../Shared/ManagementService";
-import { Autocomplete } from "@material-ui/lab";
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import Career from "../../../../Career/Components/Overview/Overview"
 
 const useStyles = (theme) => ({
   formControl: {
@@ -76,9 +79,11 @@ class ManagementEditInfo extends Form {
         dirty: false,
         teams: [],
       }),
+      open: false,
       onEditInfo: false,
       teamsCurrent: [],
       teamsSelected: [],
+      certificates:[],
     };
   }
 
@@ -113,6 +118,7 @@ class ManagementEditInfo extends Form {
         teams: res.data.teams,
       };
       this._fillForm(dataUser);
+      this.setState({certificates:res.data.certificates})
     });
     ManagementService.getListTeams().then((resTeam) => {
       for (let i = 0; i < listTeamsUser.length; i++) {
@@ -264,7 +270,18 @@ class ManagementEditInfo extends Form {
     });
     return checkTeamSelected;
   }
-
+  // dialog
+  setOpen = () => {
+    this.setState({
+        open: true,
+      
+    })
+  };
+  setClose = () => {
+    this.setState({
+        open: false,
+    })
+  };
   render() {
     const { form, onEditInfo, teamsSelected, teamsCurrent } = this.state;
     const { classes, userId } = this.props;
@@ -322,7 +339,7 @@ class ManagementEditInfo extends Form {
                   className="title-input"
                   htmlFor="input-with-icon-adornment"
                 >
-                 Họ và tên
+                  Họ và tên
                 </InputLabel>
                 <Input
                   className="input"
@@ -406,32 +423,11 @@ class ManagementEditInfo extends Form {
               </FormControl>
               <FormControl className="form-input">
                 <InputLabel
+                  id="demo-mutiple-checkbox-label"
                   className="title-input"
-                  htmlFor="input-with-icon-adornment"
                 >
-                  Bằng cấp
+                  Teams
                 </InputLabel>
-                <Input
-                  className="input"
-                  id="input-with-icon-adornment"
-                  name="certificate"
-                  onChange={(ev) => this._setValue(ev, "certificate")}
-                  value={form.certificate.value}
-                  readOnly={!onEditInfo}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <CardMembershipIcon />
-                    </InputAdornment>
-                  }
-                />
-                <span className="validate-noti">
-                  {form.dirty && form.certificate.err === "*"
-                    ? errRequiredNoti + "certificate"
-                    : ""}
-                </span>
-              </FormControl>
-              <FormControl className="form-input">
-                <InputLabel id="demo-mutiple-checkbox-label" className="title-input">Teams</InputLabel>
                 <Select
                   labelId="demo-mutiple-checkbox-label"
                   id="demo-mutiple-checkbox"
@@ -454,19 +450,16 @@ class ManagementEditInfo extends Form {
                   MenuProps={MenuProps}
                   startAdornment={
                     <InputAdornment position="start">
-                    <GroupIcon/>
-                  </InputAdornment>
+                      <GroupIcon />
+                    </InputAdornment>
                   }
                 >
                   {teamsCurrent.map((team) => (
                     <MenuItem key={team.id} value={team}>
-                      <Checkbox
-                        checked={this.checkTeamSelected(team)}
-                      />
+                      <Checkbox checked={this.checkTeamSelected(team)} />
                       <ListItemText primary={team.name} />
                     </MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
             </div>
@@ -661,6 +654,29 @@ class ManagementEditInfo extends Form {
                     ? errRequiredNoti + "bank account number"
                     : ""}
                 </span>
+              </FormControl>
+              <FormControl className="form-input">
+                <Input  disabled  className="input" onClick={() => { this.setOpen() }} value='Bằng Cấp'
+                  startAdornment={
+                    <InputAdornment position="start">
+                        <CardMembershipIcon />
+                    </InputAdornment>
+                  }>
+                 </Input >
+              <Dialog
+                  open={this.state.open}
+                  onClose={this.setClose}
+                  aria-labelledby="alert-dialog-slide-title"
+                  aria-describedby="alert-dialog-slide-description"
+                  fullWidth
+                  maxWidth='md' 
+                >
+                  <Slide direction="up" in={this.state.open}>
+                    <DialogContent>
+                     <Career idUser={form.id.value} certificates={this.state.certificates}></Career>
+                    </DialogContent>
+                  </Slide>
+                </Dialog>
               </FormControl>
             </div>
           </div>

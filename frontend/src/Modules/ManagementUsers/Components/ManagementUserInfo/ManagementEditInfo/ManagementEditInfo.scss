@@ -49,6 +49,11 @@
                 padding: 15px 20px;
                 
             }
+            .dialog-career{
+                min-height: 50px;
+                font-size: 18px;
+                border-bottom: 1px solid black;
+            }
         }
 
 
@@ -56,7 +61,10 @@
             background-color: $color-background;
         }
 
+    } 
+    .form-Career{
+        border-bottom: 2px solid #3f50b5;
+        border-top: 2px solid #3f50b5;
     }
-
 
 }
