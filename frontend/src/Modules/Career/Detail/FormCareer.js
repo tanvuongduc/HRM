@@ -16,6 +16,9 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { Gallery, Item } from 'react-photoswipe-gallery'
+import 'photoswipe/dist/photoswipe.css'
+import 'photoswipe/dist/default-skin/default-skin.css'
 
 class FormCareer extends form {
   constructor(props) {
@@ -46,7 +49,7 @@ class FormCareer extends form {
   componentDidMount = () => {
     CareerService.getUserById(this.props.idUser).then((res) => {
       let certificates = res.data.certificates;
-      if(certificates){
+      if (certificates) {
         certificates.map((data, index) => {
           if (index == this.props.index) {
             this.setState({ certificate: data });
@@ -66,7 +69,7 @@ class FormCareer extends form {
           }
         });
       }
-      
+
       this.setState({
         certificates: res.data.certificates,
         status: res.data.status,
@@ -88,13 +91,13 @@ class FormCareer extends form {
       degree,
       docs,
     } = this.state.form;
-    let value_docs= docs.value
-    let id_docs =[];
-    for( let i= 0; i<value_docs.length;i++){
+    let value_docs = docs.value
+    let id_docs = [];
+    for (let i = 0; i < value_docs.length; i++) {
       id_docs.push(value_docs[i].id)
     }
     console.log(id_docs);
-    let newImgList=[...id_docs,...id_document]
+    let newImgList = [...id_docs, ...id_document]
     console.log(newImgList);
     let data = {
       name: name.value,
@@ -142,45 +145,45 @@ class FormCareer extends form {
     console.log(idUpload);
     let id_Uploads = [];
     id_Uploads.push(idUpload);
-    let documents=[];
-    for(let i= 0; i <DocumentUpload.length;i++){
+    let documents = [];
+    for (let i = 0; i < DocumentUpload.length; i++) {
       documents.push(DocumentUpload[i]);
     }
     this.setState({
       id_document: id_Uploads,
     });
-    this.setState({ documents: documents});
+    this.setState({ documents: documents });
   };
   render() {
-   let { form } = this.state;
-   let img =form.docs.value[0]?.url;
-   console.log(img);
-   let docs= this.state.form.docs.value;
-   let id_docs =[];
-   id_docs.push(docs.id)
-   let documents = this.state.documents;
-   let newImgList = [...docs,...documents];
-   console.log(documents);
-   console.log();
-   console.log(newImgList);
-   let imgList = newImgList.map((data)=>{
-           return(
-            <GridListTile key={data.img}>
-            <img src={"http://103.124.95.189:3000/"+data.url} alt={data.title} />
-            <GridListTileBar
-              title={data.title}
-              actionIcon={
-                <IconButton aria-label={`star ${data.title}`}>
-                  <StarBorderIcon />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-     )
-   })
+    let { form } = this.state;
+    let img = form.docs.value[0]?.url;
+    console.log(img);
+    let docs = this.state.form.docs.value;
+    let id_docs = [];
+    id_docs.push(docs.id)
+    let documents = this.state.documents;
+    let newImgList = [...docs, ...documents];
+    console.log(documents);
+    console.log();
+    console.log(newImgList);
+    let imgList = newImgList.map((data) => {
+      return (
+        <GridListTile key={data.img}>
+          <img src={"http://103.124.95.189:3000/" + data.url} alt={data.title} />
+          <GridListTileBar
+            title={data.title}
+            actionIcon={
+              <IconButton aria-label={`star ${data.title}`}>
+                <StarBorderIcon />
+              </IconButton>
+            }
+          />
+        </GridListTile>
+      )
+    })
     return (
       <Fragment>
-        <ModalNoti 
+        <ModalNoti
           message={this.state.notiMessage}
           done={() => this.setState({ notiMessage: "" })}>
         </ModalNoti>
@@ -347,11 +350,32 @@ class FormCareer extends form {
           </Grid>
         </Grid>
         <Grid container paper>
-          <div className="root">
-          <GridList className='gridList' cols={2.5}> {imgList}</GridList>
-          </div>
+          <Grid container paper>
+            <Gallery >
+              <Item
+                original="https://placekitten.com/1024/768?image=1"
+                thumbnail="https://placekitten.com/80/60?image=1"
+                width="1024"
+                height="768"
+              >
+                {({ ref, open }) => (
+                  <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=1" />
+                )}
+              </Item>
+              <Item
+                original="https://placekitten.com/1024/768?image=2"
+                thumbnail="https://placekitten.com/80/60?image=2"
+                width="1024"
+                height="768"
+              >
+                {({ ref, open }) => (
+                  <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=2" />
+                )}
+              </Item>
+            </Gallery>
+          </Grid>
         </Grid>
-      </Fragment>
+      </Fragment >
     );
   }
 }

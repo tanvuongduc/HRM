@@ -83,7 +83,7 @@ class ManagementEditInfo extends Form {
       onEditInfo: false,
       teamsCurrent: [],
       teamsSelected: [],
-      certificates:[],
+      certificates: [],
     };
   }
 
@@ -118,7 +118,7 @@ class ManagementEditInfo extends Form {
         teams: res.data.teams,
       };
       this._fillForm(dataUser);
-      this.setState({certificates:res.data.certificates})
+      this.setState({ certificates: res.data.certificates })
     });
     ManagementService.getListTeams().then((resTeam) => {
       for (let i = 0; i < listTeamsUser.length; i++) {
@@ -264,7 +264,7 @@ class ManagementEditInfo extends Form {
     const { teamsSelected } = this.state;
     let checkTeamSelected = false;
     teamsSelected.forEach(item => {
-      if(item.id === team.id) {
+      if (item.id === team.id) {
         checkTeamSelected = true
       }
     });
@@ -273,13 +273,13 @@ class ManagementEditInfo extends Form {
   // dialog
   setOpen = () => {
     this.setState({
-        open: true,
-      
+      open: true,
+
     })
   };
   setClose = () => {
     this.setState({
-        open: false,
+      open: false,
     })
   };
   render() {
@@ -311,6 +311,7 @@ class ManagementEditInfo extends Form {
       },
     };
     const errRequiredNoti = "Không được để trống ";
+    console.log(form.id.value)
     return (
       <Card className="management-edit-info">
         <div className="btn-control-box">
@@ -322,8 +323,8 @@ class ManagementEditInfo extends Form {
             style={
               onEditInfo
                 ? {
-                    marginRight: "0",
-                  }
+                  marginRight: "0",
+                }
                 : null
             }
             startIcon={onEditInfo ? <ClearIcon /> : <EditIcon />}
@@ -656,30 +657,36 @@ class ManagementEditInfo extends Form {
                 </span>
               </FormControl>
               <FormControl className="form-input">
-                <Input  disabled  className="input" onClick={() => { this.setOpen() }} value='Bằng Cấp'
+                <Input disabled className="input" onClick={() => { this.setOpen() }} value='Bằng Cấp'
                   startAdornment={
                     <InputAdornment position="start">
-                        <CardMembershipIcon />
+                      <CardMembershipIcon />
                     </InputAdornment>
                   }>
-                 </Input >
-              <Dialog
+                </Input >
+                <Dialog
                   open={this.state.open}
                   onClose={this.setClose}
                   aria-labelledby="alert-dialog-slide-title"
                   aria-describedby="alert-dialog-slide-description"
                   fullWidth
-                  maxWidth='md' 
+                  maxWidth='md'
                 >
                   <Slide direction="up" in={this.state.open}>
                     <DialogContent>
-                     <Career idUser={form.id.value} certificates={this.state.certificates}></Career>
+                      <Career idUser={form.id.value} certificates={this.state.certificates}></Career>
                     </DialogContent>
                   </Slide>
                 </Dialog>
               </FormControl>
             </div>
           </div>
+        </div>
+        <div>
+          <h4>SƠ YẾU LÝ LỊCH</h4>
+          <hr></hr>
+          <Career idUser={form.id.value} certificates={this.state.certificates}></Career>
+
         </div>
         <div className="btn-control-box">
           <Button
