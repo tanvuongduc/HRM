@@ -8,11 +8,13 @@ import FormControl from "@material-ui/core/FormControl";
 import { Form } from "../../../../Shared";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import TimeOffService from "../../Shared/TimeOffService";
 import { ModalNoti } from "../../../../Shared";
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import Radio from "@material-ui/core/Radio";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 class TimeOffForm extends Form {
   constructor(props) {
@@ -25,6 +27,7 @@ class TimeOffForm extends Form {
         pic: "",
         dirty: false,
       }),
+      endDateOrg: "",
       pics: [
         {
           id: "60cff2ed74c34ea254311e8a",
@@ -40,22 +43,31 @@ class TimeOffForm extends Form {
     };
   }
 
-  componentWillMount() {
-    const { data } = this.props;
+  componentWillReceiveProps = (nextProps) => {
+    const { data } = nextProps;
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
-    startDate.setHours(8);
     endDate.setDate(endDate.getDate() - 1);
+    startDate.setHours(8);
     endDate.setHours(17);
     this._fillForm({
       timeOffReason: "",
       startDate: startDate,
       endDate: endDate,
-      pic: "60cff2ed74c34ea254311e8a",
+      pic: "",
       dirty: false,
     });
-    
+    this.setState({
+      onOpenForm: nextProps.onOpen,
+    });
+  };
+
+  componentWillMount = () => {
+    this.state.form["pic"].value = "60cff2ed74c34ea254311e8a";
+    this.state.form["startDate"].value = new Date();
+    this.state.form["endDate"].value = new Date();
   }
+
 
   convertDate = (data) => {
     const date = new Date(data);
@@ -77,23 +89,21 @@ class TimeOffForm extends Form {
     const { startDate, endDate } = this.state.form;
     switch (time) {
       case 1:
-        this.setChooseTime("from", startDate.value, 8, 0);
-        this.setChooseTime("to", endDate.value, 12, 0);
+        this.setChooseTime("from", startDate.value, 0, 0);
+        this.setChooseTime("to", endDate.value, 11, 59);
         break;
       case 2:
-        this.setChooseTime("from", startDate.value, 13, 0);
-        this.setChooseTime("to", endDate.value, 17, 0);
+        this.setChooseTime("from", startDate.value, 12, 0);
+        this.setChooseTime("to", endDate.value, 23, 59);
         break;
       case 0:
-        this.setChooseTime("from", startDate.value, 8, 0);
-        this.setChooseTime("to", endDate.value, 17, 0);
+        this.setChooseTime("from", startDate.value, 0, 0);
+        this.setChooseTime("to", endDate.value, 23, 59);
         break;
     }
     this.setState({
       chooseTimeOff: time,
     });
-    console.log("start date", this.state.form.startDate);
-    console.log("end date", this.state.form.endDate);
   };
 
   setChooseTime = (code, date, hours, minutes) => {
@@ -107,12 +117,10 @@ class TimeOffForm extends Form {
     }
   };
 
-
   commitTimeOff = async () => {
     this._validateForm();
     this.state.form["dirty"] = true;
     const { form } = this.state;
-    console.log("FORMMMMMMMM", form);
     const userId = JSON.parse(localStorage.getItem("userId"));
     if (this._isFormValid()) {
       const dataTimeOff = {
@@ -136,12 +144,26 @@ class TimeOffForm extends Form {
     }
   };
 
+  getTime = (date) => {
+    const newDate = new Date(date);
+    const hour = String(newDate.getHours()).padStart(2, "0");
+    const min = String(newDate.getMinutes()).padStart(2, "0");
+    return hour + ":" + min;
+  };
+
+  onCloseForm = () => {
+    const parentForm = document.getElementById("time-off-parent");
+    const timeOffForm = document.getElementById("time-off-form");
+    timeOffForm.classList.add("close-form");
+    parentForm.classList.add("inactive-scheduler");
+
+  };
 
   render() {
     const { startDate, endDate, pic, timeOffReason, dirty } = this.state.form;
     const startDateConvert = this.convertDate(startDate.value);
     const endDateConvert = this.convertDate(endDate.value);
-    const { pics, chooseTimeOff } = this.state;
+    const { pics, chooseTimeOff, onOpenForm } = this.state;
     const selectOption = pics.map((item) => {
       return (
         <MenuItem key={item.id} value={item.id}>
@@ -149,11 +171,28 @@ class TimeOffForm extends Form {
         </MenuItem>
       );
     });
+
+    const parentForm = document.getElementById("time-off-parent");
+    const timeOffForm = document.getElementById("time-off-form");
+    if (this.props.onOpen) {
+      parentForm.classList.add("active-form");
+      timeOffForm.classList.remove("close-form");
+      parentForm.classList.remove("inactive-scheduler");
+    }
+
+    document.onclick = (ev) => {
+      if (
+        ev.target.id !== "time-off-form" &&
+        ev.target.id == "time-off-parent"
+      ) {
+        this.onCloseForm();
+      }
+    };
+
     let requiredNoti = "Không được để trống ";
     return (
-      <div className="time-off-form">
-       
-        <div className="form">
+      <div className="scheduler-time-off" id="time-off-parent">
+        <div className="form" id="time-off-form">
           <h2 className="title">Xin nghỉ phép</h2>
           <div className="row">
             <div className="col-sm-12 div-margin">
@@ -194,30 +233,54 @@ class TimeOffForm extends Form {
               />
             </div>
             <div className="col-sm-12 div-margin">
-              <Button
-                onClick={() => this.chooseTimeOff(1)}
-                variant="contained"
-                color={chooseTimeOff === 1 ? "primary" : "default"}
-                className="btn-choose-time"
-              >
-                Buổi sáng
-              </Button>
-              <Button
-                onClick={() => this.chooseTimeOff(2)}
-                variant="contained"
-                color={chooseTimeOff === 2 ? "primary" : "default"}
-                className="btn-choose-time"
-              >
-                Buổi chiều
-              </Button>
-              <Button
-                onClick={() => this.chooseTimeOff(0)}
-                variant="contained"
-                color={chooseTimeOff === 0 ? "primary" : "default"}
-                className="btn-choose-time"
-              >
-                Cả ngày
-              </Button>
+              <span className="time-info">
+                Thời gian bắt đầu từ {this.getTime(startDate.value)}
+              </span>
+              <span className="time-info">
+                {" "}
+                đến {this.getTime(endDate.value)}
+              </span>
+            </div>
+            <div className="col-sm-12 div-margin">
+              <FormControlLabel
+                value={1}
+                control={
+                  <Radio
+                    color="primary"
+                    name="choose-time"
+                    checked={chooseTimeOff === 1}
+                    onChange={() => this.chooseTimeOff(1)}
+                  />
+                }
+                label="Buổi sáng"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value={2}
+                control={
+                  <Radio
+                    color="primary"
+                    name="choose-time"
+                    checked={chooseTimeOff === 2}
+                    onChange={() => this.chooseTimeOff(2)}
+                  />
+                }
+                label="Buổi chiều"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value={3}
+                control={
+                  <Radio
+                    color="primary"
+                    name="choose-time"
+                    checked={chooseTimeOff === 0}
+                    onChange={() => this.chooseTimeOff(0)}
+                  />
+                }
+                label="Cả ngày"
+                labelPlacement="start"
+              />
             </div>
             <div className="col-sm-12 div-margin">
               <FormControl variant="outlined" className="input-field">
@@ -238,7 +301,7 @@ class TimeOffForm extends Form {
           </div>
           <div className="btn-control-box">
             <Button
-              onClick={this.props.onCloseForm}
+              onClick={this.onCloseForm}
               variant="contained"
               color="default"
               className="btn-control-default"

@@ -1,17 +1,18 @@
 
-.time-off-form {
-    position: fixed;
+.scheduler-time-off {
+    display: block;
     top: 0;
-    right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(10, 10, 10, 0.527);
-    z-index: 10;
-
+    right: 0;
+    position: fixed;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.609);
     .form {
+        z-index: 20;
         width: 500px;
         height: 100%;
-        padding: 50px 15px 20px 35px;
+        padding: 50px 15px 20px 45px;
         position: absolute;
         top: 60px;
         right: 0;
@@ -19,8 +20,7 @@
         background-color: white;
         transform: translateX(550px);
         animation:  openTimeOffForm 400ms linear forwards;
-        
-        
+        // box-shadow:  0 0 0 2000px #000000ab;
         .title {
             color: #3f50b5;
         }
@@ -31,6 +31,11 @@
 
         .div-margin {
             margin-top: 25px;
+        }
+
+        .time-info {
+            font-size: 17px;
+            font-weight: 500;
         }
 
         .validate-noti {
@@ -47,10 +52,15 @@
         
     }
 
+    .close-form {
+        animation: closeTimeOffForm 350ms linear forwards;
+    }
+
     .btn-control-box {
         margin-top: 20px;
         margin-right: 35px;
     }
+
 
     @keyframes openTimeOffForm {
         from {
@@ -70,7 +80,36 @@
         to {
             transform: translateX(550px);
         }
-    }
-    
+    } 
+
+   
+
 }
+
+.active-form {
+    display: block;
+}
+
+.inactive-scheduler {
+    animation: hideOverlay linear 800ms forwards;
+}
+
+@keyframes hideOverlay {
+    from {
+        transform: translateX(0);
+        background: none;
+    }
+    to {
+        transform: translateX(2550px);
+        background: none;
+    }
+}
+
+
+
+
+
+
+
+
 

@@ -53,6 +53,11 @@ class TimeOff extends React.PureComponent {
   }
 
   componentDidMount = async () => {
+     this.getData();
+    //  this.intervalID = setInterval(this.getData.bind(this), 1200);
+  };
+
+  getData = async () => {
     const data = [];
     await TimeOffService.getListTimeOff().then((res) => {
       const dataAppointment = res.data;
@@ -79,7 +84,7 @@ class TimeOff extends React.PureComponent {
     this.setState({
       data: data,
     });
-  };
+  }
 
   changeAddedAppointment = async (addedAppointment) => {
     let today = new Date();
@@ -138,11 +143,6 @@ class TimeOff extends React.PureComponent {
     }
   };
 
-  closeTimeOffForm = () => {
-    this.setState({
-      setVisibleAppoinment: false
-    });
-  }
 
   priorityChange = (value) => {
     const { resources } = this.state;
@@ -175,6 +175,7 @@ class TimeOff extends React.PureComponent {
     });
   };
 
+
   render() {
     const {
       data,
@@ -188,15 +189,15 @@ class TimeOff extends React.PureComponent {
 
     let today = new Date();
     const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); 
     const yyyy = today.getFullYear();
     today = yyyy + "-" + mm + "-" + dd;
-    const timeOffForm = setVisibleAppoinment ? <TimeOffForm data={addedAppointment} onCloseForm={this.closeTimeOffForm} /> : "";
+    
 
     return (
       <div>
-        {timeOffForm}
-        <Card>
+        <TimeOffForm data={addedAppointment} onOpen={setVisibleAppoinment} />
+        <Card >
         <Scheduler
           className="scheduler-table"
           data={this.filterTasks(data, currentPriority)}
