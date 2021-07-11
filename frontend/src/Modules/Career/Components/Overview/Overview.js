@@ -7,20 +7,19 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import CareerService from '../../Shared/CareerService'
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import { Paper, Button, Typography } from '@material-ui/core';
+import { Paper, Button, Typography ,Grid} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import FormCareer from '../../Detail/FormCareer';
 import _FormCareer from '../../Detail/FormCareer';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import {Slide,AppBar,Toolbar,IconButton} from '@material-ui/core'
 import TodayIcon from '@material-ui/icons/Today';
-import Slide from '@material-ui/core/Slide';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SchoolIcon from '@material-ui/icons/School';
+
 class Overview extends Component {
     constructor(props) {
         super(props);
@@ -29,18 +28,15 @@ class Overview extends Component {
             open: false,
             careers: [],
             sliceNumber: 2,
-            userId: '60d005eadbec139b90add9a9',
+            userId:this.props.idUser,
             indexOfCert:'',
         }
     }
     componentDidMount() {
-        let careerArr = []
-        careerArr.push(CareerService.getUserById(this.state.userId))
-        Promise.all(careerArr).then(([res]) => {
-            let careers = res.data.certificates
-            this.setState({
-                careers
-            })
+        let careers = this.props.certificates
+        console.log(careers);
+        this.setState({
+            careers:careers
         })
     }
     showMore = () => {
@@ -64,30 +60,26 @@ class Overview extends Component {
         this.setState({
             open: false,
         })
+        window.location.reload(true); 
     };
     //
-
-
-    color = (index) => {
-        if (index % 3 == 1) { return "primary" }
-        else if (index % 3 == 2) { return "inherit" }
-        else { return "grey" }
+    setDate = (data) =>{
+     let dateUTC = new  Date(data);
+     let date = dateUTC.getFullYear()
+     return date;
     }
+
     render() {
-        let idUser = "60d005eadbec139b90add9a9";
-        let { careers, sliceNumber, indexOfCert } = this.state
+        let { careers, sliceNumber, indexOfCert,userId } = this.state
         let _index = -1
         console.log(indexOfCert);
+        console.log(userId);
+       
         return (
-            <Container maxWidth="md" style={{ paddingTop: '100px' }}>
+            <Container maxWidth="md" >
 
                 {/* Dialog */}
                 <div>
-                    <div className="btn-addNew">
-                        <Button variant="contained" color="primary" size="small" onClick={() => { this.setOpen(_index) }}>
-                            Thêm mới
-                        </Button>
-                    </div>
                    {this.state.open ?   <Dialog
                         className="Dialog"
                         paper
@@ -101,6 +93,7 @@ class Overview extends Component {
                          <AppBar  >
                             <Toolbar>
                                 <IconButton edge="start" color="inherit" onClick={this.setClose} aria-label="close">
+                                    
                                 <CloseIcon />
                                 </IconButton>
                                 <Typography variant="h6" >
@@ -113,7 +106,7 @@ class Overview extends Component {
                         </Button>
                         <Slide direction="up" in={this.state.open}>
                                 <DialogContent>
-                                    <FormCareer idUser={idUser} index={indexOfCert} />
+                                    <FormCareer idUser={this.state.userId}  index={indexOfCert} />
                                 </DialogContent>
                         </Slide>
                     </Dialog>: null}
@@ -126,35 +119,52 @@ class Overview extends Component {
                         hasMore={true}
                     >
                     <Timeline align="alternate">
-                     {careers.slice(0, sliceNumber).map((row, index) => (
+                     {careers ?  careers.slice(0, sliceNumber).map((row, index) => (
                         <TimelineItem key={row.id}>
                             <TimelineOppositeContent>
-                                <Typography color="textSecondary">{row.recivedAt}</Typography>
+                                <Typography className="Typography" color="primary">
+                                    <h5> <TodayIcon/> {this.setDate(row.recivedAt)}</h5>
+                                    <div class="container">
+                                    <img src={"http://103.124.95.189:3000/"+data.url} alt={data.title} />
+                                        <div class="overlay">
+                                        <a href="#" class="icon" title="User Profile">
+                                            <i class="fa fa-user"></i>
+                                        </a>
+                                       </div>
+                                 </div>
+                                </Typography>
                             </TimelineOppositeContent>
                             <TimelineSeparator>
-                                <TimelineDot color={this.color(index)}>
-                                    <TodayIcon />
+                                <TimelineDot color="primary">
+                                    <SchoolIcon />
                                 </TimelineDot>
-                                <TimelineConnector />
+                                <TimelineConnector className="TimeLine-TimelineConnector" />
                             </TimelineSeparator>
                             <TimelineContent>
-                                <Paper className="TimelineContent" Container onClick={() => { this.setOpen(index) }}>
+                                <div  className="TimelineContent" Container onClick={() => { this.setOpen(index) }}>
                                     <Typography variant="h6" component="h1">{row.name}</Typography>
                                     <Typography>{row.certNo}</Typography>
                                     <Typography variant="body2" color="textSecondary">{row.major}</Typography>
-                                </Paper>
+                                </div >
                             </TimelineContent>
                         </TimelineItem>
-                    ))}
+                    )):<h3>Chưa có sự nghiệp</h3>}
                     </Timeline>
                  </InfiniteScroll>
                 </div>
-                <div className="carrer-btn">
-                    <Button
-                        onClick={this.showMore}
-                    >xem thêm<ChevronRightIcon />
-                    </Button>
-                </div>
+                <Grid className="carrer-btn" Container>
+                    <Grid sm="8">adsfsd</Grid>
+                    <Grid sm="4">
+                        {careers ? <Button
+                            onClick={this.showMore}
+                        >xem thêm<ChevronRightIcon />
+                        </Button> : null }   
+                        <Button variant="contained" color="primary" size="small" onClick={() => { this.setOpen(_index) }}>
+                                Thêm mới
+                        </Button>
+                    </Grid>
+                </Grid>
+              
             </Container>
         )
     }

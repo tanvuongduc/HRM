@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@popperjs/core": "^2.9.2",
+    "@remotelock/react-week-scheduler": "^4.0.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -22,12 +23,15 @@
     "node-sass": "^4.14.1",
     "react": "^17.0.2",
     "react-avatar-edit": "^1.0.0",
+    "react-day-picker": "^7.4.10",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.13.1",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-weekly-schedule": "0.0.0-development",
     "reactstrap": "^8.7.1"
   },
   "scripts": {
