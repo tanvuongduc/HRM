@@ -1,23 +1,23 @@
 import * as mongoose from 'mongoose';
 
-
+export type TimeoffStatus = 'approved' | 'rejected' | 'pending';
 
 export const TimeoffSchema = new mongoose.Schema({
     reason: { type: String, require: true },
     from: { type: Date, require: true },
     to: { type: Date, require: true },
-    by: { type: String, require: true },
-    status: { type: String, require: true, default: "Pendding" }, //Pendding, approve, reject
-    pic: { type: mongoose.Types.ObjectId , ref: 'User'}
+    by: { type: mongoose.Types.ObjectId, require: true, ref: "User" },
+    status: { type: String, require: true, default: "pending" }, //Pendding, approve, reject
+    pic: { type: mongoose.Types.ObjectId, ref: 'User' }
 })
 
 
 export interface Timeoff extends mongoose.Document {
-    id: String;
-    reason: String;
+    id: string;
+    reason: string;
     from: Date;
     to: Date;
-    by: String;
-    status: String;
-    pic: String;
+    by: string;
+    status: TimeoffStatus;
+    pic: string;
 }

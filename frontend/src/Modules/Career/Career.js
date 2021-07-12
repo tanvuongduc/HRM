@@ -2,8 +2,8 @@ import React from 'react'
 import { Route, Switch, withRouter } from "react-router-dom";
 import Overview from './Components/Overview/Overview';
 
-const Career = () => {
-    const { path } = this.props.match;
+const Career = (props) => {
+    const { path } = props.match;
     return (
         <div>
             <Switch>

@@ -12,9 +12,9 @@ export class CertificateService {
     }
 
     async insertCertificate(
-        code: String,
-        name: String,
-        desc: String,
+        code: string,
+        name: string,
+        desc: string,
     ) {
         const checkCode = await this.certificateModel.find().where({ code: code }).exec();
         if (checkCode.length > 0) {
@@ -30,7 +30,7 @@ export class CertificateService {
     }
 
     async getCertificateById(
-        id: String
+        id: string
     ) {
         const cer = await this.findCertificateById(id);
         return {
@@ -52,10 +52,10 @@ export class CertificateService {
     }
 
     async updateCertificate(
-        id: String,
-        code: String,
-        name: String,
-        desc: String,
+        id: string,
+        code: string,
+        name: string,
+        desc: string,
     ) {
         let cer = await this.findCertificateById(id);
         if (code != cer.code) {
@@ -74,7 +74,7 @@ export class CertificateService {
     }
 
 
-    async findCertificateById(id: String): Promise<Certificate> {
+    async findCertificateById(id: string): Promise<Certificate> {
         let Certificate: any;
         try {
             Certificate = await this.certificateModel.findById(id).exec();

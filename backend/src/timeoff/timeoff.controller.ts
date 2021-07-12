@@ -1,20 +1,23 @@
-import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
-import { TimeoffService } from './timeoff.service'
-import {
+import { isDateRequired } from './../validator/joi.validate';
+import { Controller, Post, Body, Get, Patch, Param } from '@nestjs/common';
+import { TimeoffService } from './timeoff.service';
+import { timeoffStatusValidate } from './timeoff.validate';
+import { isStringRequired } from '../validator/joi.validate';
+import { TimeoffStatus } from './timeoff.model';
 
-} from '@nestjs/common';
 @Controller('timeoff')
 export class TimeoffController {
     constructor(private readonly timeoffService: TimeoffService) { }
 
     @Post()
-    async createTimeoff(
-        @Body('reason') reason: String,
-        @Body('from') from: Date,
-        @Body('to') to: Date,
-        @Body('by') by: String,
+    async insertTimeoff(
+        @Body('reason', isStringRequired) reason: string,
+        @Body('from', isDateRequired) from: Date,
+        @Body('to', isDateRequired) to: Date,
+        @Body('by', isStringRequired) by: string,
+        @Body('pic', isStringRequired) pic: string,
     ) {
-        return this.timeoffService.insertTimeoff(reason, from, to, by)
+        return this.timeoffService.insertTimeoff(reason, from, to, by, pic);
     }
 
     @Get()
@@ -22,10 +25,17 @@ export class TimeoffController {
         return this.timeoffService.getAllTimeoffInMonth()
     }
 
-    @Patch()
+    @Get(':id')
+    async getAllTimeoffInMonthOfUserId(
+        @Param('id', isStringRequired) id: string
+    ) {
+        return this.timeoffService.getAllTimeoffInMonthOfUserId(id)
+    }
+
+    @Patch(':id')
     async handleTimeoff(
-        @Body('id') id: String,
-        @Body('status') status: String
+        @Param('id', isStringRequired) id: string,
+        @Body('status', timeoffStatusValidate) status: TimeoffStatus
     ) {
         return this.timeoffService.handleTimeoff(id, status)
     }

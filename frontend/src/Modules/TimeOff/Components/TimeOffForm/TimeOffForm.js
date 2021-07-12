@@ -47,16 +47,25 @@ class TimeOffForm extends Form {
     const { data } = nextProps;
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
-    endDate.setDate(endDate.getDate() - 1);
-    startDate.setHours(8);
-    endDate.setHours(17);
-    this._fillForm({
-      timeOffReason: "",
-      startDate: startDate,
-      endDate: endDate,
-      pic: "",
-      dirty: false,
-    });
+    if (
+      Object.prototype.toString.call(startDate) === "[object Date]" &&
+      Object.prototype.toString.call(endDate) === "[object Date]" &&
+      !isNaN(startDate.getTime()) &&
+      !isNaN(endDate.getTime())
+    ) {
+      endDate.setDate(endDate.getDate() - 1);
+      startDate.setHours(0);
+      endDate.setHours(23);
+      endDate.setMinutes(59);
+      this._fillForm({
+        timeOffReason: "",
+        startDate: startDate,
+        endDate: endDate,
+        pic: "60cff2ed74c34ea254311e8a",
+        dirty: false,
+      });
+    }
+
     this.setState({
       onOpenForm: nextProps.onOpen,
     });
@@ -64,10 +73,20 @@ class TimeOffForm extends Form {
 
   componentWillMount = () => {
     this.state.form["pic"].value = "60cff2ed74c34ea254311e8a";
-    this.state.form["startDate"].value = new Date();
-    this.state.form["endDate"].value = new Date();
-  }
+    this.setDefaultTime();
+  };
 
+  setDefaultTime = () => {
+    const startDate = new Date();
+    const endDate = new Date();
+    startDate.setDate(startDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() + 1);
+    startDate.setHours(0);
+    endDate.setHours(23);
+    endDate.setMinutes(59);
+    this.state.form["startDate"].value = startDate;
+    this.state.form["endDate"].value = endDate;
+  };
 
   convertDate = (data) => {
     const date = new Date(data);
@@ -142,6 +161,7 @@ class TimeOffForm extends Form {
           });
         });
     }
+    console.log("ddd", this.state.form);
   };
 
   getTime = (date) => {
@@ -156,7 +176,6 @@ class TimeOffForm extends Form {
     const timeOffForm = document.getElementById("time-off-form");
     timeOffForm.classList.add("close-form");
     parentForm.classList.add("inactive-scheduler");
-
   };
 
   render() {

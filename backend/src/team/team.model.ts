@@ -15,15 +15,15 @@ export const TeamSchema = new mongoose.Schema({
 })
 
 export interface Team extends mongoose.Document {
-    id: String;
-    code: String;
-    pic: String;
-    name: String;
-    sologan?: String;
-    rate?: Number;
-    achievements?: String;
-    mission?: String;
-    department: String;
+    id: string;
+    code: string;
+    pic: string;
+    name: string;
+    sologan?: string;
+    rate?: number;
+    achievements?: string;
+    mission?: string[];
+    department: string;
     createAt: Date;
-    creatBy: String;
+    creatBy: string;
 }

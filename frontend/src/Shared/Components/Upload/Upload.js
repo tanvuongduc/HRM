@@ -28,9 +28,9 @@ class Upload extends Component {
 			this.state.selectedFile.name
 		);
 		let upload = await axios.post(`${BASE_URL}upload`, formData)
+		console.log(upload);
 		let idUpload = upload.data.id
 		let DocumentUpload = upload.data
-
 		this.props.Upload(idUpload, DocumentUpload)
 		this.setState({ modal: !this.state.modal })
 	};
@@ -62,6 +62,7 @@ class Upload extends Component {
 	};
 
 	render() {
+		console.log(this.props.idUpload);
 		return (
 			<div>
 				<Button variant="contained" color="primary" onClick={this.handleModal} startIcon={<AttachFileIcon />}>Upload file</Button>
@@ -69,7 +70,7 @@ class Upload extends Component {
 					<div className="modalStyle">
 						<h4>Upload new file</h4><hr />
 						<form className="formStyle" onSubmit={(event) => this.onFileUpload(event)}>
-							<input className="inputStyle" type="file" onChange={this.onFileChange} required />
+							<input className="inputStyle" type="file" multiple onChange={this.onFileChange} required />
 							{this.fileData()}
 							<Button variant="contained" color="primary" type="submit" startIcon={<SaveIcon />}>Save</Button>{' '}
 							<Button variant="contained" color="secondary" onClick={this.handleModal} startIcon={<CancelIcon />}>Cancel</Button>
