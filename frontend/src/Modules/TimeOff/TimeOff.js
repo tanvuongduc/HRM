@@ -180,6 +180,12 @@ class TimeOff extends React.PureComponent {
     });
   };
 
+  closeTimeOffForm = () => {
+    this.setState({
+     setVisibleAppoinment: false
+    });
+  }
+
 
   render() {
     const {
@@ -201,7 +207,7 @@ class TimeOff extends React.PureComponent {
 
     return (
       <div>
-        <TimeOffForm data={addedAppointment} onOpen={setVisibleAppoinment} />
+        <TimeOffForm data={addedAppointment} onOpen={setVisibleAppoinment} onClose={this.closeTimeOffForm} />
         <Card >
         <Scheduler
           className="scheduler-table"

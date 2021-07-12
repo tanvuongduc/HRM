@@ -176,6 +176,7 @@ class TimeOffForm extends Form {
     const timeOffForm = document.getElementById("time-off-form");
     timeOffForm.classList.add("close-form");
     parentForm.classList.add("inactive-scheduler");
+    this.props.onClose();
   };
 
   render() {
