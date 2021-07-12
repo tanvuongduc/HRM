@@ -54,9 +54,13 @@ class TimeOff extends React.PureComponent {
   }
 
   componentDidMount = async () => {
-    // this.getData();
-    this.intervalID = setInterval(this.getData.bind(this), 1200); 
+    this.getData();
+    // this.intervalID = setInterval(this.getData.bind(this), 1200); 
   };
+
+  // componentWillUnmount() {
+  //   clearInterval(this.intervalID);
+  // }
 
   getData = async () => {
     const data = [];
