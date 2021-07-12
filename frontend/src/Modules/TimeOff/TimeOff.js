@@ -53,14 +53,20 @@ class TimeOff extends React.PureComponent {
     };
   }
 
-  componentDidMount = async () => {
-    this.getData();
-    // this.intervalID = setInterval(this.getData.bind(this), 1200); 
-  };
+  intervalID;
 
-  // componentWillUnmount() {
-  //   clearInterval(this.intervalID);
-  // }
+  componentDidMount = async () => {
+    if(!this.state.setVisibleAppoinment) {
+      this.getData();
+    } else {
+       this.intervalID = setInterval(this.getData.bind(this), 1200); 
+    }
+    
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+  }
 
   getData = async () => {
     const data = [];
@@ -182,9 +188,10 @@ class TimeOff extends React.PureComponent {
 
   closeTimeOffForm = () => {
     this.setState({
-     setVisibleAppoinment: false
+     setVisibleAppoinment: false,
     });
   }
+
 
 
   render() {
@@ -207,7 +214,7 @@ class TimeOff extends React.PureComponent {
 
     return (
       <div>
-        <TimeOffForm data={addedAppointment} onOpen={setVisibleAppoinment} onClose={this.closeTimeOffForm} />
+        <TimeOffForm data={addedAppointment} onOpen={setVisibleAppoinment} onClose={this.closeTimeOffForm} onSubmit={this.getData} />
         <Card >
         <Scheduler
           className="scheduler-table"

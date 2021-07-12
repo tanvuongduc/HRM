@@ -151,6 +151,7 @@ class TimeOffForm extends Form {
       };
       await TimeOffService.addTimeOff(dataTimeOff)
         .then((res) => {
+
           this.setState({
             message: "Gửi yêu cầu xin nghỉ thành công !!",
           });
@@ -161,7 +162,8 @@ class TimeOffForm extends Form {
           });
         });
     }
-    console.log("ddd", this.state.form);
+    this.props.onSubmit();
+    
   };
 
   getTime = (date) => {
