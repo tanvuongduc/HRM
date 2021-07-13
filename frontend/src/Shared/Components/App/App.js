@@ -19,7 +19,6 @@ import './App.scss';
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state={
