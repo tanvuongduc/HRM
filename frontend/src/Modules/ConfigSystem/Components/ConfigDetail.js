@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import { Grid ,TextField,Input,InputLabel ,FormControl,Typography,InputAdornment} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -11,6 +10,12 @@ import EmailIcon from '@material-ui/icons/Email';
 import TodayIcon from '@material-ui/icons/Today';
 import Calendar from './Calendar';
 import WeeklySchedule from './WeeklySchedule';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+  } from '@material-ui/pickers';
 class ConfigDetail extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +23,7 @@ class ConfigDetail extends Component {
             email :'',
             password: '',
             showPassword: false,
+            selectedDate:new Date('2014-08-18T21:11:54'),
         }
     }
     handleClickShowPassword = () => {
@@ -33,8 +39,13 @@ class ConfigDetail extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+    handleDateChange = (date) => {
+       this.setState({selectedDate:date})
+       console.log(this.state.selectedDate);
+      };
 
 render() {
+    console.log(this.state.selectedDate);
   return (
     <div>
         <Typography variant="h4" gutterBottom>
@@ -132,8 +143,70 @@ render() {
             <Grid direction container >
                 <Typography variant="h6" className="title_Typography" >
                   Ngày làm chính quy 
-                </Typography>  
+                </Typography>
             </Grid>
+           <Grid direction container >
+           <Grid direction container xs="6">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid container justifyContent="space-around">
+                        <div className="KeyboardTimePicker">
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Ca sáng"
+                            value={this.state.selectedDate}
+                            onChange={this.handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        </div>
+                        <div className="KeyboardTimePicker">
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Ca chiều"
+                            value={this.state.selectedDate}
+                            onChange={this.handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        </div>
+                    </Grid>
+                    </MuiPickersUtilsProvider>
+            </Grid>
+            <Grid direction container xs="6">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid container justifyContent="space-around">
+                        <div className="KeyboardTimePicker">
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Ca sáng"
+                            value={this.state.selectedDate}
+                            onChange={this.handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        </div>
+                        <div className="KeyboardTimePicker">
+                            <KeyboardTimePicker
+                            margin="normal"
+                            id="time-picker"
+                            label="Ca chiều"
+                            value={this.state.selectedDate}
+                            onChange={this.handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change time',
+                            }}
+                            />
+                        </div>
+                    </Grid>
+                    </MuiPickersUtilsProvider>
+            </Grid>
+           </Grid>
             <Grid direction container >
                <WeeklySchedule/>
             </Grid>
