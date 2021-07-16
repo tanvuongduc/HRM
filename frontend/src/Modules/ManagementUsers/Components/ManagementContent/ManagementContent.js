@@ -95,7 +95,6 @@ class ManagementContent extends Component {
       this.state;
     const { path } = this.props.match;
     const { page, rowsPerPage, onSearchValue } = this.state;
-    console.log("Search value", onSearchValue);
     if (onSearchValue) {
       listUsers = listUsers.filter((user) => {
         return (

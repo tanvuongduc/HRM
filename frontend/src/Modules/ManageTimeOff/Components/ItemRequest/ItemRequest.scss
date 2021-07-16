@@ -1,0 +1,133 @@
+@import '../../../../Modules/ManagementUsers/Shared/Style/variables';
+
+.parent-request {
+    display: flex;
+    padding-left: 55px;
+
+    .item-request {
+        width: 75%;
+        background-color: $color-background;
+        height: 65px;
+        border-radius: 10px;
+        padding: 10px 16px;
+        overflow: hidden;
+        display: flex;
+
+
+        .avatar {
+            color: #ffff;
+            width: 35px;
+            height: 35px;
+            margin-top: 5px;
+        }
+
+        .body-request {
+            width: 85%;
+
+            .grid-item {
+                height: 60px;
+            }
+        }
+
+        .request-status {
+            margin-right: 60px;
+            margin-top: 7px;
+            background-color: rgb(216, 125, 7);
+            color: #ffff;
+            font-size: 15px;
+
+            .icon-status {
+                color: #ffff;
+            }
+        }
+
+        .title-request {
+            font-size: 20px;
+            color: #ffff;
+            margin-top: 8px;
+            margin-left: 12px;
+        }
+
+        .content-request {
+            font-size: 19px;
+            color: rgba(255, 255, 255, 0.829);
+            margin-top: 10px;
+        }
+
+        .view-detail-btn {
+
+
+            .view-detail-icon {
+                color: #ffff;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+
+
+    }
+
+    .item-request-approved {
+
+
+        .request-status {
+
+            background-color: rgb(5, 180, 92);
+
+        }
+    }
+
+    .item-request-rejected {
+        .request-status {
+
+            background-color: rgb(226, 58, 16);
+
+        }
+    }
+
+    .item-request-detail {
+        height: 250px;
+        animation: showDetailRequest linear 300ms forwards;
+    }
+
+    .hide-request-detail {
+        animation: hideDetailRequest linear 300ms backwards;
+    }
+
+    .btn-request {
+        margin-left: 50px;
+        justify-content: center;
+        align-items: center;
+
+        .btn-request-item {
+            font-size: 16px;
+            font-weight: 700;
+            padding: 15px 20px;
+            margin-left: 12px;
+        }
+    }
+
+
+
+
+    @keyframes showDetailRequest {
+        from {
+            height: 65px;
+        }
+
+        to {
+            height: 250px;
+        }
+    }
+
+    @keyframes hideDetailRequest {
+        from {
+            height: 250px;
+        }
+
+        to {
+            height: 65px;
+        }
+    }
+}
