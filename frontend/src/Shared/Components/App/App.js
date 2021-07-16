@@ -15,6 +15,7 @@ import MainTeam from "../../../../src/Modules/Team/Components/MainTeam";
 import TimeOff from "../../../Modules/TimeOff/TimeOff";
 import Sidebar2 from "../AppHeader/Sidebar2/Sidebar2";
 import './App.scss';
+import ManageTimeOff from "../../../Modules/ManageTimeOff/ManageTimeOff";
 
 // import NotAuthorized from '../../../Modules/Org/Components/NotAuthorized/NotAuthorized';
 
@@ -51,6 +52,7 @@ class App extends Component {
               />
               <Route path={`${path}/user`} component={User} />
               <Route path={`${path}/timeoff`} component={TimeOff} />
+              <Route path={`${path}/management/timeoff`} component={ManageTimeOff} />
             </Switch>
           </div>
         </div>
